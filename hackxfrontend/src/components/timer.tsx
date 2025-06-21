@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Set your target date/time here (e.g., hackathon start)
-const TARGET_DATE = new Date('2024-10-30T09:00:00');
+const TARGET_DATE = new Date('2025-10-30T09:00:00');
 
 const events = [
   { month: 'SEP', day: '01', label: 'REGISTRATIONS\nBEGIN' },
