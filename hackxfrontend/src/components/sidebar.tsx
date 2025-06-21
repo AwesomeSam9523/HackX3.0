@@ -8,6 +8,7 @@ interface SidebarItem {
   alt: string;
   label: string;
   path: string;
+  darkIcon: string;
 }
 
 const Sidebar: React.FC = () => {
@@ -15,20 +16,20 @@ const Sidebar: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   
   const sidebarItems: SidebarItem[] = [
-    { icon: "house.svg", alt: "Home", label: "Home", path: "/" },
-    { icon: "information.svg", alt: "Info", label: "About Us", path: "/information" },
-    { icon: "calender.svg", alt: "Calendar", label: "Timeline", path: "/calender" },
-    { icon: "ambassador.svg", alt: "Favorites", label: "Ambassador", path: "/ambassador" },
-    { icon: "team.svg", alt: "Team", label: "Team", path: "/team" },
-    { icon: "gallery.svg", alt: "Gallery", label: "Gallery", path: "/gallery" },
-    { icon: "faq.svg", alt: "FAQ", label: "FAQs", path: "/faq" },
+    { icon: "house.svg", alt: "Home", label: "Home", path: "/", darkIcon: "homeDark.svg" },
+    { icon: "information.svg", alt: "Info", label: "About Us", path: "/information", darkIcon: "informationDark.svg" },
+    { icon: "calender.svg", alt: "Calendar", label: "Timeline", path: "/calender", darkIcon: "calender.svg" },
+    { icon: "ambassador.svg", alt: "Favorites", label: "Ambassador", path: "/ambassador", darkIcon: "ambassador.svg" },
+    { icon: "team.svg", alt: "Team", label: "Team", path: "/team", darkIcon: "teamDark.svg" },
+    { icon: "gallery.svg", alt: "Gallery", label: "Gallery", path: "/gallery", darkIcon: "gallery.svg" },
+    { icon: "faq.svg", alt: "FAQ", label: "FAQs", path: "/faq", darkIcon: "faqDark.svg" },
   ];
 
   return (
     <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50">
       {/* Sidebar Container with Blur Background */}
       <div 
-        className={`backdrop-blur-md  shadow-2xl  border border-white/10 transition-all duration-500 ease-in-out ${
+        className={`backdrop-blur-md shadow-2xl border border-white/10 transition-all duration-500 ease-in-out ${
           isHovered ? 'px-6 py-8 rounded-2xl' : 'px-4 py-8 rounded-full'
         }`}
         onMouseEnter={() => setIsHovered(true)}
@@ -51,14 +52,14 @@ const Sidebar: React.FC = () => {
               >
                 <div className="flex-shrink-0">
                   <Image
-                    src={item.icon}
+                    src={isActive ? item.darkIcon : item.icon}
                     alt={item.alt}
                     width={32}
                     height={32}
                     className={`w-8 h-8 ${
                       isActive
-                        ? "filter-none text-black" // Active: original color (black)
-                        : "filter invert brightness-0 text-white" // Inactive: pure white
+                        ? "filter-none" // Active: original color (uses darkIcon)
+                        : "filter invert brightness-0" // Inactive: pure white (uses normal icon)
                     }`}
                   />
                 </div>
