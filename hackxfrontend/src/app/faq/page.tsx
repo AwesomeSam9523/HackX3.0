@@ -60,7 +60,7 @@ const Page = () => {
   };
 
   return (
-    <div className=" bg-gradient-to-br from-blue-800  to-black relative overflow-hidden w-full">
+    <div className=" bg-gradient-to-b from-blue-500 via-blue-800  to-black relative overflow-hidden w-full">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-full h-full center">
         <Image
@@ -103,47 +103,38 @@ const Page = () => {
             >
               <button
                 onClick={() => toggleFAQ(faq.id)}
-                className="w-full px-8 py-6 text-left flex items-center justify-between text-white hover:bg-white/5 transition-colors duration-200"
+                className="w-full px-8 py-6 text-left flex items-center  justify-center text-white hover:bg-white/5 transition-colors duration-200"
               >
-                <span className="text-lg font-semibold tracking-wide text-center">
+                <span className="text-lg font-bold tracking-tight text-center">
                   {faq.question}
                 </span>
                 <div className={`transform transition-transform duration-300 ${
                   openFAQ === faq.id ? 'rotate-45' : 'rotate-0'
                 }`}>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10 4V16M4 10H16"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                  
+                   
+              
                 </div>
               </button>
               
-              {openFAQ === faq.id && (
+              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                openFAQ === faq.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }`}>
                 <div className="px-8 pb-6">
                   <div className="border-t border-white/10 pt-4">
-                    <p className="text-white/80 leading-relaxed">
+                    <p className="text-white/80 leading-relaxed transform transition-transform duration-300">
                       {faq.answer}
                     </p>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>
 
         {/* Footer text */}
         <div className="text-center mt-16">
-          <p className="text-white/80 text-lg font-extrabold tracking-tighter">
+          <p className="text-white text-lg font-extrabold tracking-tighter">
             NEED FURTHER ASSISTANCE? DON&apos;T HESITATE TO REACH OUT TO OUR TEAM.
           </p>
         </div>
