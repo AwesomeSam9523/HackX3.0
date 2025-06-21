@@ -23,12 +23,18 @@ function getTimeLeft(targetDate: Date) {
 }
 
 const Timer: React.FC = () => {
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft(TARGET_DATE));
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // Set client flag and initialize timer
+    setIsClient(true);
+    setTimeLeft(getTimeLeft(TARGET_DATE));
+    
     const interval = setInterval(() => {
       setTimeLeft(getTimeLeft(TARGET_DATE));
     }, 1000);
+    
     return () => clearInterval(interval);
   }, []);
 
@@ -45,8 +51,14 @@ const Timer: React.FC = () => {
         </div>
       </div>
       <div className="label h-[51px] w-[594px] mx-auto mb-10">
-        <div className="text-wrapper text-[#fffef0] text-[63.5px] font-bold left-0 tracking-[0] leading-[50.8px] relative text-center top-0 whitespace-nowrap">
-          {`${timeLeft.days}D ${String(timeLeft.hours).padStart(2, '0')}H ${String(timeLeft.minutes).padStart(2, '0')}M ${String(timeLeft.seconds).padStart(2, '0')}S`}
+        <div 
+          className="text-wrapper text-[#fffef0] text-[63.5px] font-bold left-0 tracking-[0] leading-[50.8px] relative text-center top-0 whitespace-nowrap"
+          suppressHydrationWarning={true}
+        >
+          {isClient 
+            ? `${timeLeft.days}D ${String(timeLeft.hours).padStart(2, '0')}H ${String(timeLeft.minutes).padStart(2, '0')}M ${String(timeLeft.seconds).padStart(2, '0')}S`
+            : '--D --H --M --S'
+          }
         </div>
       </div>
       <div className="flex justify-between items-end gap-6 max-w-[900px] mx-auto">
