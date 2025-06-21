@@ -47,8 +47,8 @@ const Sidebar: React.FC = () => {
                   height={32}
                   className={`w-8 h-8 ${
                     isActive 
-                      ? "filter-none" // Active: original color (black)
-                      : "filter invert brightness-0" // Inactive: pure white
+                      ? "filter-none text-black" // Active: original color (black)
+                      : "filter invert brightness-0 text-white" // Inactive: pure white
                   }`}
                 />
               </div>
