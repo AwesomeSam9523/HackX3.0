@@ -3,7 +3,7 @@ import Themes from "../components/themes";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-black">
       <Timer />
       <Themes />
     </main>
