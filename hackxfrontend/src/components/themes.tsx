@@ -28,7 +28,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
   const defaultImage = "/rectangle-6667481.svg";
 
   // Check for specific tiles that need custom styling
-  const isSupplyChain = text === "supply chain and logistics";
+  const isSupplyChain = text === "supply chain & logistics";
   const isEnvironmental = text === "environmental impact solutions ";
   const isDefense = text === "defence systems";
   const isDisaster = text === "disaster response";
@@ -82,7 +82,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                   {isSupplyChain ? (
                       <div className="w-[184px] relative flex justify-center">
                       <span
-                          className="text-[#fefde0] text-[25.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block"
+                          className="text-[#fefde0] text-[25.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block"
                           style={{ margin: 0 }}
                       >
                         {text}
@@ -90,14 +90,14 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                       </div>
                   ) : isEnvironmental ? (
                       <div className="w-[251px] relative flex justify-center">
-                      <span className="text-[#fefde0] text-[27.61px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block">
-                        {text}
+                      <span className="text-[#fefde0] text-[24px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block">
+                        environmental<br />impact&nbsp;solutions
                       </span>
                       </div>
                   ) : isDefense ? (
                       <div className="w-[106px] relative flex justify-center">
                       <span
-                          className="text-[#fefde0] text-[28.42px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block"
+                          className="text-[#fefde0] text-[28.42px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block"
                           style={{ margin: 0 }}
                       >
                         {text}
@@ -106,7 +106,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                   ) : isDisaster ? (
                       <div className="w-[125px] relative flex justify-center">
                       <span
-                          className="text-[#fefde0] text-[28.42px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block"
+                          className="text-[#fefde0] text-[28.42px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block"
                           style={{ margin: 0 }}
                       >
                         {text}
@@ -115,7 +115,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                   ) : isOpenInnovation ? (
                       <div className="w-[156px] relative flex justify-center">
                       <span
-                          className="text-[#fefde0] text-[28.42px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block"
+                          className="text-[#fefde0] text-[28.42px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block"
                           style={{ margin: 0 }}
                       >
                         {text}
@@ -123,21 +123,21 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                       </div>
                   ) : isCybersecurity ? (
                       <div className="w-[204px] relative flex justify-center">
-                      <span className="text-[#fefde0] text-[30.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block">
+                      <span className="text-[#fefde0] text-[30.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block">
                         {text}
                       </span>
                       </div>
                   ) : isBlockchain ? (
                       <div className="w-[207px] relative flex justify-center">
                       <span
-                          className="text-[#fefde0] text-[25.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-center inline-block"
+                          className="text-[#fefde0] text-[25.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block"
                           style={{ margin: 0 }}
                       >
                         {text}
                       </span>
                       </div>
                   ) : (
-                      <span className="text-[#fefde0] text-[36.61px] leading-[98.5%] tracking-[-0.02em] uppercase font-['AvantGarde_Bk_BT'] text-left inline-block drop-shadow-lg">
+                      <span className="text-[#fefde0] text-[36.61px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-left inline-block drop-shadow-lg">
                       {text}
                     </span>
                   )}
@@ -258,7 +258,7 @@ const Themes: React.FC = () => {
     ["/rectangle-6667481-2.svg", "/fintech.svg", "FINTECH"],
     ["/rectangle_2.svg", "/edtech.svg", "edtech"],
     ["/rectangle_3.svg", "/blockchain.svg", "blockchain for good"],
-    ["/rectangle_4.svg", "/supplychain.svg", "supply chain and logistics"],
+    ["/rectangle_4.svg", "/supplychain.svg", "supply chain & logistics"],
     ["/rectangle_5.svg", "/enviroment.svg", "environmental impact solutions "],
     ["/rectangle_6.svg", "/healthcare.svg", "healthcare"],
     ["/rectangle_7.svg", "/defence.svg", "defence systems"],
@@ -271,7 +271,7 @@ const Themes: React.FC = () => {
       <div className="bg-[radial-gradient(circle_at_50%_50%,#10131a_60%,#050608_100%)] rounded-[18px] p-0 max-w-[1440px] min-h-screen mx-auto relative shadow-[0_2px_32px_0_#000a] overflow-visible">
         <div className="flex items-start relative min-h-[600px] z-[2]">
           <div className="relative min-w-[340px] text-left">
-            <div className="absolute left-[56px] top-[64px] z-[3] min-w-[340px] text-left">
+            <div className="absolute left-[100px] top-[64px] z-[3] min-w-[340px] text-left">
               {/* 2025 block with CSS-based corners */}
               <div className="relative w-fit mb-[43.58px] pt-[14px] pb-[13px] pl-[54px] pr-[52px]">
               <span className="text-[#fffef0] font-[400] font-[AvantGarde_Bk_BT-Demi,Helvetica] text-[40.7px] leading-[40.1px] tracking-[-0.81px] text-center relative z-10">
@@ -309,7 +309,7 @@ const Themes: React.FC = () => {
 
           {/* Grid tiles */}
           <div className="flex-1 flex items-start justify-start">
-            <div className="grid grid-cols-4 grid-rows-3 gap-[34px] mt-[110px] z-[2] static ml-[-292px]">
+            <div className="grid grid-cols-4 grid-rows-3 gap-[34px] mt-[110px] z-[2] static ml-[-236px]">
               {imageSets.map((set, idx) =>
                   set ? (
                       <Box
