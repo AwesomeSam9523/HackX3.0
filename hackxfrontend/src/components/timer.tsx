@@ -39,7 +39,7 @@ const Timer: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-[#111] text-white p-8 rounded-[16px] max-w-[1100px] mx-auto my-8 font-sans shadow-[0_2px_16px_rgba(0,0,0,0.3)]">
+    <div className="text-white max-w-[1100px] mx-auto my-8 font-sans">
       <div className="flex justify-center w-full mb-11">
         <div className="relative inline-block text-center mb-2 font-bold text-[20.34px] leading-[0.99] tracking-[-0.02em] uppercase">
           {/* The transform: translate values below have been changed from 6px to 12px */}
@@ -70,12 +70,12 @@ const Timer: React.FC = () => {
               </div>
               <div className="div text-[#fffef0] font-medium text-[27.7px] left-[30px] absolute text-center top-[41px] whitespace-nowrap">{event.day}</div>
             </div>
-            <div className="mt-2 text-[1.1rem] font-semibold uppercase leading-[1.1] tracking-[-1px] text-white text-shadow max-w-[240px] flex flex-col items-center justify-start">
+            <div className="mt-2 text-[1.1rem] font-semibold uppercase leading-[1.1] tracking-[-1px] text-white text-shadow max-w-[240px] flex flex-col items-center justify-start relative z-10 isolate">
               {event.label.split('\n').map((line, i) => {
                 if (["BEGIN", "END", "& HACKATHON BEGINS", "& CLOSING"].includes(line.trim())) {
-                  return <span key={i} className="text-[#b3b1a7]">{line}</span>;
+                  return <span key={i} className="text-[#b3b1a7] relative z-10">{line}</span>;
                 }
-                return <span key={i}>{line}{i !== event.label.split('\n').length - 1 && <br />}</span>;
+                return <span key={i} className="relative z-10">{line}{i !== event.label.split('\n').length - 1 && <br />}</span>;
               })}
             </div>
           </div>
