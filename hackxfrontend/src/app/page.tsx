@@ -2,11 +2,13 @@ import Timer from "../components/timer";
 import Themes from "../components/themes";
 import Sponsors from "@/components/sponsors";
 import Navbar from "@/components/navbar";
+import HeroSection from "@/components/Hero";
 
 export default function Home() {
   return (
     <main className="bg-black relative overflow-x-clip">
-      <Navbar/>
+      <HeroSection/>
+      
       <div
         className="ellipseDiv absolute left-[72%] top-0 -translate-x-1/2 z-0"
         style={{
