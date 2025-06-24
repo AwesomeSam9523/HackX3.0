@@ -75,7 +75,17 @@ const FeatureLogos: FeaturesLogo[] = [
 ];
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-black items-center overflow-hidden">
+    <section className="relative min-h-screen bg-black  items-center overflow-hidden">
+
+{/* <div className="fixed inset-0 w-full h-full pointer-events-none z-10">
+        <Image
+          src="/x2.png" 
+          alt="Background decoration"
+          width={384}
+          height={384}
+          className="w-full h-full object-contain opacity-50"
+        />
+      </div> */}
       
       <div>
         <Image
@@ -158,7 +168,7 @@ const HeroSection = () => {
         <div className="flex space-x-4 mb-12">
           {FeatureLogos.map((logo, index) => (
             <div key={index} className="p-4">
-              <img
+              <Image
                 src={`/HeroSection/${logo.src}`}
                 alt={logo.alt}
                 width={90}

@@ -6,7 +6,7 @@ import HeroSection from "@/components/Hero";
 
 export default function Home() {
   return (
-    <main className="bg-black relative overflow-x-clip">
+    <main className=" relative overflow-x-clip">
       <HeroSection/>
       <div className="h-12" />
       <div
