@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Navbar from "./Navbar";
+import Navbar from "@/components/Navbar";
 // import { Link } from "lucide-react";
 
 // // Placeholder SVG components - replace these with your own SVG elements

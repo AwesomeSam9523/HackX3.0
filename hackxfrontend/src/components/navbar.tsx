@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import RegisterButton from "./RegisterButton";
+import RegisterButton from "@/components/RegisterButton";
 
 const Navbar: React.FC = () => {
   return (
