@@ -63,7 +63,7 @@ const Page = () => {
       {/* Fixed background image */}
      
       
-      <div className="bg-gradient-to-b from-blue-500 via-blue-800 to-black relative overflow-hidden w-full min-h-screen">
+      <div className="bg-gradient-to-b from-blue-500 via-black to-black relative overflow-hidden w-full min-h-screen">
       <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
         <Image
           src="/x2.png" 
