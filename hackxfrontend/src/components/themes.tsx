@@ -28,7 +28,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
   const defaultImage = "/rectangle-6667481.svg";
 
   // Check for specific tiles that need custom styling
-  const isSupplyChain = text === "supply chain &   logistics";
+  const isSupplyChain = text === "supply chain & logistics";
   const isEnvironmental = text === "environmental impact solutions ";
   const isDefense = text === "defence systems";
   const isDisaster = text === "disaster response";
@@ -85,7 +85,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                           className="text-[#fefde0] text-[25.69px] leading-[98.5%] tracking-[-0.02em] uppercase font-bold font-inter text-center inline-block"
                           style={{ margin: 0 }}
                       >
-                        {text}
+                        supply chain<br/>&amp; logistics
                       </span>
                       </div>
                   ) : isEnvironmental ? (
