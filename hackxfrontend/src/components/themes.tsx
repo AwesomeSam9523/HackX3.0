@@ -257,7 +257,7 @@ const Themes: React.FC = () => {
     null,
     ["/rectangle-6667481-2.svg", "/fintech.svg", "FINTECH"],
     ["/rectangle_2.svg", "/edtech.svg", "edtech"],
-    ["/rectangle_3.svg", "/blockchain.svg", "blockchain for good"],
+    ["/rectangle_3.svg", "/blockchian.svg", "blockchain for good"],
     ["/rectangle_4.svg", "/supplychain.svg", "supply chain & logistics"],
     ["/rectangle_5.svg", "/enviroment.svg", "environmental impact solutions "],
     ["/rectangle_6.svg", "/healthcare.svg", "healthcare"],
