@@ -3,7 +3,6 @@ import Navbar from '@/components/navbar';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
-
 const Page = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
@@ -60,86 +59,88 @@ const Page = () => {
   };
 
   return (
-    <div className=" bg-gradient-to-b from-blue-500 via-blue-800  to-black relative overflow-hidden w-full">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-full h-full center">
+    <>
+      {/* Fixed background image */}
+     
+      
+      <div className="bg-gradient-to-b from-blue-500 via-blue-800 to-black relative overflow-hidden w-full min-h-screen">
+      <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
         <Image
-          src="/x2.png" // Replace this with your actual SVG path
+          src="/x2.png" 
           alt="Background decoration"
           width={384}
           height={384}
           className="w-full h-full object-contain opacity-50"
         />
       </div>
-
-      {/* Main content */}
-      <div className="relative z-10 container mx-auto px-4 ">
-        {/* Navbar component placed here */}
-        <Navbar />
-        
-        {/* Header section */}
-        <div className="text-center mb-16">
-          <div className="inline-block px-20 py-3 rounded-full  border border-white/30 bg-white/10 backdrop-blur-sm mb-8">
-            <span className="text-white text-lg font-extrabold tracking-tighter">
-              EVERYTHING YOU NEED TO KNOW!
-            </span>
+        <div className="relative z-10 container mx-auto px-4">
+          
+          <Navbar />
+          
+          {/* Header section */}
+          <div className="text-center mb-16">
+            <div className="inline-block px-20 py-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm mb-8">
+              <span className="text-white text-lg font-extrabold tracking-tighter">
+                EVERYTHING YOU NEED TO KNOW!
+              </span>
+            </div>
+            
+            <h1 className="text-7xl font-extrabold md:text-8xl lg:text-9xl text-white mb-6 tracking-tighter">
+              FAQs
+            </h1>
+            
+            <p className="text-white/80 text-lg font-extrabold max-w-2xl mx-auto tracking-tighter">
+              HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
+            </p>
           </div>
-          
-          <h1 className="text-7xl font-extrabold md:text-8xl lg:text-9xl text-white mb-6 tracking-tighter">
-            FAQs
-          </h1>
-          
-          <p className="text-white/80 text-lg font-extrabold max-w-2xl mx-auto tracking-tighter">
-            HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
-          </p>
-        </div>
 
-        {/* FAQ Items */}
-        <div className="max-w-4xl mx-auto space-y-1">
-          {faqs.map((faq) => (
-            <div
-              key={faq.id}
-              className="bg-black/30 backdrop-blur-sm rounded-4xl border border-white/10 overflow-hidden transition-all duration-300 hover:bg-black/40"
-            >
-              <button
-                onClick={() => toggleFAQ(faq.id)}
-                className="w-full px-8 py-6 text-left flex items-center  justify-center text-white hover:bg-white/5 transition-colors duration-200"
+          {/* FAQ Items */}
+          <div className="max-w-4xl mx-auto space-y-1">
+            {faqs.map((faq) => (
+              <div
+                key={faq.id}
+                className="bg-black/30 backdrop-blur-sm rounded-4xl border border-white/10 overflow-hidden transition-all duration-300 hover:bg-black/40"
               >
-                <span className="text-lg font-bold tracking-tight text-center">
-                  {faq.question}
-                </span>
-                <div className={`transform transition-transform duration-300 ${
-                  openFAQ === faq.id ? 'rotate-45' : 'rotate-0'
+                <button
+                  onClick={() => toggleFAQ(faq.id)}
+                  className="w-full px-8 py-6 text-left flex items-center justify-center text-white hover:bg-white/5 transition-colors duration-200"
+                >
+                  <span className="text-lg font-bold tracking-tight text-center">
+                    {faq.question}
+                  </span>
+                  <div className={`transform transition-transform duration-300 ${
+                    openFAQ === faq.id ? 'rotate-45' : 'rotate-0'
+                  }`}>
+                    
+                     
+                
+                  </div>
+                </button>
+                
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  openFAQ === faq.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}>
-                  
-                   
-              
-                </div>
-              </button>
-              
-              <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                openFAQ === faq.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}>
-                <div className="px-8 pb-6">
-                  <div className="border-t border-white/10 pt-4">
-                    <p className="text-white/80 leading-relaxed transform transition-transform duration-300">
-                      {faq.answer}
-                    </p>
+                  <div className="px-8 pb-6">
+                    <div className="border-t border-white/10 pt-4">
+                      <p className="text-white/80 leading-relaxed transform transition-transform duration-300">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Footer text */}
-        <div className="text-center mt-16">
-          <p className="text-white text-lg font-extrabold tracking-tighter">
-            NEED FURTHER ASSISTANCE? DON&apos;T HESITATE TO REACH OUT TO OUR TEAM.
-          </p>
+          {/* Footer text */}
+          <div className="text-center mt-16 pb-16">
+            <p className="text-white text-lg font-extrabold tracking-tighter">
+              NEED FURTHER ASSISTANCE? DON&apos;T HESITATE TO REACH OUT TO OUR TEAM.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

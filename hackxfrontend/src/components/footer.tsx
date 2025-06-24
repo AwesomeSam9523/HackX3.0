@@ -23,26 +23,26 @@ const Footer: React.FC = () => {
           <div className="relative px-4 py-4">
             {/* Top Left Corner */}
             <div className="absolute top-0 left-0 w-6 h-6">
-              <div className="absolute top-0 left-0 w-6 h-1 bg-white"></div>
-              <div className="absolute top-0 left-0 w-1 h-6 bg-white"></div>
+              <div className="absolute top-0 left-0 w-1 h-4 bg-white"></div>
+              <div className="absolute top-0 left-0 w-4 h-1 bg-white"></div>
             </div>
 
             {/* Top Right Corner */}
             <div className="absolute top-0 right-0 w-6 h-6">
-              <div className="absolute top-0 right-0 w-6 h-1 bg-white"></div>
-              <div className="absolute top-0 right-0 w-1 h-6 bg-white"></div>
+              <div className="absolute top-0 right-0 w-1 h-4 bg-white"></div>
+              <div className="absolute top-0 right-0 w-4 h-1 bg-white"></div>
             </div>
 
             {/* Bottom Left Corner */}
             <div className="absolute bottom-0 left-0 w-6 h-6">
-              <div className="absolute bottom-0 left-0 w-6 h-1 bg-white"></div>
-              <div className="absolute bottom-0 left-0 w-1 h-6 bg-white"></div>
+              <div className="absolute bottom-0 left-0 w-1 h-4 bg-white"></div>
+              <div className="absolute bottom-0 left-0 w-4 h-1 bg-white"></div>
             </div>
 
             {/* Bottom Right Corner */}
             <div className="absolute bottom-0 right-0 w-6 h-6">
-              <div className="absolute bottom-0 right-0 w-6 h-1 bg-white"></div>
-              <div className="absolute bottom-0 right-0 w-1 h-6 bg-white"></div>
+              <div className="absolute bottom-0 right-0 w-1 h-4 bg-white"></div>
+              <div className="absolute bottom-0 right-0 w-4 h-1 bg-white"></div>
             </div>
 
             <span className="text-4xl font-bold tracking-tighter uppercase text-white">

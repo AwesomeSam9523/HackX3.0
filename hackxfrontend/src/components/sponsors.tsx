@@ -31,10 +31,10 @@ const Sponsors: React.FC = () => {
         {/* Sponsors header with corner decorations */}
         <div className="relative inline-block mb-12 px-8 py-4">
           {/* Corner decorative elements for sponsors heading */}
-          <div className="absolute top-0 left-0 w-6 h-6 border-l-4 border-t-4 border-white "></div>
-          <div className="absolute top-0 right-0 w-6 h-6 border-r-4 border-t-4 border-white "></div>
-          <div className="absolute bottom-0 left-0 w-6 h-6 border-l-4 border-b-4 border-white "></div>
-          <div className="absolute bottom-0 right-0 w-6 h-6 border-r-4 border-b-4 border-white "></div>
+          <div className="absolute top-0 left-0 w-4 h-4 border-l-4 border-t-4 border-white "></div>
+          <div className="absolute top-0 right-0 w-4 h-4 border-r-4 border-t-4 border-white "></div>
+          <div className="absolute bottom-0 left-0 w-4 h-4 border-l-4 border-b-4 border-white "></div>
+          <div className="absolute bottom-0 right-0 w-4 h-4 border-r-4 border-b-4 border-white "></div>
           
           <h2 className="text-4xl font-bold tracking-tighter">SPONSORS</h2>
         </div>
