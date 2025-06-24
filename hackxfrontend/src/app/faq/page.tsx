@@ -7,11 +7,11 @@ const Page = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   useEffect(() => {
-    // Override body background for this component
+    
     document.body.style.background = 'transparent';
     
     return () => {
-      // Reset body background when component unmounts
+      
       document.body.style.background = '';
     };
   }, []);
@@ -80,8 +80,8 @@ const Page = () => {
           {/* Header section */}
           <div className="text-center mb-16">
             <div className="inline-block px-20 py-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm mb-8">
-              <span className="text-white text-lg font-extrabold tracking-tighter">
-                EVERYTHING YOU NEED TO KNOW!
+              <span className="text-white text-lg font-bold tracking-tighter font-sans ">
+                EVERYTHING YOU NEED TO KNOW
               </span>
             </div>
             
@@ -122,7 +122,7 @@ const Page = () => {
                 }`}>
                   <div className="px-8 pb-6">
                     <div className="border-t border-white/10 pt-4">
-                      <p className="text-white/80 leading-relaxed transform transition-transform duration-300">
+                      <p className="text-white/80 text-center leading-relaxed transform transition-transform duration-300">
                         {faq.answer}
                       </p>
                     </div>
