@@ -1,11 +1,23 @@
 import React from "react";
 import { Instagram, Linkedin, Target } from "lucide-react";
-
+import Image from "next/image";
 const Footer: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-blue-900 to-blue-800 text-white relative overflow-hidden">
+    <div className="min-h-screen z-20 bg-black text-white relative overflow-hidden"
+    >
+    <div
+  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[2000px] h-[1000px] z-0"
+  style={{
+    background: 'radial-gradient(ellipse at center, #57E3FF 0%, #020D85 100%)',
+    opacity: 0.4,
+    borderRadius: '50%',
+    filter: 'blur(40px)',
+  }}
+/>
+
       {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 ">
+
         {/* Header Badge */}
         <div className="mb-12">
           <div className="relative px-4 py-4">
@@ -56,35 +68,54 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Copyright - Positioned in center */}
-        <div className="mb-20 z-10">
+        <div className="z-10">
           <p className="text-lg  text-[#429df2] font-bold tracking-tighter">
             ©2025 MUJHACKX, ALL RIGHTS RESERVED.
           </p>
         </div>
       </div>
 
-      {/* 3D Spline Container - Positioned in bottom center */}
-      
-
-      {/* Social Icons Footer - Bottom center with dark background */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 ">
-        <div className="bg-black/40 backdrop-blur-sm px-4 py-4 rounded-full flex  tracking-tight">
-          <div className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full">
-            <Target size={24} className="text-white" />
-          </div>
-          <div className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full">
-            <Instagram size={24} className="text-white" />
-          </div>
-          <div className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full">
-            <Linkedin size={24} className="text-white" />
-          </div>
-        </div>
-      </div>
-
-      {/* Background Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-900/20 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-blue-800/50 to-transparent"></div>
+<div className="z-10 relative w-full">
+  {/* Spline Image */}
+  <Image
+    src="/ChipsSpline4.svg"
+    alt="HackxIcon"
+    width={1200}
+    height={1800}
+    className="mx-auto "
+  />
+  {/* Social Icons - Centered on top of image */}
+  <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+  
+ 
+    <div className="bg-black/40 backdrop-blur-sm px-6 py-4 rounded-full flex items-center gap-4 w-fit">
+      <a
+        href="#"
+        className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full"
+      >
+        <Target size={24} className="text-white" />
+      </a>
+      <a
+        href="#"
+        className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full"
+      >
+        <Instagram size={24} className="text-white" />
+      </a>
+      <a
+        href="#"
+        className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full"
+      >
+        <Linkedin size={24} className="text-white" />
+      </a>
     </div>
+    
+  </div>
+
+  
+</div>
+
+       
+      </div>
   );
 };
 
