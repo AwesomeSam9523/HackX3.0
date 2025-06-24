@@ -1,58 +1,58 @@
 import React from "react";
 import Image from "next/image";
-import { Link } from "lucide-react";
+// import { Link } from "lucide-react";
 
-// Placeholder SVG components - replace these with your own SVG elements
-const DecorationSVG1 = () => (
-  <svg width="200" height="300" viewBox="0 0 200 300" className="absolute">
-    <path
-      d="M50 20 Q80 50 60 100 Q40 150 70 200 Q100 250 80 280"
-      stroke="url(#gradient1)"
-      strokeWidth="3"
-      fill="none"
-    />
-    <defs>
-      <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#3B82F6" />
-        <stop offset="100%" stopColor="#8B5CF6" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
+// // Placeholder SVG components - replace these with your own SVG elements
+// const DecorationSVG1 = () => (
+//   <svg width="200" height="300" viewBox="0 0 200 300" className="absolute">
+//     <path
+//       d="M50 20 Q80 50 60 100 Q40 150 70 200 Q100 250 80 280"
+//       stroke="url(#gradient1)"
+//       strokeWidth="3"
+//       fill="none"
+//     />
+//     <defs>
+//       <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+//         <stop offset="0%" stopColor="#3B82F6" />
+//         <stop offset="100%" stopColor="#8B5CF6" />
+//       </linearGradient>
+//     </defs>
+//   </svg>
+// );
 
-const DecorationSVG2 = () => (
-  <svg width="150" height="200" viewBox="0 0 150 200" className="absolute">
-    <path
-      d="M20 180 Q50 150 40 100 Q30 50 60 20 Q90 50 80 100"
-      stroke="url(#gradient2)"
-      strokeWidth="4"
-      fill="none"
-    />
-    <defs>
-      <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#06B6D4" />
-        <stop offset="100%" stopColor="#3B82F6" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
+// const DecorationSVG2 = () => (
+//   <svg width="150" height="200" viewBox="0 0 150 200" className="absolute">
+//     <path
+//       d="M20 180 Q50 150 40 100 Q30 50 60 20 Q90 50 80 100"
+//       stroke="url(#gradient2)"
+//       strokeWidth="4"
+//       fill="none"
+//     />
+//     <defs>
+//       <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+//         <stop offset="0%" stopColor="#06B6D4" />
+//         <stop offset="100%" stopColor="#3B82F6" />
+//       </linearGradient>
+//     </defs>
+//   </svg>
+// );
 
-const DecorationSVG3 = () => (
-  <svg width="180" height="250" viewBox="0 0 180 250" className="absolute">
-    <path
-      d="M160 30 Q130 60 150 110 Q170 160 140 210 Q110 240 120 220"
-      stroke="url(#gradient3)"
-      strokeWidth="3"
-      fill="none"
-    />
-    <defs>
-      <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#8B5CF6" />
-        <stop offset="100%" stopColor="#EC4899" />
-      </linearGradient>
-    </defs>
-  </svg>
-);
+// const DecorationSVG3 = () => (
+//   <svg width="180" height="250" viewBox="0 0 180 250" className="absolute">
+//     <path
+//       d="M160 30 Q130 60 150 110 Q170 160 140 210 Q110 240 120 220"
+//       stroke="url(#gradient3)"
+//       strokeWidth="3"
+//       fill="none"
+//     />
+//     <defs>
+//       <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+//         <stop offset="0%" stopColor="#8B5CF6" />
+//         <stop offset="100%" stopColor="#EC4899" />
+//       </linearGradient>
+//     </defs>
+//   </svg>
+// );
 
 interface FeaturesLogo {
   src: string;
