@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Navbar from "./Navbar";
 // import { Link } from "lucide-react";
 
 // // Placeholder SVG components - replace these with your own SVG elements
@@ -97,7 +98,8 @@ const HeroSection = () => {
 
 
       {/* Navigation */}
-      <nav className="relative  z-15 flex justify-between items-center px-8 ">
+      <Navbar/>
+      {/* <nav className="relative  z-15 flex justify-between items-center px-8 ">
         <Image
           src="/HeroSection/logo.svg"
           alt="HackxIcon"
@@ -118,7 +120,7 @@ const HeroSection = () => {
           </button>
 </div>
        
-      </nav>
+      </nav> */}
 
       {/* Main Content */}
       <div className="relative mt-10 z-10 flex flex-col items-center justify-center min-h-[80vh] px-8 text-center">

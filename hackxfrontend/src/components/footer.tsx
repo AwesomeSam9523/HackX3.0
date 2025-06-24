@@ -1,6 +1,7 @@
 import React from "react";
 import { Instagram, Linkedin, Target } from "lucide-react";
 import Image from "next/image";
+import RegisterButton from "./RegisterButton";
 const Footer: React.FC = () => {
   return (
     <div className="min-h-screen z-20 bg-black text-white relative overflow-hidden"
@@ -16,7 +17,7 @@ const Footer: React.FC = () => {
 />
 
       {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 ">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
 
         {/* Header Badge */}
         <div className="mb-12">
@@ -45,7 +46,7 @@ const Footer: React.FC = () => {
               <div className="absolute bottom-0 right-0 w-4 h-1 bg-white"></div>
             </div>
 
-            <span className="text-4xl font-bold tracking-tighter uppercase text-white">
+            <span className="text-4xl font-bold tracking-tighter uppercase text-white  w-full">
               THIS IS YOUR CALL
             </span>
           </div>
@@ -62,9 +63,7 @@ const Footer: React.FC = () => {
 
         {/* CTA Button */}
         <div className="mb-8">
-          <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-5 rounded-full text-2xl font-semibold uppercase tracking-tight text-white">
-            REGISTER NOW
-          </button>
+          <RegisterButton/>
         </div>
 
         {/* Copyright - Positioned in center */}
