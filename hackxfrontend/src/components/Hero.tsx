@@ -57,28 +57,29 @@ const DecorationSVG3 = () => (
 interface FeaturesLogo {
   src: string;
   alt: string;
-  width: number;
-  height: number;
 }
 
 const FeatureLogos: FeaturesLogo[] = [
-  { src: "SDG4.svg", alt: "Axure", width: 120, height: 40 },
-  { src: "oracle.svg", alt: "Oracle Academy", width: 140, height: 40 },
-  { src: "cdcc.svg", alt: "CDGC", width: 100, height: 40 },
-  { src: "bikesetu.svg", alt: "BikeSetu", width: 130, height: 40 },
-  { src: "radio.svg", alt: "Pin Store", width: 110, height: 40 },
-  { src: "bobble.svg", alt: "Bobble AI", width: 120, height: 40 },
-  { src: "ed.svg", alt: "EDU", width: 100, height: 40 },
-  { src: "designstudio.svg", alt: "Design Studio", width: 140, height: 40 },
+ 
+  { src: "sdg1.svg", alt: "SDG 1" },
+  
+  { src: "sdg2.svg", alt: "SDG 2"},
+  { src: "sdg3.svg", alt: "SDG 3"},
+  { src: "sdg4.svg", alt: "SDG 4"},
+  { src: "sdg5.svg", alt: "SDG 5" },
+  { src: "sdg6.svg", alt: "SDG 6" },
+   { src: "sdg7.svg", alt: "SDG 7" },
+  { src: "sdg8.svg", alt: "SDG 8",  },
+  { src: "sdg9.svg", alt: "SDG 9",  },
 ];
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen bg-black items-center overflow-hidden">
-      {/* Background Decorative SVGs - Replace these with your own */}
+      
       <div>
         <Image
           src="/HeroSection/Ellipse1.svg"
-          alt="HackxIcon"
+          alt="Gradient"
           width={1800}
           height={850}
           className="z-5 absolute "
@@ -96,7 +97,7 @@ const HeroSection = () => {
 
 
       {/* Navigation */}
-      <nav className="relative z-15 flex justify-between items-center px-8 ">
+      <nav className="relative  z-15 flex justify-between items-center px-8 ">
         <Image
           src="/HeroSection/logo.svg"
           alt="HackxIcon"
@@ -106,31 +107,25 @@ const HeroSection = () => {
         />
         <Image
           src="/HeroSection/ChipsSpline1.svg"
-          alt="Register Now"
-          width={895}
-          height={820}
-          className="item-center top-0 mt-0 mx-auto"
+          alt="HackxIcon"
+          width={1000}
+          height={100}
+          className="mt-0"
         />
-
-        <Image
-          src="/HeroSection/registernow.svg"
-          alt="Register Now"
-          width={131}
-          height={50}
-          className=""
-        />
+        <div className="">
+       <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-2 rounded-full text-lg font-semibold uppercase tracking-tight text-white">
+            REGISTER NOW
+          </button>
+</div>
+       
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] px-8 text-center">
+      <div className="relative mt-10 z-10 flex flex-col items-center justify-center min-h-[80vh] px-8 text-center">
         {/* Subtitle */}
-        <Image
-          src="/HeroSection/department.svg"
-          alt="Join Now "
-          width={720}
-          height={52}
-          className="mt-10"
-        />
+        <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-3 rounded-full text-lg font-semibold uppercase tracking-tight text-white">
+            DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
+          </button>
         <Image
           src="/HeroSection/presents.svg"
           alt="Join Now "
@@ -140,7 +135,7 @@ const HeroSection = () => {
         />
 
         {/* Main Title */}
-        <div className="flex flex-col items-center justify-center text-center gap-0">
+        <div className="py-0 flex flex-col items-center justify-center text-center gap-0">
           <Image
             src="/HeroSection/hackx.svg"
             alt="Join Now "
@@ -153,36 +148,42 @@ const HeroSection = () => {
             alt="Join Now "
             width={650}
             height={40}
-            className=""
+            className="py-0"
           />
         </div>
 
         {/* Features */}
-        <div className="flex space-x-6 mb-12">
+        <div className="flex space-x-4 mb-12">
           {FeatureLogos.map((logo, index) => (
             <div key={index} className="p-4">
               <img
                 src={`/HeroSection/${logo.src}`}
                 alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
+                width={90}
+                height={90}
               />
             </div>
           ))}
         </div>
 
         {/* Stats */}
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16 mb-12">
+        <div className="flex flex-col mt-15 items-center justify-center gap-2 md:gap-16 mb-12">
           <Image
             src="/HeroSection/stats.svg"
-            alt="Join Now "
+            alt="stats "
+            width={200}
+            height={50}
+          />
+          <Image
+            src="/HeroSection/numbers.svg"
+            alt="Numbers "
             width={1000}
             height={185}
           />
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col mt-15 mb-15 sm:flex-row gap-4">
           <Image
             src="/HeroSection/join.svg"
             alt="Join Now "
