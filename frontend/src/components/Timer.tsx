@@ -44,9 +44,9 @@ const Timer: React.FC = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-8 max-w-[1100px] font-sans text-white">
-      <div className="mb-11 flex w-full justify-center">
-        <div className="relative mb-2 inline-block text-center text-[20.34px] leading-[0.99] font-bold tracking-[-0.02em] uppercase">
+    <div className="mx-auto my-8 max-w-[1100px] px-2 font-sans text-white sm:px-4">
+      <div className="mb-6 flex w-full justify-center sm:mb-11">
+        <div className="relative mb-2 inline-block text-center text-[18px] leading-[0.99] font-bold tracking-[-0.02em] uppercase sm:text-[20.34px]">
           {/* The transform: translate values below have been changed from 6px to 12px */}
           <span
             className="absolute top-0 left-0 h-[6px] w-[6px] border-2 border-white"
@@ -83,9 +83,9 @@ const Timer: React.FC = () => {
           Time Left to Begin
         </div>
       </div>
-      <div className="label mx-auto mb-10 h-[51px] w-[594px]">
+      <div className="label mx-auto mb-8 h-[40px] w-full max-w-[350px] sm:mb-10 sm:h-[51px] sm:max-w-[594px]">
         <div
-          className="text-wrapper relative top-0 left-0 text-center text-[63.5px] leading-[50.8px] font-bold tracking-[0] whitespace-nowrap text-[#fffef0]"
+          className="text-wrapper relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-bold tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
           suppressHydrationWarning={true}
         >
           {isClient
@@ -93,23 +93,23 @@ const Timer: React.FC = () => {
             : "--D --H --M --S"}
         </div>
       </div>
-      <div className="mx-auto flex max-w-[900px] items-end justify-between gap-6">
+      <div className="scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 sm:scrollbar-none mx-auto flex max-w-full flex-col items-center justify-center gap-4 overflow-x-auto sm:max-w-[900px] sm:flex-row sm:items-end sm:justify-between sm:gap-6 sm:overflow-x-visible">
         {events.map((event, idx) => (
           <div
             key={idx}
-            className="flex flex-1 flex-col items-center justify-start text-center"
+            className="mb-4 flex min-w-[160px] flex-1 flex-col items-center justify-start text-center sm:mb-0 sm:min-w-0"
           >
-            <div className="frame relative mb-2 h-[94px] w-[94px] overflow-hidden rounded-[19.86px] border-[3.31px] border-solid border-[#fffef0]">
-              <div className="overlap-group absolute top-0 left-0 h-[38px] w-[94px] bg-[#fffef0]">
-                <div className="text-wrapper absolute top-[4px] left-[25px] text-[22.2px] font-medium whitespace-nowrap text-[#1e2332]">
+            <div className="frame relative mb-2 h-[70px] w-[70px] overflow-hidden rounded-[15px] border-[2.2px] border-solid border-[#fffef0] sm:h-[94px] sm:w-[94px] sm:rounded-[19.86px] sm:border-[3.31px]">
+              <div className="overlap-group absolute top-0 left-0 h-[28px] w-full bg-[#fffef0] sm:h-[38px]">
+                <div className="text-wrapper absolute top-[4px] left-1/2 -translate-x-1/2 text-[16px] font-medium whitespace-nowrap text-[#1e2332] sm:text-[22.2px]">
                   {event.month}
                 </div>
               </div>
-              <div className="div absolute top-[41px] left-[30px] text-center text-[27.7px] font-medium whitespace-nowrap text-[#fffef0]">
+              <div className="div absolute top-[30px] left-1/2 -translate-x-1/2 text-center text-[20px] font-medium whitespace-nowrap text-[#fffef0] sm:top-[41px] sm:text-[27.7px]">
                 {event.day}
               </div>
             </div>
-            <div className="text-shadow relative isolate z-10 mt-2 flex max-w-[240px] flex-col items-center justify-start text-[1.1rem] leading-[1.1] font-semibold tracking-[-1px] text-white uppercase">
+            <div className="text-shadow relative isolate z-10 mt-2 flex max-w-[180px] flex-col items-center justify-start text-[0.95rem] leading-[1.1] font-semibold tracking-[-1px] text-white uppercase sm:max-w-[240px] sm:text-[1.1rem]">
               {event.label.split("\n").map((line, i) => {
                 if (
                   ["BEGIN", "END", "& HACKATHON BEGINS", "& CLOSING"].includes(

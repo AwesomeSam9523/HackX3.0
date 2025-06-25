@@ -4,10 +4,37 @@ const CommunityPartners: React.FC = () => {
   return (
     <section className="relative overflow-hidden bg-black px-8 py-16 text-white">
       {/* Corner decorative elements */}
-      <div className="absolute top-50 right-325 h-8 w-8 border-t-4 border-l-4 border-white"></div>
-      <div className="absolute top-50 right-30 h-8 w-8 border-t-4 border-r-4 border-white"></div>
-      <div className="absolute right-325 bottom-8 h-8 w-8 border-b-4 border-l-4 border-white"></div>
-      <div className="absolute right-30 bottom-8 h-8 w-8 border-r-4 border-b-4 border-white"></div>
+      {/* Top left corner (desktop) */}
+      <div
+        className="absolute top-50 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"
+        style={{ left: "150px" }}
+      ></div>
+      {/* Top left corner (mobile) */}
+      <div className="absolute top-4 left-4 h-6 w-6 border-t-2 border-l-2 border-white md:hidden"></div>
+
+      {/* Top right corner (desktop) */}
+      <div
+        className="absolute top-50 hidden h-8 w-8 border-t-4 border-r-4 border-white md:block"
+        style={{ right: "150px" }}
+      ></div>
+      {/* Top right corner (mobile) */}
+      <div className="absolute top-4 right-4 h-6 w-6 border-t-2 border-r-2 border-white md:hidden"></div>
+
+      {/* Bottom left corner (desktop) */}
+      <div
+        className="absolute bottom-8 hidden h-8 w-8 border-b-4 border-l-4 border-white md:block"
+        style={{ left: "150px" }}
+      ></div>
+      {/* Bottom left corner (mobile) */}
+      <div className="absolute bottom-4 left-4 h-6 w-6 border-b-2 border-l-2 border-white md:hidden"></div>
+
+      {/* Bottom right corner (desktop) */}
+      <div
+        className="absolute bottom-8 hidden h-8 w-8 border-r-4 border-b-4 border-white md:block"
+        style={{ right: "150px" }}
+      ></div>
+      {/* Bottom right corner (mobile) */}
+      <div className="absolute right-4 bottom-4 h-6 w-6 border-r-2 border-b-2 border-white md:hidden"></div>
 
       <div className="mx-auto max-w-6xl text-center">
         {/* Main heading */}
