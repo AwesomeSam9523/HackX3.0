@@ -275,20 +275,67 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
   );
 };
 
+const themesData = [
+  {
+    hoverImage: "/rectangle-6667481-2.svg",
+    vectorImage: "/fintech.svg",
+    text: "FINTECH",
+  },
+  {
+    hoverImage: "/rectangle_2.svg",
+    vectorImage: "/edtech.svg",
+    text: "edtech",
+  },
+  {
+    hoverImage: "/rectangle_3.svg",
+    vectorImage: "/blockchian.svg",
+    text: "blockchain for good",
+  },
+  {
+    hoverImage: "/rectangle_4.svg",
+    vectorImage: "/supplychain.svg",
+    text: "supply chain & logistics",
+  },
+  {
+    hoverImage: "/rectangle_5.svg",
+    vectorImage: "/enviroment.svg",
+    text: "environmental impact solutions ",
+  },
+  {
+    hoverImage: "/rectangle_6.svg",
+    vectorImage: "/healthcare.svg",
+    text: "healthcare",
+  },
+  {
+    hoverImage: "/rectangle_7.svg",
+    vectorImage: "/defence.svg",
+    text: "defence systems",
+  },
+  {
+    hoverImage: "/rectangle_8.svg",
+    vectorImage: "/disaster.svg",
+    text: "disaster response",
+  },
+  {
+    hoverImage: "/rectangle_9.svg",
+    vectorImage: "/open_innovation.svg",
+    text: "open innovation",
+  },
+  {
+    hoverImage: "/rectangle_10.svg",
+    vectorImage: "/cybersecurity.svg",
+    text: "cybersecurity",
+  },
+];
+
 const Themes: React.FC = () => {
-  const imageSets = [
+  // For a 4x3 grid, we need 12 slots. First two are empty, then themes.
+  const gridSize = 12;
+  const gridThemes = [
     null,
     null,
-    ["/rectangle-6667481-2.svg", "/fintech.svg", "FINTECH"],
-    ["/rectangle_2.svg", "/edtech.svg", "edtech"],
-    ["/rectangle_3.svg", "/blockchian.svg", "blockchain for good"],
-    ["/rectangle_4.svg", "/supplychain.svg", "supply chain & logistics"],
-    ["/rectangle_5.svg", "/enviroment.svg", "environmental impact solutions "],
-    ["/rectangle_6.svg", "/healthcare.svg", "healthcare"],
-    ["/rectangle_7.svg", "/defence.svg", "defence systems"],
-    ["/rectangle_8.svg", "/disaster.svg", "disaster response"],
-    ["/rectangle_9.svg", "/open_innovation.svg", "open innovation"],
-    ["/rectangle_10.svg", "/cybersecurity.svg", "cybersecurity"],
+    ...themesData,
+    ...Array(Math.max(0, gridSize - 2 - themesData.length)).fill(null),
   ];
 
   return (
@@ -347,13 +394,13 @@ const Themes: React.FC = () => {
           {/* Grid tiles */}
           <div className="flex flex-1 items-start justify-start">
             <div className="static z-[2] ml-[-236px] grid grid-cols-4 grid-rows-3 gap-[34px]">
-              {imageSets.map((set, idx) =>
-                set ? (
+              {gridThemes.map((theme, idx) =>
+                theme ? (
                   <Box
                     key={idx}
-                    hoverImage={set[0]}
-                    vectorImage={set[1]}
-                    text={set[2]}
+                    hoverImage={theme.hoverImage}
+                    vectorImage={theme.vectorImage}
+                    text={theme.text}
                   />
                 ) : (
                   <div key={idx} />
