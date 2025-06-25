@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "node .husky/install.mjs"
+    "prepare": "cd .. && husky frontend/.husky"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
