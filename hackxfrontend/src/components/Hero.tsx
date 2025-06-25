@@ -61,23 +61,21 @@ interface FeaturesLogo {
 }
 
 const FeatureLogos: FeaturesLogo[] = [
- 
   { src: "sdg1.svg", alt: "SDG 1" },
-  
-  { src: "sdg2.svg", alt: "SDG 2"},
-  { src: "sdg3.svg", alt: "SDG 3"},
-  { src: "sdg4.svg", alt: "SDG 4"},
+
+  { src: "sdg2.svg", alt: "SDG 2" },
+  { src: "sdg3.svg", alt: "SDG 3" },
+  { src: "sdg4.svg", alt: "SDG 4" },
   { src: "sdg5.svg", alt: "SDG 5" },
   { src: "sdg6.svg", alt: "SDG 6" },
-   { src: "sdg7.svg", alt: "SDG 7" },
-  { src: "sdg8.svg", alt: "SDG 8",  },
-  { src: "sdg9.svg", alt: "SDG 9",  },
+  { src: "sdg7.svg", alt: "SDG 7" },
+  { src: "sdg8.svg", alt: "SDG 8" },
+  { src: "sdg9.svg", alt: "SDG 9" },
 ];
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-black  items-center overflow-hidden">
-
-{/* <div className="fixed inset-0 w-full h-full pointer-events-none z-10">
+    <section className="relative min-h-screen items-center overflow-hidden bg-black">
+      {/* <div className="fixed inset-0 w-full h-full pointer-events-none z-10">
         <Image
           src="/x2.png" 
           alt="Background decoration"
@@ -86,29 +84,28 @@ const HeroSection = () => {
           className="w-full h-full object-contain opacity-50"
         />
       </div> */}
-      
+
       <div>
         <Image
           src="/HeroSection/Ellipse1.svg"
           alt="Gradient"
           width={1800}
           height={850}
-          className="z-5 absolute "
+          className="absolute z-5"
         />
       </div>
       <div className="">
-  <Image
-    src="/HeroSection/X.svg"
-    alt="HackxIcon"
-    width={895}
-    height={1000}
-    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-overlay z-10"
-  />
-</div>
-
+        <Image
+          src="/HeroSection/X.svg"
+          alt="HackxIcon"
+          width={895}
+          height={1000}
+          className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-overlay"
+        />
+      </div>
 
       {/* Navigation */}
-      <Navbar/>
+      <Navbar />
       {/* <nav className="relative  z-15 flex justify-between items-center px-8 ">
         <Image
           src="/HeroSection/logo.svg"
@@ -133,21 +130,21 @@ const HeroSection = () => {
       </nav> */}
 
       {/* Main Content */}
-      <div className="relative mt-10 z-10 flex flex-col items-center justify-center min-h-[80vh] px-8 text-center">
+      <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
         {/* Subtitle */}
-        <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-3 rounded-full text-lg font-semibold uppercase tracking-tight text-white">
-            DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
-          </button>
+        <button className="rounded-full border-2 border-white bg-transparent px-5 py-3 text-lg font-semibold tracking-tight text-white uppercase transition-all duration-300 hover:bg-white/10">
+          DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
+        </button>
         <Image
           src="/HeroSection/presents.svg"
           alt="Join Now "
           width={120}
           height={30}
-          className="mt-8   "
+          className="mt-8"
         />
 
         {/* Main Title */}
-        <div className="py-0 flex flex-col items-center justify-center text-center gap-0">
+        <div className="flex flex-col items-center justify-center gap-0 py-0 text-center">
           <Image
             src="/HeroSection/hackx.svg"
             alt="Join Now "
@@ -165,7 +162,7 @@ const HeroSection = () => {
         </div>
 
         {/* Features */}
-        <div className="flex space-x-4 mb-12">
+        <div className="mb-12 flex space-x-4">
           {FeatureLogos.map((logo, index) => (
             <div key={index} className="p-4">
               <Image
@@ -179,7 +176,7 @@ const HeroSection = () => {
         </div>
 
         {/* Stats */}
-        <div className="flex flex-col mt-15 items-center justify-center gap-2 md:gap-16 mb-12">
+        <div className="mt-15 mb-12 flex flex-col items-center justify-center gap-2 md:gap-16">
           <Image
             src="/HeroSection/stats.svg"
             alt="stats "
@@ -195,7 +192,7 @@ const HeroSection = () => {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col mt-15 mb-15 sm:flex-row gap-4">
+        <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
           <Image
             src="/HeroSection/join.svg"
             alt="Join Now "

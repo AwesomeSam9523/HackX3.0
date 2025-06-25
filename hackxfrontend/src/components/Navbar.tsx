@@ -1,14 +1,12 @@
-
-
 import React from "react";
 import Image from "next/image";
 import RegisterButton from "@/components/RegisterButton";
 
 const Navbar: React.FC = () => {
   return (
-    <div className="relative w-full h-32 z-50">
+    <div className="relative z-50 h-32 w-full">
       {/* Navbar content */}
-      <div className="flex items-center justify-between px-8 h-full">
+      <div className="flex h-full items-center justify-between px-8">
         {/* Logo section */}
         <div className="flex items-center">
           <Image
@@ -23,7 +21,7 @@ const Navbar: React.FC = () => {
 
         {/* Register button */}
         <div>
-          <RegisterButton/>
+          <RegisterButton />
         </div>
       </div>
     </div>

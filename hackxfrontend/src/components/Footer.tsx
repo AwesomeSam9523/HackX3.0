@@ -4,58 +4,57 @@ import Image from "next/image";
 import RegisterButton from "./RegisterButton";
 const Footer: React.FC = () => {
   return (
-    <div className="min-h-screen z-20 bg-black text-white relative overflow-hidden"
-    >
-    <div
-  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-[2000px] h-[1000px] z-0"
-  style={{
-    background: 'radial-gradient(ellipse at center, #57E3FF 0%, #020D85 100%)',
-    opacity: 0.4,
-    borderRadius: '50%',
-    filter: 'blur(40px)',
-  }}
-/>
+    <div className="relative z-20 min-h-screen overflow-hidden bg-black text-white">
+      <div
+        className="absolute bottom-0 left-1/2 z-0 h-[1000px] w-[2000px] -translate-x-1/2 translate-y-1/2 transform"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, #57E3FF 0%, #020D85 100%)",
+          opacity: 0.4,
+          borderRadius: "50%",
+          filter: "blur(40px)",
+        }}
+      />
 
       {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
-
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center">
         {/* Header Badge */}
         <div className="mb-12">
           <div className="relative px-4 py-4">
             {/* Top Left Corner */}
-            <div className="absolute top-0 left-0 w-6 h-6">
-              <div className="absolute top-0 left-0 w-1 h-4 bg-white"></div>
-              <div className="absolute top-0 left-0 w-4 h-1 bg-white"></div>
+            <div className="absolute top-0 left-0 h-6 w-6">
+              <div className="absolute top-0 left-0 h-4 w-1 bg-white"></div>
+              <div className="absolute top-0 left-0 h-1 w-4 bg-white"></div>
             </div>
 
             {/* Top Right Corner */}
-            <div className="absolute top-0 right-0 w-6 h-6">
-              <div className="absolute top-0 right-0 w-1 h-4 bg-white"></div>
-              <div className="absolute top-0 right-0 w-4 h-1 bg-white"></div>
+            <div className="absolute top-0 right-0 h-6 w-6">
+              <div className="absolute top-0 right-0 h-4 w-1 bg-white"></div>
+              <div className="absolute top-0 right-0 h-1 w-4 bg-white"></div>
             </div>
 
             {/* Bottom Left Corner */}
-            <div className="absolute bottom-0 left-0 w-6 h-6">
-              <div className="absolute bottom-0 left-0 w-1 h-4 bg-white"></div>
-              <div className="absolute bottom-0 left-0 w-4 h-1 bg-white"></div>
+            <div className="absolute bottom-0 left-0 h-6 w-6">
+              <div className="absolute bottom-0 left-0 h-4 w-1 bg-white"></div>
+              <div className="absolute bottom-0 left-0 h-1 w-4 bg-white"></div>
             </div>
 
             {/* Bottom Right Corner */}
-            <div className="absolute bottom-0 right-0 w-6 h-6">
-              <div className="absolute bottom-0 right-0 w-1 h-4 bg-white"></div>
-              <div className="absolute bottom-0 right-0 w-4 h-1 bg-white"></div>
+            <div className="absolute right-0 bottom-0 h-6 w-6">
+              <div className="absolute right-0 bottom-0 h-4 w-1 bg-white"></div>
+              <div className="absolute right-0 bottom-0 h-1 w-4 bg-white"></div>
             </div>
 
-            <span className="text-4xl font-bold tracking-tighter uppercase text-white  w-full">
+            <span className="w-full text-4xl font-bold tracking-tighter text-white uppercase">
               THIS IS YOUR CALL
             </span>
           </div>
         </div>
 
         {/* Main Headline */}
-        <div className="text-center max-w-full mb-16">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl uppercase leading-tighter tracking-tighter font-extrabold">
-            <span className="block  ">LET&apos;S IGNITE INNOVATION</span>
+        <div className="mb-16 max-w-full text-center">
+          <h1 className="leading-tighter text-6xl font-extrabold tracking-tighter uppercase md:text-7xl lg:text-8xl">
+            <span className="block">LET&apos;S IGNITE INNOVATION</span>
             <span className="block">IN THE WORLD OF TECHNOLOGY</span>
             <span className="block">ONE PROJECT A TIME</span>
           </h1>
@@ -63,58 +62,51 @@ const Footer: React.FC = () => {
 
         {/* CTA Button */}
         <div className="mb-8">
-          <RegisterButton/>
+          <RegisterButton />
         </div>
 
         {/* Copyright - Positioned in center */}
         <div className="z-10">
-          <p className="text-lg  text-[#429df2] font-bold tracking-tighter">
+          <p className="text-lg font-bold tracking-tighter text-[#429df2]">
             ©2025 MUJHACKX, ALL RIGHTS RESERVED.
           </p>
         </div>
       </div>
 
-<div className="z-10 relative w-full">
-  {/* Spline Image */}
-  <Image
-    src="/ChipsSpline4.svg"
-    alt="HackxIcon"
-    width={1200}
-    height={1800}
-    className="mx-auto "
-  />
-  {/* Social Icons - Centered on top of image */}
-  <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
-  
- 
-    <div className="bg-black/40 backdrop-blur-sm px-6 py-4 rounded-full flex items-center gap-4 w-fit">
-      <a
-        href="#"
-        className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full"
-      >
-        <Target size={24} className="text-white" />
-      </a>
-      <a
-        href="#"
-        className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full"
-      >
-        <Instagram size={24} className="text-white" />
-      </a>
-      <a
-        href="#"
-        className="w-12 h-12 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer rounded-full"
-      >
-        <Linkedin size={24} className="text-white" />
-      </a>
-    </div>
-    
-  </div>
-
-  
-</div>
-
-       
+      <div className="relative z-10 w-full">
+        {/* Spline Image */}
+        <Image
+          src="/ChipsSpline4.svg"
+          alt="HackxIcon"
+          width={1200}
+          height={1800}
+          className="mx-auto"
+        />
+        {/* Social Icons - Centered on top of image */}
+        <div className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 transform">
+          <div className="flex w-fit items-center gap-4 rounded-full bg-black/40 px-6 py-4 backdrop-blur-sm">
+            <a
+              href="#"
+              className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
+            >
+              <Target size={24} className="text-white" />
+            </a>
+            <a
+              href="#"
+              className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
+            >
+              <Instagram size={24} className="text-white" />
+            </a>
+            <a
+              href="#"
+              className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
+            >
+              <Linkedin size={24} className="text-white" />
+            </a>
+          </div>
+        </div>
       </div>
+    </div>
   );
 };
 

@@ -14,23 +14,65 @@ interface SidebarItem {
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const sidebarItems: SidebarItem[] = [
-    { icon: "house.svg", alt: "Home", label: "Home", path: "/", darkIcon: "homeDark.svg" },
-    { icon: "information.svg", alt: "Info", label: "About Us", path: "/information", darkIcon: "informationDark.svg" },
-    { icon: "calender.svg", alt: "Calendar", label: "Timeline", path: "/calender", darkIcon: "calender.svg" },
-    { icon: "ambassador.svg", alt: "Favorites", label: "Ambassador", path: "/ambassador", darkIcon: "ambassador.svg" },
-    { icon: "team.svg", alt: "Team", label: "Team", path: "/team", darkIcon: "teamDark.svg" },
-    { icon: "gallery.svg", alt: "Gallery", label: "Gallery", path: "/gallery", darkIcon: "gallery.svg" },
-    { icon: "faq.svg", alt: "FAQ", label: "FAQs", path: "/faq", darkIcon: "faqDark.svg" },
+    {
+      icon: "house.svg",
+      alt: "Home",
+      label: "Home",
+      path: "/",
+      darkIcon: "homeDark.svg",
+    },
+    {
+      icon: "information.svg",
+      alt: "Info",
+      label: "About Us",
+      path: "/information",
+      darkIcon: "informationDark.svg",
+    },
+    {
+      icon: "calender.svg",
+      alt: "Calendar",
+      label: "Timeline",
+      path: "/calender",
+      darkIcon: "calender.svg",
+    },
+    {
+      icon: "ambassador.svg",
+      alt: "Favorites",
+      label: "Ambassador",
+      path: "/ambassador",
+      darkIcon: "ambassador.svg",
+    },
+    {
+      icon: "team.svg",
+      alt: "Team",
+      label: "Team",
+      path: "/team",
+      darkIcon: "teamDark.svg",
+    },
+    {
+      icon: "gallery.svg",
+      alt: "Gallery",
+      label: "Gallery",
+      path: "/gallery",
+      darkIcon: "gallery.svg",
+    },
+    {
+      icon: "faq.svg",
+      alt: "FAQ",
+      label: "FAQs",
+      path: "/faq",
+      darkIcon: "faqDark.svg",
+    },
   ];
 
   return (
-    <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-50">
+    <div className="fixed top-1/2 left-6 z-50 -translate-y-1/2 transform">
       {/* Sidebar Container with Blur Background */}
-      <div 
-        className={`backdrop-blur-md shadow-2xl border border-white/10 transition-all duration-500 ease-in-out ${
-          isHovered ? 'px-6 py-8 rounded-2xl' : 'px-4 py-8 rounded-full'
+      <div
+        className={`border border-white/10 shadow-2xl backdrop-blur-md transition-all duration-500 ease-in-out ${
+          isHovered ? "rounded-2xl px-6 py-8" : "rounded-full px-4 py-8"
         }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -41,11 +83,11 @@ const Sidebar: React.FC = () => {
             return (
               <div
                 key={item.path}
-                className={`flex items-center transition-all duration-300 cursor-pointer rounded-full ${
+                className={`flex cursor-pointer items-center rounded-full transition-all duration-300 ${
                   isActive
-                    ? "bg-white/90 backdrop-blur-sm shadow-lg"
+                    ? "bg-white/90 shadow-lg backdrop-blur-sm"
                     : "hover:bg-white/10"
-                } ${isHovered ? 'px-4 py-3' : 'p-4'}`}
+                } ${isHovered ? "px-4 py-3" : "p-4"}`}
                 onClick={() => {
                   window.location.href = item.path;
                 }}
@@ -56,23 +98,25 @@ const Sidebar: React.FC = () => {
                     alt={item.alt}
                     width={32}
                     height={32}
-                    className={`w-8 h-8 ${
+                    className={`h-8 w-8 ${
                       isActive
                         ? "filter-none" // Active: original color (uses darkIcon)
-                        : "filter invert brightness-0" // Inactive: pure white (uses normal icon)
+                        : "brightness-0 invert filter" // Inactive: pure white (uses normal icon)
                     }`}
                   />
                 </div>
-                
+
                 {/* Label that slides in/out */}
-                <div 
+                <div
                   className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isHovered ? 'max-w-xs opacity-100 ml-4' : 'max-w-0 opacity-0 ml-0'
+                    isHovered
+                      ? "ml-4 max-w-xs opacity-100"
+                      : "ml-0 max-w-0 opacity-0"
                   }`}
                 >
-                  <span 
-                    className={`whitespace-nowrap text-lg font-medium ${
-                      isActive ? 'text-gray-800' : 'text-white'
+                  <span
+                    className={`text-lg font-medium whitespace-nowrap ${
+                      isActive ? "text-gray-800" : "text-white"
                     }`}
                   >
                     {item.label}
