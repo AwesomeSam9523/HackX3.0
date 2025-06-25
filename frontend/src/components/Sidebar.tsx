@@ -72,7 +72,7 @@ const Sidebar: React.FC = () => {
       {/* Sidebar Container with Blur Background */}
       <div
         className={`border border-white/10 shadow-2xl backdrop-blur-md transition-all duration-500 ease-in-out ${
-          isHovered ? "rounded-2xl px-6 py-8" : "rounded-full px-4 py-8"
+          isHovered ? "rounded-full px-6 py-8" : "rounded-full px-4 py-8"
         }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
