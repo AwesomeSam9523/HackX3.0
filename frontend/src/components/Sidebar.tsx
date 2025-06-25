@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
       icon: "information.svg",
       alt: "Info",
       label: "About Us",
-      path: "/information",
+      path: "/about",
       darkIcon: "informationDark.svg",
     },
     {
