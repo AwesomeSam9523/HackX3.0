@@ -1,69 +1,57 @@
-"use client";
+import FAQClient from "@/components/FAQClient";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+
+const faqs = [
+  {
+    id: 1,
+    question: "HOW DO I REGISTER ?",
+    answer:
+      "To register for the hackathon, click the 'REGISTER NOW' button and fill out the registration form with your details.",
+  },
+  {
+    id: 2,
+    question: "HOW MANY TEAM MEMBERS DO I NEED?",
+    answer:
+      "Teams can consist of 2-4 members. You can also participate as an individual and we'll help you find teammates.",
+  },
+  {
+    id: 3,
+    question: "HOW MUCH IS THE PARTICIPATION FEES?",
+    answer:
+      "The participation fee varies by category. Please check the registration page for current pricing details.",
+  },
+  {
+    id: 4,
+    question: "WILL THE HACKATHON BE IN PERSON OR ONLINE ?",
+    answer:
+      "This hackathon will be conducted in a hybrid format - both in-person and online participation options are available.",
+  },
+  {
+    id: 5,
+    question: "WHAT IS THE VENUE FOR MUJHACKX 2.0 ?",
+    answer:
+      "The in-person venue details will be shared with registered participants via email closer to the event date.",
+  },
+  {
+    id: 6,
+    question: "WHAT ARE THE PREREQUISITES TO PARTICIPATE IN THIS HACKATHON ?",
+    answer:
+      "Basic programming knowledge and enthusiasm to learn and build innovative solutions. All skill levels are welcome!",
+  },
+  {
+    id: 7,
+    question:
+      "CAN MY FRIEND JOIN OUR TEAM AFTER WE HAVE ALREADY SUBMITTED THE APPLICATION FOR REVIEW ?",
+    answer:
+      "Yes, team modifications are possible before the final deadline. Please contact our support team for assistance with team changes.",
+  },
+];
 
 const Page = () => {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-
-  useEffect(() => {
-    document.body.style.background = "transparent";
-
-    return () => {
-      document.body.style.background = "";
-    };
-  }, []);
-
-  const faqs = [
-    {
-      id: 1,
-      question: "HOW DO I REGISTER ?",
-      answer:
-        "To register for the hackathon, click the 'REGISTER NOW' button and fill out the registration form with your details.",
-    },
-    {
-      id: 2,
-      question: "HOW MANY TEAM MEMBERS DO I NEED?",
-      answer:
-        "Teams can consist of 2-4 members. You can also participate as an individual and we'll help you find teammates.",
-    },
-    {
-      id: 3,
-      question: "HOW MUCH IS THE PARTICIPATION FEES?",
-      answer:
-        "The participation fee varies by category. Please check the registration page for current pricing details.",
-    },
-    {
-      id: 4,
-      question: "WILL THE HACKATHON BE IN PERSON OR ONLINE ?",
-      answer:
-        "This hackathon will be conducted in a hybrid format - both in-person and online participation options are available.",
-    },
-    {
-      id: 5,
-      question: "WHAT IS THE VENUE FOR MUJHACKX 2.0 ?",
-      answer:
-        "The in-person venue details will be shared with registered participants via email closer to the event date.",
-    },
-    {
-      id: 6,
-      question: "WHAT ARE THE PREREQUISITES TO PARTICIPATE IN THIS HACKATHON ?",
-      answer:
-        "Basic programming knowledge and enthusiasm to learn and build innovative solutions. All skill levels are welcome!",
-    },
-    {
-      id: 7,
-      question:
-        "CAN MY FRIEND JOIN OUR TEAM AFTER WE HAVE ALREADY SUBMITTED THE APPLICATION FOR REVIEW ?",
-      answer:
-        "Yes, team modifications are possible before the final deadline. Please contact our support team for assistance with team changes.",
-    },
-  ];
-
   return (
     <>
       {/* Fixed background image */}
-
       <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-blue-500 via-black to-black">
         <div className="pointer-events-none fixed inset-0 z-0 h-full w-full">
           <Image
@@ -72,6 +60,7 @@ const Page = () => {
             width={384}
             height={384}
             className="h-full w-full object-contain opacity-50"
+            priority
           />
         </div>
         <div className="relative z-10 container mx-auto px-4">
@@ -94,47 +83,7 @@ const Page = () => {
             </p>
           </div>
 
-          {/* FAQ Items */}
-          <div className="mx-auto max-w-4xl space-y-1">
-            {faqs.map((faq) => (
-              <div
-                key={faq.id}
-                className="overflow-hidden rounded-4xl border border-white/10 bg-black/30 backdrop-blur-sm transition-all duration-300 hover:bg-black/40"
-                onMouseEnter={() => setOpenFAQ(faq.id)}
-                onMouseLeave={() => setOpenFAQ(null)}
-              >
-                <div className="flex w-full cursor-pointer items-center justify-center px-8 py-6 text-left text-white transition-colors duration-200 hover:bg-white/5">
-                  <span className="text-center text-lg font-bold tracking-tight">
-                    {faq.question}
-                  </span>
-                  <div
-                    className={`transition-all duration-500 ease-in-out ${
-                      openFAQ === faq.id ? "rotate-45" : "rotate-0"
-                    }`}
-                  ></div>
-                </div>
-
-                <div
-                  className={`overflow-hidden transition-all duration-700 ease-in-out ${
-                    openFAQ === faq.id
-                      ? "max-h-60 translate-y-0 opacity-100"
-                      : "max-h-0 -translate-y-2 opacity-0"
-                  }`}
-                  style={{
-                    transitionProperty: "max-height, opacity, transform",
-                  }}
-                >
-                  <div className="px-8 pb-6">
-                    <div className="border-t border-white/10 pt-4">
-                      <p className="transform text-center leading-relaxed text-white/80 transition-transform duration-300">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FAQClient faqs={faqs} />
 
           {/* Footer text */}
           <div className="mt-16 pb-16 text-center">
