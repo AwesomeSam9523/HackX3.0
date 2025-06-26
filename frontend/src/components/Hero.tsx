@@ -157,7 +157,7 @@ const HeroSection = () => {
             height={320}
             className="mt-2"
           />
-          <div className="font-roboto text-4xl font-extrabold">MUJ'S LARGEST HACKATHON</div>
+          <div className="font-roboto text-4xl font-extrabold">MUJ&apos;s LARGEST HACKATHON</div>
         </div>
 
         {/* Features */}
