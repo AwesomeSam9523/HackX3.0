@@ -155,7 +155,7 @@ const PastSponsors = () => {
 
   return (
     <section className="flex min-h-screen w-full flex-col items-center bg-gradient-to-br from-black to-gray-900 px-4 py-16">
-      <h2 className="mb-8 text-center text-4xl font-extrabold text-white md:text-5xl">
+      <h2 className="font-kinetikaUltra mb-8 text-center text-4xl font-extrabold text-white md:text-5xl">
         OUR PAST PARTNERS
       </h2>
       {/* Option selector: pill for desktop, stacked for mobile */}

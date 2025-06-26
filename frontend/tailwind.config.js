@@ -15,6 +15,11 @@ module.exports = {
       fontFamily: {
         nortune: ['"NortuneBlack"', '"Inter"', "sans-serif"],
         sans: ['"Inter"', "sans-serif"],
+        avgardn: ["'Avgardn'", "sans-serif"],
+        avgardd: ["'Avgardd'", "sans-serif"],
+        avgarddo: ["'Avgarddo'", "sans-serif"],
+        kinetikaLight: ["'KinetikaLight'", "sans-serif"],
+        kinetikaUltra: ["'KinetikaUltra'", "sans-serif"],
       },
     },
   },

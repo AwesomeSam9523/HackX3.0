@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
@@ -12,6 +13,16 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const kinetikaLight = localFont({
+  src: "../../public/fonts/KinetikaLight.otf",
+  variable: "--font-kinetika-light",
+});
+
+const kinetikaUltra = localFont({
+  src: "../../public/fonts/KinetikaUltra.otf",
+  variable: "--font-kinetika-ultra",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${kinetikaLight.variable} ${kinetikaUltra.variable} antialiased`}
       >
         <Sidebar />
         {children}

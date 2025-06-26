@@ -8,6 +8,39 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: Avgardn;
+  src: url("/fonts/AVGARDN_2.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Avgardd;
+  src: url("/fonts/AVGARDD_2.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Avgarddo;
+  src: url("/fonts/AVGARDDO_2.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: KinetikaLight;
+  src: url("/fonts/KinetikaLight.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: KinetikaUltra;
+  src: url("/fonts/KinetikaUltra.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Set up color variables */
 :root {
   --background: #ffffff;
