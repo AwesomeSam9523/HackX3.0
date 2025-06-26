@@ -2,7 +2,39 @@ import React from "react";
 
 const CommunityPartners: React.FC = () => {
   return (
-    <section className="relative overflow-hidden bg-black px-8 py-16 text-white">
+    <section className="relative overflow-hidden bg-black px-8 pt-0 pb-16 text-white">
+      {/* Ellipse background in top left corner */}
+      {/* <div
+        style={{
+          width: '728px',
+          height: '728px',
+          position: 'absolute',
+          top: '-120px',
+          left: '-150px',
+          filter: 'blur(100px)',
+          borderRadius: '50%',
+          background: 'radial-gradient(50% 50% at 50% 50%, #1a252f, #111)',
+          zIndex: 0,
+          opacity: 0.8,
+        }}
+        aria-hidden="true"
+      ></div> */}
+      {/* Bottom right ellipse background */}
+      {/* <div
+        style={{
+          width: '728px',
+          height: '728px',
+          position: 'absolute',
+          bottom: '-120px',
+          right: '-150px',
+          filter: 'blur(100px)',
+          borderRadius: '50%',
+          background: 'radial-gradient(50% 50% at 50% 50%, #1a252f, #111)',
+          zIndex: 0,
+          opacity: 0.8,
+        }}
+        aria-hidden="true"
+      ></div> */}
       {/* Corner decorative elements */}
       {/* Top left corner (desktop) */}
       <div

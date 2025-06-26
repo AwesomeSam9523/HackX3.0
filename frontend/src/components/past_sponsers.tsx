@@ -1,84 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-
-const sponsorsData = [
-  {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
-    type: "HIRING PARTNER",
-  },
-  {
-    logo: "/scribbr.svg",
-    name: "Scribbr",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/languagetool.svg",
-    name: "LanguageTool",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
-    type: "HIRING PARTNER",
-  },
-  {
-    logo: "/scribbr.svg",
-    name: "Scribbr",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/languagetool.svg",
-    name: "LanguageTool",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
-    type: "HIRING PARTNER",
-  },
-  {
-    logo: "/scribbr.svg",
-    name: "Scribbr",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  // Repeat or add more as needed
-];
-
-const inKindSponsorsData = [
-  {
-    logo: "/scribbr.svg",
-    name: "Scribbr",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/languagetool.svg",
-    name: "LanguageTool",
-    type: "LANGUAGE PARTNER",
-  },
-  // Add more as needed
-];
+import { sponsorsData, inKindSponsorsData } from "../../data/sponsorsData";
 
 const tabOptions = [
   { key: "sponsors", label: "SPONSORS" },
@@ -154,7 +77,28 @@ const PastSponsors = () => {
   const rows = [data.slice(0, 4), data.slice(4, 8), data.slice(8, 11)];
 
   return (
-    <section className="flex min-h-screen w-full flex-col items-center bg-gradient-to-br from-black to-gray-900 px-4 py-16">
+    <section
+      className="flex min-h-screen w-full flex-col items-center bg-black px-4 py-16"
+      style={{ position: "relative", zIndex: 0 }}
+    >
+      {/* Blurred ellipse background, right center, always behind content */}
+      <div
+        style={{
+          width: "700px", // set a fixed width to avoid overflow
+          maxWidth: "100vw", // never exceed viewport width
+          height: "864px",
+          position: "absolute",
+          right: 0, // align to the right edge
+          top: "50%",
+          transform: "translateY(-50%)",
+          filter: "blur(211.1px)",
+          borderRadius: "50%",
+          background: "radial-gradient(50% 50% at 50% 50%, #1a252f, #111)",
+          zIndex: -1,
+          pointerEvents: "none",
+        }}
+        aria-hidden="true"
+      />
       <h2 className="font-kinetikaUltra mb-8 text-center text-4xl font-extrabold text-white md:text-5xl">
         OUR PAST PARTNERS
       </h2>
@@ -248,7 +192,7 @@ const PastSponsors = () => {
         {/* Mobile: horizontal scroll */}
         <div
           ref={mobileScrollRef}
-          className="flex gap-4 overflow-x-auto pb-2 md:hidden"
+          className="mt-8 flex gap-4 overflow-x-auto pb-2 md:hidden"
         >
           {data.map((sponsor, idx) => (
             <div
