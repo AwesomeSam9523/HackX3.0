@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import HackathonStats from "./Statistics";
+import JoinHackathonBanner from "./JoinHackathon";
 // import { Link } from "lucide-react";
 
 // // Placeholder SVG components - replace these with your own SVG elements
@@ -189,12 +190,7 @@ HACKATHON STATS
 
         {/* CTA Buttons */}
         <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
-          <Image
-            src="/HeroSection/join.svg"
-            alt="Join Now "
-            width={1000}
-            height={185}
-          />
+         <JoinHackathonBanner/>
         </div>
       </div>
     </section>
