@@ -46,42 +46,17 @@ const Timer: React.FC = () => {
   return (
     <div className="mx-auto my-8 max-w-[1100px] px-2 font-sans text-white sm:px-4">
       <div className="mb-6 flex w-full justify-center sm:mb-11">
-        <div className="relative mb-2 inline-block text-center text-[18px] leading-[0.99] font-bold tracking-[-0.02em] uppercase sm:text-[20.34px]">
+        <div className="relative mb-2 inline-block text-center text-[18px] leading-[0.99] font-bold tracking-[-0.02em] uppercase sm:text-[20.34px] px-6 py-4">
           {/* The transform: translate values below have been changed from 6px to 12px */}
-          <span
-            className="absolute top-0 left-0 h-[6px] w-[6px] border-2 border-white"
-            style={{
-              borderRight: "none",
-              borderBottom: "none",
-              transform: "translate(-12px, -12px)",
-            }}
-          ></span>
-          <span
-            className="absolute top-0 right-0 h-[6px] w-[6px] border-2 border-white"
-            style={{
-              borderLeft: "none",
-              borderBottom: "none",
-              transform: "translate(12px, -12px)",
-            }}
-          ></span>
-          <span
-            className="absolute bottom-0 left-0 h-[6px] w-[6px] border-2 border-white"
-            style={{
-              borderRight: "none",
-              borderTop: "none",
-              transform: "translate(-12px, 12px)",
-            }}
-          ></span>
-          <span
-            className="absolute right-0 bottom-0 h-[6px] w-[6px] border-2 border-white"
-            style={{
-              borderLeft: "none",
-              borderTop: "none",
-              transform: "translate(12px, 12px)",
-            }}
-          ></span>
-          Time Left to Begin
-        </div>
+         
+  {/* Corner Borders */}
+  <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
+  <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
+  <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-r-0" />
+  <span className="absolute bottom-0 right-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-l-0" />
+  
+  TIME LEFT TO BEGIN
+</div>
       </div>
       <div className="label mx-auto mb-8 h-[40px] w-full max-w-[350px] sm:mb-10 sm:h-[51px] sm:max-w-[594px]">
         <div

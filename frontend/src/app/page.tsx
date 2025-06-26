@@ -3,6 +3,7 @@ import Themes from "@/components/Themes";
 import Sponsors from "@/components/Sponsors";
 import HeroSection from "@/components/Hero";
 
+
 export default function Home() {
   return (
     <main className="relative overflow-x-clip">

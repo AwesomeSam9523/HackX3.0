@@ -1,6 +1,7 @@
-import React from "react";
+ import React from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import HackathonStats from "./Statistics";
 // import { Link } from "lucide-react";
 
 // // Placeholder SVG components - replace these with your own SVG elements
@@ -132,16 +133,19 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
         {/* Subtitle */}
-        <button className="rounded-full border-2 border-white bg-transparent px-5 py-3 text-lg font-semibold tracking-tight text-white uppercase transition-all duration-300 hover:bg-white/10">
+        <button className="rounded-full border-2 border-white bg-transparent px-5 py-3 text-lg font-semibold tracking-tight text-white uppercase transition-all duration-300 mt-4 ">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
         </button>
-        <Image
-          src="/HeroSection/presents.svg"
-          alt="Join Now "
-          width={120}
-          height={30}
-          className="mt-8"
-        />
+        <div className="relative inline-block px-6 py-3 font-roboto mt-6 text-white">
+  {/* Corner Borders */}
+  <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
+  <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
+  <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-r-0" />
+  <span className="absolute bottom-0 right-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-l-0" />
+  
+  PRESENTS
+</div>
+
 
         {/* Main Title */}
         <div className="flex flex-col items-center justify-center gap-0 py-0 text-center">
@@ -152,13 +156,7 @@ const HeroSection = () => {
             height={320}
             className="mt-2"
           />
-          <Image
-            src="/HeroSection/largest.svg"
-            alt="Join Now "
-            width={650}
-            height={40}
-            className="py-0"
-          />
+          <div className="font-roboto text-4xl font-extrabold">MUJ'S LARGEST HACKATHON</div>
         </div>
 
         {/* Features */}
@@ -177,18 +175,16 @@ const HeroSection = () => {
 
         {/* Stats */}
         <div className="mt-15 mb-12 flex flex-col items-center justify-center gap-2 md:gap-16">
-          <Image
-            src="/HeroSection/stats.svg"
-            alt="stats "
-            width={200}
-            height={50}
-          />
-          <Image
-            src="/HeroSection/numbers.svg"
-            alt="Numbers "
-            width={1000}
-            height={185}
-          />
+          <div className="relative inline-block px-6 py-3 font-roboto mt-6 text-white">
+  {/* Corner Borders */}
+  <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
+  <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
+  <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-r-0" />
+  <span className="absolute bottom-0 right-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-l-0" />
+  
+HACKATHON STATS
+</div>
+          <HackathonStats/>
         </div>
 
         {/* CTA Buttons */}
