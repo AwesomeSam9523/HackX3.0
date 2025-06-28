@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed top-1/2 left-6 z-50 -translate-y-1/2 transform">
+    <div className="fixed top-1/2 left-6 z-50 -translate-y-1/2 transform hidden md:block">
       {/* Sidebar Container with Blur Background */}
       <div
         className={`border border-white/10 shadow-2xl backdrop-blur-md transition-all duration-500 ease-in-out ${
@@ -100,8 +100,8 @@ const Sidebar: React.FC = () => {
                     height={32}
                     className={`h-8 w-8 ${
                       isActive
-                        ? "filter-none" // Active: original color (uses darkIcon)
-                        : "brightness-0 invert filter" // Inactive: pure white (uses normal icon)
+                        ? "filter-none" 
+                        : "brightness-0 invert filter" 
                     }`}
                   />
                 </div>
