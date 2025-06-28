@@ -149,16 +149,13 @@ const HeroSection = () => {
 
 
         {/* Main Title */}
-        <div className="flex flex-col items-center justify-center gap-0 py-0 text-center">
-          <Image
-            src="/HeroSection/hackx.svg"
-            alt="Join Now "
-            width={850}
-            height={320}
-            className="mt-2"
-          />
-          <div className="font-roboto text-4xl font-extrabold">MUJ&apos;s LARGEST HACKATHON</div>
-        </div>
+        <div className="flex mt-4 flex-col items-center justify-center text-center leading-none">
+  <h1 className="text-[240px] font-nortune leading-none m-0 p-0">HACKX3.0</h1>
+  <div className="font-kinetikaUltra text-4xl font-extrabold m-0 p-0 leading-none -mt-4">
+    MUJ&apos;S LARGEST HACKATHON
+  </div>
+</div>
+
 
         {/* Features */}
         <div className="mb-12 flex space-x-4">

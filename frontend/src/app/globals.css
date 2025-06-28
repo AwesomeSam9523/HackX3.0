@@ -7,7 +7,9 @@
   font-weight: normal;
   font-style: normal;
 }
-
+.font-nortune {
+  font-family: "NortuneBlack", "Inter", sans-serif;
+}
 @font-face {
   font-family: Avgardn;
   src: url("/fonts/AVGARDN_2.TTF") format("truetype");
@@ -40,7 +42,25 @@
   font-weight: normal;
   font-style: normal;
 }
+.font-avgardn {
+    font-family: "Avgardn", sans-serif;
+  }
 
+  .font-avgardd {
+    font-family: "Avgardd", sans-serif;
+  }
+
+  .font-avgarddo {
+    font-family: "Avgarddo", sans-serif;
+  }
+
+  .font-kinetikaLight {
+    font-family: "KinetikaLight", sans-serif;
+  }
+
+  .font-kinetikaUltra {
+    font-family: "KinetikaUltra", sans-serif;
+  }
 /* Set up color variables */
 :root {
   --background: #ffffff;
