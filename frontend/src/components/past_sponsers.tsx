@@ -28,10 +28,19 @@ const PastSponsors = () => {
     const idx = tabOptions.findIndex((tab) => tab.key === activeTab);
     const btn = tabRefs.current[idx];
     if (btn) {
-      setPillStyle({
-        width: btn.offsetWidth,
-        left: btn.offsetLeft,
-      });
+      const padding = 12;
+      if (idx === 0) {
+        // First tab: align pill to parent's left edge
+        setPillStyle({
+          width: btn.offsetWidth + btn.offsetLeft,
+          left: 7,
+        });
+      } else {
+        setPillStyle({
+          width: btn.offsetWidth,
+          left: btn.offsetLeft - padding,
+        });
+      }
       // Scroll tab into view on mobile
       if (window.innerWidth < 768 && tabScrollRef.current) {
         const scrollContainer = tabScrollRef.current;
@@ -141,7 +150,7 @@ const PastSponsors = () => {
         {tabOptions.map((tab) => (
           <button
             key={tab.key}
-            className={`w-full rounded-xl border-2 py-4 font-['AvantGarde-Bk-BT',sans-serif] text-lg transition-all duration-200 focus:outline-none ${
+            className={`w-full rounded-xl border-2 py-4 font-['AvantGarde-Bk-BT',sans-serif] text-2xl font-extrabold transition-all duration-200 focus:outline-none ${
               activeTab === tab.key
                 ? "border-[#fffff1] bg-[#fffff1] text-[#222]"
                 : "border-[#fffff1] bg-transparent text-[#fffff1]"
