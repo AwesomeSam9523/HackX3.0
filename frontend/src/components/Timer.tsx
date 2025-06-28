@@ -44,23 +44,21 @@ const Timer: React.FC = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-8 max-w-[1100px] px-2 font-sans text-white sm:px-4">
+    <div className="mx-auto my-8 max-w-[1100px] px-2 font-['Kinetika',sans-serif] text-white sm:px-4">
       <div className="mb-6 flex w-full justify-center sm:mb-11">
-        <div className="relative mb-2 inline-block text-center text-[18px] leading-[0.99] font-bold tracking-[-0.02em] uppercase sm:text-[20.34px] px-6 py-4">
+        <div className="relative mb-2 inline-block px-6 py-4 text-center font-['AvantGarde-Bk-BT',sans-serif] text-[18px] leading-[0.99] font-bold tracking-[-0.02em] uppercase sm:text-[20.34px]">
           {/* The transform: translate values below have been changed from 6px to 12px */}
-         
-  {/* Corner Borders */}
-  <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
-  <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
-  <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-r-0" />
-  <span className="absolute bottom-0 right-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-l-0" />
-  
-  TIME LEFT TO BEGIN
-</div>
+          {/* Corner Borders */}
+          <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-r-0 border-b-0 border-white" />
+          <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-b-0 border-l-0 border-white" />
+          <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-t-0 border-r-0 border-white" />
+          <span className="absolute right-0 bottom-0 h-[10px] w-[10px] border-3 border-t-0 border-l-0 border-white" />
+          TIME LEFT TO BEGIN
+        </div>
       </div>
       <div className="label mx-auto mb-8 h-[40px] w-full max-w-[350px] sm:mb-10 sm:h-[51px] sm:max-w-[594px]">
         <div
-          className="text-wrapper relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-bold tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
+          className="text-wrapper relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-black tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
           suppressHydrationWarning={true}
         >
           {isClient

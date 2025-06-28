@@ -70,7 +70,7 @@ const CommunityPartners: React.FC = () => {
 
       <div className="mx-auto max-w-6xl text-center">
         {/* Main heading */}
-        <h1 className="mb-16 text-5xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
+        <h1 className="mb-16 font-['Kinetika',sans-serif] text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
           COMMUNITY PARTNERS
         </h1>
         {/* Empty area for future partner logos */}

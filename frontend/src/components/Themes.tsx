@@ -319,7 +319,7 @@ const Themes: React.FC = () => {
 
               {/* OUR THEMES text */}
               <div className="relative h-[178px] w-[463px]">
-                <span className="absolute top-0 left-0 z-20 h-full w-full font-[Kinetika-Ultra,Helvetica] text-[111.2px] leading-[88.9px] font-[400] font-bold tracking-[0] text-[#fffef0]">
+                <span className="absolute top-0 left-0 z-20 h-full w-full font-['Kinetika-Ultra',sans-serif] text-[111.2px] leading-[88.9px] font-[400] font-bold tracking-[0] text-[#fffef0]">
                   OUR
                   <br />
                   THEMES
