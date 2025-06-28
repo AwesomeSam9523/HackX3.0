@@ -134,10 +134,10 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
         {/* Subtitle */}
-        <button className="rounded-full border-2 border-white bg-transparent px-5 py-3 text-lg font-semibold tracking-tight text-white uppercase transition-all duration-300 mt-4 ">
+        <button className="rounded-full font-avgardn border-2 border-white bg-transparent px-10 py-3 text-lg tracking-tight text-white uppercase transition-all duration-300 mt-4 ">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
         </button>
-        <div className="relative inline-block px-6 py-3 font-roboto mt-6 text-white">
+        <div className="relative font-avgardn inline-block px-4 py-2 mt-6 text-white">
   {/* Corner Borders */}
   <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
   <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
@@ -150,7 +150,7 @@ const HeroSection = () => {
 
         {/* Main Title */}
         <div className="flex mt-4 flex-col items-center justify-center text-center leading-none">
-  <h1 className="text-[240px] font-nortune leading-none m-0 p-0">HACKX3.0</h1>
+  <h1 className="text-[240px] font-nortune leading-none m-0 p-0">HACKX<span className="text-8xl">3.0</span></h1>
   <div className="font-kinetikaUltra text-4xl font-extrabold m-0 p-0 leading-none -mt-4">
     MUJ&apos;S LARGEST HACKATHON
   </div>
@@ -158,7 +158,7 @@ const HeroSection = () => {
 
 
         {/* Features */}
-        <div className="mb-12 flex space-x-4">
+        <div className="mt-20 flex space-x-4">
           {FeatureLogos.map((logo, index) => (
             <div key={index} className="p-4">
               <Image
@@ -172,8 +172,8 @@ const HeroSection = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-15 mb-12 flex flex-col items-center justify-center gap-2 md:gap-16">
-          <div className="relative inline-block px-6 py-3 font-roboto mt-6 text-white">
+        <div className="mt-15 mb-10 flex flex-col items-center justify-center gap-2 ">
+          <div className="relative inline-block px-6 py-3 font-avgardn mt-6 text-white">
   {/* Corner Borders */}
   <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
   <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
