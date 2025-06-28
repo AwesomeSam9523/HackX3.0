@@ -74,7 +74,7 @@ const Page = () => {
               </span>
             </div>
 
-            <h1 className="mb-6 text-7xl font-extrabold tracking-tighter text-white md:text-8xl lg:text-9xl">
+            <h1 className="mb-6 text-7xl font-extrabold tracking-wide font-nortune text-white md:text-8xl lg:text-9xl">
               FAQs
             </h1>
 

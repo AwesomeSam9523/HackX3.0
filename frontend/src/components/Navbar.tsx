@@ -3,14 +3,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import RegisterButton from "@/components/RegisterButton";
+import { SidebarItem } from "../../types/team";
 
-interface SidebarItem {
-  icon: string;
-  alt: string;
-  label: string;
-  path: string;
-  darkIcon: string;
-}
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -80,7 +74,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       <div className="relative z-50 h-32 w-full">
-        <div className="flex h-full justify-between px-2 sm:px-8">
+        <div className="flex h-full justify-between px-4 sm:px-8">
           <div className="flex w-sm items-center">
             <Image
               src="hackxlogo.svg"
@@ -130,7 +124,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Hamburger Menu Overlay */}
+     
       {isMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           {/* Backdrop */}
@@ -139,7 +133,7 @@ const Navbar: React.FC = () => {
             onClick={() => setIsMenuOpen(false)}
           />
 
-          {/* Menu Content */}
+          
           <div className="absolute top-20 right-4 w-80 max-w-[calc(100vw-2rem)] mt-4">
             <div className="rounded-3xl border border-white/10 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
               <nav className="space-y-4">
@@ -180,7 +174,7 @@ const Navbar: React.FC = () => {
                 })}
               </nav>
 
-              {/* Register Button in Menu */}
+             
               <div className="mt-6 border-t border-white/10 pt-4">
                 <RegisterButton />
               </div>

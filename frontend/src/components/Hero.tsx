@@ -77,7 +77,7 @@ const FeatureLogos: FeaturesLogo[] = [
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen items-center overflow-hidden bg-black">
-      {/* <div className="fixed inset-0 w-full h-full pointer-events-none z-10">
+      <div className="fixed inset-0 w-full h-full pointer-events-none z-10">
         <Image
           src="/x2.png" 
           alt="Background decoration"
@@ -85,7 +85,7 @@ const HeroSection = () => {
           height={384}
           className="w-full h-full object-contain opacity-50"
         />
-      </div> */}
+      </div>
 
       <div>
         <Image

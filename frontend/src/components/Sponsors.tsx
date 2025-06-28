@@ -22,10 +22,10 @@ const Sponsors: React.FC = () => {
   return (
     <section className="relative overflow-hidden px-8 py-16 text-white">
       {/* Corner decorative elements */}
-      <div className="absolute top-8 left-8 h-8 w-8 border-t-4 border-l-4 border-white"></div>
-      <div className="absolute top-8 right-8 h-8 w-8 border-t-4 border-r-4 border-white"></div>
-      <div className="absolute bottom-8 left-8 h-8 w-8 border-b-4 border-l-4 border-white"></div>
-      <div className="absolute right-8 bottom-8 h-8 w-8 border-r-4 border-b-4 border-white"></div>
+      <div className="absolute top-8 left-8 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"></div>
+      <div className="absolute top-8 right-8 hidden h-8 w-8 border-t-4 border-r-4 border-white md:block"></div>
+      <div className="absolute bottom-8 left-8 hidden h-8 w-8 border-b-4 border-l-4 border-white md:block"></div>
+      <div className="absolute right-8 bottom-8 hidden h-8 w-8 border-r-4 border-b-4 border-white md:block"></div>
 
       <div className="mx-auto max-w-6xl text-center">
         {/* Sponsors header with corner decorations */}
@@ -36,11 +36,11 @@ const Sponsors: React.FC = () => {
           <div className="absolute bottom-0 left-0 h-4 w-4 border-b-4 border-l-4 border-white"></div>
           <div className="absolute right-0 bottom-0 h-4 w-4 border-r-4 border-b-4 border-white"></div>
 
-          <h2 className="text-4xl font-bold tracking-tighter">SPONSORS</h2>
+          <h2 className="text-2xl md:text-4xl font-bold tracking-tighter">SPONSORS</h2>
         </div>
 
         {/* Main heading */}
-        <h1 className="leading-tighter mb-16 text-5xl font-bold md:text-6xl lg:text-8xl">
+        <h1 className="leading-wide mb-16 text-5xl font-bold md:text-6xl lg:text-9xl text-center font-nortune">
           <span className="block">POWERED BY</span>
           <span className="block">WORLD CLASS TEAMS</span>
           <span className="block">AND COMPANIES!</span>

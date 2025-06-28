@@ -17,3 +17,12 @@ export interface TeamCategory {
   name: string;
   subcategories: TeamSubcategory[];
 }
+
+
+export interface SidebarItem {
+  icon: string;
+  alt: string;
+  label: string;
+  path: string;
+  darkIcon: string;
+}
