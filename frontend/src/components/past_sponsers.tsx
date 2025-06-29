@@ -108,7 +108,7 @@ const PastSponsors = () => {
         }}
         aria-hidden="true"
       />
-      <h2 className="mb-8 text-center font-['Kinetika',sans-serif] text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+      <h2 className="mb-8 text-center font-kinetikaUltra text-5xl leading-[79.9%] font-black text-white md:text-6xl">
         OUR PAST PARTNERS
       </h2>
       {/* Option selector: pill for desktop, stacked for mobile */}
