@@ -146,18 +146,10 @@ const HeroSection = () => {
         </div>
 
         {/* Stats */}
-        <div className="mt-15 mb-10 flex flex-col items-center justify-center gap-2 ">
-          <div className="relative inline-block px-6 py-3 font-avgardn mt-6 text-white">
-  {/* Corner Borders */}
-  <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
-  <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
-  <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-r-0" />
-  <span className="absolute bottom-0 right-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-l-0" />
-  
-HACKATHON STATS
-</div>
+        
+         
           <HackathonStats/>
-        </div>
+        
 
         {/* CTA Buttons */}
         <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
