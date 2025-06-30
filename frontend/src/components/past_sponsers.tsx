@@ -108,7 +108,7 @@ const PastSponsors = () => {
         }}
         aria-hidden="true"
       />
-      <h2 className="mb-8 text-center font-kinetikaUltra text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+      <h2 className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
         OUR PAST PARTNERS
       </h2>
       {/* Option selector: pill for desktop, stacked for mobile */}
@@ -170,7 +170,7 @@ const PastSponsors = () => {
               {row.map((sponsor, idx) => (
                 <div
                   key={idx}
-                  className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg"
+                  className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg transition-transform duration-300 hover:scale-105"
                 >
                   {/* Logo container - centers the logo */}
                   <div className="flex flex-grow items-center justify-center p-4">
@@ -206,7 +206,7 @@ const PastSponsors = () => {
           {data.map((sponsor, idx) => (
             <div
               key={idx}
-              className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg"
+              className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg transition-transform duration-300 hover:scale-105"
             >
               <div className="flex flex-grow items-center justify-center p-4">
                 <Image
