@@ -18,8 +18,8 @@ export default function Home() {
           pointerEvents: "none",
           width: "90%",
           height: "90vh",
-          // top: "-12.5%",
-          top: "-450px",
+          top: "-12.5%",
+          // top: "-450px",
           left: "2%",
         }}
       >
