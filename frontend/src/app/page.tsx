@@ -3,6 +3,7 @@ import Themes from "@/components/Themes";
 import Sponsors from "@/components/Sponsors";
 import HeroSection from "@/components/Hero";
 import Background from "@/components/Background";
+import Spline from '@splinetool/react-spline/next';
 
 
 export default function Home() {
@@ -11,16 +12,19 @@ export default function Home() {
       <Background/>
       <HeroSection />
       <div className="h-12" />
+      {/* Replaced existing ellipseDiv with Spline component */}
       <div
-        className="ellipseDiv absolute top-0 left-[72%] z-0 -translate-x-1/2"
+        className="absolute inset-0 z-5"
         style={{
-          width: "100%",
-          height: "864px",
-          filter: "blur(211.1px)",
-          borderRadius: "50%",
-          background: "radial-gradient(50% 50% at 50% 50%, #1a252f, #111)",
+          pointerEvents: "none", // Ensures the Spline canvas doesn't capture mouse events
+          width: "90%", // Made smaller
+          height: "90vh", // Made smaller
+          top: '-63vh', // Adjusted top to keep it visible while smaller
+          left: '5%', // Center horizontally if width is 80%
         }}
-      />
+      >
+        <Spline scene="https://prod.spline.design/WWQ6UfiQ4jUgZ9zx/scene.splinecode" />
+      </div>
       <div className="h-8" />
       <Timer />
       <div className="h-8" />
