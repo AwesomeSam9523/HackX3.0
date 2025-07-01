@@ -1,3 +1,4 @@
+// HackX3.0/frontend/src/components/Navbar.tsx
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
@@ -74,6 +75,9 @@ const Navbar: React.FC = () => {
   return (
     <>
       <div className="relative z-50 h-32 w-full">
+        {/* This div previously held the Spline iframe. It is now removed as Spline is in Hero.tsx */}
+        {/* The Navbar's content will now overlay the Spline in Hero.tsx */}
+
         <div className="flex h-full justify-between px-4 sm:px-8">
           <div className="flex w-sm items-center">
             <Image
@@ -87,15 +91,8 @@ const Navbar: React.FC = () => {
           </div>
 
           <div className="relative hidden aspect-square w-full max-w-[900px] sm:block">
-            <Image
-              src="/HeroSection/ChipsSpline1.svg"
-              alt="HackX 3.0 Logo"
-              width={0}
-              height={0}
-              sizes="(max-width: 768px) 80vw, 600px"
-              className="h-auto w-full"
-              priority
-            />
+            {/* This div previously held the static image or Spline embed.
+                It's now empty as Spline is moved to Hero.tsx for banner background. */}
           </div>
 
           {/* Register button for larger screens */}
@@ -124,7 +121,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-     
+
       {isMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           {/* Backdrop */}
@@ -133,7 +130,7 @@ const Navbar: React.FC = () => {
             onClick={() => setIsMenuOpen(false)}
           />
 
-          
+
           <div className="absolute top-20 right-4 w-80 max-w-[calc(100vw-2rem)] mt-4">
             <div className="rounded-3xl border border-white/10 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
               <nav className="space-y-4">
@@ -174,7 +171,7 @@ const Navbar: React.FC = () => {
                 })}
               </nav>
 
-             
+
               <div className="mt-6 border-t border-white/10 pt-4">
                 <RegisterButton />
               </div>
