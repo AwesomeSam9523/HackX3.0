@@ -13,12 +13,13 @@ export default function Home() {
       <div className="h-12" />
       {/* Replaced existing ellipseDiv with Spline component */}
       <div
-        className="absolute inset-0 z-5 rotate-180"
+        className="absolute inset-0 z-5 rotate-180 rotate-y-[160] transform-3d"
         style={{
           pointerEvents: "none",
           width: "90%",
           height: "90vh",
-          top: "-56vh",
+          // top: "-12.5%",
+          top: "-450px",
           left: "2%",
         }}
       >
