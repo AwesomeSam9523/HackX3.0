@@ -18,8 +18,8 @@ export default function Home() {
           pointerEvents: "none",
           width: "90%",
           height: "90vh",
-          top: "-60vh",
-          left: "5%",
+          top: "-56vh",
+          left: "2%",
         }}
       >
         <Spline scene="https://prod.spline.design/WWQ6UfiQ4jUgZ9zx/scene.splinecode" />
