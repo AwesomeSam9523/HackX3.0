@@ -1,28 +1,27 @@
 "use client";
 import { useState, useEffect } from "react";
 
-
 interface FAQ {
   id: number;
   question: string;
   answer: string;
 }
 
-
 interface FAQClientProps {
   faqs: FAQ[];
+  disableBodyBgChange?: boolean;
 }
 
-const FAQClient: React.FC<FAQClientProps> = ({ faqs }) => {
+const FAQClient: React.FC<FAQClientProps> = ({ faqs, disableBodyBgChange }) => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   useEffect(() => {
+    if (disableBodyBgChange) return;
     document.body.style.background = "transparent";
-
     return () => {
       document.body.style.background = "";
     };
-  }, []);
+  }, [disableBodyBgChange]);
 
   return (
     <div className="mx-auto max-w-4xl space-y-1">
