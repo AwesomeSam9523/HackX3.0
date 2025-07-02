@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimation, useMotionValue } from "framer-motion";
 import Navbar from "@/components/Navbar";
@@ -24,7 +25,15 @@ const FeatureLogos: FeaturesLogo[] = [
 ];
 
 // Framer Motion Circular Text Component
-const CircularText = ({
+interface CircularTextProps {
+  text: string;
+  spinDuration?: number;
+  onHover?: "slowDown" | "speedUp" | "pause" | "goBonkers";
+  className?: string;
+  radius?: number;
+}
+
+const CircularText: React.FC<CircularTextProps> = ({
   text,
   spinDuration = 20,
   onHover = "speedUp",
@@ -34,22 +43,24 @@ const CircularText = ({
   const letters = Array.from(text);
   const controls = useAnimation();
   const rotation = useMotionValue(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     const start = rotation.get();
     controls.start({
       rotate: start + 360,
       transition: {
-        rotate: {
-          from: start,
-          to: start + 360,
-          ease: "linear",
-          duration: spinDuration,
-          repeat: Infinity,
-        },
+        ease: "linear",
+        duration: spinDuration,
+        repeat: Infinity,
       },
     });
-  }, [spinDuration, controls, rotation]);
+  }, [mounted, spinDuration, controls, rotation]);
 
   const handleHoverStart = () => {
     const start = rotation.get();
@@ -76,13 +87,9 @@ const CircularText = ({
     controls.start({
       rotate: start + 360,
       transition: {
-        rotate: {
-          from: start,
-          to: start + 360,
-          ease: "linear",
-          duration: duration,
-          repeat: Infinity,
-        },
+        ease: "linear",
+        duration: duration,
+        repeat: Infinity,
       },
     });
   };
@@ -92,16 +99,14 @@ const CircularText = ({
     controls.start({
       rotate: start + 360,
       transition: {
-        rotate: {
-          from: start,
-          to: start + 360,
-          ease: "linear",
-          duration: spinDuration,
-          repeat: Infinity,
-        },
+        ease: "linear",
+        duration: spinDuration,
+        repeat: Infinity,
       },
     });
   };
+
+  if (!mounted) return null;
 
   return (
     <motion.div
@@ -121,12 +126,15 @@ const CircularText = ({
         return (
           <span
             key={i}
-            className="absolute text-[8px] font-[850] font-extrabold tracking-wide text-white uppercase"
+            className="font-kinetika absolute text-[8px] tracking-wide text-white uppercase"
             style={{
               left: "50%",
               top: "50%",
-              transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rotationDeg + 90}deg)`,
+              transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${
+                rotationDeg + 90
+              }deg)`,
               transformOrigin: "center",
+              fontWeight: 850,
             }}
           >
             {letter}
@@ -137,7 +145,7 @@ const CircularText = ({
   );
 };
 
-// Updated Prize Pool Circle Component
+// Prize Pool Circle
 const PrizePoolCircle = () => {
   const text = "TOTAL PRIZE POOL • TOTAL PRIZE POOL • ";
 
@@ -145,10 +153,10 @@ const PrizePoolCircle = () => {
     <div
       className="relative"
       style={{
-        width: "106.5246353149414px",
-        height: "108.4100341796875px",
+        width: "106.52px",
+        height: "108.41px",
         background: "#D9D9D91A",
-        backdropFilter: "blur(51.37692642211914px)",
+        backdropFilter: "blur(51.37px)",
         borderRadius: "50%",
         position: "absolute",
         zIndex: 20,
@@ -163,7 +171,6 @@ const PrizePoolCircle = () => {
         onHover="speedUp"
         radius={45}
       />
-      {/* Center text */}
       <div className="absolute inset-0 flex items-center justify-center">
         <span
           className="text-2xl font-bold text-white"
