@@ -68,16 +68,25 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed top-1/2 left-6 z-50 -translate-y-1/2 transform hidden md:block">
-      {/* Sidebar Container with Blur Background */}
+    <div
+      className="fixed z-50 hidden md:block"
+      style={{
+        top: "50%",
+        left: "24px",
+        transform: "translateY(-50%)",
+        width: "auto",
+        height: "auto",
+        borderRadius: isHovered ? "16px" : "9999px",
+        transition: "all 0.5s ease-in-out",
+      }}
+    >
       <div
-        className={`border border-white/10 shadow-2xl backdrop-blur-md transition-all duration-500 ease-in-out ${
-          isHovered ? "rounded-full px-6 py-8" : "rounded-full px-4 py-8"
-        }`}
+        className={`h-full w-full rounded-[42px] border border-white/10 bg-white/10 px-4 py-8 shadow-2xl transition-all duration-500 ease-in-out`}
+        style={{ backdropFilter: "blur(59.900001525878906px)" }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <nav className="flex flex-col space-y-8">
+        <nav className="flex flex-col space-y-6">
           {sidebarItems.map((item) => {
             const isActive = pathname === item.path;
             return (
@@ -87,7 +96,7 @@ const Sidebar: React.FC = () => {
                   isActive
                     ? "bg-white/90 shadow-lg backdrop-blur-sm"
                     : "hover:bg-white/10"
-                } ${isHovered ? "px-4 py-3" : "p-4"}`}
+                } p-4`}
                 onClick={() => {
                   window.location.href = item.path;
                 }}
@@ -99,18 +108,15 @@ const Sidebar: React.FC = () => {
                     width={32}
                     height={32}
                     className={`h-8 w-8 ${
-                      isActive
-                        ? "filter-none" 
-                        : "brightness-0 invert filter" 
+                      isActive ? "filter-none" : "brightness-0 invert filter"
                     }`}
                   />
                 </div>
 
-                {/* Label that slides in/out */}
                 <div
                   className={`overflow-hidden transition-all duration-500 ease-in-out ${
                     isHovered
-                      ? "ml-4 max-w-xs opacity-100"
+                      ? "ml-4 w-auto opacity-100"
                       : "ml-0 max-w-0 opacity-0"
                   }`}
                 >

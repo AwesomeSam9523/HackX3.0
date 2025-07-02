@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
+import ClientOnly from "@/components/ClientOnly";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +41,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${kinetikaLight.variable} ${kinetikaUltra.variable} antialiased`}
       >
-        <Sidebar />
+        <ClientOnly>
+          <Sidebar />
+        </ClientOnly>
         {children}
         <Footer />
       </body>
