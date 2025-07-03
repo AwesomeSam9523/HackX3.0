@@ -1,12 +1,11 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { teamData } from "../../../data/teamData";
 import CategoryTabs from "@/components/CategoryTabs";
 
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
 import TeamSubcategoryComponent from "@/components/TeamSubcategory";
-
+import XComponent from "@/components/XComponent";
 
 const TeamPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("FACULTY");
@@ -19,16 +18,7 @@ const TeamPage: React.FC = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-blue-500 via-black to-black">
       <Navbar />
-      <div className="pointer-events-none fixed inset-0 z-0 h-full w-full">
-        <Image
-          src="/x2.png"
-          alt="Background decoration"
-          width={384}
-          height={384}
-          className="h-full w-full object-contain opacity-50"
-          priority
-        />
-      </div>
+      <XComponent />
 
       <div className="relative z-10 container mx-auto px-4 py-12">
         <div className="absolute top-8 left-8 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"></div>
