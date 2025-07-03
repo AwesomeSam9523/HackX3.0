@@ -168,10 +168,7 @@ const WhyApplySection = () => {
                 {step.number}
               </span>
             </div>
-            <div
-              className="font-avgardd leading-tight font-bold text-white uppercase"
-              style={{ fontSize: "24px" }}
-            >
+            <div className="font-avgardd text-[1.5rem] leading-tight font-bold text-white uppercase">
               {step.text}
             </div>
           </div>
