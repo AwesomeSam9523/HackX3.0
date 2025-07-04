@@ -108,10 +108,10 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
         {/* Subtitle */}
-        <button className="rounded-full font-avgardn border-2 border-white bg-transparent px-10 py-3 text-lg tracking-tight text-white uppercase transition-all duration-300 mt-4 ">
+        <button className="rounded-full font-avgardn border-2 border-white bg-transparent px-10 py-3 text-lg tracking-tight font-bold text-white uppercase transition-all duration-300 mt-4 ">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
         </button>
-        <div className="relative font-avgardn inline-block px-4 py-2 mt-6 text-white">
+        <div className="relative font-bold font-avgardn inline-block px-4 py-2 mt-6 text-white">
   {/* Corner Borders */}
   <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
   <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
