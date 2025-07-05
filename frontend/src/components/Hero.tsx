@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import HackathonStats from "./Statistics";
@@ -78,8 +78,6 @@ const FeatureLogos: FeaturesLogo[] = [
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen items-center overflow-hidden bg-black">
-     
-
       {/* Navigation */}
       <Navbar />
       {/* <nav className="relative  z-15 flex justify-between items-center px-8 ">
@@ -108,28 +106,27 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
         {/* Subtitle */}
-        <button className="rounded-full font-avgardn border-2 border-white bg-transparent px-10 py-3 text-lg tracking-tight font-bold text-white uppercase transition-all duration-300 mt-4 ">
+        <button className="font-avgardn mt-4 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg tracking-tight text-white uppercase transition-all duration-300">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
         </button>
-        <div className="relative font-bold font-avgardn inline-block px-4 py-2 mt-6 text-white">
-  {/* Corner Borders */}
-  <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-r-0" />
-  <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-white border-b-0 border-l-0" />
-  <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-r-0" />
-  <span className="absolute bottom-0 right-0 h-[10px] w-[10px] border-3 border-white border-t-0 border-l-0" />
-  
-  PRESENTS
-</div>
-
+        <div className="font-avgardn relative mt-6 inline-block px-4 py-2 text-white">
+          {/* Corner Borders */}
+          <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-r-0 border-b-0 border-white" />
+          <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-b-0 border-l-0 border-white" />
+          <span className="absolute bottom-0 left-0 h-[10px] w-[10px] border-3 border-t-0 border-r-0 border-white" />
+          <span className="absolute right-0 bottom-0 h-[10px] w-[10px] border-3 border-t-0 border-l-0 border-white" />
+          PRESENTS
+        </div>
 
         {/* Main Title */}
-        <div className="flex mt-4 flex-col items-center justify-center text-center leading-none">
-  <h1 className="text-[240px] font-nortune leading-none m-0 p-0">HACKX<span className="text-8xl">3.0</span></h1>
-  <div className="font-kinetikaUltra text-4xl font-extrabold m-0 p-0 leading-none -mt-4">
-    MUJ&apos;S LARGEST HACKATHON
-  </div>
-</div>
-
+        <div className="mt-4 flex flex-col items-center justify-center text-center leading-none">
+          <h1 className="font-nortune m-0 p-0 text-[240px] leading-none">
+            HACKX<span className="text-8xl">3.0</span>
+          </h1>
+          <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold">
+            MUJ&apos;S LARGEST HACKATHON
+          </div>
+        </div>
 
         {/* Features */}
         <div className="mt-20 flex space-x-4">
@@ -146,14 +143,12 @@ const HeroSection = () => {
         </div>
 
         {/* Stats */}
-        
-         
-          <HackathonStats/>
-        
+
+        <HackathonStats />
 
         {/* CTA Buttons */}
         <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
-         <JoinHackathonBanner/>
+          <JoinHackathonBanner />
         </div>
       </div>
     </section>

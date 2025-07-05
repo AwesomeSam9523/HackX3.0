@@ -1,4 +1,3 @@
-
 export interface TeamMember {
   id: string;
   name: string;
@@ -17,7 +16,6 @@ export interface TeamCategory {
   name: string;
   subcategories: TeamSubcategory[];
 }
-
 
 export interface SidebarItem {
   icon: string;

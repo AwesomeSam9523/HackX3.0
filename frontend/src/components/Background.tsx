@@ -1,17 +1,10 @@
- import React from "react";
- import Image from "next/image";
-const Background =()=>{
-return (
+import React from "react";
+import Image from "next/image";
+import XComponent from "./XComponent";
+const Background = () => {
+  return (
     <div>
-<div className="fixed inset-0 w-full h-full pointer-events-none z-10">
-        <Image
-          src="/x2.png" 
-          alt="Background decoration"
-          width={384}
-          height={384}
-          className="w-full h-full object-contain opacity-50"
-        />
-      </div>
+      <XComponent />
 
       <div>
         <Image
@@ -31,7 +24,7 @@ return (
           className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-overlay"
         />
       </div>
-      </div>
-);
-      };
-      export default Background;
+    </div>
+  );
+};
+export default Background;
