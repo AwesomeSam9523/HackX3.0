@@ -8,10 +8,10 @@ import HackathonStats from "@/components/Statistics";
 export default function About() {
   return (
     <main>
-      <Background/>
-      <Navbar/>
-<WhyUsSection/>
-<HackathonStats/>
+      <Background />
+      <Navbar />
+      <WhyUsSection />
+      <HackathonStats />
       <PastSponsors />
       <CommunityPartners />
     </main>

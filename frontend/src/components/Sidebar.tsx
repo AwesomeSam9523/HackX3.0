@@ -2,70 +2,11 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-
-interface SidebarItem {
-  icon: string;
-  alt: string;
-  label: string;
-  path: string;
-  darkIcon: string;
-}
+import { sidebarItems } from "../../data/sidebarData";
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const [isHovered, setIsHovered] = useState(false);
-
-  const sidebarItems: SidebarItem[] = [
-    {
-      icon: "house.svg",
-      alt: "Home",
-      label: "Home",
-      path: "/",
-      darkIcon: "homeDark.svg",
-    },
-    {
-      icon: "information.svg",
-      alt: "Info",
-      label: "About Us",
-      path: "/about",
-      darkIcon: "informationDark.svg",
-    },
-    {
-      icon: "calender.svg",
-      alt: "Calendar",
-      label: "Timeline",
-      path: "/calender",
-      darkIcon: "calender.svg",
-    },
-    {
-      icon: "ambassador.svg",
-      alt: "Favorites",
-      label: "Ambassador",
-      path: "/ambassador",
-      darkIcon: "ambassador.svg",
-    },
-    {
-      icon: "team.svg",
-      alt: "Team",
-      label: "Team",
-      path: "/team",
-      darkIcon: "teamDark.svg",
-    },
-    {
-      icon: "gallery.svg",
-      alt: "Gallery",
-      label: "Gallery",
-      path: "/gallery",
-      darkIcon: "gallery.svg",
-    },
-    {
-      icon: "faq.svg",
-      alt: "FAQ",
-      label: "FAQs",
-      path: "/faq",
-      darkIcon: "faqDark.svg",
-    },
-  ];
 
   return (
     <div

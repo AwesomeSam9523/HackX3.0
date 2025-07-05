@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import RegisterButton from "@/components/RegisterButton";
 import { SidebarItem } from "../../types/team";
 
-
 const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -121,7 +120,6 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-
       {isMenuOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
           {/* Backdrop */}
@@ -130,8 +128,7 @@ const Navbar: React.FC = () => {
             onClick={() => setIsMenuOpen(false)}
           />
 
-
-          <div className="absolute top-20 right-4 w-80 max-w-[calc(100vw-2rem)] mt-4">
+          <div className="absolute top-20 right-4 mt-4 w-80 max-w-[calc(100vw-2rem)]">
             <div className="rounded-3xl border border-white/10 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
               <nav className="space-y-4">
                 {sidebarItems.map((item) => {
@@ -170,7 +167,6 @@ const Navbar: React.FC = () => {
                   );
                 })}
               </nav>
-
 
               <div className="mt-6 border-t border-white/10 pt-4">
                 <RegisterButton />
