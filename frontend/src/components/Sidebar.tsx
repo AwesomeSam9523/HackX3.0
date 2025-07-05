@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { sidebarItems } from "../../data/sidebarData";
+
+import { SidebarItem } from "../../types/team";
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
