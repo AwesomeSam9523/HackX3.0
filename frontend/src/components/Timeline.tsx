@@ -41,9 +41,17 @@ const timelineData: TimelineItem[] = [
 
 const HackathonTimeline: React.FC = () => {
   return (
-    <div className="relative px-4 py-16 max-w-5xl mx-auto">
-      {/* Vertical Line */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[8px] h-full bg-cyan-400 shadow-[0_0_17px_rgba(0,221,255,1)] z-0" />
+    <div className="relative px-4 py-16 max-w-5xl mx-auto z-10">
+        <div className="flex flex-col items-center justify-center gap-5">
+        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+          WHY SHOULD YOU PARTICIPATE IN
+        </button>
+        <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+          MUJ HACKX 3.0?
+        </div>
+      </div>
+      {/* Blue VerticalLine */}
+      <div className="absolute  left-1/2 transform -translate-x-1/2 w-[8px] h-full bg-cyan-400 shadow-[0_0_17px_rgba(0,221,255,1)] z-10" />
 
       <div className="flex flex-col gap-15 relative z-10">
         {timelineData.map((item, index) => {
@@ -51,10 +59,10 @@ const HackathonTimeline: React.FC = () => {
 
           return (
             <div key={index} className="relative w-full flex flex-col items-center">
-              {/* Center Dot */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] z-20"></div>
+              {/* white Dot */}
+             <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] z-20"></div>
 
-              {/* Container for date/time + box */}
+              {/* Container for date/time and the box */}
               <div
                 className={`w-full md:w-1/2 ${
                   isLeft ? "md:ml-auto pl-20" : "md:mr-auto pr-20"
