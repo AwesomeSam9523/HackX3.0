@@ -39,7 +39,7 @@ const XComponent = () => {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed top-0 left-0 z-5 h-screen w-full">
+    <div className="pointer-events-none fixed top-0 left-0 z-2 h-screen w-full">
       <div ref={imageRef}>
         <Image
           src="/x2.png"

@@ -20,7 +20,7 @@ const Page = () => {
               </span>
             </div>
 
-            <h1 className="font-nortune mb-6 text-7xl font-extrabold tracking-wide text-white md:text-8xl lg:text-9xl">
+            <h1 className="font-nortune mb-6 text-7xl tracking-wide text-white md:text-8xl lg:text-9xl">
               FAQs
             </h1>
 

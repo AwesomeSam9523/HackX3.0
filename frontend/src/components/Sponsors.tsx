@@ -42,7 +42,7 @@ const Sponsors: React.FC = () => {
         </div>
 
         {/* Main heading */}
-        <h1 className="leading-wide font-nortune mb-16 text-center text-5xl font-bold md:text-6xl lg:text-9xl">
+        <h1 className="leading-wide font-nortune mb-16 text-center text-5xl md:text-6xl lg:text-9xl">
           <span className="block">POWERED BY</span>
           <span className="block">WORLD CLASS TEAMS</span>
           <span className="block">AND COMPANIES!</span>
