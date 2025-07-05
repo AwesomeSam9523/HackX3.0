@@ -1,157 +1,83 @@
-import React from 'react';
+"use client";
+import React from "react";
 
-interface TimelineItem {
+type TimelineItem = {
   date: string;
-  title: string;
-  subtitle?: string;
-  description: string[];
-  status: 'opening' | 'round' | 'closing';
-}
+  time: string;
+  points: string[];
+};
 
-interface TimelineProps {
-  items?: TimelineItem[];
-}
-
-const defaultItems: TimelineItem[] = [
+const timelineData: TimelineItem[] = [
   {
-    date: '31ST OCT (OPENING)',
-    title: '1ST ROUND - 31ST OCT',
-    subtitle: 'OPENING',
-    description: [
-      'Inauguration & Speech by dignitaries',
-      'Announcement of track of event',
-      'Report Submission Guidelines'
+    date: "31st Oct (Opening)",
+    time: "10:00AM - 11:30AM",
+    points: [
+      "Inauguration & Speech by dignitaries",
+      "Announcement of track of event",
+      "HackX Rules & Guidelines",
     ],
-    status: 'opening'
   },
   {
-    date: '31ST OCT (ROUND 1)',
-    title: '31ST OCT (ROUND 1)',
-    subtitle: '1ST ROUND - 31ST OCT',
-    description: [
-      'Report Round | General submission and checks for participant teams'
-    ],
-    status: 'round'
+    date: "31st Oct (Round 1)",
+    time: "12:00PM - 8:30PM",
+    points: ["HackX Round-1 begins", "Validation and checks for participant teams"],
   },
   {
-    date: '1ST NOV (ROUND 1 CONT\'D)',
-    title: '1ST NOV (ROUND 1 CONT\'D)',
-    subtitle: '1ST ROUND CONTINUED',
-    description: [
-      'Round 1 continues',
-      'Mentors check team progress'
-    ],
-    status: 'round'
+    date: "1st Nov (Round 1 Cont’d)",
+    time: "Till 4:00AM",
+    points: ["Round 1 continues", "Mentors check team progress"],
   },
   {
-    date: '1ST NOV (ROUND 2)',
-    title: '1ST NOV (ROUND 2)',
-    subtitle: '2ND ROUND - 1ST NOV',
-    description: [
-      'Presentation pitch for Round 2',
-      'Screening of teams',
-      'Final scoring of teams'
-    ],
-    status: 'round'
+    date: "1st Nov (Round 2)",
+    time: "2:00PM - 5:00PM",
+    points: ["Presentation pitch for Round 2 begins", "Final scoring of teams"],
   },
   {
-    date: '1ST NOV (CLOSING)',
-    title: '1ST NOV (CLOSING)',
-    subtitle: 'CLOSING CEREMONY',
-    description: [
-      'Result declaration',
-      'Closing ceremony & speeches',
-      'Award and prize distribution'
-    ],
-    status: 'closing'
-  }
+    date: "1st Nov (Closing)",
+    time: "6:00PM to 7:00PM",
+    points: ["Result declaration", "Closing ceremony & speeches", "Award distribution"],
+  },
 ];
 
-const HackathonTimeline: React.FC<TimelineProps> = ({ items = defaultItems }) => {
+const HackathonTimeline: React.FC = () => {
   return (
-    <div className="min-h-screen p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="relative">
-          {/* Main vertical line - centered */}
-         <div
-  className="absolute left-1/2 transform -translate-x-0.5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400 via-blue-400 to-cyan-400"
-  style={{
-    border: '5.8px solid rgba(0, 221, 255, 1)',
-    boxShadow: '0px 0px 17.01px 0px rgba(0, 221, 255, 1)'
-  }}
-></div>
+    <div className="relative px-4 py-16 max-w-5xl mx-auto">
+      {/* Vertical Line */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[8px] h-full bg-cyan-400 shadow-[0_0_17px_rgba(0,221,255,1)] z-0" />
 
-          
-          {items.map((item, index) => {
-            const isLeft = index % 2 === 0;
-            
-            return (
-              <div key={index} className="relative mb-16 last:mb-0">
-                {/* Timeline dot - centered */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-cyan-400 rounded-full border-4 border-slate-900 shadow-lg shadow-cyan-400/50 z-10"></div>
-                
-                {/* Connecting line from box to center dot */}
-                <div className={`absolute top-6 ${
-                  isLeft 
-                    ? 'right-0 w-20 h-0.5 bg-gradient-to-r from-cyan-400 to-cyan-300' 
-                    : 'left-0 w-20 h-0.5 bg-gradient-to-l from-cyan-400 to-cyan-300 transform -translate-x-full'
-                }`}></div>
-                
-                {/* Content container - alternating sides */}
-                <div className={`w-5/12 ${isLeft ? 'pr-16' : 'ml-auto pl-16'}`}>
-                  <div className="bg-slate-800/60 backdrop-blur-sm rounded-lg border border-slate-700/50 p-6 shadow-xl relative">
-                    
-                    {/* Date badge */}
-                    <div className="inline-block bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wider">
-                      {item.date}
-                    </div>
-                    
-                    {/* Title */}
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {item.title}
-                    </h3>
-                    
-                    {/* Subtitle */}
-                    {item.subtitle && (
-                      <p className="text-cyan-300 text-sm font-medium mb-4 uppercase tracking-wide">
-                        {item.subtitle}
-                      </p>
-                    )}
-                    
-                    {/* Description list */}
-                    <ul className="space-y-2">
-                      {item.description.map((desc, descIndex) => (
-                        <li key={descIndex} className="flex items-start text-gray-300">
-                          <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                          <span className="text-sm leading-relaxed">{desc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    {/* Status indicator */}
-                    <div className="mt-4 flex items-center">
-                      <div className={`w-3 h-3 rounded-full mr-2 ${
-                        item.status === 'opening' 
-                          ? 'bg-green-400 shadow-green-400/50' 
-                          : item.status === 'round' 
-                          ? 'bg-blue-400 shadow-blue-400/50' 
-                          : 'bg-purple-400 shadow-purple-400/50'
-                      } shadow-lg`}></div>
-                      <span className="text-xs text-gray-400 uppercase font-medium">
-                        {item.status}
-                      </span>
-                    </div>
-                  </div>
+      <div className="flex flex-col gap-15 relative z-10">
+        {timelineData.map((item, index) => {
+          const isLeft = index % 2 !== 0;
+
+          return (
+            <div key={index} className="relative w-full flex flex-col items-center">
+              {/* Center Dot */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] z-20"></div>
+
+              {/* Container for date/time + box */}
+              <div
+                className={`w-full md:w-1/2 ${
+                  isLeft ? "md:ml-auto pl-20" : "md:mr-auto pr-20"
+                }`}
+              >
+               {/* Date & Time ABOVE the box, aligned to box side */}
+  <div className={`mb-2 ${isLeft ? "text-right" : "text-left"}`}>
+    <div className="text-white text-xl font-bold">{item.date}</div>
+    <div className="text-gray-600 font-bold text-xl">{item.time}</div>
+  </div>
+
+                {/* Content Box */}
+                <div className="bg-white/15 bg-opacity-60 backdrop-blur-md px-8 py-10 rounded-xl shadow-lg font-avgardn text-white ">
+                  <ul className="list-disc pl-5 space-y-2 text-xl">
+                    {item.points.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
                 </div>
-                
-                {/* Connecting line segment */}
-                {index < items.length - 1 && (
-                  <div className="absolute left-1/2 transform -translate-x-0.5 top-4 w-0.5 h-16 bg-gradient-to-b from-cyan-400/80 to-cyan-400/30"></div>
-                )}
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
