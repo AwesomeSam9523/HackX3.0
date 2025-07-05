@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 
 type TimelineItem = {
@@ -23,7 +22,7 @@ const timelineData: TimelineItem[] = [
     points: ["HackX Round-1 begins", "Validation and checks for participant teams"],
   },
   {
-    date: "1st Nov (Round 1 Cont’d)",
+    date: "1st Nov (Round 1 Cont'd)",
     time: "Till 4:00AM",
     points: ["Round 1 continues", "Mentors check team progress"],
   },
@@ -44,7 +43,7 @@ const HackathonTimeline: React.FC = () => {
     <div className="relative px-4 py-16 max-w-5xl mx-auto z-10">
         <div className="flex flex-col items-center justify-center gap-5">
         <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
-          HERE'S HOW TH EVENT WILL PROGRESS
+          HERE&apos;S HOW TH EVENT WILL PROGRESS
         </button>
         <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
           TIMELINE
