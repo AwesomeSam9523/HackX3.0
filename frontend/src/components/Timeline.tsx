@@ -44,10 +44,10 @@ const HackathonTimeline: React.FC = () => {
     <div className="relative px-4 py-16 max-w-5xl mx-auto z-10">
         <div className="flex flex-col items-center justify-center gap-5">
         <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
-          WHY SHOULD YOU PARTICIPATE IN
+          HERE'S HOW TH EVENT WILL PROGRESS
         </button>
         <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
-          MUJ HACKX 3.0?
+          TIMELINE
         </div>
       </div>
       {/* Blue VerticalLine */}
