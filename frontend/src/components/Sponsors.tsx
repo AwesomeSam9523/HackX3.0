@@ -39,6 +39,7 @@ const Sponsors: React.FC = () => {
           <h2 className="text-2xl font-bold tracking-tighter md:text-4xl">
             SPONSORS
           </h2>
+          <h2 className="text-2xl tracking-tighter md:text-4xl">SPONSORS</h2>
         </div>
 
         {/* Main heading */}
