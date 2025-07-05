@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
               <div className="absolute right-0 bottom-0 h-1 w-4 bg-white"></div>
             </div>
 
-            <span className="w-full text-2xl md:text-4xl font-bold tracking-tighter text-white uppercase">
+            <span className="w-full text-2xl font-bold tracking-tighter text-white uppercase md:text-4xl">
               THIS IS YOUR CALL
             </span>
           </div>
@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
 
         {/* Main Headline */}
         <div className="mb-16 max-w-full text-center">
-          <h1 className="leading-tighter text-5xl font-extrabold tracking-wide uppercase md:text-7xl lg:text-9xl font-nortune">
+          <h1 className="leading-tighter font-nortune text-5xl font-extrabold tracking-wide uppercase md:text-7xl lg:text-9xl">
             <span className="block">LET&apos;S IGNITE INNOVATION</span>
             <span className="block">IN THE WORLD OF TECHNOLOGY</span>
             <span className="block">ONE PROJECT A TIME</span>
