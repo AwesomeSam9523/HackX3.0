@@ -74,18 +74,20 @@ const WhyApplySection = () => {
                   </div>
                 </div>
               </div>
-              <div className="font-avgardn text-bold mb-4 text-lg leading-snug font-bold text-white md:text-xl">
-                OUR CAMPUS AMBASSADOR PROGRAM IS AN INCREDIBLE OPPORTUNITY FOR
-                STUDENTS TO REPRESENT OUR COLLEGE AND HELP US SPREAD THE WORD
-                ABOUT OUR MISSION. AS A CAMPUS AMBASSADOR, YOU WILL GAIN
-                VALUABLE EXPERIENCE, ENHANCE YOUR LEADERSHIP SKILLS, AND CONNECT
-                WITH LIKE-MINDED INDIVIDUALS.
-              </div>
-              <div className="font-avgardn text-bold text-lg leading-snug font-bold text-white md:text-xl">
-                YOU WILL BE THE FACE OF OUR HACKATHON ON YOUR CAMPUS, ORGANIZING
-                EVENTS, SHARING OUR STORY, AND PROMOTING OUR VALUES. THIS ROLE
-                IS PERFECT FOR PROACTIVE, ENTHUSIASTIC, AND PASSIONATE STUDENTS
-                WHO WANT TO MAKE A DIFFERENCE.
+              <div className="mx-auto max-w-4xl space-y-6 px-4 text-center font-bold text-white uppercase">
+                <p className="font-avgardn text-lg leading-snug tracking-wider md:text-xl">
+                  Our Campus Ambassador Program is an incredible opportunity for
+                  students to represent our college and help us spread the word
+                  about our mission. As a Campus Ambassador, you will gain
+                  valuable experience, enhance your leadership skills, and
+                  connect with like-minded individuals.
+                </p>
+                <p className="font-avgardn text-lg leading-snug tracking-wider md:text-xl">
+                  You will be the face of our hackathon on your campus,
+                  organizing events, sharing our story, and promoting our
+                  values. This role is perfect for proactive, enthusiastic, and
+                  passionate students who want to make a difference.
+                </p>
               </div>
             </div>
           </div>
@@ -166,10 +168,7 @@ const WhyApplySection = () => {
                 {step.number}
               </span>
             </div>
-            <div
-              className="font-avgardd leading-tight font-bold text-white uppercase"
-              style={{ fontSize: "28px" }}
-            >
+            <div className="font-avgardd text-[1.5rem] leading-tight font-bold text-white uppercase">
               {step.text}
             </div>
           </div>

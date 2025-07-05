@@ -43,24 +43,24 @@
   font-style: normal;
 }
 .font-avgardn {
-    font-family: "Avgardn", sans-serif;
-  }
+  font-family: "Avgardn", sans-serif;
+}
 
-  .font-avgardd {
-    font-family: "Avgardd", sans-serif;
-  }
+.font-avgardd {
+  font-family: "Avgardd", sans-serif;
+}
 
-  .font-avgarddo {
-    font-family: "Avgarddo", sans-serif;
-  }
+.font-avgarddo {
+  font-family: "Avgarddo", sans-serif;
+}
 
-  .font-kinetikaLight {
-    font-family: "KinetikaLight", sans-serif;
-  }
+.font-kinetikaLight {
+  font-family: "KinetikaLight", sans-serif;
+}
 
-  .font-kinetikaUltra {
-    font-family: "KinetikaUltra", sans-serif;
-  }
+.font-kinetikaUltra {
+  font-family: "KinetikaUltra", sans-serif;
+}
 /* Set up color variables */
 :root {
   --background: #ffffff;
@@ -91,5 +91,5 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  background:black;
+  background: black;
 }

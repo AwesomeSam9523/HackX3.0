@@ -57,13 +57,11 @@ export const cardData: CardProps[] = [
 export function Card({ icon, title, description }: CardProps) {
   return (
     <div>
-      <div className="flex h-72 w-80 flex-col items-center justify-center rounded-xl px-2 border border-white/20 bg-[rgba(255,255,255,0.01)] text-center text-white bg-blend-luminosity shadow-md shadow-blue-500/30 backdrop-blur-md transition-transform duration-300 hover:scale-105">
-        <div className="mb-4 text-6xl ">{icon}</div>
-        <h3 className="mb-2 text-lg font-avgardn font-semibold">{title}</h3>
-        <p className="px-4 text-sm font-avgardn text-gray-300">{description}</p>
-      
-
-    </div>
+      <div className="flex h-72 w-80 flex-col items-center justify-center rounded-xl border border-white/20 bg-[rgba(255,255,255,0.01)] px-2 text-center text-white bg-blend-luminosity shadow-md shadow-blue-500/30 backdrop-blur-md transition-transform duration-300 hover:scale-105">
+        <div className="mb-4 text-6xl">{icon}</div>
+        <h3 className="font-avgardn mb-2 text-lg font-semibold">{title}</h3>
+        <p className="font-avgardn px-4 text-sm text-gray-300">{description}</p>
+      </div>
     </div>
   );
 }
