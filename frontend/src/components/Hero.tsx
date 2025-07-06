@@ -3,10 +3,9 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import HackathonStats from "./Statistics";
 import JoinHackathonBanner from "./JoinHackathon";
+import PrizePoolCircle from "./PrizePoolCircle";
 
-// import { Link } from "lucide-react";
-
-// // Placeholder SVG components - replace these with your own SVG elements
+// Commented SVG decorations from the first version - kept for future use
 // const DecorationSVG1 = () => (
 //   <svg width="200" height="300" viewBox="0 0 200 300" className="absolute">
 //     <path
@@ -59,28 +58,30 @@ import JoinHackathonBanner from "./JoinHackathon";
 // );
 
 interface FeaturesLogo {
-  src: string;
-  alt: string;
+    src: string;
+    alt: string;
 }
 
 const FeatureLogos: FeaturesLogo[] = [
-  { src: "sdg1.svg", alt: "SDG 1" },
-
-  { src: "sdg2.svg", alt: "SDG 2" },
-  { src: "sdg3.svg", alt: "SDG 3" },
-  { src: "sdg4.svg", alt: "SDG 4" },
-  { src: "sdg5.svg", alt: "SDG 5" },
-  { src: "sdg6.svg", alt: "SDG 6" },
-  { src: "sdg7.svg", alt: "SDG 7" },
-  { src: "sdg8.svg", alt: "SDG 8" },
-  { src: "sdg9.svg", alt: "SDG 9" },
+    { src: "sdg1.svg", alt: "SDG 1" },
+    { src: "sdg2.svg", alt: "SDG 2" },
+    { src: "sdg3.svg", alt: "SDG 3" },
+    { src: "sdg4.svg", alt: "SDG 4" },
+    { src: "sdg5.svg", alt: "SDG 5" },
+    { src: "sdg6.svg", alt: "SDG 6" },
+    { src: "sdg7.svg", alt: "SDG 7" },
+    { src: "sdg8.svg", alt: "SDG 8" },
+    { src: "sdg9.svg", alt: "SDG 9" },
 ];
+
 const HeroSection = () => {
-  return (
-    <section className="relative min-h-screen items-center overflow-hidden bg-black">
-      {/* Navigation */}
-      <Navbar />
-      {/* <nav className="relative  z-15 flex justify-between items-center px-8 ">
+    return (
+        <section className="relative min-h-screen items-center overflow-hidden bg-black">
+            {/* Navigation */}
+            <Navbar />
+
+            {/* Commented alternative navigation from first version - kept for reference */}
+            {/* <nav className="relative z-15 flex justify-between items-center px-8 ">
         <Image
           src="/HeroSection/logo.svg"
           alt="HackxIcon"
@@ -96,12 +97,12 @@ const HeroSection = () => {
           className="mt-0"
         />
         <div className="">
-       <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-2 rounded-full text-lg font-semibold uppercase tracking-tight text-white">
+          <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-2 rounded-full text-lg font-semibold uppercase tracking-tight text-white">
             REGISTER NOW
           </button>
-</div>
-       
+        </div>
       </nav> */}
+
 
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
@@ -118,41 +119,56 @@ const HeroSection = () => {
           PRESENTS
         </div>
 
-        {/* Main Title */}
-        <div className="mt-4 flex flex-col items-center justify-center text-center leading-none">
-          <h1 className="font-nortune m-0 p-0 text-[240px] leading-none">
+
+                {/* Main Title - Using SVG version from second code with fallback to text version */}
+                <div className="relative mt-4 flex flex-col items-center justify-center text-center leading-none">
+                    {/* SVG Logo Version (from second code) */}
+                    <Image
+                        src="/HeroSection/HACKX 3.0.svg"
+                        alt="HACKX 3.0 Logo"
+                        width={800}
+                        height={200}
+                        className="ml-16 h-auto w-full max-w-[800px] object-contain"
+                        priority
+
+
+                    {/* Fallback Text Version (from first code) - uncomment if SVG fails */}
+                    {/* <h1 className="font-nortune m-0 p-0 text-[240px] leading-none">
             HACKX<span className="text-8xl">3.0</span>
-          </h1>
-          <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold">
-            MUJ&apos;S LARGEST HACKATHON
-          </div>
-        </div>
+          </h1> */}
 
-        {/* Features */}
-        <div className="mt-20 flex space-x-4">
-          {FeatureLogos.map((logo, index) => (
-            <div key={index} className="p-4">
-              <Image
-                src={`/HeroSection/${logo.src}`}
-                alt={logo.alt}
-                width={90}
-                height={90}
-              />
+                    <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold">
+                        MUJ&apos;S LARGEST HACKATHON
+                    </div>
+
+                    {/* Prize Pool Circle from second version */}
+                    <PrizePoolCircle />
+                </div>
+
+                {/* Features - SDG Logos */}
+                <div className="mt-20 flex space-x-4">
+                    {FeatureLogos.map((logo, index) => (
+                        <div key={index} className="p-4">
+                            <Image
+                                src={`/HeroSection/${logo.src}`}
+                                alt={logo.alt}
+                                width={90}
+                                height={90}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                {/* Stats */}
+                <HackathonStats />
+
+                {/* CTA Buttons */}
+                <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
+                    <JoinHackathonBanner />
+                </div>
             </div>
-          ))}
-        </div>
-
-        {/* Stats */}
-
-        <HackathonStats />
-
-        {/* CTA Buttons */}
-        <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
-          <JoinHackathonBanner />
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default HeroSection;
