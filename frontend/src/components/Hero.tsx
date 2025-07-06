@@ -135,7 +135,7 @@ const HeroSection = () => {
             HACKX<span className="text-8xl">3.0</span>
           </h1> */}
 
-          <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold">
+          <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold text-white">
             MUJ&apos;S LARGEST HACKATHON
           </div>
 

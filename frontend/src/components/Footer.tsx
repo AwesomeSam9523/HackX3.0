@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
         }}
       />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-end px-6 text-center">
         <div className="mb-12">
           <div className="relative px-4 py-4">
             <div className="absolute top-0 left-0 h-6 w-6">
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
           alt="HackxIcon"
           width={1200}
           height={1800}
-          className="relative z-10 mx-auto"
+          className="relative z-10 mx-auto pb-0"
         />
 
         <div className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2 transform">

@@ -327,7 +327,7 @@ const Themes: React.FC = () => {
               </div>
 
               {/* Thunderbolt image */}
-              <div className="pointer-events-none absolute top-[-140px] left-[230px] -z-10 h-[602px] w-[508px]">
+              <div className="pointer-events-none absolute top-[-140px] left-[230px] z-[-10] h-[602px] w-[508px]">
                 <Image
                   src="/Thunderbolt Asset Green (1) 1.svg"
                   alt="Thunderbolt"
