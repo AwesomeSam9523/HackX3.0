@@ -21,7 +21,7 @@ const Background = () => {
           alt="HackxIcon"
           width={895}
           height={1000}
-          className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-overlay"
+          className="absolute top-1/2 left-1/2 -z-100 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-overlay"
         />
       </div>
     </div>

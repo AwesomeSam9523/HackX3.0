@@ -7,8 +7,8 @@ const TARGET_DATE = new Date("2025-10-30T09:00:00");
 const events = [
   { month: "SEP", day: "01", label: "REGISTRATIONS\nBEGIN" },
   { month: "OCT", day: "15", label: "REGISTRATIONS\nEND" },
-  { month: "OCT", day: "30", label: "OPENING CEREMONY\n& HACKATHON BEGINS" },
-  { month: "SEP", day: "31", label: "HACKATHON ENDS\n& CLOSING" },
+  { month: "NOV", day: "14", label: "OPENING CEREMONY\n& HACKATHON BEGINS" },
+  { month: "NOV", day: "15", label: "HACKATHON ENDS\n& CLOSING" },
 ];
 
 function getTimeLeft(targetDate: Date) {
@@ -58,7 +58,7 @@ const Timer: React.FC = () => {
       </div>
       <div className="label mx-auto mb-8 h-[40px] w-full max-w-[350px] sm:mb-10 sm:h-[51px] sm:max-w-[594px]">
         <div
-          className="text-wrapper relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-black tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
+          className="text-wrapper font-kinetikaUltra relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-black tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
           suppressHydrationWarning={true}
         >
           {isClient
