@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
 
         {/* Main Headline */}
         <div className="mb-16 max-w-full text-center">
-          <h1 className="leading-tighter font-nortune text-5xl tracking-wide uppercase md:text-7xl lg:text-9xl">
+          <h1 className="leading-tighter font-kinetikaUltra text-5xl tracking-wide uppercase md:text-7xl lg:text-9xl">
             <span className="block">LET&apos;S IGNITE INNOVATION</span>
             <span className="block">IN THE WORLD OF TECHNOLOGY</span>
             <span className="block">ONE PROJECT A TIME</span>
