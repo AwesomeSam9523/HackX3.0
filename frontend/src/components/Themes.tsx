@@ -43,23 +43,31 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
       onMouseLeave={() => dispatch({ type: "mouse_leave" })}
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="relative h-[275px] w-[275px] rounded-[14px] bg-[linear-gradient(180deg,rgba(16,19,21,1)_0%,rgba(23,32,39,1)_100%)] shadow-[0_2px_16px_#0008]"
+      className="relative h-[275px] w-[275px] overflow-hidden rounded-[14px] bg-[linear-gradient(180deg,rgba(16,19,21,1)_0%,rgba(23,32,39,1)_100%)] shadow-[0_2px_16px_#0008]"
     >
-      {/* Default image scrolls up and fades */}
+      {/* Default image: scrolls up and fades out on hover */}
       <motion.div
         animate={
-          state.hovered ? { y: "-37%", opacity: 0 } : { y: 0, opacity: 1 }
+          state.hovered ? { y: "-100%", opacity: 0 } : { y: 0, opacity: 1 }
         }
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        transition={{
+          y: { duration: 0.6, ease: "easeInOut" }, // Scroll animation duration
+          opacity: { duration: 0.6, ease: "easeInOut" }, // Fade animation duration
+        }}
         className="absolute inset-0 z-10 flex h-full w-full items-center justify-center"
       >
         <Image src={defaultImage} width={78} height={86} alt="Default Tile" />
       </motion.div>
 
-      {/* Hover image and vector scroll up together */}
+      {/* Hover content: scrolls up from below and fades in on hover */}
       <motion.div
-        animate={state.hovered ? { y: 0, opacity: 1 } : { y: "0%", opacity: 0 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        animate={
+          state.hovered ? { y: 0, opacity: 1 } : { y: "100%", opacity: 0 }
+        }
+        transition={{
+          y: { duration: 0.8, ease: "easeInOut" }, // Scroll animation duration
+          opacity: { duration: 0.8, ease: "easeInOut" }, // Fade animation duration
+        }}
         className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden rounded-[14px]"
       >
         {hoverImage && (
