@@ -4,6 +4,9 @@ export interface TeamMember {
   position: string;
   image: string;
   linkedinUrl?: string;
+  githubUrl?: string;
+  instagramUrl?: string;
+  phoneNumber?: string;
 }
 
 export interface TeamSubcategory {

@@ -26,9 +26,9 @@ const XComponent = () => {
         scrollTrigger: {
           trigger: document.body,
           start: "top top",
-          end: "+=100", // Adjust this value to change when the animation completes
-          scrub: 1, // Makes the animation smooth and tied to scroll position
-          markers: false, // Set to true for debugging
+          end: "+=100",
+          scrub: 1,
+          markers: false,
         },
       },
     );
