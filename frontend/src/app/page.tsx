@@ -1,13 +1,10 @@
-import Timer from "@/components/Timer";
-import Themes from "@/components/Themes";
-import Sponsors from "@/components/Sponsors";
 import HeroSection from "@/components/Hero";
 import Background from "@/components/Background";
 import Spline from "@splinetool/react-spline/next";
 
 export default function Home() {
   return (
-    <main className="relative overflow-x-clip">
+    <div className="relative overflow-x-clip">
       <Background />
       <HeroSection />
       <div className="h-12" />
@@ -26,10 +23,7 @@ export default function Home() {
         <Spline scene="https://prod.spline.design/WWQ6UfiQ4jUgZ9zx/scene.splinecode" />
       </div>
       <div className="h-8" />
-      <Timer />
       <div className="h-8" />
-      <Themes />
-      <Sponsors />
-    </main>
+    </div>
   );
 }

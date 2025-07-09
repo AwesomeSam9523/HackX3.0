@@ -4,58 +4,10 @@ import Navbar from "@/components/Navbar";
 import HackathonStats from "./Statistics";
 import JoinHackathonBanner from "./JoinHackathon";
 import PrizePoolCircle from "./PrizePoolCircle";
-
-// Commented SVG decorations from the first version - kept for future use
-// const DecorationSVG1 = () => (
-//   <svg width="200" height="300" viewBox="0 0 200 300" className="absolute">
-//     <path
-//       d="M50 20 Q80 50 60 100 Q40 150 70 200 Q100 250 80 280"
-//       stroke="url(#gradient1)"
-//       strokeWidth="3"
-//       fill="none"
-//     />
-//     <defs>
-//       <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-//         <stop offset="0%" stopColor="#3B82F6" />
-//         <stop offset="100%" stopColor="#8B5CF6" />
-//       </linearGradient>
-//     </defs>
-//   </svg>
-// );
-
-// const DecorationSVG2 = () => (
-//   <svg width="150" height="200" viewBox="0 0 150 200" className="absolute">
-//     <path
-//       d="M20 180 Q50 150 40 100 Q30 50 60 20 Q90 50 80 100"
-//       stroke="url(#gradient2)"
-//       strokeWidth="4"
-//       fill="none"
-//     />
-//     <defs>
-//       <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-//         <stop offset="0%" stopColor="#06B6D4" />
-//         <stop offset="100%" stopColor="#3B82F6" />
-//       </linearGradient>
-//     </defs>
-//   </svg>
-// );
-
-// const DecorationSVG3 = () => (
-//   <svg width="180" height="250" viewBox="0 0 180 250" className="absolute">
-//     <path
-//       d="M160 30 Q130 60 150 110 Q170 160 140 210 Q110 240 120 220"
-//       stroke="url(#gradient3)"
-//       strokeWidth="3"
-//       fill="none"
-//     />
-//     <defs>
-//       <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-//         <stop offset="0%" stopColor="#8B5CF6" />
-//         <stop offset="100%" stopColor="#EC4899" />
-//       </linearGradient>
-//     </defs>
-//   </svg>
-// );
+import LightBlock from "@/components/LightBlock";
+import Timer from "@/components/Timer";
+import Themes from "@/components/Themes";
+import Sponsors from "@/components/Sponsors";
 
 interface FeaturesLogo {
   src: string;
@@ -76,32 +28,9 @@ const FeatureLogos: FeaturesLogo[] = [
 
 const HeroSection = () => {
   return (
-    <div className="relative min-h-screen items-center overflow-hidden bg-black">
+    <div className="relative min-h-screen items-center overflow-hidden bg-transparent">
       {/* Navigation */}
       <Navbar />
-
-      {/* Commented alternative navigation from first version - kept for reference */}
-      {/* <nav className="relative z-15 flex justify-between items-center px-8 ">
-        <Image
-          src="/HeroSection/logo.svg"
-          alt="HackxIcon"
-          width={100}
-          height={100}
-          className=""
-        />
-        <Image
-          src="/HeroSection/ChipsSpline1.svg"
-          alt="HackxIcon"
-          width={1000}
-          height={100}
-          className="mt-0"
-        />
-        <div className="">
-          <button className="bg-transparent border-2 border-white hover:bg-white/10 transition-all duration-300 px-5 py-2 rounded-full text-lg font-semibold uppercase tracking-tight text-white">
-            REGISTER NOW
-          </button>
-        </div>
-      </nav> */}
 
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
@@ -129,11 +58,6 @@ const HeroSection = () => {
             className="ml-16 h-auto w-full max-w-[800px] object-contain"
             priority
           />
-
-          {/* Fallback Text Version (from first code) - uncomment if SVG fails */}
-          {/* <h1 className="font-nortune m-0 p-0 text-[240px] leading-none">
-            HACKX<span className="text-8xl">3.0</span>
-          </h1> */}
 
           <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold text-white">
             MUJ&apos;S LARGEST HACKATHON
@@ -163,6 +87,23 @@ const HeroSection = () => {
         {/* CTA Buttons */}
         <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
           <JoinHackathonBanner />
+        </div>
+        <div className="absolute top-[50rem] right-0 -z-10 h-[20rem] w-1/2">
+          <LightBlock position="right" />
+        </div>
+        <div className="w-full">
+          <Timer />
+        </div>
+
+        <div className="mt-32 w-full">
+          <Themes />
+        </div>
+        <div className="absolute top-[160rem] left-0 -z-10 h-[20rem] w-1/2">
+          <LightBlock position="left" />
+        </div>
+
+        <div className="mt-32 w-full">
+          <Sponsors />
         </div>
       </div>
     </div>

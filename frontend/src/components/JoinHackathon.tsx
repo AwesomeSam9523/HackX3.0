@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-//import RegisterButton from "./RegisterButton";
+
 const JoinHackathonBanner = () => {
   return (
     <div className="relative flex h-[180px] w-full max-w-[950px] items-center justify-between overflow-hidden rounded-full bg-[#0a0f2b] px-18 py-12 md:py-8">
@@ -19,9 +19,12 @@ const JoinHackathonBanner = () => {
         <Image
           src="/HeroSection/ChipsSpline3.svg"
           alt="Glowing Shape"
-          fill
-          className="object-cover"
-          style={{ transform: "rotate(240deg)" }}
+          width={1000}
+          height={500}
+          style={{
+            transform: "translateY(60%) translateX(15%)",
+            height: "20rem",
+          }}
           priority
         />
       </div>

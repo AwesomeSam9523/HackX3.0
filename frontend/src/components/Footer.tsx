@@ -5,14 +5,8 @@ import RegisterButton from "./RegisterButton";
 
 const Footer: React.FC = () => {
   return (
-    <div className="relative z-20 min-h-screen overflow-hidden bg-black text-white">
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at bottom center, #1e40af 0%, #1e3a8a 15%, #1a1a2e 35%, #0a0a0a 60%, #000000 100%)",
-        }}
-      />
+    <div className="relative z-20 overflow-hidden bg-black text-white">
+      <div className="absolute inset-0 z-0" />
 
       <div className="relative z-10 flex flex-col items-center justify-end px-6 text-center">
         <div className="mb-12">
@@ -63,15 +57,15 @@ const Footer: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative z-10 w-full">
-        <div
-          className="absolute inset-x-0 bottom-0 z-0 h-[400px] transform"
-          style={{
-            background:
-              "radial-gradient(ellipse at bottom, #00E8FF 0%, #00479A 50%, #000A1A 100%)",
-            opacity: 0.4,
-            filter: "blur(70px)",
-          }}
+      <div className="relative w-full">
+        <div className="absolute inset-x-0 bottom-0 z-0 h-[400px] transform" />
+
+        <Image
+          src="/HeroSection/Ellipse1.svg"
+          alt="HackxIcon"
+          width={1200}
+          height={1800}
+          className="absolute -z-20 mx-auto w-full -translate-y-1/2 rotate-x-180 transform pb-0"
         />
 
         <Image
