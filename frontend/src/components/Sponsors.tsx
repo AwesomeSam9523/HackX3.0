@@ -8,14 +8,15 @@ interface SponsorLogo {
 }
 
 const sponsorLogos: SponsorLogo[] = [
-  { src: "axure.svg", alt: "Axure", width: 120, height: 40 },
-  { src: "oracle.svg", alt: "Oracle Academy", width: 140, height: 40 },
-  { src: "cdcc.svg", alt: "CDGC", width: 100, height: 40 },
-  { src: "bikesetu.svg", alt: "BikeSetu", width: 130, height: 40 },
-  { src: "radio.svg", alt: "Pin Store", width: 110, height: 40 },
-  { src: "bobble.svg", alt: "Bobble AI", width: 120, height: 40 },
-  { src: "ed.svg", alt: "EDU", width: 100, height: 40 },
-  { src: "designstudio.svg", alt: "Design Studio", width: 140, height: 40 },
+  { src: "axure.svg", alt: "Axure", width: 120, height: 30 },
+  { src: "axure2.svg", alt: "Axure", width: 120, height: 30 },
+  { src: "oracle.svg", alt: "Oracle Academy", width: 140, height: 30 },
+  { src: "cdac.svg", alt: "CDAC", width: 100, height: 30 },
+  { src: "bikesetu.svg", alt: "BikeSetu", width: 130, height: 30 },
+  { src: "radio.svg", alt: "Pin Store", width: 110, height: 30 },
+  { src: "bobble.svg", alt: "Bobble AI", width: 120, height: 30 },
+  { src: "ed.svg", alt: "EDU", width: 100, height: 30 },
+  { src: "design.svg", alt: "Design Studio", width: 140, height: 30 },
 ];
 
 const Sponsors: React.FC = () => {
@@ -49,15 +50,15 @@ const Sponsors: React.FC = () => {
         </h1>
 
         {/* Sponsor logos grid */}
-        <div className="grid grid-cols-2 items-center justify-items-center gap-8 opacity-80 md:grid-cols-4 lg:grid-cols-8">
+        <div className="grid grid-cols-2 items-center justify-items-center gap-6 opacity-80 md:grid-cols-4 lg:grid-cols-9">
           {sponsorLogos.map((logo, index) => (
             <div key={index} className="flex items-center justify-center">
               <Image
-                src={logo.src}
+                src={`/sponsors/${logo.src}`}
+                className={"h-12 w-auto"}
                 alt={logo.alt}
                 width={logo.width}
                 height={logo.height}
-                className="opacity-70 brightness-0 invert filter transition-opacity duration-300 hover:opacity-100"
                 priority={index < 4} // Prioritize first 4 logos for faster loading
               />
             </div>
