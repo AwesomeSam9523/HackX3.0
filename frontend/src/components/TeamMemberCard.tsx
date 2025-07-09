@@ -7,9 +7,55 @@ interface TeamMemberCardProps {
 }
 
 const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
+  // Helper function to create social media links
+  const renderSocialLink = (url: string, iconSrc: string, alt: string) => (
+    <a
+      key={url}
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex h-12 w-12 items-center justify-center transition-all duration-300 ease-in-out"
+    >
+      <Image
+        src={iconSrc}
+        alt={alt}
+        height={20}
+        width={20}
+        className="object-cover transition-transform duration-300 ease-in-out"
+      />
+    </a>
+  );
+
+  // Helper function to create phone link
+  const renderPhoneLink = (phoneNumber: string) => (
+    <a
+      href={`tel:${phoneNumber}`}
+      className="inline-flex h-12 w-12 items-center justify-center transition-all duration-300 ease-in-out hover:scale-105"
+    >
+      <Image
+        src="/phone.png"
+        alt="phone"
+        height={20}
+        width={20}
+        className="object-cover transition-transform duration-300 ease-in-out"
+      />
+    </a>
+  );
+
+  // Collect all available social links
+  const socialLinks = [
+    member.instagramUrl &&
+      renderSocialLink(member.instagramUrl, "/instagram.png", "instagram"),
+    member.linkedinUrl &&
+      renderSocialLink(member.linkedinUrl, "/linkedin.png", "linkedin"),
+    member.githubUrl &&
+      renderSocialLink(member.githubUrl, "/github.png", "github"),
+    member.phoneNumber && renderPhoneLink(member.phoneNumber),
+  ].filter(Boolean); // Remove null/undefined values
+
   return (
-    <div className="transform rounded-2xl bg-[#2a3041] p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-      <div className="mx-auto mb-4 h-72 w-72 overflow-hidden rounded-2xl bg-gray-800">
+    <div className="transform rounded-2xl border border-white/20 bg-white/10 p-6 text-center shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white/15 hover:shadow-2xl">
+      <div className="mx-auto mb-4 h-72 w-72 overflow-hidden rounded-2xl border border-white/10 bg-gray-800/50 backdrop-blur-sm">
         <Image
           src={member.image}
           alt={member.name}
@@ -18,27 +64,19 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
           className="h-full w-full object-cover"
         />
       </div>
-      <h3 className="mb-2 text-2xl font-extrabold tracking-tighter text-white">
+      <h3 className="mb-2 text-2xl font-extrabold tracking-tighter text-white drop-shadow-lg">
         {member.name}
       </h3>
-      <p className="mb-4 text-sm font-extrabold whitespace-pre-line text-gray-300">
+      <p className="mb-4 text-sm font-extrabold whitespace-pre-line text-gray-200 drop-shadow-md">
         {member.position}
       </p>
-      {member.linkedinUrl && (
-        <a
-          href={member.linkedinUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-tansparent inline-flex h-10 w-10 items-center justify-center rounded-full border-1 border-white transition-colors duration-300"
-        >
-          <Image
-            src={"/linkedin.png"}
-            alt="linkedin"
-            height={15}
-            width={15}
-            className="object-cover"
-          />
-        </a>
+      {/* Social Media Icons - Pill-shaped container design */}
+      {socialLinks.length > 0 && (
+        <div className="mt-4 flex items-center justify-center">
+          <div className="flex items-center justify-center gap-1 rounded-full border-2 border-white/30 bg-white/10 px-1 py-1 backdrop-blur-sm transition-all duration-300 hover:border-white/50 hover:bg-white/20">
+            {socialLinks}
+          </div>
+        </div>
       )}
     </div>
   );
