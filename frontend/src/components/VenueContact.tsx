@@ -89,8 +89,8 @@ const VenueContact: React.FC = () => {
       {/* Email */}
       <p className="font-avgardn mt-12 text-center text-lg font-semibold text-white">
         OR MAIL US AT:{" "}
-        <a href="mailto:hackxmu@gmail.com" className="text-white">
-          HACKXMU@GMAIL.COM
+        <a href="mailto:hackxmuj@gmail.com" className="text-white">
+          HACKXMUJ@GMAIL.COM
         </a>
       </p>
     </div>
