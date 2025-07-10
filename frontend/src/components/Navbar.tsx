@@ -54,11 +54,11 @@ const Navbar: React.FC = () => {
       darkIcon: "gallery.svg",
     },
     {
-      icon: "faq.svg",
-      alt: "FAQ",
-      label: "FAQs",
-      path: "/faq",
-      darkIcon: "faqDark.svg",
+      icon: "contact.svg",
+      alt: "contact",
+      label: "Contact",
+      path: "/contact",
+      darkIcon: "contactDark.svg",
     },
   ];
 
