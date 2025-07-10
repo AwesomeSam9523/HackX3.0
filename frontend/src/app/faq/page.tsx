@@ -13,20 +13,13 @@ const Page = () => {
           <Navbar />
 
           {/* Header section */}
-          <div className="mb-16 text-center">
-            <div className="mb-8 inline-block rounded-full border border-white/30 bg-white/10 px-20 py-3 backdrop-blur-sm">
-              <span className="font-sans text-lg font-bold tracking-tighter text-white">
-                EVERYTHING YOU NEED TO KNOW
-              </span>
+          <div className="flex flex-col items-center justify-center gap-5">
+            <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+              HERE&apos;S HOW THE EVENT WILL PROGRESS
+            </button>
+            <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+              TIMELINE
             </div>
-
-            <h1 className="font-nortune mb-6 text-7xl tracking-wide text-white md:text-8xl lg:text-9xl">
-              FAQs
-            </h1>
-
-            <p className="mx-auto max-w-2xl text-lg font-extrabold tracking-tighter text-white/80">
-              HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
-            </p>
           </div>
 
           <FAQClient faqs={faqs} />
