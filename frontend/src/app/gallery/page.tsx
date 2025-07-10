@@ -106,15 +106,14 @@ const Page = () => {
     >
       <Navbar />
       <XComponent />
-      <div className="mx-auto mb-4 w-fit rounded-full border border-white/30 bg-white/10 px-8 py-2 text-center backdrop-blur-sm sm:mb-8 sm:px-20 sm:py-3">
-        <span className="font-sans text-sm font-bold tracking-tighter text-white sm:text-lg">
+      <div className="flex flex-col items-center justify-center gap-5">
+        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
           GLIMPSE OF OUR PREVIOUS EDITIONS
-        </span>
+        </button>
+        <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+          GALLERY
+        </div>
       </div>
-
-      <h2 className="font-nortune mb-8 text-center text-4xl tracking-wide sm:mb-16 sm:text-6xl lg:text-9xl">
-        GALLERY
-      </h2>
 
       <div className="space-y-8 px-2 sm:space-y-16 sm:px-4 md:px-8">
         {galleryData.map((section, idx) => (
