@@ -26,17 +26,14 @@ const TeamPage: React.FC = () => {
         <div className="absolute bottom-8 left-8 hidden h-8 w-8 border-b-4 border-l-4 border-white md:block"></div>
         <div className="absolute right-8 bottom-8 hidden h-8 w-8 border-r-4 border-b-4 border-white md:block"></div>
         {/* Header */}
-        <div className="mt-10 mb-12 text-center">
-          <div className="mb-6 inline-block items-center justify-center rounded-full border-2 border-white/30 bg-white/10 px-8 py-3 backdrop-blur-sm">
-            <span className="text-xl font-extrabold tracking-tight text-white">
-              MEET THE HUMANS BEHIND THE CURTAINS
-            </span>
+        <div className="flex flex-col items-center justify-center gap-5">
+          <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+            MEET THE HUMANS BEHIND THE CURTAINS
+          </button>
+          <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+            TEAM MUJ HACKX3.0
           </div>
-          <h1 className="mb-8 text-5xl font-extrabold tracking-tight text-white md:text-7xl">
-            TEAM MUJ HACKX 3.0
-          </h1>
         </div>
-
         {/* Category Tabs */}
         <CategoryTabs
           categories={categories}
