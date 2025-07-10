@@ -3,6 +3,7 @@ import React, { useReducer } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import themesData from "../../data/themeData";
+import { useIsMobile } from "@/hooks/isMobile";
 
 type BoxState = { hovered: boolean };
 type BoxAction = { type: "mouse_enter" } | { type: "mouse_leave" };
@@ -27,6 +28,7 @@ type BoxProps = {
 const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
   const [state, dispatch] = useReducer(boxReducer, { hovered: false });
   const defaultImage = "/rectangle-6667481.svg";
+  const isMobile = useIsMobile();
 
   // Check for specific tiles that need custom styling
   const isSupplyChain = text === "supply chain & logistics";
@@ -43,7 +45,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
       onMouseLeave={() => dispatch({ type: "mouse_leave" })}
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="relative h-[275px] w-[275px] overflow-hidden rounded-[14px] bg-[linear-gradient(180deg,rgba(16,19,21,1)_0%,rgba(23,32,39,1)_100%)] shadow-[0_2px_16px_#0008]"
+      className="relative h-40 w-40 overflow-hidden rounded-[14px] bg-[linear-gradient(180deg,rgba(16,19,21,1)_0%,rgba(23,32,39,1)_100%)] shadow-[0_2px_16px_#0008] lg:h-[275px] lg:w-[275px]"
     >
       {/* Default image: scrolls up and fades out on hover */}
       <motion.div
@@ -81,7 +83,13 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
         <div className="relative z-20 flex flex-col items-center justify-center">
           {vectorImage && (
             <div className="mb-4 flex justify-center">
-              <Image src={vectorImage} width={94} height={87} alt="Vector" />
+              <Image
+                src={vectorImage}
+                width={94}
+                height={87}
+                alt="Vector"
+                className="h-16 w-16 lg:h-auto lg:w-auto"
+              />
             </div>
           )}
           {text && (
@@ -93,9 +101,9 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
               className="flex justify-center text-center"
             >
               {isSupplyChain ? (
-                <div className="relative flex w-[184px] justify-center">
+                <div className="relative flex w-full justify-center lg:w-[184px]">
                   <span
-                    className="font-inter inline-block text-center text-[25.69px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase"
+                    className="font-inter inline-block text-center text-xl leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase lg:text-[25.69px]"
                     style={{ margin: 0 }}
                   >
                     supply chain
@@ -104,57 +112,57 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
                   </span>
                 </div>
               ) : isEnvironmental ? (
-                <div className="relative flex w-[251px] justify-center">
-                  <span className="font-inter inline-block text-center text-[24px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase">
+                <div className="relative flex justify-center lg:w-[251px]">
+                  <span className="font-inter inline-block text-center text-sm leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase lg:text-[24px]">
                     environmental
                     <br />
                     impact&nbsp;solutions
                   </span>
                 </div>
               ) : isDefense ? (
-                <div className="relative flex w-[106px] justify-center">
+                <div className="relative flex justify-center lg:w-[106px]">
                   <span
-                    className="font-inter inline-block text-center text-[28.42px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase"
+                    className="font-inter inline-block text-center text-xl leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase lg:text-[28.42px]"
                     style={{ margin: 0 }}
                   >
                     {text}
                   </span>
                 </div>
               ) : isDisaster ? (
-                <div className="relative flex w-[125px] justify-center">
+                <div className="relative flex justify-center lg:w-[125px]">
                   <span
-                    className="font-inter inline-block text-center text-[28.42px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase"
+                    className="font-inter inline-block text-center text-xl leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase lg:text-[28.42px]"
                     style={{ margin: 0 }}
                   >
                     {text}
                   </span>
                 </div>
               ) : isOpenInnovation ? (
-                <div className="relative flex w-[156px] justify-center">
+                <div className="relative flex justify-center lg:w-[156px]">
                   <span
-                    className="font-inter inline-block text-center text-[28.42px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase"
+                    className="font-inter inline-block text-center text-xl leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase lg:text-[28.42px]"
                     style={{ margin: 0 }}
                   >
                     {text}
                   </span>
                 </div>
               ) : isCybersecurity ? (
-                <div className="relative flex w-[204px] justify-center">
-                  <span className="font-inter inline-block text-center text-[30.69px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase">
+                <div className="relative flex w-9/12 justify-center lg:w-[204px]">
+                  <span className="font-inter inline-block text-center text-base leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase lg:text-[30.69px]">
                     {text}
                   </span>
                 </div>
               ) : isBlockchain ? (
-                <div className="relative flex w-[207px] justify-center">
+                <div className="relative flex w-11/12 justify-center lg:w-[207px]">
                   <span
-                    className="font-inter inline-block text-center text-[25.69px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase"
+                    className="font-inter inline-block text-center text-xl font-bold text-[#fefde0] uppercase lg:text-[25.69px] lg:leading-[98.5%] lg:tracking-[-0.02em]"
                     style={{ margin: 0 }}
                   >
                     {text}
                   </span>
                 </div>
               ) : (
-                <span className="font-inter inline-block text-left text-[36.61px] leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase drop-shadow-lg">
+                <span className="font-inter inline-block text-left text-xl leading-[98.5%] font-bold tracking-[-0.02em] text-[#fefde0] uppercase drop-shadow-lg lg:text-[36.61px]">
                   {text}
                 </span>
               )}
@@ -175,11 +183,11 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
         animate={
           state.hovered
             ? {
-                width: "16px",
-                height: "16px",
-                borderWidth: "6px",
-                top: "18px",
-                left: "18px",
+                width: isMobile ? "12px" : "16px",
+                height: isMobile ? "12px" : "16px",
+                borderWidth: isMobile ? "3px" : "6px",
+                top: isMobile ? "15px" : "18px",
+                left: isMobile ? "15px" : "18px",
               }
             : {
                 width: "10px",
@@ -204,11 +212,11 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
         animate={
           state.hovered
             ? {
-                width: "16px",
-                height: "16px",
-                borderWidth: "6px",
-                top: "18px",
-                right: "18px",
+                width: isMobile ? "12px" : "16px",
+                height: isMobile ? "12px" : "16px",
+                borderWidth: isMobile ? "3px" : "6px",
+                top: isMobile ? "15px" : "18px",
+                right: isMobile ? "15px" : "18px",
               }
             : {
                 width: "10px",
@@ -233,11 +241,11 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
         animate={
           state.hovered
             ? {
-                width: "16px",
-                height: "16px",
-                borderWidth: "6px",
-                bottom: "18px",
-                left: "18px",
+                width: isMobile ? "12px" : "16px",
+                height: isMobile ? "12px" : "16px",
+                borderWidth: isMobile ? "3px" : "6px",
+                bottom: isMobile ? "15px" : "18px",
+                left: isMobile ? "15px" : "18px",
               }
             : {
                 width: "10px",
@@ -262,11 +270,11 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
         animate={
           state.hovered
             ? {
-                width: "16px",
-                height: "16px",
-                borderWidth: "6px",
-                bottom: "18px",
-                right: "18px",
+                width: isMobile ? "12px" : "16px",
+                height: isMobile ? "12px" : "16px",
+                borderWidth: isMobile ? "3px" : "6px",
+                bottom: isMobile ? "15px" : "18px",
+                right: isMobile ? "15px" : "18px",
               }
             : {
                 width: "10px",
@@ -297,9 +305,9 @@ const Themes: React.FC = () => {
   return (
     <div className="min-h-screen w-full overflow-visible">
       <div className="relative mx-auto min-h-screen max-w-[1440px] p-0">
-        <div className="relative z-[2] flex min-h-[600px] items-start">
+        <div className="relative z-[2] flex min-h-[600px] flex-col items-start lg:flex-row">
           <div className="relative min-w-[340px] text-left">
-            <div className="absolute top-[24px] left-[100px] z-[3] min-w-[340px] text-left">
+            <div className="absolute top-[24px] z-[3] min-w-[340px] text-left lg:left-[100px]">
               {/* 2025 block with CSS-based corners */}
               <div className="relative mb-[43.58px] w-fit pt-[14px] pr-[52px] pb-[13px] pl-[54px]">
                 <span className="relative z-10 text-center font-[AvantGarde_Bk_BT-Demi,Helvetica] text-[40.7px] leading-[40.1px] font-[400] tracking-[-0.81px] text-[#fffef0]">
@@ -327,7 +335,7 @@ const Themes: React.FC = () => {
 
               {/* OUR THEMES text */}
               <div className="relative h-[178px] w-[463px]">
-                <span className="absolute top-0 left-0 z-20 h-full w-full font-['Kinetika-Ultra',sans-serif] text-[111.2px] leading-[88.9px] font-[400] font-bold tracking-[0] text-[#fffef0]">
+                <span className="font-kinetikaUltra absolute top-0 left-0 z-20 h-full w-full text-6xl tracking-[0] text-[#fffef0] lg:text-8xl lg:leading-[88.9px]">
                   OUR
                   <br />
                   THEMES
@@ -335,34 +343,32 @@ const Themes: React.FC = () => {
               </div>
 
               {/* Thunderbolt image */}
-              <div className="pointer-events-none absolute top-[-140px] left-[230px] z-[-10] h-[602px] w-[508px]">
+              <div className="pointer-events-none absolute top-0 left-30 z-[-10] h-[602px] w-[508px] lg:top-[-140px] lg:left-[230px]">
                 <Image
                   src="/Thunderbolt Asset Green (1) 1.svg"
                   alt="Thunderbolt"
                   width={508}
                   height={602}
-                  className="absolute top-0 left-0 z-10 h-[602px] w-[508px]"
+                  className="absolute top-0 left-0 z-10 h-auto w-72 lg:h-[602px] lg:w-[508px]"
                 />
               </div>
             </div>
           </div>
 
           {/* Grid tiles */}
-          <div className="flex flex-1 items-start justify-start">
-            <div className="static z-[2] ml-[-236px] grid grid-cols-4 grid-rows-3 gap-[34px]">
-              {gridThemes.map((theme, idx) =>
-                theme ? (
-                  <Box
-                    key={idx}
-                    hoverImage={theme.hoverImage}
-                    vectorImage={theme.vectorImage}
-                    text={theme.text}
-                  />
-                ) : (
-                  <div key={idx} />
-                ),
-              )}
-            </div>
+          <div className="static z-[2] mt-24 grid grid-cols-2 grid-rows-5 gap-4 lg:ml-[-236px] lg:grid-cols-4 lg:grid-rows-3 lg:gap-[34px]">
+            {gridThemes.map((theme, idx) =>
+              theme ? (
+                <Box
+                  key={idx}
+                  hoverImage={theme.hoverImage}
+                  vectorImage={theme.vectorImage}
+                  text={theme.text}
+                />
+              ) : (
+                <div key={idx} />
+              ),
+            )}
           </div>
         </div>
       </div>

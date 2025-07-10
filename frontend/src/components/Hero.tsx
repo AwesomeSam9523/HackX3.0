@@ -8,6 +8,7 @@ import LightBlock from "@/components/LightBlock";
 import Timer from "@/components/Timer";
 import Themes from "@/components/Themes";
 import Sponsors from "@/components/Sponsors";
+import RegisterButton from "@/components/RegisterButton";
 
 interface FeaturesLogo {
   src: string;
@@ -33,9 +34,9 @@ const HeroSection = () => {
       <Navbar />
 
       {/* Main Content */}
-      <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-8 text-center">
+      <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-4 text-center lg:px-8">
         {/* Subtitle */}
-        <button className="font-avgardn mt-4 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-tight text-white uppercase transition-all duration-300">
+        <button className="font-avgardn mt-4 rounded-full border-2 border-white bg-transparent px-10 py-3 text-xs font-bold tracking-tight text-white uppercase transition-all duration-300 lg:text-lg">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
         </button>
         <div className="font-avgardn relative mt-6 inline-block px-4 py-2 font-bold text-white">
@@ -55,11 +56,11 @@ const HeroSection = () => {
             alt="HACKX 3.0 Logo"
             width={800}
             height={200}
-            className="ml-16 h-auto w-full max-w-[800px] object-contain"
+            className="h-auto w-full max-w-[800px] object-contain lg:ml-16"
             priority
           />
 
-          <div className="font-kinetikaUltra m-0 -mt-4 p-0 text-4xl leading-none font-extrabold text-white">
+          <div className="font-kinetikaUltra text-offwhite m-0 -mt-4 p-0 text-xl leading-none font-extrabold lg:text-4xl">
             MUJ&apos;S LARGEST HACKATHON
           </div>
 
@@ -67,8 +68,18 @@ const HeroSection = () => {
           <PrizePoolCircle />
         </div>
 
+        <div className="font-kinetikaUltra relative mt-12 flex w-full flex-col items-center gap-8 overflow-hidden py-2 text-white uppercase lg:hidden">
+          <div className="text-base">
+            Join the ultimate tech showdown a hackathon where your ideas ignite,
+            your code transforms, and your innovations shine!
+          </div>
+          <div className="w-1/2">
+            <RegisterButton />
+          </div>
+        </div>
+
         {/* Features - SDG Logos */}
-        <div className="mt-20 flex space-x-4">
+        <div className="mt-10 flex flex-wrap items-center justify-center lg:mt-20 lg:flex-nowrap lg:space-x-4">
           {FeatureLogos.map((logo, index) => (
             <div key={index} className="p-4">
               <Image
@@ -76,6 +87,7 @@ const HeroSection = () => {
                 alt={logo.alt}
                 width={90}
                 height={90}
+                className="h-20 w-20 object-contain"
               />
             </div>
           ))}
@@ -85,7 +97,7 @@ const HeroSection = () => {
         <HackathonStats />
 
         {/* CTA Buttons */}
-        <div className="mt-15 mb-15 flex flex-col gap-4 sm:flex-row">
+        <div className="mt-12 mb-15 hidden flex-col gap-4 sm:flex-row lg:mt-15 lg:flex">
           <JoinHackathonBanner />
         </div>
         <div className="absolute top-[50rem] right-0 -z-10 h-[20rem] w-1/2">
@@ -95,14 +107,14 @@ const HeroSection = () => {
           <Timer />
         </div>
 
-        <div className="mt-32 w-full">
+        <div className="mt-16 w-full lg:mt-32">
           <Themes />
         </div>
         <div className="absolute top-[160rem] left-0 -z-10 h-[20rem] w-1/2">
           <LightBlock position="left" />
         </div>
 
-        <div className="mt-32 w-full">
+        <div className="mt-16 w-full lg:mt-32">
           <Sponsors />
         </div>
       </div>

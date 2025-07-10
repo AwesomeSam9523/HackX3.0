@@ -3,7 +3,7 @@ import React from "react";
 const HackathonStats = () => {
   return (
     <>
-      <div className="mt-25 mb-20 flex flex-col items-center justify-center gap-10">
+      <div className="mt-20 mb-20 flex flex-col items-center justify-center gap-10 lg:mt-25">
         {" "}
         <div className="font-avgardn relative inline-block px-6 py-3 font-bold tracking-wider text-white">
           {/* Corner Borders */}

@@ -15,7 +15,7 @@ const JoinHackathonBanner = () => {
       </div>
 
       {/* Right Image */}
-      <div className="relative mb-40 h-[300px] w-[500px] sm:h-[400px] sm:w-[400px] md:h-[500px] md:w-[800px]">
+      <div className="relative mb-40 h-[300px] w-[100px] sm:h-[400px] sm:w-[400px] md:h-[500px] md:w-[800px]">
         <Image
           src="/HeroSection/ChipsSpline3.svg"
           alt="Glowing Shape"

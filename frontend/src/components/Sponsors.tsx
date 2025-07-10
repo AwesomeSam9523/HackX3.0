@@ -21,12 +21,12 @@ const sponsorLogos: SponsorLogo[] = [
 
 const Sponsors: React.FC = () => {
   return (
-    <section className="relative overflow-hidden px-8 py-16 text-white">
+    <section className="relative overflow-hidden py-16 text-white lg:px-8">
       {/* Corner decorative elements */}
-      <div className="absolute top-8 left-8 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"></div>
-      <div className="absolute top-8 right-8 hidden h-8 w-8 border-t-4 border-r-4 border-white md:block"></div>
-      <div className="absolute bottom-8 left-8 hidden h-8 w-8 border-b-4 border-l-4 border-white md:block"></div>
-      <div className="absolute right-8 bottom-8 hidden h-8 w-8 border-r-4 border-b-4 border-white md:block"></div>
+      <div className="absolute top-8 left-32 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"></div>
+      <div className="absolute top-8 right-32 hidden h-8 w-8 border-t-4 border-r-4 border-white md:block"></div>
+      <div className="absolute bottom-8 left-32 hidden h-8 w-8 border-b-4 border-l-4 border-white md:block"></div>
+      <div className="absolute right-32 bottom-8 hidden h-8 w-8 border-r-4 border-b-4 border-white md:block"></div>
 
       <div className="mx-auto max-w-6xl text-center">
         {/* Sponsors header with corner decorations */}
@@ -43,26 +43,31 @@ const Sponsors: React.FC = () => {
         </div>
 
         {/* Main heading */}
-        <h1 className="leading-wide font-kinetikaUltra mb-16 text-center text-5xl md:text-5xl lg:text-6xl">
+        <h1 className="leading-wide font-kinetikaUltra mb-16 text-center text-3xl md:text-5xl lg:text-6xl">
           <span className="block">POWERED BY</span>
           <span className="block">WORLD CLASS TEAMS</span>
           <span className="block">AND COMPANIES!</span>
         </h1>
 
         {/* Sponsor logos grid */}
-        <div className="grid grid-cols-2 items-center justify-items-center gap-6 opacity-80 md:grid-cols-4 lg:grid-cols-9">
-          {sponsorLogos.map((logo, index) => (
-            <div key={index} className="flex items-center justify-center">
-              <Image
-                src={`/sponsors/${logo.src}`}
-                className={"h-12 w-auto"}
-                alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
-                priority={index < 4} // Prioritize first 4 logos for faster loading
-              />
-            </div>
-          ))}
+        <div className="overflow-hidden">
+          <div className="animate-scroll flex w-max gap-6 opacity-80">
+            {[...sponsorLogos, ...sponsorLogos].map((logo, index) => (
+              <div
+                key={index}
+                className="flex min-w-[100px] items-center justify-center px-4"
+              >
+                <Image
+                  src={`/sponsors/${logo.src}`}
+                  className="h-12 w-auto"
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  priority={index < 4}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

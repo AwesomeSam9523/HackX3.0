@@ -1,13 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Instagram, Linkedin, Target, Phone } from "lucide-react";
+import { Instagram, Phone, Target } from "lucide-react";
 import Image from "next/image";
 import RegisterButton from "./RegisterButton";
 import { contactInfo } from "../../data/contactDetails";
+import { useIsMobile } from "@/hooks/isMobile";
+
+import ChipsSpline from "../../public/ChipsSpline4.svg";
+import ChipsSplineMobile from "../../public/ChipsSpline5.svg";
 
 const Footer: React.FC = () => {
   const [isContactExpanded, setIsContactExpanded] = useState(false);
+  const isMobile = useIsMobile();
 
   const toggleContact = () => {
     setIsContactExpanded(!isContactExpanded);
@@ -48,7 +53,7 @@ const Footer: React.FC = () => {
 
         {/* Main Headline */}
         <div className="mb-16 max-w-full text-center">
-          <h1 className="leading-tighter font-kinetikaUltra text-5xl tracking-wide uppercase md:text-5xl lg:text-6xl">
+          <h1 className="leading-tighter font-kinetikaUltra text-2xl leading-12 font-extrabold text-[#FFFFF1] uppercase md:text-5xl lg:text-6xl">
             <span className="block">LET&apos;S IGNITE INNOVATION</span>
             <span className="block">IN THE WORLD OF TECHNOLOGY</span>
             <span className="block">ONE PROJECT A TIME</span>
@@ -60,7 +65,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="z-10">
-          <p className="text-lg font-bold tracking-tighter text-[#429df2]">
+          <p className="text-base font-bold tracking-tighter text-[#429df2] lg:text-lg">
             ©2025 MUJHACKX, ALL RIGHTS RESERVED.
           </p>
         </div>
@@ -69,18 +74,13 @@ const Footer: React.FC = () => {
       <div className="relative w-full">
         <div className="absolute inset-x-0 bottom-0 z-0 h-[400px] transform" />
 
-        <Image
-          src="/HeroSection/Ellipse1.svg"
-          alt="HackxIcon"
-          width={1200}
-          height={1800}
-          className="absolute -z-20 mx-auto w-full -translate-y-1/2 rotate-x-180 transform pb-0"
-        />
+        {/* footer gradient */}
+        <div className="absolute left-1/2 block h-[60rem] w-[100rem] -translate-x-1/2 transform rounded-full bg-transparent bg-radial from-[#368BCC] to-[#020D85] blur-[200px]"></div>
 
         {/* Contact Us Expanded Panel */}
         {isContactExpanded && (
           <div className="absolute right-10 bottom-32 z-30">
-            <div className="w-96 rounded-3xl bg-black/50 p-8 backdrop-blur-sm">
+            <div className="bg-footer w-72 rounded-3xl py-8 backdrop-blur-sm">
               <div className="mb-6 flex items-center justify-center">
                 <div className="flex items-center gap-3">
                   <Phone size={24} className="text-white" />
@@ -88,10 +88,6 @@ const Footer: React.FC = () => {
                     CONTACT US
                   </span>
                 </div>
-                <div
-                  onClick={toggleContact}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10"
-                ></div>
               </div>
 
               <div className="space-y-6">
@@ -114,18 +110,10 @@ const Footer: React.FC = () => {
           </div>
         )}
 
-        <Image
-          src="/ChipsSpline4.svg"
-          alt="HackxIcon"
-          width={1200}
-          height={1800}
-          className="relative z-10 mx-auto pb-0"
-        />
-
-        <div className="absolute right-0 bottom-10 left-0 z-20 flex items-center justify-between px-8">
+        <div className="z-20 mt-12 flex items-center justify-between px-8 lg:absolute lg:right-0 lg:bottom-10 lg:left-0">
           {/* Social Links - Centered */}
           <div className="flex flex-1 justify-center">
-            <div className="flex w-fit items-center gap-4 rounded-full bg-black/40 px-6 py-4 backdrop-blur-sm">
+            <div className="bg-footer flex w-fit items-center gap-4 rounded-full px-6 py-4 backdrop-blur-sm">
               <a
                 href="#"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
@@ -142,16 +130,21 @@ const Footer: React.FC = () => {
                 href="#"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
               >
-                <Linkedin size={24} className="text-white" />
+                <Image
+                  src={"/linkedin.svg"}
+                  alt={"linkedinicon"}
+                  width={28}
+                  height={28}
+                />
               </a>
             </div>
           </div>
 
           {/* Contact Us Button - Absolute Right */}
-          <div className="absolute right-10 flex flex-1 justify-end">
+          <div className="absolute right-10 hidden flex-1 justify-end lg:flex">
             <button
               onClick={toggleContact}
-              className="flex items-center gap-3 rounded-full bg-black/40 px-6 py-6 backdrop-blur-sm transition-all hover:scale-110"
+              className="bg-footer flex items-center gap-3 rounded-full px-6 py-6 backdrop-blur-sm transition-all hover:scale-110"
             >
               <Phone size={20} className="text-white" />
               <span className="font-semibold tracking-wide text-white uppercase">
@@ -160,6 +153,14 @@ const Footer: React.FC = () => {
             </button>
           </div>
         </div>
+
+        <Image
+          src={isMobile ? ChipsSplineMobile : ChipsSpline}
+          alt="HackxIcon"
+          width={1200}
+          height={1800}
+          className="relative z-10 w-full pb-0 lg:mx-auto"
+        />
       </div>
     </div>
   );

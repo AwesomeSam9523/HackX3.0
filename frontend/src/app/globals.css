@@ -65,6 +65,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --d9color: #d9d9d91a;
   /* --font-sans: 'NortuneBlack', 'Inter', sans-serif; */
   --font-sans: "Inter", sans-serif;
 }
@@ -75,6 +76,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-footer: var(--d9color);
+  --color-offwhite: #fffff1;
   --font-sans: "Inter", sans-serif;
   --font-mono: var(--font-geist-mono); /* if defined elsewhere */
 }
@@ -85,6 +88,19 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
 }
 
 body {

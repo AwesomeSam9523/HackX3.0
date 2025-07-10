@@ -29,11 +29,8 @@ const Timer: React.FC = () => {
     minutes: 0,
     seconds: 0,
   });
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Set client flag and initialize timer
-    setIsClient(true);
     setTimeLeft(getTimeLeft(TARGET_DATE));
 
     const interval = setInterval(() => {
@@ -61,12 +58,10 @@ const Timer: React.FC = () => {
           className="text-wrapper font-kinetikaUltra relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-black tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
           suppressHydrationWarning={true}
         >
-          {isClient
-            ? `${timeLeft.days}D ${String(timeLeft.hours).padStart(2, "0")}H ${String(timeLeft.minutes).padStart(2, "0")}M ${String(timeLeft.seconds).padStart(2, "0")}S`
-            : "--D --H --M --S"}
+          {`${timeLeft.days}D ${String(timeLeft.hours).padStart(2, "0")}H ${String(timeLeft.minutes).padStart(2, "0")}M ${String(timeLeft.seconds).padStart(2, "0")}S`}
         </div>
       </div>
-      <div className="scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 sm:scrollbar-none mx-auto flex max-w-full flex-col items-center justify-center gap-4 overflow-x-auto sm:max-w-[900px] sm:flex-row sm:items-end sm:justify-between sm:gap-6 sm:overflow-x-visible">
+      <div className="scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 sm:scrollbar-none overflow-x-none mx-auto grid max-w-full grid-cols-2 grid-rows-2 items-center justify-center gap-4 sm:max-w-[900px] sm:flex-row sm:items-end sm:justify-between sm:gap-6 sm:overflow-x-visible lg:grid-cols-4 lg:grid-rows-1">
         {events.map((event, idx) => (
           <div
             key={idx}

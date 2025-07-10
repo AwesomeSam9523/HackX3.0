@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation, useMotionValue } from "framer-motion";
+import { useIsMobile } from "@/hooks/isMobile";
 
 interface CircularTextProps {
   text: string;
@@ -14,7 +15,6 @@ interface CircularTextProps {
 const CircularText: React.FC<CircularTextProps> = ({
   text,
   spinDuration = 20,
-  onHover = "speedUp",
   className = "",
   radius = 45,
 }) => {
@@ -39,51 +39,6 @@ const CircularText: React.FC<CircularTextProps> = ({
       },
     });
   }, [mounted, spinDuration, controls, rotation]);
-
-  const handleHoverStart = () => {
-    const start = rotation.get();
-    if (!onHover) return;
-
-    let duration = spinDuration;
-    switch (onHover) {
-      case "slowDown":
-        duration = spinDuration * 2;
-        break;
-      case "speedUp":
-        duration = spinDuration / 4;
-        break;
-      case "pause":
-        controls.stop();
-        return;
-      case "goBonkers":
-        duration = spinDuration / 10;
-        break;
-      default:
-        duration = spinDuration;
-    }
-
-    controls.start({
-      rotate: start + 360,
-      transition: {
-        ease: "linear",
-        duration: duration,
-        repeat: Infinity,
-      },
-    });
-  };
-
-  const handleHoverEnd = () => {
-    const start = rotation.get();
-    controls.start({
-      rotate: start + 360,
-      transition: {
-        ease: "linear",
-        duration: spinDuration,
-        repeat: Infinity,
-      },
-    });
-  };
-
   if (!mounted) return null;
 
   return (
@@ -92,8 +47,6 @@ const CircularText: React.FC<CircularTextProps> = ({
       style={{ rotate: rotation }}
       initial={{ rotate: 0 }}
       animate={controls}
-      onMouseEnter={handleHoverStart}
-      onMouseLeave={handleHoverEnd}
     >
       {letters.map((letter, i) => {
         const rotationDeg = (360 / letters.length) * i;
@@ -104,7 +57,7 @@ const CircularText: React.FC<CircularTextProps> = ({
         return (
           <span
             key={i}
-            className="font-kinetika absolute text-[8px] tracking-wide text-white uppercase"
+            className="font-kinetika absolute text-[6px] tracking-wide text-white uppercase lg:text-[8px]"
             style={{
               left: "50%",
               top: "50%",
@@ -125,34 +78,13 @@ const CircularText: React.FC<CircularTextProps> = ({
 
 const PrizePoolCircle = () => {
   const text = "TOTAL PRIZE POOL • TOTAL PRIZE POOL • ";
+  const isMobile = useIsMobile();
 
   return (
-    <div
-      className="relative"
-      style={{
-        width: "106.52px",
-        height: "108.41px",
-        background: "#D9D9D91A",
-        backdropFilter: "blur(51.37px)",
-        borderRadius: "50%",
-        position: "absolute",
-        zIndex: 20,
-        top: "23px",
-        right: "100px",
-        transform: "translate(40%, -40%)",
-      }}
-    >
-      <CircularText
-        text={text}
-        spinDuration={15}
-        onHover="speedUp"
-        radius={45}
-      />
+    <div className="absolute top-3 right-10 z-20 flex h-16 w-16 translate-x-2/5 -translate-y-2/5 transform items-center justify-center rounded-full bg-[#D9D9D91A] backdrop-blur-2xl lg:top-6 lg:right-24 lg:h-24 lg:w-24">
+      <CircularText text={text} spinDuration={15} radius={isMobile ? 27 : 42} />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span
-          className="text-2xl font-bold text-white"
-          style={{ transform: "rotate(-15.51deg)" }}
-        >
+        <span className="rotate-[-15.15deg] transform text-base font-bold text-white lg:text-2xl">
           ₹5L+
         </span>
       </div>
