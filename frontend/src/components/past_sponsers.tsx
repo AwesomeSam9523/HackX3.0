@@ -19,6 +19,19 @@ const PastSponsors = () => {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [pillStyle, setPillStyle] = useState({ width: 0, left: 0 });
 
+  // State for dynamic pill height
+  const [pillHeight, setPillHeight] = useState(70);
+
+  useEffect(() => {
+    const updatePillHeight = () => {
+      setPillHeight(window.innerWidth < 768 ? 54 : 70);
+    };
+
+    updatePillHeight();
+    window.addEventListener("resize", updatePillHeight);
+    return () => window.removeEventListener("resize", updatePillHeight);
+  }, []);
+
   // Ref for mobile scroll container
   const mobileScrollRef = useRef<HTMLDivElement>(null);
   const tabScrollRef = useRef<HTMLDivElement>(null);
@@ -28,21 +41,30 @@ const PastSponsors = () => {
     const idx = tabOptions.findIndex((tab) => tab.key === activeTab);
     const btn = tabRefs.current[idx];
     if (btn) {
-      const padding = 12;
+      const isMobile = window.innerWidth < 768;
+      const padding = isMobile ? 8 : 12; // Reduced padding for mobile
+
       if (idx === 0) {
         // First tab: align pill to parent's left edge
+        const width = isMobile
+          ? btn.offsetWidth + btn.offsetLeft / 2 // Reduced width for mobile
+          : btn.offsetWidth + btn.offsetLeft;
         setPillStyle({
-          width: btn.offsetWidth + btn.offsetLeft,
+          width: width,
           left: 7,
         });
       } else {
+        const width = isMobile
+          ? btn.offsetWidth // Reduced width for mobile
+          : btn.offsetWidth;
         setPillStyle({
-          width: btn.offsetWidth,
+          width: width,
           left: btn.offsetLeft - padding,
         });
       }
+
       // Scroll tab into view on mobile
-      if (window.innerWidth < 768 && tabScrollRef.current) {
+      if (isMobile && tabScrollRef.current) {
         const scrollContainer = tabScrollRef.current;
         const btnRect = btn.getBoundingClientRect();
         const containerRect = scrollContainer.getBoundingClientRect();
@@ -58,6 +80,40 @@ const PastSponsors = () => {
         }
       }
     }
+  }, [activeTab]);
+
+  // Add resize event listener to handle device orientation changes
+  useEffect(() => {
+    const handleResize = () => {
+      // Recalculate pill position on resize
+      const idx = tabOptions.findIndex((tab) => tab.key === activeTab);
+      const btn = tabRefs.current[idx];
+      if (btn) {
+        const isMobile = window.innerWidth < 768;
+        const padding = isMobile ? 8 : 12; // Reduced padding for mobile
+
+        if (idx === 0) {
+          const width = isMobile
+            ? btn.offsetWidth + btn.offsetLeft / 2 // Reduced width for mobile
+            : btn.offsetWidth + btn.offsetLeft;
+          setPillStyle({
+            width: width,
+            left: 7,
+          });
+        } else {
+          const width = isMobile
+            ? btn.offsetWidth - 16 // Reduced width for mobile
+            : btn.offsetWidth;
+          setPillStyle({
+            width: width,
+            left: btn.offsetLeft - padding,
+          });
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [activeTab]);
 
   useEffect(() => {
@@ -111,12 +167,12 @@ const PastSponsors = () => {
       <h2 className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
         OUR PAST PARTNERS
       </h2>
-      {/* Option selector: pill for desktop, stacked for mobile */}
-      {/* Desktop pill selector */}
+
+      {/* Unified pill selector for both desktop and mobile */}
       <div
         ref={tabScrollRef}
-        className="scrollbar-hide relative mx-auto mb-10 hidden h-[86px] items-center justify-start gap-0 rounded-full border-[3px] border-[#fffff1] bg-transparent md:flex md:overflow-hidden"
-        style={{ WebkitOverflowScrolling: "touch" }}
+        className="scrollbar-hide relative mx-auto mb-10 flex h-[70px] w-full max-w-fit items-center justify-start gap-0 overflow-x-auto rounded-full border-2 border-[#fffff1] bg-transparent px-2 md:h-[86px] md:overflow-hidden md:border-[3px] md:px-0"
+        style={{ WebkitOverflowScrolling: "touch", minWidth: "fit-content" }}
       >
         {/* Sliding pill background */}
         <div
@@ -124,7 +180,7 @@ const PastSponsors = () => {
           style={{
             width: pillStyle.width,
             left: pillStyle.left,
-            height: "70px",
+            height: pillHeight,
             top: "50%",
             transform: "translateY(-50%)",
           }}
@@ -135,7 +191,7 @@ const PastSponsors = () => {
             ref={(el) => {
               tabRefs.current[idx] = el;
             }}
-            className={`relative z-10 h-[70px] rounded-full px-10 font-['AvantGarde-Bk-BT',sans-serif] text-2xl font-extrabold whitespace-nowrap transition-all duration-200 focus:outline-none ${
+            className={`relative z-10 h-[54px] flex-shrink-0 rounded-full px-4 font-['AvantGarde-Bk-BT',sans-serif] text-base font-extrabold whitespace-nowrap transition-all duration-200 focus:outline-none md:h-[70px] md:px-10 md:text-2xl ${
               activeTab === tab.key ? "text-[#222]" : "text-[#fffff1]"
             }`}
             style={{ border: "none" }}
@@ -145,22 +201,7 @@ const PastSponsors = () => {
           </button>
         ))}
       </div>
-      {/* Mobile stacked selector */}
-      <div className="w-min-xs mx-auto mb-10 flex flex-col gap-3 md:hidden">
-        {tabOptions.map((tab) => (
-          <button
-            key={tab.key}
-            className={`w-full rounded-xl border-2 py-4 font-['AvantGarde-Bk-BT',sans-serif] text-2xl font-extrabold transition-all duration-200 focus:outline-none ${
-              activeTab === tab.key
-                ? "border-[#fffff1] bg-[#fffff1] text-[#222]"
-                : "border-[#fffff1] bg-transparent text-[#fffff1]"
-            }`}
-            onClick={() => setActiveTab(tab.key as typeof activeTab)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+
       <div className="flex w-full max-w-6xl flex-col gap-8">
         {/* Mobile: horizontal scrollable row, Desktop: keep grid */}
         {/* Desktop grid (md and above) */}
