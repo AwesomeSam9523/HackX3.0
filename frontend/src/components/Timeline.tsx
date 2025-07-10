@@ -68,6 +68,7 @@ const HackathonTimeline: React.FC = () => {
               key={index}
               className="relative flex w-full flex-col items-center"
             >
+
               {/* Horizontal line at the top of the box  */}
               <div
                 className={`absolute top-[68px] z-10 hidden lg:block ${
@@ -75,6 +76,7 @@ const HackathonTimeline: React.FC = () => {
                 } w-[calc(42%-40px)]`}
                 style={{
                   height: "4px",
+
 
                   background: isLeft
                     ? "linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0.3))"
@@ -105,6 +107,7 @@ const HackathonTimeline: React.FC = () => {
               {/* Container for date/time and the box */}
               <div
                 className={`w-full md:w-1/2 ${
+
                   isLeft
                     ? "pr-0 pl-0 md:ml-auto md:pl-20"
                     : "pr-0 pl-0 md:mr-auto md:pr-20"
@@ -118,12 +121,14 @@ const HackathonTimeline: React.FC = () => {
                     {item.date}
                   </div>
                   <div className="text-2xl font-bold text-gray-600">
+
                     {item.time}
                   </div>
                 </div>
 
                 {/* Content Box */}
                 <div className="bg-opacity-60 font-avgardn rounded-xl bg-white/15 px-8 py-10 text-white shadow-lg backdrop-blur-md">
+
                   {/* Mobile date/time */}
                   <div className="mb-4 block text-center md:hidden">
                     <div className="text-md font-bold text-white">
@@ -131,6 +136,7 @@ const HackathonTimeline: React.FC = () => {
                     </div>
                     <div className="text-md text-white">{item.time}</div>
                   </div>
+
                   <ul className="list-disc space-y-2 pl-5 text-xl">
                     {item.points.map((point, i) => (
                       <li key={i}>{point}</li>

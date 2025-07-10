@@ -115,12 +115,12 @@ const PastSponsors = () => {
       {/* Desktop pill selector */}
       <div
         ref={tabScrollRef}
-        className="scrollbar-hide relative mx-auto mb-10 box-border hidden h-[86px] w-full max-w-xl items-center justify-start gap-0 rounded-full border-[3px] border-[#fffff1] bg-transparent p-2 md:flex md:overflow-visible"
+        className="scrollbar-hide relative mx-auto mb-10 hidden h-[86px] items-center justify-start gap-0 rounded-full border-[3px] border-[#fffff1] bg-transparent md:flex md:overflow-hidden"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         {/* Sliding pill background */}
         <div
-          className="absolute left-0 z-0 rounded-full bg-[#fffff1] transition-all duration-300 ease-in-out"
+          className="absolute z-0 rounded-full bg-[#fffff1] transition-all duration-300 ease-in-out"
           style={{
             width: pillStyle.width,
             left: pillStyle.left,
@@ -146,7 +146,7 @@ const PastSponsors = () => {
         ))}
       </div>
       {/* Mobile stacked selector */}
-      <div className="mx-auto mb-10 flex w-full max-w-xs flex-col gap-3 md:hidden">
+      <div className="w-min-xs mx-auto mb-10 flex flex-col gap-3 md:hidden">
         {tabOptions.map((tab) => (
           <button
             key={tab.key}
@@ -172,7 +172,6 @@ const PastSponsors = () => {
                   key={idx}
                   className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg transition-transform duration-300 hover:scale-105"
                 >
-                  {/* Logo container - centers the logo */}
                   <div className="flex flex-grow items-center justify-center p-4">
                     <Image
                       src={sponsor.logo}

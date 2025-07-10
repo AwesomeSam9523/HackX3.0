@@ -7,8 +7,8 @@ const TARGET_DATE = new Date("2025-10-30T09:00:00");
 const events = [
   { month: "SEP", day: "01", label: "REGISTRATIONS\nBEGIN" },
   { month: "OCT", day: "15", label: "REGISTRATIONS\nEND" },
-  { month: "NOV", day: "14", label: "OPENING CEREMONY\n& HACKATHON BEGINS" },
-  { month: "NOV", day: "15", label: "HACKATHON ENDS\n& CLOSING" },
+  { month: "OCT", day: "31", label: "OPENING CEREMONY\n& HACKATHON BEGINS" },
+  { month: "NOV", day: "01", label: "HACKATHON ENDS\n& CLOSING" },
 ];
 
 function getTimeLeft(targetDate: Date) {
