@@ -22,7 +22,7 @@ const Background = () => {
           alt="Background decoration"
           width={384}
           height={384}
-          className="absolute top-1/2 right-0 z-7 h-auto w-[30rem] max-w-none -translate-y-1/2 transform sm:h-full sm:w-[40rem] sm:translate-x-[28%] lg:max-w-full"
+          className="absolute top-1/2 right-0 z-7 h-auto w-[8rem] max-w-none -translate-y-1/2 transform sm:h-full sm:w-[40rem] sm:translate-x-[28%] lg:max-w-full"
           priority
         />
         <Image
@@ -30,7 +30,7 @@ const Background = () => {
           alt="Background decoration"
           width={384}
           height={384}
-          className="absolute top-3/4 left-0 z-7 h-auto w-[30rem] max-w-none transform sm:h-full sm:w-[40rem] sm:-translate-x-[28%] lg:max-w-full"
+          className="absolute top-3/4 left-0 z-7 h-auto w-[8rem] max-w-none transform sm:h-full sm:w-[40rem] sm:-translate-x-[28%] lg:max-w-full"
           priority
         />
       </div>
