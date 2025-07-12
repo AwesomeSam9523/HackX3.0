@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
       icon: "calender.svg",
       alt: "Calendar",
       label: "Timeline",
-      path: "/calender",
+      path: "/timeline",
       darkIcon: "calender.svg",
     },
     {
