@@ -1,4 +1,4 @@
-import PastSponsors from "@/components/past_sponsers";
+import PastSponsors from "@/components/PastSponsors";
 import CommunityPartners from "@/components/CommunityPartners";
 import WhyUsSection from "@/components/WhyUsSection";
 import Background from "@/components/Background";
