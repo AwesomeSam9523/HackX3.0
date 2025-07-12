@@ -8,13 +8,30 @@ const Background = () => {
       <XComponent />
 
       <div className="absolute left-1/2 -z-10 block h-[60rem] w-[100rem] -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-transparent bg-radial from-[#368BCC] to-[#020D85] blur-[200px]"></div>
-      <div className="hidden">
+      <div className="pointer-events-none absolute top-0 left-0 z-6 flex h-screen w-full items-start lg:items-center lg:justify-center">
         <Image
-          src="/HeroSection/X.svg"
-          alt="HackxIcon"
-          width={895}
-          height={1000}
-          className="absolute top-1/2 left-1/2 -z-100 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-overlay"
+          src={"/ChipsSpline1.svg"}
+          alt="Background decoration"
+          width={384}
+          height={384}
+          className="absolute top-0 left-1/2 z-7 h-auto w-[30rem] max-w-none -translate-x-1/2 transform sm:h-full sm:w-[40rem] sm:-translate-y-2/5 lg:max-w-full"
+          priority
+        />
+        <Image
+          src={"/ChipsSpline2.svg"}
+          alt="Background decoration"
+          width={384}
+          height={384}
+          className="absolute top-1/2 right-0 z-7 h-auto w-[30rem] max-w-none -translate-y-1/2 transform sm:h-full sm:w-[40rem] sm:translate-x-[28%] lg:max-w-full"
+          priority
+        />
+        <Image
+          src={"/ChipsSpline3.svg"}
+          alt="Background decoration"
+          width={384}
+          height={384}
+          className="absolute top-3/4 left-0 z-7 h-auto w-[30rem] max-w-none transform sm:h-full sm:w-[40rem] sm:-translate-x-[28%] lg:max-w-full"
+          priority
         />
       </div>
     </div>
