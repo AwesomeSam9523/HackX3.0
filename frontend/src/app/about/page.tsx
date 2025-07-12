@@ -7,13 +7,13 @@ import HackathonStats from "@/components/Statistics";
 
 export default function About() {
   return (
-    <main>
+    <div className="relative overflow-x-clip">
       <Background />
       <Navbar />
       <WhyUsSection />
       <HackathonStats />
       <PastSponsors />
       <CommunityPartners />
-    </main>
+    </div>
   );
 }

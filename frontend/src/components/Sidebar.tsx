@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
       alt: "Favorites",
       label: "Ambassador",
       path: "/ambassador",
-      darkIcon: "ambassador.svg",
+      darkIcon: "ambassadorDark.svg",
     },
     {
       icon: "team.svg",
@@ -50,7 +50,7 @@ const Sidebar: React.FC = () => {
       alt: "Gallery",
       label: "Gallery",
       path: "/gallery",
-      darkIcon: "gallery.svg",
+      darkIcon: "galleryDark.svg",
     },
     {
       icon: "contact.svg",

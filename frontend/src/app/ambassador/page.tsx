@@ -4,11 +4,11 @@ import Navbar from "@/components/Navbar";
 
 export default function Ambassador() {
   return (
-    <main>
+    <div className="relative overflow-x-clip">
       <Background />
       <Navbar />
 
       <WhyApplySection />
-    </main>
+    </div>
   );
 }

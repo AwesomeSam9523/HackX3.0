@@ -4,10 +4,10 @@ import HackathonTimeline from "@/components/Timeline";
 
 export default function Timeline() {
   return (
-    <main>
+    <div className="relative overflow-x-clip">
       <Background />
       <Navbar />
       <HackathonTimeline />
-    </main>
+    </div>
   );
 }

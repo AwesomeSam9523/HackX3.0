@@ -199,7 +199,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="space-y-8 px-2 sm:space-y-16 sm:px-4 md:px-8">
+      <div className="flex flex-col items-center justify-start space-y-8 px-2 sm:space-y-16 sm:px-4 md:px-8">
         {galleryData.map((section, idx) => (
           <div key={idx} className="relative space-y-4 sm:space-y-8">
             {/* Section Title with SVG corners */}
@@ -285,16 +285,16 @@ const Page = () => {
             <div className="relative">
               {/* Corner Decorators - Hidden on mobile */}
               {/* Top Left Corner Decorator */}
-              <div className="absolute top-0 left-20 hidden h-6 w-6 border-t-4 border-l-4 border-white sm:left-40 sm:h-8 sm:w-8 lg:left-80 lg:block"></div>
+              <div className="absolute top-0 left-20 hidden h-6 w-6 border-t-4 border-l-4 border-white sm:left-40 sm:h-8 sm:w-8 lg:left-0 lg:block"></div>
 
               {/* Top Right Corner Decorator */}
-              <div className="absolute top-0 right-20 hidden h-6 w-6 border-t-4 border-r-4 border-white sm:right-40 sm:h-8 sm:w-8 lg:right-80 lg:block"></div>
+              <div className="absolute top-0 right-20 hidden h-6 w-6 border-t-4 border-r-4 border-white sm:right-40 sm:h-8 sm:w-8 lg:right-0 lg:block"></div>
 
               {/* Bottom Left Corner Decorator */}
-              <div className="absolute bottom-0 left-20 hidden h-6 w-6 border-b-4 border-l-4 border-white sm:left-40 sm:h-8 sm:w-8 lg:left-80 lg:block"></div>
+              <div className="absolute bottom-0 left-20 hidden h-6 w-6 border-b-4 border-l-4 border-white sm:left-40 sm:h-8 sm:w-8 lg:left-0 lg:block"></div>
 
               {/* Bottom Right Corner Decorator */}
-              <div className="absolute right-20 bottom-0 hidden h-6 w-6 border-r-4 border-b-4 border-white sm:right-40 sm:h-8 sm:w-8 lg:right-80 lg:block"></div>
+              <div className="absolute right-20 bottom-0 hidden h-6 w-6 border-r-4 border-b-4 border-white sm:right-40 sm:h-8 sm:w-8 lg:right-0 lg:block"></div>
 
               {renderImageGrid(section.images)}
             </div>
