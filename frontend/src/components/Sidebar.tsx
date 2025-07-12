@@ -116,7 +116,7 @@ const Sidebar: React.FC = () => {
                 >
                   <span
                     className={`text-lg font-medium whitespace-nowrap ${
-                      isActive ? "text-gray-800" : "text-white"
+                      isActive ? "text-gray-800" : "text-offwhite"
                     }`}
                   >
                     {item.label}

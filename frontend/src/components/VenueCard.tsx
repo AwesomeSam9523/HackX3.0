@@ -15,7 +15,7 @@ const cardData: CardProps[] = [
       <>
         Book tickets from IRCTC. The campus is <strong>25 KMs</strong> from{" "}
         <strong>Jaipur Railway Station</strong> and cab fare is around{" "}
-        <span className="font-semibold text-white">₹500–₹600</span>.
+        <span className="text-offwhite font-semibold">₹500–₹600</span>.
       </>
     ),
   },
@@ -36,21 +36,21 @@ const cardData: CardProps[] = [
       <>
         Only if nearby. <strong>Sindhi Camp</strong> is <strong>30 KMs</strong>{" "}
         away. Auto fare is approx{" "}
-        <span className="font-semibold text-white">₹400–₹450</span>.
+        <span className="text-offwhite font-semibold">₹400–₹450</span>.
       </>
     ),
   },
 ];
 
 const Card: React.FC<CardProps> = ({ icon, title, description }) => (
-  <div className="flex h-[16rem] w-[22rem] flex-col items-center justify-center rounded-xl border border-white/20 bg-white/[0.02] px-8 text-center text-white shadow-md shadow-blue-500/20 backdrop-blur-md transition-transform duration-300 hover:scale-105">
+  <div className="text-offwhite flex h-[16rem] w-[22rem] flex-col items-center justify-center rounded-xl border border-white/20 bg-white/[0.02] px-8 text-center shadow-md shadow-blue-500/20 backdrop-blur-md transition-transform duration-300 hover:scale-105">
     <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-3 border-white text-3xl">
       {icon}
     </div>
-    <h3 className="font-avgardn mb-2 text-xl font-semibold tracking-wide text-white uppercase">
+    <h3 className="font-avgardn text-offwhite mb-2 text-xl font-semibold tracking-wide uppercase">
       {title}
     </h3>
-    <p className="text-md font-avgardn px-4 text-white">{description}</p>
+    <p className="text-md font-avgardn text-offwhite px-4">{description}</p>
   </div>
 );
 
@@ -108,7 +108,7 @@ export default function TransportCards() {
             </svg>
           </div>
 
-          <h3 className="font-avgardn text-center text-xl font-bold tracking-wider text-white">
+          <h3 className="font-avgardn text-offwhite text-center text-xl font-bold tracking-wider">
             REACHING THE VENUE : MANIPAL UNIVERSITY JAIPUR
           </h3>
         </div>

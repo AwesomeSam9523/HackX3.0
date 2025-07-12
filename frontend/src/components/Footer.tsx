@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className="relative z-20 overflow-hidden bg-black text-white">
+    <div className="text-offwhite relative z-20 overflow-hidden bg-black">
       <div className="absolute inset-0 z-0" />
 
       <div className="relative z-10 flex flex-col items-center justify-end px-6 text-center">
@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
               <div className="absolute right-0 bottom-0 h-1 w-4 bg-white"></div>
             </div>
 
-            <span className="w-full text-2xl font-bold tracking-tighter text-white uppercase md:text-4xl">
+            <span className="text-offwhite w-full text-2xl font-bold tracking-tighter uppercase md:text-4xl">
               THIS IS YOUR CALL
             </span>
           </div>
@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
 
         {/* Main Headline */}
         <div className="mb-16 max-w-full text-center">
-          <h1 className="leading-tighter font-kinetikaUltra text-2xl leading-12 font-extrabold text-[#FFFFF1] uppercase md:text-5xl lg:text-6xl">
+          <h1 className="leading-tighter font-kinetikaUltra text-offwhite text-2xl leading-12 font-extrabold uppercase md:text-5xl lg:text-6xl">
             <span className="block">LET&apos;S IGNITE INNOVATION</span>
             <span className="block">IN THE WORLD OF TECHNOLOGY</span>
             <span className="block">ONE PROJECT A TIME</span>
@@ -83,8 +83,8 @@ const Footer: React.FC = () => {
             <div className="bg-footer w-72 rounded-3xl py-8 backdrop-blur-sm">
               <div className="mb-6 flex items-center justify-center">
                 <div className="flex items-center gap-3">
-                  <Phone size={24} className="text-white" />
-                  <span className="text-xl font-bold text-white uppercase">
+                  <Phone size={24} className="text-offwhite" />
+                  <span className="text-offwhite text-xl font-bold uppercase">
                     CONTACT US
                   </span>
                 </div>
@@ -96,10 +96,12 @@ const Footer: React.FC = () => {
                     <h3 className="mb-2 text-xl font-bold text-cyan-400">
                       {contact.name}
                     </h3>
-                    <p className="mb-1 text-lg text-white">{contact.phone}</p>
+                    <p className="text-offwhite mb-1 text-lg">
+                      {contact.phone}
+                    </p>
                     <a
                       href={`mailto:${contact.email}`}
-                      className="text-white underline transition-colors hover:text-cyan-400"
+                      className="text-offwhite underline transition-colors hover:text-cyan-400"
                     >
                       {contact.email}
                     </a>
@@ -118,13 +120,13 @@ const Footer: React.FC = () => {
                 href="#"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
               >
-                <Target size={24} className="text-white" />
+                <Target size={24} className="text-offwhite" />
               </a>
               <a
                 href="#"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
               >
-                <Instagram size={24} className="text-white" />
+                <Instagram size={24} className="text-offwhite" />
               </a>
               <a
                 href="#"
@@ -146,8 +148,8 @@ const Footer: React.FC = () => {
               onClick={toggleContact}
               className="bg-footer flex items-center gap-3 rounded-full px-6 py-6 backdrop-blur-sm transition-all hover:scale-110"
             >
-              <Phone size={20} className="text-white" />
-              <span className="font-semibold tracking-wide text-white uppercase">
+              <Phone size={20} className="text-offwhite" />
+              <span className="text-offwhite font-semibold tracking-wide uppercase">
                 Contact Us
               </span>
             </button>

@@ -57,7 +57,7 @@ const CircularText: React.FC<CircularTextProps> = ({
         return (
           <span
             key={i}
-            className="font-kinetika absolute text-[6px] tracking-wide text-white uppercase lg:text-[8px]"
+            className="font-kinetika text-offwhite absolute text-[6px] tracking-wide uppercase lg:text-[8px]"
             style={{
               left: "50%",
               top: "50%",
@@ -84,7 +84,7 @@ const PrizePoolCircle = () => {
     <div className="absolute top-3 right-10 z-20 flex h-16 w-16 translate-x-2/5 -translate-y-2/5 transform items-center justify-center rounded-full bg-[#D9D9D91A] backdrop-blur-2xl lg:top-6 lg:right-24 lg:h-24 lg:w-24">
       <CircularText text={text} spinDuration={15} radius={isMobile ? 27 : 42} />
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="rotate-[-15.15deg] transform text-base font-bold text-white lg:text-2xl">
+        <span className="text-offwhite rotate-[-15.15deg] transform text-base font-bold lg:text-2xl">
           ₹5L+
         </span>
       </div>

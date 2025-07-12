@@ -48,11 +48,11 @@ const timelineData: TimelineItem[] = [
 const HackathonTimeline: React.FC = () => {
   return (
     <div className="relative z-10 mx-auto max-w-5xl px-4 py-16">
-      <div className="flex flex-col items-center justify-center gap-5">
-        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+      <div className="mb-10 flex flex-col items-center justify-center gap-5">
+        <button className="font-avgardn text-offwhite mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
           HERE&apos;S HOW THE EVENT WILL PROGRESS
         </button>
-        <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+        <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-8xl">
           TIMELINE
         </div>
       </div>
@@ -68,7 +68,6 @@ const HackathonTimeline: React.FC = () => {
               key={index}
               className="relative flex w-full flex-col items-center"
             >
-
               {/* Horizontal line at the top of the box  */}
               <div
                 className={`absolute top-[68px] z-10 hidden lg:block ${
@@ -76,7 +75,6 @@ const HackathonTimeline: React.FC = () => {
                 } w-[calc(42%-40px)]`}
                 style={{
                   height: "4px",
-
 
                   background: isLeft
                     ? "linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0.3))"
@@ -107,7 +105,6 @@ const HackathonTimeline: React.FC = () => {
               {/* Container for date/time and the box */}
               <div
                 className={`w-full md:w-1/2 ${
-
                   isLeft
                     ? "pr-0 pl-0 md:ml-auto md:pl-20"
                     : "pr-0 pl-0 md:mr-auto md:pr-20"
@@ -117,24 +114,22 @@ const HackathonTimeline: React.FC = () => {
                 <div
                   className={`mb-2 ${isLeft ? "text-right" : "text-left"} hidden md:block`}
                 >
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-offwhite text-2xl font-bold">
                     {item.date}
                   </div>
                   <div className="text-2xl font-bold text-gray-600">
-
                     {item.time}
                   </div>
                 </div>
 
                 {/* Content Box */}
-                <div className="bg-opacity-60 font-avgardn rounded-xl bg-white/15 px-8 py-10 text-white shadow-lg backdrop-blur-md">
-
+                <div className="bg-opacity-60 font-avgardn text-offwhite rounded-xl bg-white/15 px-8 py-10 shadow-lg backdrop-blur-md">
                   {/* Mobile date/time */}
                   <div className="mb-4 block text-center md:hidden">
-                    <div className="text-md font-bold text-white">
+                    <div className="text-md text-offwhite font-bold">
                       {item.date}
                     </div>
-                    <div className="text-md text-white">{item.time}</div>
+                    <div className="text-md text-offwhite">{item.time}</div>
                   </div>
 
                   <ul className="list-disc space-y-2 pl-5 text-xl">

@@ -17,11 +17,11 @@ const BecomeAmbassadorBanner = () => {
       </div>
       {/* Right Content */}
       <div className="relative z-10 ml-auto flex flex-col items-start justify-center pr-12">
-        <h2 className="font-kinetikaUltra relative -top-5 mb-2 w-full text-center text-2xl leading-tight font-extrabold tracking-wide text-white uppercase md:text-3xl">
+        <h2 className="font-kinetikaUltra text-offwhite relative -top-5 mb-2 w-full text-center text-2xl leading-tight font-extrabold tracking-wide uppercase md:text-3xl">
           BECOME THE CAMPUS <br />
           <span className="inline-block pl-20">AMBASSADOR!</span>
         </h2>
-        <button className="-mt-6 self-end rounded-full border-2 border-white px-5 py-1 text-base font-bold text-white transition hover:bg-white hover:text-[#181c27]">
+        <button className="text-offwhite -mt-6 self-end rounded-full border-2 border-white px-5 py-1 text-base font-bold transition hover:bg-white hover:text-[#181c27]">
           APPLY NOW!
         </button>
       </div>

@@ -41,7 +41,7 @@ const Timer: React.FC = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-8 max-w-[1100px] px-2 font-['Kinetika',sans-serif] text-white sm:px-4">
+    <div className="text-offwhite mx-auto my-8 max-w-[1100px] px-2 font-['Kinetika',sans-serif] sm:px-4">
       <div className="mb-6 flex w-full justify-center sm:mb-11">
         <div className="relative mb-2 inline-block px-6 py-4 text-center font-['AvantGarde-Bk-BT',sans-serif] text-[18px] leading-[0.99] font-bold tracking-[-0.02em] uppercase sm:text-[20.34px]">
           {/* The transform: translate values below have been changed from 6px to 12px */}
@@ -77,7 +77,7 @@ const Timer: React.FC = () => {
                 {event.day}
               </div>
             </div>
-            <div className="text-shadow relative isolate z-10 mt-2 flex max-w-[180px] flex-col items-center justify-start text-[0.95rem] leading-[1.1] font-semibold tracking-[-1px] text-white uppercase sm:max-w-[240px] sm:text-[1.1rem]">
+            <div className="text-shadow text-offwhite relative isolate z-10 mt-2 flex max-w-[180px] flex-col items-center justify-start text-[0.95rem] leading-[1.1] font-semibold tracking-[-1px] uppercase sm:max-w-[240px] sm:text-[1.1rem]">
               {event.label.split("\n").map((line, i) => {
                 if (
                   ["BEGIN", "END", "& HACKATHON BEGINS", "& CLOSING"].includes(

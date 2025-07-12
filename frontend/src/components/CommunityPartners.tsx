@@ -2,7 +2,7 @@ import React from "react";
 
 const CommunityPartners: React.FC = () => {
   return (
-    <section className="relative overflow-hidden bg-black px-8 pt-0 pb-16 text-white">
+    <section className="text-offwhite relative overflow-hidden bg-black px-8 pt-0 pb-16">
       {/* Ellipse background in top left corner */}
       {/* <div
         style={{

@@ -26,7 +26,7 @@ const contacts = [
 
 const VenueContact: React.FC = () => {
   return (
-    <div className="bg-black px-4 py-12 text-white md:px-16">
+    <div className="text-offwhite bg-black px-4 py-12 md:px-16">
       {/* Decorative Heading */}
       <div className="mt-10 mb-10 flex justify-center">
         <div className="relative px-8 py-2 text-center">
@@ -56,7 +56,7 @@ const VenueContact: React.FC = () => {
               </svg>
             </div>
           ))}
-          <h3 className="font-avgardn max-w-3xl text-xl tracking-wider text-white uppercase">
+          <h3 className="font-avgardn text-offwhite max-w-3xl text-xl tracking-wider uppercase">
             Need further assistance? Don’t hesitate to reach out to our team
           </h3>
         </div>
@@ -73,23 +73,23 @@ const VenueContact: React.FC = () => {
             <p className="font-avgardn mb-4 text-sm text-gray-400">
               {person.role.toUpperCase()}
             </p>
-            <p className="font-avgardn mt-2 text-sm text-white">
+            <p className="font-avgardn text-offwhite mt-2 text-sm">
               {person.phone}
             </p>
             <a
               href={`tel:${person.phone.replace(/ /g, "")}`}
               className="mt-4 inline-flex h-10 w-30 items-center justify-center rounded-3xl border border-white/20 bg-white/10 transition hover:bg-white/20"
             >
-              <Phone className="h-5 w-5 text-white" />
+              <Phone className="text-offwhite h-5 w-5" />
             </a>
           </div>
         ))}
       </div>
 
       {/* Email */}
-      <p className="font-avgardn mt-12 text-center text-lg font-semibold text-white">
+      <p className="font-avgardn text-offwhite mt-12 text-center text-lg font-semibold">
         OR MAIL US AT:{" "}
-        <a href="mailto:hackxmuj@gmail.com" className="text-white">
+        <a href="mailto:hackxmuj@gmail.com" className="text-offwhite">
           HACKXMUJ@GMAIL.COM
         </a>
       </p>

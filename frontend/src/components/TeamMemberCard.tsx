@@ -64,7 +64,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
           className="h-full w-full object-cover"
         />
       </div>
-      <h3 className="mb-2 text-2xl font-extrabold tracking-tighter text-white drop-shadow-lg">
+      <h3 className="text-offwhite mb-2 text-2xl font-extrabold tracking-tighter drop-shadow-lg">
         {member.name}
       </h3>
       <p className="mb-4 text-sm font-extrabold whitespace-pre-line text-gray-200 drop-shadow-md">

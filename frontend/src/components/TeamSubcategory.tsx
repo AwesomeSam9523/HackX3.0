@@ -66,7 +66,7 @@ const TeamSubcategoryComponent: React.FC<TeamSubcategoryProps> = ({
             </svg>
           </div>
 
-          <h3 className="text-xl font-bold tracking-wider text-white">
+          <h3 className="text-offwhite text-xl font-bold tracking-wider">
             {subcategory.title}
           </h3>
         </div>

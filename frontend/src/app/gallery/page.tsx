@@ -5,7 +5,7 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { GalleryImage } from "../../../types/gallery";
 import { galleryData } from "../../../data/galleryData";
-import XComponent from "@/components/XComponent";
+import Background from "@/components/Background";
 
 const Page = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -186,15 +186,15 @@ const Page = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative z-40 min-h-screen w-full overflow-hidden bg-gradient-to-b from-blue-500 via-black to-black text-white"
+      className="text-offwhite relative z-40 min-h-screen w-full overflow-hidden"
     >
+      <Background />
       <Navbar />
-      <XComponent />
       <div className="flex flex-col items-center justify-center gap-5">
-        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+        <button className="font-avgardn text-offwhite mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
           GLIMPSE OF OUR PREVIOUS EDITIONS
         </button>
-        <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+        <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
           GALLERY
         </div>
       </div>
@@ -276,7 +276,7 @@ const Page = () => {
                 </svg>
               </div>
 
-              <h3 className="text-center text-lg font-bold tracking-wider text-white sm:text-xl">
+              <h3 className="text-offwhite text-center text-lg font-bold tracking-wider sm:text-xl">
                 {section.title}
               </h3>
             </div>

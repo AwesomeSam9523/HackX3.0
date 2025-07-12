@@ -59,7 +59,7 @@ const PastSponsors = () => {
           : btn.offsetWidth;
         setPillStyle({
           width: width,
-          left: btn.offsetLeft - padding,
+          left: btn.offsetLeft - padding + 6,
         });
       }
 
@@ -106,7 +106,7 @@ const PastSponsors = () => {
             : btn.offsetWidth;
           setPillStyle({
             width: width,
-            left: btn.offsetLeft - padding,
+            left: btn.offsetLeft - padding + 6,
           });
         }
       }
@@ -164,7 +164,7 @@ const PastSponsors = () => {
         }}
         aria-hidden="true"
       />
-      <h2 className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+      <h2 className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
         OUR PAST PARTNERS
       </h2>
 
@@ -192,7 +192,7 @@ const PastSponsors = () => {
               tabRefs.current[idx] = el;
             }}
             className={`relative z-10 h-[54px] flex-shrink-0 rounded-full px-4 font-['AvantGarde-Bk-BT',sans-serif] text-base font-extrabold whitespace-nowrap transition-all duration-200 focus:outline-none md:h-[70px] md:px-10 md:text-2xl ${
-              activeTab === tab.key ? "text-[#222]" : "text-[#fffff1]"
+              activeTab === tab.key ? "text-[#222]" : "text-offwhite"
             }`}
             style={{ border: "none" }}
             onClick={() => setActiveTab(tab.key as typeof activeTab)}
@@ -226,7 +226,7 @@ const PastSponsors = () => {
                   </div>
                   {/* Text container at the bottom */}
                   <div className="bg-[#303030] p-4 text-center">
-                    <div className="font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold text-white">
+                    <div className="text-offwhite font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold">
                       {sponsor.name}
                     </div>
                     <div className="font-['AvantGarde-Bk-BT',sans-serif] text-xs tracking-wider text-gray-400 uppercase">
@@ -258,7 +258,7 @@ const PastSponsors = () => {
                 />
               </div>
               <div className="bg-[#303030] p-4 text-center">
-                <div className="font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold text-white">
+                <div className="text-offwhite font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold">
                   {sponsor.name}
                 </div>
                 <div className="font-['AvantGarde-Bk-BT',sans-serif] text-xs tracking-wider text-gray-400 uppercase">

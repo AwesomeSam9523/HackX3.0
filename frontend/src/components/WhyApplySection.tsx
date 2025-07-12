@@ -40,18 +40,18 @@ const WhyApplySection = () => {
   return (
     <div className="relative z-10">
       <div className="flex flex-col items-center justify-center gap-5">
-        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+        <button className="font-avgardn text-offwhite mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
           Be the representative of your campus!
         </button>
-        <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black tracking-wider text-white md:text-6xl">
+        <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black tracking-wider md:text-6xl">
           CAMPUS AMBASSADOR
           <div
-            className="font-kinetikaUltra mt-4 mb-8 text-center text-xl leading-[79.9%] font-black text-white md:text-6xl"
+            className="font-kinetikaUltra text-offwhite mt-4 mb-8 text-center text-xl leading-[79.9%] font-black md:text-6xl"
             style={{ fontSize: "35px", marginBottom: "16px" }}
           >
             OF MUJ HACKX 3.0!
           </div>
-          <button className="font-avgardn mt-0 rounded-full border-2 border-white bg-transparent px-6 py-2 text-base font-bold tracking-wider text-white uppercase transition-all duration-300">
+          <button className="font-avgardn text-offwhite mt-0 rounded-full border-2 border-white bg-transparent px-6 py-2 text-base font-bold tracking-wider uppercase transition-all duration-300">
             Apply Now
           </button>
           {/* ABOUT Section */}
@@ -69,12 +69,12 @@ const WhyApplySection = () => {
                   <span className="absolute -top-1 -right-2 h-2 w-2 border-t-2 border-r-2 border-white" />
                   <span className="absolute -bottom-1 -left-2 h-2 w-2 border-b-2 border-l-2 border-white" />
                   <span className="absolute -right-2 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-                  <div className="font-avgardd flex items-center gap-4 text-2xl font-extrabold tracking-wider text-white uppercase md:text-3xl">
+                  <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
                     <span>About</span>
                   </div>
                 </div>
               </div>
-              <div className="mx-auto max-w-4xl space-y-6 px-4 text-center font-bold text-white uppercase">
+              <div className="text-offwhite mx-auto max-w-4xl space-y-6 px-4 text-center font-bold uppercase">
                 <p className="font-avgardn text-lg leading-snug tracking-wider md:text-xl">
                   Our Campus Ambassador Program is an incredible opportunity for
                   students to represent our college and help us spread the word
@@ -100,13 +100,13 @@ const WhyApplySection = () => {
           <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
           <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
           <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-          <div className="font-avgardd flex items-center gap-4 text-2xl font-extrabold tracking-wider text-white uppercase md:text-3xl">
+          <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
             <span>why should you apply?</span>
           </div>
         </div>
       </div>
       <div className="mb-10 flex items-center justify-center">
-        <div className="font-avgardn mx-auto max-w-4xl text-center text-lg leading-tight font-bold text-white uppercase md:text-xl">
+        <div className="font-avgardn text-offwhite mx-auto max-w-4xl text-center text-lg leading-tight font-bold uppercase md:text-xl">
           Becoming a Campus Ambassador offers a unique opportunity to develop
           your professional skills, network with industry leaders, and gain
           invaluable experience that will set you apart in the job market.
@@ -124,7 +124,7 @@ const WhyApplySection = () => {
         ))}
       </div>
       <div className="mt-12 mb-10 flex items-center justify-center">
-        <div className="font-avgardn mx-auto max-w-4xl text-center text-lg leading-tight font-bold text-white uppercase md:text-xl">
+        <div className="font-avgardn text-offwhite mx-auto max-w-4xl text-center text-lg leading-tight font-bold uppercase md:text-xl">
           As a Campus Ambassador, you will be responsible for promoting our
           brand on campus, organizing and hosting events and workshops, engaging
           with students and gathering feedback, and representing our company at
@@ -138,7 +138,7 @@ const WhyApplySection = () => {
           <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
           <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
           <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-          <div className="font-avgardd flex items-center gap-4 text-2xl font-extrabold tracking-wider text-white uppercase md:text-3xl">
+          <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
             <span>Campus Ambassador in 3 simple steps</span>
           </div>
         </div>
@@ -164,11 +164,11 @@ const WhyApplySection = () => {
             className="flex w-full items-center rounded-[80px] bg-[rgba(0,0,0,0.45)] px-8 py-6 shadow-lg"
           >
             <div className="mr-8 flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full border-2 border-white bg-[rgba(255,255,255,0.1)]">
-              <span className="font-avgardd text-2xl font-bold text-white">
+              <span className="font-avgardd text-offwhite text-2xl font-bold">
                 {step.number}
               </span>
             </div>
-            <div className="font-avgardd text-[1.5rem] leading-tight font-bold text-white uppercase">
+            <div className="font-avgardd text-offwhite text-[1.5rem] leading-tight font-bold uppercase">
               {step.text}
             </div>
           </div>
@@ -182,7 +182,7 @@ const WhyApplySection = () => {
             <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
             <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
             <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-            <div className="font-avgardd flex items-center gap-4 text-2xl font-extrabold tracking-wider text-white uppercase md:text-3xl">
+            <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
               <span>frequently asked questions</span>
             </div>
           </div>

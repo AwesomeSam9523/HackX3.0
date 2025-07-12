@@ -11,7 +11,7 @@ const Venue: React.FC = () => {
 
       <div className="px-6 py-8 md:px-24">
         {/* Address Card */}
-        <div className="flex w-full flex-col gap-1 rounded-[1rem] bg-white/6 px-6 py-4 text-center text-white backdrop-blur-md md:px-24 md:py-4">
+        <div className="text-offwhite flex w-full flex-col gap-1 rounded-[1rem] bg-white/6 px-6 py-4 text-center backdrop-blur-md md:px-24 md:py-4">
           <h3 className="mt-4 text-2xl font-semibold">📍 </h3>
           <h3 className="font-avgardn text-2xl font-semibold">
             {" "}

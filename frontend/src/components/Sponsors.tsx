@@ -21,7 +21,7 @@ const sponsorLogos: SponsorLogo[] = [
 
 const Sponsors: React.FC = () => {
   return (
-    <section className="relative overflow-hidden py-16 text-white lg:px-8">
+    <section className="text-offwhite relative overflow-hidden py-16 lg:px-8">
       {/* Corner decorative elements */}
       <div className="absolute top-8 left-32 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"></div>
       <div className="absolute top-8 right-32 hidden h-8 w-8 border-t-4 border-r-4 border-white md:block"></div>

@@ -172,6 +172,16 @@ export const teamData: TeamCategory[] = [
             instagramUrl: "https://instagram.com/karan_singh",
             phoneNumber: "+91-9876543212",
           },
+          {
+            id: "99",
+            name: "Karan Singh",
+            position: "TECH MANAGER\nPLATFORM DEVELOPMENT",
+            image: "/teams/person1.jpg",
+            linkedinUrl: "https://linkedin.com/in/karan-singh",
+            githubUrl: "https://github.com/karan-singh",
+            instagramUrl: "https://instagram.com/karan_singh",
+            phoneNumber: "+91-9876543212",
+          },
         ],
       },
       {

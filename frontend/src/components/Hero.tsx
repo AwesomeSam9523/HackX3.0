@@ -36,10 +36,10 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-4 text-center lg:px-8">
         {/* Subtitle */}
-        <button className="font-avgardn mt-4 rounded-full border-2 border-white bg-transparent px-10 py-3 text-xs font-bold tracking-tight text-white uppercase transition-all duration-300 lg:text-lg">
+        <button className="font-avgardn text-offwhite mt-4 rounded-full border-2 border-white bg-transparent px-10 py-3 text-xs font-bold tracking-tight uppercase transition-all duration-300 lg:text-lg">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
         </button>
-        <div className="font-avgardn relative mt-6 inline-block px-4 py-2 font-bold text-white">
+        <div className="font-avgardn text-offwhite relative mt-6 inline-block px-4 py-2 font-bold">
           {/* Corner Borders */}
           <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-r-0 border-b-0 border-white" />
           <span className="absolute top-0 right-0 h-[10px] w-[10px] border-3 border-b-0 border-l-0 border-white" />
@@ -68,7 +68,7 @@ const HeroSection = () => {
           <PrizePoolCircle />
         </div>
 
-        <div className="font-kinetikaUltra relative mt-12 flex w-full flex-col items-center gap-8 overflow-hidden py-2 text-white uppercase lg:hidden">
+        <div className="font-kinetikaUltra text-offwhite relative mt-12 flex w-full flex-col items-center gap-8 overflow-hidden py-2 uppercase lg:hidden">
           <div className="text-base">
             Join the ultimate tech showdown a hackathon where your ideas ignite,
             your code transforms, and your innovations shine!

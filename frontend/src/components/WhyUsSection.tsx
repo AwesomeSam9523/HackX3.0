@@ -5,10 +5,10 @@ const WhyUsSection = () => {
   return (
     <div className="relative z-10">
       <div className="flex flex-col items-center justify-center gap-5">
-        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
+        <button className="font-avgardn text-offwhite mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
           WHY SHOULD YOU PARTICIPATE IN
         </button>
-        <div className="font-kinetikaUltra mb-8 px-4 text-center text-5xl leading-[79.9%] font-black text-white md:px-0 md:text-6xl">
+        <div className="font-kinetikaUltra text-offwhite mb-8 px-4 text-center text-5xl leading-[79.9%] font-black md:px-0 md:text-6xl">
           MUJ HACKX 3.0?
         </div>
       </div>

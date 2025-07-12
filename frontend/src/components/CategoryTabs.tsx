@@ -21,7 +21,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
             className={`mx-1 cursor-pointer rounded-full px-2 py-3 text-lg font-bold tracking-tight transition-all duration-300 md:px-4 md:text-xl ${
               activeCategory === category
                 ? "bg-white text-gray-900"
-                : "text-white hover:bg-gray-800"
+                : "text-offwhite hover:bg-gray-800"
             }`}
           >
             {category}

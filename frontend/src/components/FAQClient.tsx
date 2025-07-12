@@ -76,7 +76,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs, disableBodyBgChange }) => {
             </svg>
           </div>
 
-          <h3 className="font-avgardn mb-8 text-center text-xl tracking-wider text-white">
+          <h3 className="font-avgardn text-offwhite mb-8 text-center text-xl tracking-wider">
             HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
           </h3>
         </div>
@@ -88,8 +88,8 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs, disableBodyBgChange }) => {
           onMouseEnter={() => setOpenFAQ(faq.id)}
           onMouseLeave={() => setOpenFAQ(null)}
         >
-          <div className="flex w-full cursor-pointer items-center justify-center px-8 py-6 text-left text-white transition-colors duration-200 hover:bg-white/5">
-            <span className="font-avgardn text-center text-lg font-bold tracking-tight">
+          <div className="text-offwhite flex w-full cursor-pointer items-center justify-center px-8 py-6 text-left transition-colors duration-200 hover:bg-white/5">
+            <span className="text-center text-lg font-bold tracking-tight">
               {faq.question}
             </span>
             <div
@@ -111,7 +111,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs, disableBodyBgChange }) => {
           >
             <div className="px-8 pb-6">
               <div className="border-t border-white/10 pt-4">
-                <p className="font-avgardn transform text-center leading-relaxed text-white/80 transition-transform duration-300">
+                <p className="text-offwhite/80 transform text-center leading-relaxed transition-transform duration-300">
                   {faq.answer}
                 </p>
               </div>

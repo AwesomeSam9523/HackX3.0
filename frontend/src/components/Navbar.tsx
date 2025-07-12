@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
                       </div>
                       <span
                         className={`ml-4 text-lg font-medium whitespace-nowrap ${
-                          isActive ? "text-gray-800" : "text-white"
+                          isActive ? "text-gray-800" : "text-offwhite"
                         }`}
                       >
                         {item.label}
