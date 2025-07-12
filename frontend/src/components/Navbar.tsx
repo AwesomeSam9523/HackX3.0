@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
 
   const sidebarItems: SidebarItem[] = [
     {
-      icon: "house.svg",
+      icon: "home.svg",
       alt: "Home",
       label: "Home",
       path: "/",
@@ -30,14 +30,14 @@ const Navbar: React.FC = () => {
       alt: "Calendar",
       label: "Timeline",
       path: "/timeline",
-      darkIcon: "calender.svg",
+      darkIcon: "calenderDark.svg",
     },
     {
       icon: "ambassador.svg",
       alt: "Favorites",
       label: "Ambassador",
       path: "/ambassador",
-      darkIcon: "ambassador.svg",
+      darkIcon: "ambassadorDark.svg",
     },
     {
       icon: "team.svg",
@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
                     >
                       <div className="flex-shrink-0">
                         <Image
-                          src={isActive ? item.darkIcon : item.icon}
+                          src={`/pathIcons/${isActive ? item.darkIcon : item.icon}`}
                           alt={item.alt}
                           width={32}
                           height={32}

@@ -2,7 +2,7 @@ import { SidebarItem } from "../types/sidebar";
 
 export const sidebarItems: SidebarItem[] = [
   {
-    icon: "house.svg",
+    icon: "home.svg",
     alt: "Home",
     label: "Home",
     path: "/",

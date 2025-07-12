@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
 
   const sidebarItems: SidebarItem[] = [
     {
-      icon: "house.svg",
+      icon: "home.svg",
       alt: "Home",
       label: "Home",
       path: "/",
@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
       alt: "Calendar",
       label: "Timeline",
       path: "/timeline",
-      darkIcon: "calender.svg",
+      darkIcon: "calenderDark.svg",
     },
     {
       icon: "ambassador.svg",
@@ -71,12 +71,12 @@ const Sidebar: React.FC = () => {
         width: "auto",
         height: "auto",
         borderRadius: isHovered ? "16px" : "9999px",
-        transition: "all 0.5s ease-in-out",
+        transition: "all 0.5s linear",
       }}
     >
       <div
         className={`h-full w-full rounded-[42px] border border-white/10 bg-white/10 px-4 py-8 shadow-2xl transition-all duration-500 ease-in-out`}
-        style={{ backdropFilter: "blur(59.900001525878906px)" }}
+        style={{ backdropFilter: "blur(60px)" }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -97,7 +97,7 @@ const Sidebar: React.FC = () => {
               >
                 <div className="flex-shrink-0">
                   <Image
-                    src={isActive ? item.darkIcon : item.icon}
+                    src={`/pathIcons/${isActive ? item.darkIcon : item.icon}`}
                     alt={item.alt}
                     width={32}
                     height={32}
