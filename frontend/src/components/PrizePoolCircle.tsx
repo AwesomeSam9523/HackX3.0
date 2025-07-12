@@ -81,7 +81,7 @@ const PrizePoolCircle = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="absolute top-3 right-10 z-20 flex h-16 w-16 translate-x-2/5 -translate-y-2/5 transform items-center justify-center rounded-full bg-[#D9D9D91A] backdrop-blur-2xl lg:top-6 lg:right-24 lg:h-24 lg:w-24">
+    <div className="absolute top-1 right-8 z-20 flex h-16 w-16 translate-x-2/5 -translate-y-2/5 transform items-center justify-center rounded-full bg-[#D9D9D91A] backdrop-blur-2xl lg:top-6 lg:right-24 lg:h-24 lg:w-24">
       <CircularText text={text} spinDuration={15} radius={isMobile ? 27 : 42} />
       <div className="absolute inset-0 flex items-center justify-center">
         <span className="text-offwhite rotate-[-15.15deg] transform text-base font-bold lg:text-2xl">

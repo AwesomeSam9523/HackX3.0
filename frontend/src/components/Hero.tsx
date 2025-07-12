@@ -34,7 +34,7 @@ const HeroSection = () => {
       <Navbar />
 
       {/* Main Content */}
-      <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-4 text-center lg:px-8">
+      <div className="relative z-10 mt-4 flex min-h-[80vh] flex-col items-center justify-center px-4 text-center lg:px-8">
         {/* Subtitle */}
         <button className="font-avgardn text-offwhite mt-4 rounded-full border-2 border-white bg-transparent px-10 py-3 text-xs font-bold tracking-tight uppercase transition-all duration-300 lg:text-lg">
           DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING, SCSE, FOSTA
@@ -49,8 +49,11 @@ const HeroSection = () => {
         </div>
 
         {/* Main Title - Using SVG version from second code with fallback to text version */}
-        <div className="relative mt-4 flex flex-col items-center justify-center text-center leading-none">
+        <div className="relative mt-8 flex flex-col items-center justify-center text-center leading-none">
           {/* SVG Logo Version (from second code) */}
+          <div className="font-kinetikaUltra text-offwhite absolute -top-5 left-0 m-0 p-0 text-3xl leading-none font-extrabold tracking-[0.2rem] lg:hidden">
+            MUJ
+          </div>
           <Image
             src="/HeroSection/HACKX 3.0.svg"
             alt="HACKX 3.0 Logo"

@@ -45,7 +45,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
       onMouseLeave={() => dispatch({ type: "mouse_leave" })}
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="relative h-40 w-40 overflow-hidden rounded-[14px] bg-[linear-gradient(180deg,rgba(16,19,21,1)_0%,rgba(23,32,39,1)_100%)] shadow-[0_2px_16px_#0008] lg:h-[275px] lg:w-[275px]"
+      className="relative aspect-square w-[45vw] overflow-hidden rounded-[14px] bg-[linear-gradient(180deg,rgba(16,19,21,1)_0%,rgba(23,32,39,1)_100%)] shadow-[0_2px_16px_#0008] lg:h-[275px] lg:w-[275px]"
     >
       {/* Default image: scrolls up and fades out on hover */}
       <motion.div
