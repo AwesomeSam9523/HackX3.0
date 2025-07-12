@@ -31,71 +31,155 @@ const Page = () => {
     const smallImages = images.filter((img) => img.size === "small");
 
     return (
-      <div className="flex flex-col flex-wrap items-center justify-center gap-2 bg-transparent p-3 sm:gap-4 sm:p-6 lg:flex-row">
-        {/* Left Tall Image */}
-        {tallImage && (
-          <div className="h-[280px] w-[280px] overflow-hidden rounded-2xl sm:h-[320px] sm:w-[200px] lg:h-[360px] lg:w-[220px]">
-            <Image
-              src={tallImage.src}
-              alt={tallImage.src}
-              width={220}
-              height={340}
-              className="h-full w-full object-cover grayscale"
-            />
-          </div>
-        )}
+      <>
+        {/* Desktop Grid Layout */}
+        <div className="hidden flex-col flex-wrap items-center justify-center gap-2 bg-transparent p-3 sm:gap-4 sm:p-6 lg:flex lg:flex-row">
+          {/* Left Tall Image */}
+          {tallImage && (
+            <div className="h-[280px] w-[280px] overflow-hidden rounded-2xl sm:h-[320px] sm:w-[200px] lg:h-[360px] lg:w-[220px]">
+              <Image
+                src={tallImage.src}
+                alt={tallImage.src}
+                width={220}
+                height={340}
+                className="h-full w-full object-cover grayscale"
+              />
+            </div>
+          )}
 
-        {/* Middle Column */}
-        <div className="flex flex-col gap-2 sm:gap-4">
-          {/* Top Row */}
-          <div className="flex gap-2 sm:gap-4">
-            {smallImages.slice(0, 2).map((img, i) => (
-              <div
-                key={`top-${i}`}
-                className="h-[120px] w-[120px] overflow-hidden rounded-2xl sm:h-[150px] sm:w-[150px] lg:h-[170px] lg:w-[170px]"
-              >
-                <Image
-                  src={img.src}
-                  alt={img.src}
-                  width={170}
-                  height={170}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            ))}
+          {/* Middle Column */}
+          <div className="flex flex-col gap-2 sm:gap-4">
+            {/* Top Row */}
+            <div className="flex gap-2 sm:gap-4">
+              {smallImages.slice(0, 2).map((img, i) => (
+                <div
+                  key={`top-${i}`}
+                  className="h-[120px] w-[120px] overflow-hidden rounded-2xl sm:h-[150px] sm:w-[150px] lg:h-[170px] lg:w-[170px]"
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.src}
+                    width={170}
+                    height={170}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+            {/* Bottom Row */}
+            <div className="flex gap-2 sm:gap-4">
+              {smallImages.slice(2, 4).map((img, i) => (
+                <div
+                  key={`bottom-${i}`}
+                  className="h-[120px] w-[120px] overflow-hidden rounded-2xl sm:h-[150px] sm:w-[150px] lg:h-[170px] lg:w-[170px]"
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.src}
+                    width={170}
+                    height={170}
+                    className="h-full w-full object-cover grayscale"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          {/* Bottom Row */}
-          <div className="flex gap-2 sm:gap-4">
-            {smallImages.slice(2, 4).map((img, i) => (
-              <div
-                key={`bottom-${i}`}
-                className="h-[120px] w-[120px] overflow-hidden rounded-2xl sm:h-[150px] sm:w-[150px] lg:h-[170px] lg:w-[170px]"
-              >
-                <Image
-                  src={img.src}
-                  alt={img.src}
-                  width={170}
-                  height={170}
-                  className="h-full w-full object-cover grayscale"
-                />
-              </div>
-            ))}
-          </div>
+
+          {/* Right Large Image */}
+          {largeImage && (
+            <div className="h-[280px] w-[280px] overflow-hidden rounded-2xl sm:h-[320px] sm:w-[320px] lg:h-[360px] lg:w-[340px]">
+              <Image
+                src={largeImage.src}
+                alt={largeImage.src}
+                width={340}
+                height={340}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
         </div>
 
-        {/* Right Large Image */}
-        {largeImage && (
-          <div className="h-[280px] w-[280px] overflow-hidden rounded-2xl sm:h-[320px] sm:w-[320px] lg:h-[360px] lg:w-[340px]">
-            <Image
-              src={largeImage.src}
-              alt={largeImage.src}
-              width={340}
-              height={340}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        )}
-      </div>
+        {/* Mobile Grid Layout - 2 Columns */}
+        <div className="mx-auto grid max-w-[400px] grid-cols-2 gap-3 p-4 lg:hidden">
+          {/* First Image - First Column, Rows 1-2 */}
+          {images[0] && (
+            <div className="col-span-1 row-span-2 aspect-[1/2] overflow-hidden rounded-2xl">
+              <Image
+                src={images[0].src}
+                alt={images[0].src}
+                width={200}
+                height={400}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Second Image - Second Column, First Row */}
+          {images[1] && (
+            <div className="col-span-1 row-span-1 aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src={images[1].src}
+                alt={images[1].src}
+                width={180}
+                height={180}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Third Image - Second Column, Second Row */}
+          {images[2] && (
+            <div className="col-span-1 row-span-1 aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src={images[2].src}
+                alt={images[2].src}
+                width={180}
+                height={180}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Fourth Image - First Column, Third Row */}
+          {images[3] && (
+            <div className="col-span-1 row-span-1 aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src={images[3].src}
+                alt={images[3].src}
+                width={180}
+                height={180}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Fifth Image - Second Column, Third Row */}
+          {images[4] && (
+            <div className="col-span-1 row-span-1 aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src={images[4].src}
+                alt={images[4].src}
+                width={180}
+                height={180}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          {/* Sixth Image - Both Columns, Fourth and Fifth Rows */}
+          {images[5] && (
+            <div className="col-span-2 row-span-2 aspect-[1/1] overflow-hidden rounded-2xl">
+              <Image
+                src={images[5].src}
+                alt={images[5].src}
+                width={400}
+                height={400}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+        </div>
+      </>
     );
   };
 
@@ -106,15 +190,14 @@ const Page = () => {
     >
       <Navbar />
       <XComponent />
-      <div className="mx-auto mb-4 w-fit rounded-full border border-white/30 bg-white/10 px-8 py-2 text-center backdrop-blur-sm sm:mb-8 sm:px-20 sm:py-3">
-        <span className="font-sans text-sm font-bold tracking-tighter text-white sm:text-lg">
+      <div className="flex flex-col items-center justify-center gap-5">
+        <button className="font-avgardn mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider text-white uppercase transition-all duration-300">
           GLIMPSE OF OUR PREVIOUS EDITIONS
-        </span>
+        </button>
+        <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black text-white md:text-6xl">
+          GALLERY
+        </div>
       </div>
-
-      <h2 className="font-nortune mb-8 text-center text-4xl tracking-wide sm:mb-16 sm:text-6xl lg:text-9xl">
-        GALLERY
-      </h2>
 
       <div className="space-y-8 px-2 sm:space-y-16 sm:px-4 md:px-8">
         {galleryData.map((section, idx) => (
@@ -200,17 +283,18 @@ const Page = () => {
 
             {/* Grid Container with Corner Decorators */}
             <div className="relative">
+              {/* Corner Decorators - Hidden on mobile */}
               {/* Top Left Corner Decorator */}
-              <div className="absolute top-0 left-20 hidden h-6 w-6 border-t-4 border-l-4 border-white sm:left-40 sm:block sm:h-8 sm:w-8 lg:left-80"></div>
+              <div className="absolute top-0 left-20 hidden h-6 w-6 border-t-4 border-l-4 border-white sm:left-40 sm:h-8 sm:w-8 lg:left-80 lg:block"></div>
 
               {/* Top Right Corner Decorator */}
-              <div className="absolute top-0 right-20 hidden h-6 w-6 border-t-4 border-r-4 border-white sm:right-40 sm:block sm:h-8 sm:w-8 lg:right-80"></div>
+              <div className="absolute top-0 right-20 hidden h-6 w-6 border-t-4 border-r-4 border-white sm:right-40 sm:h-8 sm:w-8 lg:right-80 lg:block"></div>
 
               {/* Bottom Left Corner Decorator */}
-              <div className="absolute bottom-0 left-20 hidden h-6 w-6 border-b-4 border-l-4 border-white sm:left-40 sm:block sm:h-8 sm:w-8 lg:left-80"></div>
+              <div className="absolute bottom-0 left-20 hidden h-6 w-6 border-b-4 border-l-4 border-white sm:left-40 sm:h-8 sm:w-8 lg:left-80 lg:block"></div>
 
               {/* Bottom Right Corner Decorator */}
-              <div className="absolute right-20 bottom-0 hidden h-6 w-6 border-r-4 border-b-4 border-white sm:right-40 sm:block sm:h-8 sm:w-8 lg:right-80"></div>
+              <div className="absolute right-20 bottom-0 hidden h-6 w-6 border-r-4 border-b-4 border-white sm:right-40 sm:h-8 sm:w-8 lg:right-80 lg:block"></div>
 
               {renderImageGrid(section.images)}
             </div>

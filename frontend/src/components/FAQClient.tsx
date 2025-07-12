@@ -25,15 +25,71 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs, disableBodyBgChange }) => {
 
   return (
     <div className="mx-auto max-w-4xl space-y-1">
+      {/* Decorative white corners */}
+      <div className="mb-8 flex justify-center">
+        <div className="relative px-8 py-2">
+          {/* Top Left Corner */}
+          <div className="absolute top-0 left-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M2 2L2 8M2 2L8 2"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="square"
+              />
+            </svg>
+          </div>
+
+          {/* Top Right Corner */}
+          <div className="absolute top-0 right-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M22 2L22 8M22 2L16 2"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="square"
+              />
+            </svg>
+          </div>
+
+          {/* Bottom Left Corner */}
+          <div className="absolute bottom-0 left-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M2 22L2 16M2 22L8 22"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="square"
+              />
+            </svg>
+          </div>
+
+          {/* Bottom Right Corner */}
+          <div className="absolute right-0 bottom-0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M22 22L22 16M22 22L16 22"
+                stroke="white"
+                strokeWidth="3"
+                strokeLinecap="square"
+              />
+            </svg>
+          </div>
+
+          <h3 className="font-avgardn mb-8 text-center text-xl tracking-wider text-white">
+            HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
+          </h3>
+        </div>
+      </div>
       {faqs.map((faq) => (
         <div
           key={faq.id}
-          className="overflow-hidden rounded-4xl border border-white/10 bg-black/30 backdrop-blur-sm transition-all duration-300 hover:bg-black/40"
+          className="overflow-hidden rounded-4xl border border-white/10 bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-black/40"
           onMouseEnter={() => setOpenFAQ(faq.id)}
           onMouseLeave={() => setOpenFAQ(null)}
         >
           <div className="flex w-full cursor-pointer items-center justify-center px-8 py-6 text-left text-white transition-colors duration-200 hover:bg-white/5">
-            <span className="text-center text-lg font-bold tracking-tight">
+            <span className="font-avgardn text-center text-lg font-bold tracking-tight">
               {faq.question}
             </span>
             <div
@@ -55,7 +111,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs, disableBodyBgChange }) => {
           >
             <div className="px-8 pb-6">
               <div className="border-t border-white/10 pt-4">
-                <p className="transform text-center leading-relaxed text-white/80 transition-transform duration-300">
+                <p className="font-avgardn transform text-center leading-relaxed text-white/80 transition-transform duration-300">
                   {faq.answer}
                 </p>
               </div>
