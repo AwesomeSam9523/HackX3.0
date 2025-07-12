@@ -88,7 +88,7 @@ const Sidebar: React.FC = () => {
                 key={item.path}
                 className={`flex cursor-pointer items-center rounded-full transition-all duration-300 ${
                   isActive
-                    ? "bg-white/90 shadow-lg backdrop-blur-sm"
+                    ? "bg-offwhite shadow-lg backdrop-blur-sm"
                     : "hover:bg-white/10"
                 } p-4`}
                 onClick={() => {
