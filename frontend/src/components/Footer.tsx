@@ -53,15 +53,15 @@ const Footer: React.FC = () => {
 
         {/* Main Headline */}
         <div className="mb-16 max-w-full text-center">
-          <h1 className="leading-tighter font-kinetikaUltra text-offwhite text-2xl leading-6 font-extrabold uppercase md:text-5xl lg:text-6xl lg:leading-12">
+          <h1 className="leading-tighter font-kinetikaUltra text-offwhite text-4xl leading-8 font-extrabold uppercase md:text-5xl lg:text-6xl lg:leading-12">
             <span className="block">LET&apos;S IGNITE INNOVATION</span>
             <span className="block">IN THE WORLD OF TECHNOLOGY</span>
-            <span className="block">ONE PROJECT A TIME</span>
+            <span className="block">ONE PROJECT A TIME.</span>
           </h1>
         </div>
 
-        <div className="mb-8">
-          <RegisterButton />
+        <div className="mb-8 w-3/4">
+          <RegisterButton isFooterButton={true} />
         </div>
 
         <div className="z-10">
@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
         <div className="z-20 mt-12 flex items-center justify-between px-8 lg:absolute lg:right-0 lg:bottom-10 lg:left-0">
           {/* Social Links - Centered */}
           <div className="flex flex-1 justify-center">
-            <div className="bg-footer flex w-fit items-center gap-4 rounded-full px-6 py-4 backdrop-blur-sm">
+            <div className="bg-footer flex w-fit items-center rounded-full p-2 backdrop-blur-sm lg:gap-4 lg:px-6 lg:py-4">
               <a
                 href="#"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"

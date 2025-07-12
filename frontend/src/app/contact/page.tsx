@@ -15,7 +15,7 @@ const Page = () => {
         <Navbar />
         <div className="relative z-10 mt-10 flex min-h-[80vh] flex-col items-center justify-center px-4 text-center lg:px-8">
           <div className="text-offwhite flex flex-col items-center justify-center gap-5">
-            <button className="font-avgardn mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
+            <button className="font-avgardn rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300 lg:mt-20">
               HOW CAN WE HELP YOU ?
             </button>
             <div className="font-kinetikaUltra mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">

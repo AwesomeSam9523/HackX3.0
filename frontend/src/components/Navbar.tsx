@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
         {/* This div previously held the Spline iframe. It is now removed as Spline is in Hero.tsx */}
         {/* The Navbar's content will now overlay the Spline in Hero.tsx */}
 
-        <div className="flex h-full justify-between px-4 pt-20 sm:px-8 sm:pt-0">
+        <div className="flex h-full justify-between px-4 pt-24 sm:px-8 sm:pt-0">
           <div className="flex w-sm items-center">
             <Image
               src="hackxlogo.svg"
@@ -121,7 +121,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 z-60 md:hidden">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"

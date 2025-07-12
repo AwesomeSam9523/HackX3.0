@@ -49,7 +49,7 @@ const HackathonTimeline: React.FC = () => {
   return (
     <div className="relative z-10 mx-auto max-w-5xl px-4 py-16">
       <div className="mb-10 flex flex-col items-center justify-center gap-5">
-        <button className="font-avgardn text-offwhite mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
+        <button className="font-avgardn text-offwhite rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300 lg:mt-20">
           HERE&apos;S HOW THE EVENT WILL PROGRESS
         </button>
         <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-8xl">

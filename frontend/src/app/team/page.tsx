@@ -29,7 +29,7 @@ const TeamPage: React.FC = () => {
         <div className="absolute right-8 bottom-8 hidden h-8 w-8 border-r-4 border-b-4 border-white md:block"></div>
         {/* Header */}
         <div className="flex flex-col items-center justify-center gap-5">
-          <button className="font-avgardn text-offwhite mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
+          <button className="font-avgardn text-offwhite rounded-full border-2 border-white bg-transparent px-4 py-3 text-sm font-bold tracking-wider uppercase transition-all duration-300 lg:mt-20 lg:px-10 lg:text-lg">
             MEET THE HUMANS BEHIND THE CURTAINS
           </button>
           <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">

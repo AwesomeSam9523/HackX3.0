@@ -184,14 +184,14 @@ const Page = () => {
   };
 
   return (
-    <section
+    <div
       ref={sectionRef}
-      className="text-offwhite relative z-40 min-h-screen w-full overflow-hidden"
+      className="text-offwhite relative min-h-screen w-full overflow-hidden"
     >
       <Background />
       <Navbar />
       <div className="flex flex-col items-center justify-center gap-5">
-        <button className="font-avgardn text-offwhite mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
+        <button className="font-avgardn text-offwhite mt-20 rounded-full border-2 border-white bg-transparent px-4 py-3 text-base font-bold tracking-wider uppercase transition-all duration-300 lg:px-10 lg:text-lg">
           GLIMPSE OF OUR PREVIOUS EDITIONS
         </button>
         <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
@@ -301,7 +301,7 @@ const Page = () => {
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 
