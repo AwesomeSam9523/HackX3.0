@@ -9,14 +9,14 @@ Made with ❤️ by Team HackX
 ### Prerequisites
 
 - **Node.js**: Version 18.0.0 or higher
-- **npm** or **yarn**: Package manager
+- **npm** : Package manager
 - **Git**: Version control system
 
 ### Installation
 
 1. **Clone the repository** (if not already done):
    ```bash
-   git clone <repository-url>
+   git clone <[repository-url](https://github.com/AwesomeSam9523/HackX3.0/)>
    cd HackX3.0
    ```
 
@@ -28,8 +28,7 @@ Made with ❤️ by Team HackX
 3. **Install dependencies**:
    ```bash
    npm install
-   # or
-   yarn install
+   
    ```
 
 ### Development
@@ -37,8 +36,7 @@ Made with ❤️ by Team HackX
 4. **Start the development server**:
    ```bash
    npm run dev
-   # or
-   yarn dev
+  
    ```
 
    The application will be available at [http://localhost:3000](http://localhost:3000)
