@@ -16,7 +16,7 @@ Made with ❤️ by Team HackX
 
 1. **Clone the repository** (if not already done):
    ```bash
-   git clone <[repository-url](https://github.com/AwesomeSam9523/HackX3.0/)>
+   git clone https://github.com/AwesomeSam9523/HackX3.0
    cd HackX3.0
    ```
 
