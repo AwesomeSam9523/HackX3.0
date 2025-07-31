@@ -1,4 +1,5 @@
 import React from "react";
+import TimelineBlueLine from "./TimelineBlueLine";
 import LightBoxOthers from "./LightBoxOthers";
 
 type TimelineItem = {
@@ -62,7 +63,7 @@ const HackathonTimeline: React.FC = () => {
           </div>
         </div>
         {/* Blue VerticalLine */}
-        <div className="absolute left-1/2 z-10 h-full w-[8px] -translate-x-1/2 transform bg-cyan-400 shadow-[0_0_17px_rgba(0,221,255,1)]" />
+        <TimelineBlueLine />
 
         <div className="relative z-10 flex flex-col gap-15">
           {timelineData.map((item, index) => {

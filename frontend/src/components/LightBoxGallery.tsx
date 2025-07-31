@@ -20,7 +20,7 @@ const LightBoxGallery = () => {
                 </div>*/}
 
       {/*ligthboxes mobile right*/}
-      <div className="absolute top-[105rem] -right-60 -z-10 h-[20rem] w-200 opacity-80 md:hidden">
+      <div className="absolute top-[94rem] -right-60 -z-10 h-[20rem] w-200 opacity-70 md:hidden">
         <LightBlock position="right" />
       </div>
       {/*<div className="absolute top-[215rem] -right-60 opacity-80 -z-10 h-[20rem] w-200 md:hidden">
