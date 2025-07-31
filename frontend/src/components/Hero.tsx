@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import HackathonStats from "./Statistics";
 import JoinHackathonBanner from "./JoinHackathon";
 import PrizePoolCircle from "./PrizePoolCircle";
-import LightBlock from "@/components/LightBlock";
+import LightBoxOthers from "./LightBoxOthers";
 import Timer from "@/components/Timer";
 import Themes from "@/components/Themes";
 import Sponsors from "@/components/Sponsors";
@@ -103,18 +103,15 @@ const HeroSection = () => {
         <div className="mt-12 mb-15 hidden flex-col gap-4 sm:flex-row lg:mt-15 lg:flex">
           <JoinHackathonBanner />
         </div>
-        <div className="absolute top-[50rem] right-0 -z-10 h-[20rem] w-1/2">
-          <LightBlock position="right" />
-        </div>
         <div className="w-full">
           <Timer />
         </div>
 
+        {/*light boxes*/}
+        <LightBoxOthers name="home" id={0} />
+
         <div className="mt-16 w-full lg:mt-32">
           <Themes />
-        </div>
-        <div className="absolute top-[160rem] left-0 -z-10 h-[20rem] w-1/2">
-          <LightBlock position="left" />
         </div>
 
         <div className="mt-16 w-full lg:mt-32">

@@ -2,7 +2,9 @@ import React from "react";
 import { cardData, Card, CardProps } from "./AmbassadorCard";
 import BecomeAmbassadorBanner from "./BecomeAmbassadorBanner";
 import FAQClient from "./FAQClient";
+import LightBoxOthers from "./LightBoxOthers";
 //import  AbassadorFAQ from "./AmbassadorFAQ";
+
 const WhyApplySection = () => {
   const campusAmbassadorFaqs = [
     {
@@ -39,6 +41,9 @@ const WhyApplySection = () => {
 
   return (
     <div className="relative z-10">
+      <LightBoxOthers name="ambassador" id={0} />
+
+      {/*Details*/}
       <div className="flex flex-col items-center justify-center gap-5">
         <button className="font-avgardn text-offwhite mt-4 mt-20 rounded-full border-2 border-white bg-transparent px-10 py-3 text-lg font-bold tracking-wider uppercase transition-all duration-300">
           Be the representative of your campus!
@@ -175,7 +180,7 @@ const WhyApplySection = () => {
         ))}
         <BecomeAmbassadorBanner />
         {/* Campus Ambassador FAQ Section */}
-        <div className="mt-19 mb-10 flex items-center justify-center">
+        <div className="z-10 mt-19 mb-10 flex items-center justify-center">
           <div className="relative inline-block px-2 py-1">
             {/* Corner Borders for ABOUT heading */}
             <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />

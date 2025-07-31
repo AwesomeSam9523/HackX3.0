@@ -1,8 +1,11 @@
 import React from "react";
+import LightBoxOthers from "./LightBoxOthers";
 
 const CommunityPartners: React.FC = () => {
   return (
     <section className="text-offwhite relative overflow-hidden bg-black px-8 pt-0 pb-16">
+      <LightBoxOthers name="about" id={1} />
+
       {/* Ellipse background in top left corner */}
       {/* <div
         style={{
