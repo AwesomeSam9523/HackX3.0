@@ -21,13 +21,13 @@ const LightBoxTeams = (props: { name: string }) => {
         </div>
 
         {/*ligthboxes mobile right*/}
-        <div className="absolute top-[105rem] -right-60 -z-10 h-[20rem] w-200 opacity-80 md:hidden">
+        <div className="absolute top-[105rem] -right-60 -z-10 h-[20rem] w-200 opacity-90 md:hidden">
           <LightBlock position="right" />
         </div>
-        <div className="absolute top-[215rem] -right-60 -z-10 h-[20rem] w-200 opacity-80 md:hidden">
+        <div className="absolute top-[215rem] -right-60 -z-10 h-[20rem] w-200 opacity-90 md:hidden">
           <LightBlock position="right" />
         </div>
-        <div className="absolute top-[330rem] -right-60 -z-10 h-[20rem] w-200 opacity-80 md:hidden">
+        <div className="absolute top-[330rem] -right-60 -z-10 h-[20rem] w-200 opacity-90 md:hidden">
           <LightBlock position="right" />
         </div>
 

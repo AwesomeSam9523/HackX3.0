@@ -5,13 +5,29 @@ const LightBoxOthers = (props: { name: string; id: number }) => {
     // Home :
     return (
       <>
-        <div className="absolute top-[69rem] right-0 -z-10 h-[20rem] w-1/2 opacity-50">
-          <LightBlock position="right" />
-        </div>
-        <div className="absolute top-[150rem] left-0 -z-10 h-[20rem] w-250 opacity-75">
+        {/*lightbox mobile left*/}
+        <div className="absolute top-[52rem] -left-80 -z-10 h-[20rem] w-250 opacity-80 md:hidden">
           <LightBlock position="left" />
         </div>
-        <div className="absolute top-[179rem] right-0 -z-10 h-[20rem] w-130 opacity-55">
+        {/*lightbox mobile right*/}
+        <div className="absolute top-[78rem] -right-38 -z-10 h-[20rem] w-250 opacity-70 md:hidden">
+          <LightBlock position="right" />
+        </div>
+        {/*lightbox mobile right*/}
+        <div className="absolute top-[192rem] -right-25 -z-10 h-[20rem] w-130 opacity-75 md:hidden">
+          <LightBlock position="right" />
+        </div>
+
+        {/*lightbox desktop right*/}
+        <div className="absolute top-[69rem] right-0 -z-10 hidden h-[20rem] w-1/2 opacity-70 md:block">
+          <LightBlock position="right" />
+        </div>
+        {/*lightbox desktop left*/}
+        <div className="absolute top-[150rem] left-0 -z-10 hidden h-[20rem] w-250 opacity-75 md:block">
+          <LightBlock position="left" />
+        </div>
+        {/*lightbox desktop right*/}
+        <div className="absolute top-[179rem] right-0 -z-10 hidden h-[20rem] w-130 opacity-65 md:block">
           <LightBlock position="right" />
         </div>
       </>
@@ -36,7 +52,7 @@ const LightBoxOthers = (props: { name: string; id: number }) => {
         </div>
 
         {/*lightbox mobile right*/}
-        <div className="absolute top-[110rem] -right-60 -z-10 h-[20rem] w-300 opacity-70 md:hidden">
+        <div className="absolute top-[110rem] -right-60 -z-10 h-[20rem] w-300 opacity-60 md:hidden">
           <LightBlock position="right" />
         </div>
 
@@ -49,7 +65,7 @@ const LightBoxOthers = (props: { name: string; id: number }) => {
         </div>
 
         {/*lightbox mobile left*/}
-        <div className="absolute top-[60rem] -left-180 -z-10 h-[20rem] w-400 opacity-85 md:hidden">
+        <div className="absolute top-[60rem] -left-180 -z-10 h-[20rem] w-400 opacity-100 md:hidden">
           <LightBlock position="left" />
         </div>
         <div className="absolute top-[180rem] -left-180 -z-10 h-[20rem] w-400 opacity-85 md:hidden">
