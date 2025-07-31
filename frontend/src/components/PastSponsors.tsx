@@ -171,7 +171,7 @@ const PastSponsors = () => {
       {/* Unified pill selector for both desktop and mobile */}
       <div
         ref={tabScrollRef}
-        className="scrollbar-hide relative mx-auto mb-10 flex h-[70px] w-full max-w-fit items-center justify-center gap-1 overflow-x-auto rounded-full border-2 border-[#fffff1] bg-transparent px-3 md:h-[86px] md:overflow-hidden md:border-[3px] md:px-2"
+        className="scrollbar-hide relative mx-auto mb-10 flex h-[70px] w-full max-w-fit items-center justify-start gap-0 overflow-x-auto rounded-full border-2 border-[#fffff1] bg-transparent px-2 md:h-[86px] md:overflow-hidden md:border-[3px] md:px-0"
         style={{ WebkitOverflowScrolling: "touch", minWidth: "fit-content" }}
       >
         {/* Sliding pill background */}
@@ -191,7 +191,7 @@ const PastSponsors = () => {
             ref={(el) => {
               tabRefs.current[idx] = el;
             }}
-            className={`relative z-10 h-[54px] flex-shrink-0 rounded-full px-6 font-['AvantGarde-Bk-BT',sans-serif] text-base font-extrabold whitespace-nowrap transition-all duration-200 focus:outline-none md:h-[70px] md:px-12 md:text-2xl ${
+            className={`relative z-10 h-[54px] flex-shrink-0 rounded-full px-4 font-['AvantGarde-Bk-BT',sans-serif] text-base font-extrabold whitespace-nowrap transition-all duration-200 focus:outline-none md:h-[70px] md:px-10 md:text-2xl ${
               activeTab === tab.key ? "text-[#222]" : "text-offwhite"
             }`}
             style={{ border: "none" }}
