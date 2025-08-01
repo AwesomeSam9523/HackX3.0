@@ -106,6 +106,20 @@ const LightBoxOthers = (props: { name: string; id: number }) => {
         </>
       );
     }
+  } else if (props.name.toLowerCase() === "contact") {
+    // Contact :
+    return (
+      <>
+        {/*lightbox mobile right*/}
+        <div className="absolute top-[110rem] -right-60 -z-10 h-[20rem] w-300 opacity-100 md:hidden">
+          <LightBlock position="right" />
+        </div>
+        {/*lightbox mobile left*/}
+        <div className="absolute top-[60rem] -left-180 -z-10 h-[20rem] w-400 opacity-100 md:hidden">
+          <LightBlock position="left" />
+        </div>
+      </>
+    );
   }
 };
 
