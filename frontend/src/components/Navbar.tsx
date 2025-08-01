@@ -1,16 +1,13 @@
-// HackX3.0/frontend/src/components/Navbar.tsx
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import RegisterButton from "@/components/RegisterButton";
-import { SidebarItem } from "../../types/team";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const sidebarItems: SidebarItem[] = [
+  const sidebarItems = [
     {
       icon: "home.svg",
       alt: "Home",
@@ -56,7 +53,7 @@ const Navbar: React.FC = () => {
     {
       icon: "contact.svg",
       alt: "contact",
-      label: "Contact",
+      label: "Contact Us", // ✅ Line 59 update
       path: "/contact",
       darkIcon: "contactDark.svg",
     },
@@ -89,10 +86,12 @@ const Navbar: React.FC = () => {
           <div className="relative hidden aspect-square w-full max-w-[900px] sm:block" />
 
           <div className="mt-10 hidden md:block">
-            <RegisterButton />
+            {/* Removed RegisterButton component */}
+            <button className="rounded-xl border border-white bg-transparent px-6 py-3 text-sm font-semibold text-white uppercase transition-all duration-300 hover:bg-white hover:text-black">
+              Register Now
+            </button>
           </div>
 
-          {/* Hamburger menu for small screens */}
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleMenu}
@@ -119,62 +118,106 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Animated Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 z-40 transition-all duration-500 ease-in-out md:hidden ${
           isMenuOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-6 opacity-0"
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
         }`}
       >
-        {/* Backdrop */}
+        {/* Backdrop - Transparent */}
         <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="backdrop-transparent absolute inset-0 bg-black/30"
           onClick={() => setIsMenuOpen(false)}
         />
 
-        <div className="absolute top-20 right-4 mt-4 w-80 max-w-[calc(100vw-2rem)]">
-          <div className="rounded-3xl border border-white/10 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
-            <nav className="space-y-4">
-              {sidebarItems.map((item) => {
-                const isActive = pathname === item.path;
-                return (
-                  <div
-                    key={item.path}
-                    className={`flex cursor-pointer items-center rounded-full px-4 py-3 transition-all duration-300 ${
-                      isActive
-                        ? "bg-white/90 shadow-lg backdrop-blur-sm"
-                        : "hover:bg-white/10"
-                    }`}
-                    onClick={() => handleNavigation(item.path)}
-                  >
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={`/pathIcons/${isActive ? item.darkIcon : item.icon}`}
-                        alt={item.alt}
-                        width={32}
-                        height={32}
-                        className={`h-8 w-8 ${
-                          isActive
-                            ? "filter-none"
-                            : "brightness-0 invert filter"
-                        }`}
-                      />
-                    </div>
-                    <span
-                      className={`ml-4 text-lg font-medium whitespace-nowrap ${
-                        isActive ? "text-gray-800" : "text-offwhite"
-                      }`}
-                    >
-                      {item.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </nav>
+        {/* Sliding Panel */}
+        <div
+          className={`absolute top-0 right-0 h-full w-2/3 max-w-sm transform transition-transform duration-500 ease-in-out ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="h-full rounded-l-3xl border-t border-b border-l border-white/20 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
+            {/* Close Button */}
+            {/* <div className="flex justify-end mb-8">
+              <button 
+                onClick={() => setIsMenuOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all duration-300 hover:bg-white/25"
+                aria-label="Close menu"
+              >
+                <span className="text-white text-xl font-bold">×</span>
+              </button>
+            </div> */}
 
-            <div className="mt-6 border-t border-white/10 pt-4">
-              <RegisterButton />
+            {/* Nav Items */}
+            <div className="mt-35 rounded-4xl bg-white/15 p-4 backdrop-blur-sm">
+              <nav className="space-y-3">
+                {sidebarItems.map((item) => {
+                  const isActive = pathname === item.path;
+                  return (
+                    <div
+                      key={item.path}
+                      className={`flex cursor-pointer items-center transition-all duration-300 ${
+                        isActive
+                          ? "rounded-3xl border border-gray-300 bg-amber-50/95 px-4 py-3 text-gray-800 shadow-lg backdrop-blur-sm"
+                          : "px-4 py-3 text-white hover:bg-white/15"
+                      }`}
+                      onClick={() => handleNavigation(item.path)}
+                    >
+                      <div className="flex-shrink-0">
+                        <Image
+                          src={`/pathIcons/${isActive ? item.darkIcon : item.icon}`}
+                          alt={item.alt}
+                          width={24}
+                          height={24}
+                          className={`h-6 w-6 ${
+                            isActive
+                              ? "filter-none"
+                              : "brightness-0 invert filter"
+                          }`}
+                        />
+                      </div>
+                      <span className="ml-4 text-base font-medium whitespace-nowrap">
+                        {item.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Register Button Inline */}
+            <div className="mt-8">
+              <button className="w-full rounded-3xl border border-white bg-transparent px-6 py-3 text-sm font-semibold text-white uppercase transition-all duration-300 hover:bg-white hover:text-black">
+                Register Now
+              </button>
+            </div>
+
+            {/* Social Media Icons */}
+            <div className="mt-auto pt-8">
+              <div className="rounded-4xl bg-white/15 p-4 backdrop-blur-sm">
+                <div className="flex justify-center space-x-6">
+                  {[
+                    { icon: "globe.svg", alt: "Website" },
+                    { icon: "instagram.svg", alt: "Instagram" },
+                    { icon: "linkedin.svg", alt: "LinkedIn" },
+                  ].map((social) => (
+                    <button
+                      key={social.alt}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-all duration-300 hover:bg-white/25"
+                    >
+                      <Image
+                        src={`/${social.icon}`}
+                        alt={social.alt}
+                        width={16}
+                        height={16}
+                        className="h-4 w-4 brightness-0 invert filter"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
