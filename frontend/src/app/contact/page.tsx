@@ -4,10 +4,11 @@ import { faqs } from "../../../data/faqData";
 import Venue from "@/components/Venue";
 import VenueContact from "@/components/VenueContact";
 import Background from "@/components/Background";
+import LightBoxOthers from "@/components/LightBoxOthers";
 
 const Page = () => {
   return (
-    <div className="relative overflow-x-clip">
+    <div className="relative w-[100%] overflow-x-clip">
       {/*<XComponent />*/}
       <Background />
 
@@ -24,7 +25,8 @@ const Page = () => {
           </div>
           {/* Transport cards + Map  */}
           <Venue />
-
+          {/* Lightbox */}
+          <LightBoxOthers name="contact" id={0} />
           {/* FAQ Section */}
 
           <FAQClient faqs={faqs} />
