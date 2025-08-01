@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import RegisterButton from "./RegisterButton";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -53,7 +54,7 @@ const Navbar: React.FC = () => {
     {
       icon: "contact.svg",
       alt: "contact",
-      label: "Contact Us", // ✅ Line 59 update
+      label: "Contact Us",
       path: "/contact",
       darkIcon: "contactDark.svg",
     },
@@ -86,10 +87,7 @@ const Navbar: React.FC = () => {
           <div className="relative hidden aspect-square w-full max-w-[900px] sm:block" />
 
           <div className="mt-10 hidden md:block">
-            {/* Removed RegisterButton component */}
-            <button className="rounded-xl border border-white bg-transparent px-6 py-3 text-sm font-semibold text-white uppercase transition-all duration-300 hover:bg-white hover:text-black">
-              Register Now
-            </button>
+            <RegisterButton />
           </div>
 
           <div className="flex items-center md:hidden">
