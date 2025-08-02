@@ -136,15 +136,17 @@ const WhyApplySection = () => {
           campus fairs and events.
         </div>
       </div>
-      <div className="mt-10 mb-10 flex items-center justify-center">
-        <div className="relative inline-block max-w-sm px-2 py-1">
-          {/* Corner Borders for ABOUT heading */}
-          <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
-          <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
-          <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
-          <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-          <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
-            <span>Campus Ambassador in 3 simple steps</span>
+      <div className="mx-auto mb-0 flex w-full max-w-4xl flex-col items-center gap-2">
+        <div className="container mt-10 mb-10 flex items-center justify-center">
+          <div className="relative container m-3 inline-block px-2 py-1">
+            {/* Corner Borders for ABOUT heading */}
+            <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
+            <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
+            <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
+            <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
+            <div className="font-avgardd text-offwhite flex items-center justify-center gap-4 text-[1.2rem] font-extrabold tracking-tight uppercase sm:text-2xl sm:tracking-wider md:text-3xl">
+              <span>Campus Ambassador in 3 simple steps</span>
+            </div>
           </div>
         </div>
       </div>
@@ -180,14 +182,14 @@ const WhyApplySection = () => {
         ))}
         <BecomeAmbassadorBanner />
         {/* Campus Ambassador FAQ Section */}
-        <div className="z-10 mt-19 mb-10 flex items-center justify-center">
-          <div className="relative inline-block px-2 py-1">
+        <div className="z-10 container mt-10 mb-10 flex items-center justify-center">
+          <div className="relative container m-3 inline-block px-2 py-1">
             {/* Corner Borders for ABOUT heading */}
             <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
             <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
             <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
             <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-            <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
+            <div className="font-avgardd text-offwhite flex items-center justify-center gap-4 text-[1.2rem] font-extrabold tracking-wider uppercase sm:text-2xl md:text-3xl">
               <span>frequently asked questions</span>
             </div>
           </div>

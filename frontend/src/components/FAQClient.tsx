@@ -16,63 +16,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs }) => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="mx-1 max-w-sm space-y-1">
-      {/* Decorative white corners */}
-      <div className="mb-8 flex justify-center">
-        <div className="relative px-8 py-2">
-          {/* Top Left Corner */}
-          <div className="absolute top-0 left-0">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M2 2L2 8M2 2L8 2"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="square"
-              />
-            </svg>
-          </div>
-
-          {/* Top Right Corner */}
-          <div className="absolute top-0 right-0">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M22 2L22 8M22 2L16 2"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="square"
-              />
-            </svg>
-          </div>
-
-          {/* Bottom Left Corner */}
-          <div className="absolute bottom-0 left-0">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M2 22L2 16M2 22L8 22"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="square"
-              />
-            </svg>
-          </div>
-
-          {/* Bottom Right Corner */}
-          <div className="absolute right-0 bottom-0">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M22 22L22 16M22 22L16 22"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="square"
-              />
-            </svg>
-          </div>
-
-          <h3 className="font-avgardn text-offwhite text-center text-xl tracking-wider">
-            HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
-          </h3>
-        </div>
-      </div>
+    <div className="mx-1 space-y-1">
       {faqs.map((faq) => (
         <div
           key={faq.id}
