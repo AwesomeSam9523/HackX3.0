@@ -194,7 +194,9 @@ const WhyApplySection = () => {
             </div>
           </div>
         </div>
-        <FAQClient faqs={campusAmbassadorFaqs} disableBodyBgChange={true} />
+        <div className="px-8 lg:px-12">
+          <FAQClient faqs={campusAmbassadorFaqs} disableBodyBgChange={true} />
+        </div>
       </div>
     </div>
   );
