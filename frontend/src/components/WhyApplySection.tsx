@@ -60,7 +60,7 @@ const WhyApplySection = () => {
             Apply Now
           </button>
           {/* ABOUT Section */}
-          <div className="rectangleDiv relative mx-auto mt-8 mb-8 h-[500px] w-full max-w-6xl overflow-hidden rounded-[40px] bg-[rgba(0,0,0,0.17)] px-12 shadow-lg backdrop-blur-[48.9px]">
+          <div className="rectangleDiv relative mx-auto mt-8 mb-8 min-h-[500px] w-full max-w-6xl overflow-hidden rounded-[40px] bg-[rgba(0,0,0,0.17)] px-6 py-8 shadow-lg backdrop-blur-[48.9px] md:px-12">
             {/* Corner Borders */}
             <span className="absolute top-8 left-8 h-[15px] w-[15px] border-3 border-r-0 border-b-0 border-white" />
             <span className="absolute top-8 right-8 h-[15px] w-[15px] border-3 border-b-0 border-l-0 border-white" />
@@ -79,15 +79,15 @@ const WhyApplySection = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-offwhite mx-auto max-w-4xl space-y-6 px-4 text-center font-bold uppercase">
-                <p className="font-avgardn text-lg leading-snug tracking-wider md:text-xl">
+              <div className="text-offwhite mx-auto max-w-4xl space-y-6 px-2 py-4 text-center font-bold uppercase md:px-4">
+                <p className="font-avgardn text-base leading-snug tracking-wider md:text-lg lg:text-xl">
                   Our Campus Ambassador Program is an incredible opportunity for
                   students to represent our college and help us spread the word
                   about our mission. As a Campus Ambassador, you will gain
                   valuable experience, enhance your leadership skills, and
                   connect with like-minded individuals.
                 </p>
-                <p className="font-avgardn text-lg leading-snug tracking-wider md:text-xl">
+                <p className="font-avgardn text-base leading-snug tracking-wider md:text-lg lg:text-xl">
                   You will be the face of our hackathon on your campus,
                   organizing events, sharing our story, and promoting our
                   values. This role is perfect for proactive, enthusiastic, and
@@ -110,7 +110,7 @@ const WhyApplySection = () => {
           </div>
         </div>
       </div>
-      <div className="mb-10 flex items-center justify-center">
+      <div className="rectangleDiv relative mx-auto mt-8 mb-8 w-full max-w-6xl overflow-hidden px-6 py-8 shadow-lg md:px-12">
         <div className="font-avgardn text-offwhite mx-auto max-w-4xl text-center text-lg leading-tight font-bold uppercase md:text-xl">
           Becoming a Campus Ambassador offers a unique opportunity to develop
           your professional skills, network with industry leaders, and gain
@@ -128,7 +128,7 @@ const WhyApplySection = () => {
           />
         ))}
       </div>
-      <div className="mt-12 mb-10 flex items-center justify-center">
+      <div className="rectangleDiv relative mx-auto mt-8 mb-8 w-full max-w-6xl overflow-hidden px-6 py-8 shadow-lg md:px-12">
         <div className="font-avgardn text-offwhite mx-auto max-w-4xl text-center text-lg leading-tight font-bold uppercase md:text-xl">
           As a Campus Ambassador, you will be responsible for promoting our
           brand on campus, organizing and hosting events and workshops, engaging
@@ -136,8 +136,8 @@ const WhyApplySection = () => {
           campus fairs and events.
         </div>
       </div>
-      <div className="mt-19 mb-10 flex items-center justify-center">
-        <div className="relative inline-block px-2 py-1">
+      <div className="mt-10 mb-10 flex items-center justify-center">
+        <div className="relative inline-block max-w-sm px-2 py-1">
           {/* Corner Borders for ABOUT heading */}
           <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
           <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
@@ -166,14 +166,14 @@ const WhyApplySection = () => {
         ].map((step, idx) => (
           <div
             key={idx}
-            className="flex w-full items-center rounded-[80px] bg-[rgba(0,0,0,0.45)] px-8 py-6 shadow-lg"
+            className="flex w-full items-center rounded-full bg-[rgba(0,0,0,0.45)] px-8 py-6 shadow-lg"
           >
-            <div className="mr-8 flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full border-2 border-white bg-[rgba(255,255,255,0.1)]">
-              <span className="font-avgardd text-offwhite text-2xl font-bold">
+            <div className="mr-8 flex h-15 w-15 flex-shrink-0 items-center justify-center rounded-full border-1 border-white bg-[rgba(255,255,255,0.1)]">
+              <span className="font-avgardd text-offwhite text-xl">
                 {step.number}
               </span>
             </div>
-            <div className="font-avgardd text-offwhite text-[1.5rem] leading-tight font-bold uppercase">
+            <div className="font-avgardd text-offwhite text-xl leading-tight uppercase">
               {step.text}
             </div>
           </div>

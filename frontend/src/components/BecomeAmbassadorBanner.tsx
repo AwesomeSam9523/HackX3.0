@@ -5,7 +5,7 @@ const BecomeAmbassadorBanner = () => {
   return (
     <div className="relative flex h-[180px] w-full max-w-[1100px] items-center overflow-hidden rounded-full bg-[#181c27] px-8 py-6 shadow-lg">
       {/* Left Image */}
-      <div className="absolute top-1/3 left-0 -mt-8 h-[220px] w-[380px] -translate-x-1/12 -translate-y-1/2 md:h-[260px] md:w-[420px]">
+      <div className="absolute top-1/8 -left-2 -mt-8 h-[220px] w-[380px] -translate-x-1/12 -translate-y-1/2 md:h-[260px] md:w-[420px]">
         <Image
           src="/HeroSection/ChipsSpline3.svg"
           alt="Glowing Shape"

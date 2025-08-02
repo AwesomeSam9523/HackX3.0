@@ -16,7 +16,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs }) => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto max-w-4xl space-y-1">
+    <div className="mx-1 max-w-sm space-y-1">
       {/* Decorative white corners */}
       <div className="mb-8 flex justify-center">
         <div className="relative px-8 py-2">
@@ -68,7 +68,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs }) => {
             </svg>
           </div>
 
-          <h3 className="font-avgardn text-offwhite mb-8 text-center text-xl tracking-wider">
+          <h3 className="font-avgardn text-offwhite text-center text-xl tracking-wider">
             HAVE QUESTIONS ABOUT THE HACKATHON? EXPLORE OUR FAQ BELOW!
           </h3>
         </div>
