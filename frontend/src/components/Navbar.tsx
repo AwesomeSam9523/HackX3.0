@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="relative z-50 h-32 w-full">
+      <div className="relative z-7 h-32 w-full">
         <div className="flex h-full justify-between px-4 pt-24 sm:px-8 sm:pt-0">
           <div className="flex w-sm items-center">
             <Image
