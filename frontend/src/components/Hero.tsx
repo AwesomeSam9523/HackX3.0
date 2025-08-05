@@ -100,7 +100,7 @@ const HeroSection = () => {
         <HackathonStats />
 
         {/* CTA Buttons */}
-        <div className="mt-12 mb-15 hidden flex-col gap-4 sm:flex-row lg:mt-15 lg:flex">
+        <div className="mb:mt-12 -mt-7 mb-7 flex-col gap-4 sm:flex-row md:mb-15 lg:mt-15 lg:flex">
           <JoinHackathonBanner />
         </div>
         <div className="w-full">

@@ -3,19 +3,20 @@ import Image from "next/image";
 
 const JoinHackathonBanner = () => {
   return (
-    <div className="relative flex h-[180px] w-full max-w-[950px] items-center justify-between overflow-hidden rounded-full bg-[#0a0f2b] px-18 py-12 md:py-8">
+    <div className="relative flex h-[clamp(6rem,12vw,10rem)] w-[clamp(18rem,90vw,60rem)] flex-col-reverse items-center justify-between gap-6 overflow-hidden rounded-full bg-[#0a0f2b] px-4 py-6 sm:flex-row sm:px-8 md:w-[clamp(18rem,70vw,60rem)] md:px-12 lg:px-16">
       {/* Left Content */}
-      <div className="text-offwhite z-10 flex flex-col items-start gap-3">
-        <h2 className="font-kinetikaUltra text-left text-xl leading-tight font-extrabold text-nowrap sm:text-lg md:text-2xl lg:text-3xl">
+      <div className="text-offwhite z-10 flex flex-col items-start">
+        <h2 className="font-kinetikaUltra absolute top-[clamp(1.4rem,2.75vw,2.75rem)] left-[clamp(1.3rem,4.6vw,4.6rem)] text-left text-xl leading-tight font-extrabold text-nowrap sm:text-lg md:text-2xl lg:text-[2rem]">
           JOIN THE HACKATHON!
         </h2>
-        <button className="xs:px-5 xs:py-3 xs:text-base text-offwhite min-h-[34px] w-full max-w-xs transform rounded-full border-2 border-white bg-transparent px-2 py-1.5 text-sm font-extrabold tracking-wide whitespace-nowrap shadow-lg transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white hover:text-black hover:shadow-xl focus:scale-105 focus:ring-4 focus:ring-white/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 sm:min-h-[48px] sm:px-6 sm:py-3 sm:text-lg md:min-h-[52px] md:w-3/5 md:px-4 md:py-1.5 md:text-base lg:min-h-[36px]">
+        {/*<button */}
+        <button className="text-offwhite absolute bottom-[clamp(1.4rem,2.95vw,2.95rem)] left-[clamp(1.3rem,4.6vw,4.6rem)] transform rounded-full border-[clamp(0.05rem,0.13vw,0.13rem)] border-white bg-transparent px-[clamp(0.7rem,2vw,2rem)] py-[clamp(0.3rem,0.35vw,0.35rem)] text-sm text-[clamp(0.5rem,0.9vw,0.9rem)] font-extrabold tracking-wide whitespace-nowrap shadow-lg transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white hover:text-black hover:shadow-xl focus:scale-105 focus:ring-4 focus:ring-white/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100">
           REGISTER NOW
         </button>
       </div>
 
       {/* Right Image */}
-      <div className="relative mb-40 h-[300px] w-[100px] sm:h-[400px] sm:w-[400px] md:h-[500px] md:w-[800px]">
+      <div className="absolute -bottom-[clamp(8rem,12vw,12rem)] left-[clamp(10rem,30.5vw,30.5rem)] w-[clamp(13rem,25vw,25rem]">
         <Image
           src="/HeroSection/ChipsSpline3.svg"
           alt="Glowing Shape"
