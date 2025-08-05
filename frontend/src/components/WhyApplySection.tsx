@@ -110,7 +110,7 @@ const WhyApplySection = () => {
           </div>
         </div>
       </div>
-      <div className="mb-10 flex items-center justify-center">
+      <div className="rectangleDiv relative mx-auto mt-8 mb-8 w-full max-w-6xl overflow-hidden px-6 py-8 shadow-lg md:px-12">
         <div className="font-avgardn text-offwhite mx-auto max-w-4xl text-center text-lg leading-tight font-bold uppercase md:text-xl">
           Becoming a Campus Ambassador offers a unique opportunity to develop
           your professional skills, network with industry leaders, and gain
@@ -128,7 +128,7 @@ const WhyApplySection = () => {
           />
         ))}
       </div>
-      <div className="mt-12 mb-10 flex items-center justify-center">
+      <div className="rectangleDiv relative mx-auto mt-8 mb-8 w-full max-w-6xl overflow-hidden px-6 py-8 shadow-lg md:px-12">
         <div className="font-avgardn text-offwhite mx-auto max-w-4xl text-center text-lg leading-tight font-bold uppercase md:text-xl">
           As a Campus Ambassador, you will be responsible for promoting our
           brand on campus, organizing and hosting events and workshops, engaging
@@ -136,15 +136,17 @@ const WhyApplySection = () => {
           campus fairs and events.
         </div>
       </div>
-      <div className="mt-19 mb-10 flex items-center justify-center">
-        <div className="relative inline-block px-2 py-1">
-          {/* Corner Borders for ABOUT heading */}
-          <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
-          <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
-          <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
-          <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-          <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
-            <span>Campus Ambassador in 3 simple steps</span>
+      <div className="mx-auto mb-0 flex w-full max-w-4xl flex-col items-center gap-2">
+        <div className="container mt-10 mb-10 flex items-center justify-center">
+          <div className="relative container m-3 inline-block px-2 py-1">
+            {/* Corner Borders for ABOUT heading */}
+            <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
+            <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
+            <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
+            <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
+            <div className="font-avgardd text-offwhite flex items-center justify-center gap-4 text-[1.2rem] font-extrabold tracking-tight uppercase sm:text-2xl sm:tracking-wider md:text-3xl">
+              <span>Campus Ambassador in 3 simple steps</span>
+            </div>
           </div>
         </div>
       </div>
@@ -166,33 +168,35 @@ const WhyApplySection = () => {
         ].map((step, idx) => (
           <div
             key={idx}
-            className="flex w-full items-center rounded-[80px] bg-[rgba(0,0,0,0.45)] px-8 py-6 shadow-lg"
+            className="flex w-full items-center rounded-full bg-[rgba(0,0,0,0.45)] px-8 py-6 shadow-lg"
           >
-            <div className="mr-8 flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full border-2 border-white bg-[rgba(255,255,255,0.1)]">
-              <span className="font-avgardd text-offwhite text-2xl font-bold">
+            <div className="mr-8 flex h-15 w-15 flex-shrink-0 items-center justify-center rounded-full border-1 border-white bg-[rgba(255,255,255,0.1)]">
+              <span className="font-avgardd text-offwhite text-xl">
                 {step.number}
               </span>
             </div>
-            <div className="font-avgardd text-offwhite text-[1.5rem] leading-tight font-bold uppercase">
+            <div className="font-avgardd text-offwhite text-xl leading-tight uppercase">
               {step.text}
             </div>
           </div>
         ))}
         <BecomeAmbassadorBanner />
         {/* Campus Ambassador FAQ Section */}
-        <div className="z-10 mt-19 mb-10 flex items-center justify-center">
-          <div className="relative inline-block px-2 py-1">
+        <div className="z-10 container mt-10 mb-10 flex items-center justify-center">
+          <div className="relative container m-3 inline-block px-2 py-1">
             {/* Corner Borders for ABOUT heading */}
             <span className="absolute -top-1 -left-1 h-2 w-2 border-t-2 border-l-2 border-white" />
             <span className="absolute -top-1 -right-1 h-2 w-2 border-t-2 border-r-2 border-white" />
             <span className="absolute -bottom-1 -left-1 h-2 w-2 border-b-2 border-l-2 border-white" />
             <span className="absolute -right-1 -bottom-1 h-2 w-2 border-r-2 border-b-2 border-white" />
-            <div className="font-avgardd text-offwhite flex items-center gap-4 text-2xl font-extrabold tracking-wider uppercase md:text-3xl">
+            <div className="font-avgardd text-offwhite flex items-center justify-center gap-4 text-[1.2rem] font-extrabold tracking-wider uppercase sm:text-2xl md:text-3xl">
               <span>frequently asked questions</span>
             </div>
           </div>
         </div>
-        <FAQClient faqs={campusAmbassadorFaqs} disableBodyBgChange={true} />
+        <div className="px-8 lg:px-12">
+          <FAQClient faqs={campusAmbassadorFaqs} disableBodyBgChange={true} />
+        </div>
       </div>
     </div>
   );
