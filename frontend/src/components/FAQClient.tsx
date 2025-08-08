@@ -24,8 +24,8 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs }) => {
           onMouseEnter={() => setOpenFAQ(faq.id)}
           onMouseLeave={() => setOpenFAQ(null)}
         >
-          <div className="text-offwhite flex w-full cursor-pointer items-center justify-center px-8 py-6 text-left transition-colors duration-200 hover:bg-white/5">
-            <span className="text-center text-lg font-bold tracking-tight">
+          <div className="text-offwhite flex h-[clamp(3.3rem,6vw,6rem)] w-full cursor-pointer items-center justify-center px-8 py-6 text-left transition-colors duration-200 hover:bg-white/5">
+            <span className="text-center text-[clamp(0.65rem,1.3vw,1.3rem)] font-bold tracking-tight">
               {faq.question}
             </span>
             <div
@@ -47,7 +47,7 @@ const FAQClient: React.FC<FAQClientProps> = ({ faqs }) => {
           >
             <div className="px-8 pb-6">
               <div className="border-t border-white/10 pt-4">
-                <p className="text-offwhite/80 transform text-center leading-relaxed transition-transform duration-300">
+                <p className="text-offwhite/80 transform text-center text-[clamp(0.65rem,1.3vw,1.3rem)] leading-relaxed transition-transform duration-300">
                   {faq.answer}
                 </p>
               </div>
