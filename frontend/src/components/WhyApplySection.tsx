@@ -71,7 +71,7 @@ const WhyApplySection = () => {
           </button>
           {/* ABOUT Section */}
           <div
-            className="rectangleDiv relative mx-auto mt-8 mb-8 min-h-[500px] overflow-hidden rounded-[40px] bg-[rgba(0,0,0,0.17)] px-6 py-8 shadow-lg backdrop-blur-[48.9px] md:px-12"
+            className="rectangleDiv relative mx-auto mt-8 mb-8 min-h-[500px] w-full max-w-6xl overflow-hidden rounded-[40px] bg-[rgba(0,0,0,0.17)] px-6 py-8 shadow-lg backdrop-blur-[48.9px] md:px-12"
             style={{ width: "clamp(19rem,63vw,63rem)" }}
           >
             {/* Corner Borders */}
@@ -93,14 +93,16 @@ const WhyApplySection = () => {
                 </div>
               </div>
               <div className="text-offwhite mx-auto max-w-4xl space-y-6 px-2 py-4 text-center font-bold uppercase md:px-4">
-                <p className="font-avgardn text-base text-[clamp(0.8rem,1.3vw,1.3rem)] leading-snug tracking-wider">
+
+                <p className="font-avgardn text-base md:text-lg lg:text-xl text-[clamp(0.8rem,1.3vw,1.3rem)] leading-snug tracking-wider">
                   Our Campus Ambassador Program is an incredible opportunity for
                   students to represent our college and help us spread the word
                   about our mission. As a Campus Ambassador, you will gain
                   valuable experience, enhance your leadership skills, and
                   connect with like-minded individuals.
                 </p>
-                <p className="font-avgardn mb-4 text-base text-[clamp(0.8rem,1.3vw,1.3rem)] leading-snug tracking-wider">
+
+                <p className="font-avgardn mb-4 text-base text-[clamp(0.8rem,1.3vw,1.3rem)] leading-snug tracking-wider md:text-lg lg:text-xl">
                   You will be the face of our hackathon on your campus,
                   organizing events, sharing our story, and promoting our
                   values. This role is perfect for proactive, enthusiastic, and

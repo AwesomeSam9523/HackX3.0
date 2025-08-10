@@ -1,16 +1,14 @@
-// HackX3.0/frontend/src/components/Navbar.tsx
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import RegisterButton from "@/components/RegisterButton";
-import { SidebarItem } from "../../types/team";
+import RegisterButton from "./RegisterButton";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const sidebarItems: SidebarItem[] = [
+  const sidebarItems = [
     {
       icon: "home.svg",
       alt: "Home",
@@ -56,7 +54,7 @@ const Navbar: React.FC = () => {
     {
       icon: "contact.svg",
       alt: "contact",
-      label: "Contact",
+      label: "Contact Us",
       path: "/contact",
       darkIcon: "contactDark.svg",
     },
@@ -73,10 +71,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <div className="relative z-50 h-32 w-full">
-        {/* This div previously held the Spline iframe. It is now removed as Spline is in Hero.tsx */}
-        {/* The Navbar's content will now overlay the Spline in Hero.tsx */}
-
+      <div className="relative z-7 h-32 w-full">
         <div className="flex h-full justify-between px-4 pt-24 sm:px-8 sm:pt-0">
           <div className="flex w-sm items-center">
             <Image
@@ -89,17 +84,12 @@ const Navbar: React.FC = () => {
             />
           </div>
 
-          <div className="relative hidden aspect-square w-full max-w-[900px] sm:block">
-            {/* This div previously held the static image or Spline embed.
-                It's now empty as Spline is moved to Hero.tsx for banner background. */}
-          </div>
+          <div className="relative hidden aspect-square w-full max-w-[900px] sm:block" />
 
-          {/* Register button for larger screens */}
           <div className="mt-10 hidden md:block">
             <RegisterButton />
           </div>
 
-          {/* Hamburger menu button for smaller screens */}
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleMenu}
@@ -107,39 +97,69 @@ const Navbar: React.FC = () => {
               aria-label="Toggle menu"
             >
               <div
-                className={`h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? "translate-y-1.5 rotate-45" : ""}`}
+                className={`h-0.5 w-6 transform bg-white transition-all duration-300 ${
+                  isMenuOpen ? "translate-y-1.5 rotate-45" : ""
+                }`}
               />
               <div
-                className={`my-1 h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`}
+                className={`my-1 h-0.5 w-6 bg-white transition-all duration-300 ${
+                  isMenuOpen ? "opacity-0" : ""
+                }`}
               />
               <div
-                className={`h-0.5 w-6 bg-white transition-all duration-300 ${isMenuOpen ? "-translate-y-1.5 -rotate-45" : ""}`}
+                className={`h-0.5 w-6 transform bg-white transition-all duration-300 ${
+                  isMenuOpen ? "-translate-y-1.5 -rotate-45" : ""
+                }`}
               />
             </button>
           </div>
         </div>
       </div>
 
-      {isMenuOpen && (
-        <div className="fixed inset-0 z-60 md:hidden">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMenuOpen(false)}
-          />
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-40 transition-all duration-500 ease-in-out md:hidden ${
+          isMenuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      >
+        {/* Backdrop - Transparent */}
+        <div
+          className="backdrop-transparent absolute inset-0 bg-black/30"
+          onClick={() => setIsMenuOpen(false)}
+        />
 
-          <div className="absolute top-20 right-4 mt-4 w-80 max-w-[calc(100vw-2rem)]">
-            <div className="rounded-3xl border border-white/10 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
-              <nav className="space-y-4">
+        {/* Sliding Panel */}
+        <div
+          className={`absolute top-0 right-0 h-full w-3/4 max-w-md transform transition-transform duration-500 ease-in-out ${
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="h-full rounded-l-3xl border-t border-b border-l border-white/20 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
+            {/* Close Button */}
+            {/* <div className="flex justify-end mb-8">
+              <button 
+                onClick={() => setIsMenuOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all duration-300 hover:bg-white/25"
+                aria-label="Close menu"
+              >
+                <span className="text-white text-xl font-bold">×</span>
+              </button>
+            </div> */}
+
+            {/* Nav Items */}
+            <div className="mt-8 rounded-4xl bg-white/15 p-4 backdrop-blur-sm">
+              <nav className="space-y-2">
                 {sidebarItems.map((item) => {
                   const isActive = pathname === item.path;
                   return (
                     <div
                       key={item.path}
-                      className={`flex cursor-pointer items-center rounded-full px-4 py-3 transition-all duration-300 ${
+                      className={`flex cursor-pointer items-center transition-all duration-300 ${
                         isActive
-                          ? "bg-white/90 shadow-lg backdrop-blur-sm"
-                          : "hover:bg-white/10"
+                          ? "rounded-3xl border border-gray-300 bg-amber-50/95 px-4 py-2 text-gray-800 shadow-lg backdrop-blur-sm"
+                          : "px-4 py-2 text-white hover:bg-white/15"
                       }`}
                       onClick={() => handleNavigation(item.path)}
                     >
@@ -147,34 +167,59 @@ const Navbar: React.FC = () => {
                         <Image
                           src={`/pathIcons/${isActive ? item.darkIcon : item.icon}`}
                           alt={item.alt}
-                          width={32}
-                          height={32}
-                          className={`h-8 w-8 ${
+                          width={24}
+                          height={24}
+                          className={`h-6 w-6 ${
                             isActive
                               ? "filter-none"
                               : "brightness-0 invert filter"
                           }`}
                         />
                       </div>
-                      <span
-                        className={`ml-4 text-lg font-medium whitespace-nowrap ${
-                          isActive ? "text-gray-800" : "text-offwhite"
-                        }`}
-                      >
+                      <span className="ml-4 text-base font-medium whitespace-nowrap">
                         {item.label}
                       </span>
                     </div>
                   );
                 })}
               </nav>
+            </div>
 
-              <div className="mt-6 border-t border-white/10 pt-4">
-                <RegisterButton />
+            {/* Register Button Inline */}
+            <div className="mt-4">
+              <button className="w-full rounded-3xl border border-white bg-transparent px-6 py-2 text-sm font-semibold text-white uppercase transition-all duration-300 hover:bg-white hover:text-black">
+                Register Now
+              </button>
+            </div>
+
+            {/* Social Media Icons */}
+            <div className="mt-4 pb-4">
+              <div className="rounded-4xl bg-white/15 p-3 backdrop-blur-sm">
+                <div className="flex justify-center space-x-6">
+                  {[
+                    { icon: "globe.svg", alt: "Website" },
+                    { icon: "instagram.svg", alt: "Instagram" },
+                    { icon: "linkedin.svg", alt: "LinkedIn" },
+                  ].map((social) => (
+                    <button
+                      key={social.alt}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-all duration-300 hover:bg-white/25"
+                    >
+                      <Image
+                        src={`/${social.icon}`}
+                        alt={social.alt}
+                        width={16}
+                        height={16}
+                        className="h-4 w-4 brightness-0 invert filter"
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };
