@@ -65,7 +65,7 @@ const WhyApplySection = () => {
           </div>
           <button
             className="font-avgardn text-offwhite mt-2 rounded-full border-2 border-white bg-transparent px-6 py-2 text-base font-bold tracking-wider uppercase transition-all duration-300"
-            style={{ fontSize: "clamp(0.55rem,1vw,1rem)" }}
+            style={{ fontSize: "clamp(0.7rem,1vw,1rem)" }}
           >
             Apply Now
           </button>
@@ -93,8 +93,7 @@ const WhyApplySection = () => {
                 </div>
               </div>
               <div className="text-offwhite mx-auto max-w-4xl space-y-6 px-2 py-4 text-center font-bold uppercase md:px-4">
-
-                <p className="font-avgardn text-base md:text-lg lg:text-xl text-[clamp(0.8rem,1.3vw,1.3rem)] leading-snug tracking-wider">
+                <p className="font-avgardn text-base text-[clamp(0.8rem,1.3vw,1.3rem)] leading-snug tracking-wider">
                   Our Campus Ambassador Program is an incredible opportunity for
                   students to represent our college and help us spread the word
                   about our mission. As a Campus Ambassador, you will gain
