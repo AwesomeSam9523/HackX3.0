@@ -124,21 +124,21 @@ export const teamData: TeamCategory[] = [
         title: "MUJ HACX 3.0 ADVISORIES",
         members: [
           {
-            id: "12",
+            id: "1b",
             name: "Vaibhav Verma",
             position: "Technical",
             image: "/teams/EC/technical/Vaibhav Verma.jpg",
             linkedinUrl: "https://www.linkedin.com/in/vaibhavverma01/",
           },
           {
-            id: "13",
+            id: "2b",
             name: "Rohit Ganguly",
             position: "Technical",
             image: "/teams/EC/technical/Rohit Ganguly.jpeg",
             linkedinUrl: "https://www.linkedin.com/in/rohit-ganguly-42685521b/",
           },
           {
-            id: "13a",
+            id: "3b",
             name: "Kanishka Bhatia",
             position: "Technical",
             image: "/teams/EC/technical/Kanishka Bhatia.png",
@@ -151,7 +151,7 @@ export const teamData: TeamCategory[] = [
         title: "STUDENT CONVENER 2024-25",
         members: [
           {
-            id: "14",
+            id: "4b",
             name: "Aryan Verma",
             position: "STUDENT CONVENER",
             image: "/teams/EC/conveners/aryan verma - convener.png",
@@ -159,7 +159,7 @@ export const teamData: TeamCategory[] = [
             phoneNumber: "+91-9876543210",
           },
           {
-            id: "15",
+            id: "5b",
             name: "Samaksh Gupta",
             position: "STUDENT CONVENER",
             image: "/teams/EC/conveners/samaksh gupta - convener.png",
@@ -167,7 +167,7 @@ export const teamData: TeamCategory[] = [
             phoneNumber: "+91-9876543211",
           },
           {
-            id: "16",
+            id: "6b",
             name: "Tamanna Yadav",
             position: "STUDENT CONVENER",
             image: "/teams/EC/conveners/tamanna yadav - convener.png",
@@ -175,7 +175,7 @@ export const teamData: TeamCategory[] = [
             phoneNumber: "+91-9876543212",
           },
           {
-            id: "99",
+            id: "7b",
             name: "Harshada Chandel",
             position: "STUDENT CONVENER",
             image: "/teams/EC/conveners/harshada chandel - convener.png",
@@ -188,7 +188,7 @@ export const teamData: TeamCategory[] = [
         title: "TECHNICAL TEAM",
         members: [
           {
-            id: "17",
+            id: "8b",
             name: "Rohit Ganguly",
             position: "TECHNICAL",
             image: "/teams/EC/technical/Rohit Ganguly.jpeg",
@@ -197,7 +197,7 @@ export const teamData: TeamCategory[] = [
             instagramUrl: "https://instagram.com/rohit_verma",
           },
           {
-            id: "18",
+            id: "9b",
             name: "Vaibhav Verma",
             position: "TECHNICAL",
             image: "/teams/EC/technical/Vaibhav Verma.jpg",
@@ -206,7 +206,7 @@ export const teamData: TeamCategory[] = [
             instagramUrl: "https://instagram.com/ankit_joshi",
           },
           {
-            id: "19",
+            id: "10b",
             name: "Kanishka Bhatia",
             position: "TECHNICAL",
             image: "/teams/EC/technical/Kanishka Bhatia.png",
@@ -221,21 +221,21 @@ export const teamData: TeamCategory[] = [
         title: "CONTENT TEAM",
         members: [
           {
-            id: "20a",
+            id: "11b",
             name: "Samar Chaubey",
             position: "CONTENT",
             image: "/teams/EC/content/Samar Chaubey - content.jpg",
             linkedinUrl: "https://linkedin.com/in/rohit-verma",
           },
           {
-            id: "21a",
+            id: "12b",
             name: "Dishita Sharma",
             position: "CONTENT",
             image: "/teams/EC/content/dishita sharma - content.png",
             linkedinUrl: "https://linkedin.com/in/ankit-joshi",
           },
           {
-            id: "22a",
+            id: "13b",
             name: "Sarah Sohaib ",
             position: "CONTENT",
             image: "/teams/EC/content/Sarah Sohaib - content.png",
@@ -247,21 +247,21 @@ export const teamData: TeamCategory[] = [
         title: "CURATIONS TEAM",
         members: [
           {
-            id: "23a",
+            id: "14b",
             name: "Archisha Garg",
             position: "CURATIONS",
             image: "/teams/EC/curations/Archisha Garg - curations.jpg",
             linkedinUrl: "https://linkedin.com/in/arjun-mehta",
           },
           {
-            id: "24a",
+            id: "15b",
             name: "Vansh Jain",
             position: "CURATIONS",
             image: "/teams/EC/curations/Vansh Jain - curations.png",
             linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
           },
           {
-            id: "25a",
+            id: "16b",
             name: "Mehul",
             position: "CURATIONS",
             image: "/teams/EC/curations/ANMOL PRIYA - curations.jpeg",
@@ -273,28 +273,28 @@ export const teamData: TeamCategory[] = [
         title: "GRAPHIC DESIGN TEAM",
         members: [
           {
-            id: "26a",
+            id: "17b",
             name: "Arsh Adil",
             position: "GRAPHIC DESIGN",
             image: "/teams/EC/GD/Arsh Adil - GD.png",
             linkedinUrl: "https://linkedin.com/in/priya-sharma",
           },
           {
-            id: "27a",
+            id: "18b",
             name: "Prakhar Mahant",
             position: "GRAPHIC DESIGN",
             image: "/teams/EC/GD/Prakhar Mahant - GD.jpg",
             linkedinUrl: "https://linkedin.com/in/amit-patel",
           },
           {
-            id: "28a",
+            id: "19b",
             name: "Ashutosh Sharma",
             position: "GRAPHIC DESIGN",
             image: "/teams/EC/GD/Ashutosh Sharma - GD.jpg",
             linkedinUrl: "https://linkedin.com/in/kavita-singh",
           },
           {
-            id: "29a",
+            id: "20b",
             name: "Sankalp Jhamb",
             position: "GRAPHIC DESIGN",
             image: "/teams/EC/GD/Sankalp Jhamb - GD.png",
@@ -306,21 +306,21 @@ export const teamData: TeamCategory[] = [
         title: "HOSPITALITY TEAM",
         members: [
           {
-            id: "30a",
+            id: "21b",
             name: "Paarth Yadav",
             position: "HOSPITALITY",
             image: "/teams/EC/hospitality/Paarth Yadav - hospitality.png",
             linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
           },
           {
-            id: "31a",
+            id: "22b",
             name: "Satya Agrawal",
             position: "HOSPITALITY",
             image: "/teams/EC/hospitality/Satya Agrawal - hospitality.png",
             linkedinUrl: "https://linkedin.com/in/meera-joshi",
           },
           {
-            id: "32a",
+            id: "23b",
             name: "Vansh Devgun",
             position: "HOSPITALITY",
             image: "/teams/EC/hospitality/VANSH DEVGUN - hospitality.jpeg",
@@ -332,21 +332,21 @@ export const teamData: TeamCategory[] = [
         title: "MARKETING TEAM",
         members: [
           {
-            id: "34a",
+            id: "24b",
             name: "Nitin Bharadwaj",
             position: "MARKETING",
             image: "/teams/EC/marketing/Nitin Bharadwaj - marketing.jpeg",
             linkedinUrl: "https://linkedin.com/in/priya-kapoor",
           },
           {
-            id: "35a",
+            id: "25b",
             name: "Yash Maheshwari",
             position: "MARKETING",
             image: "/teams/EC/marketing/Yash Maheshwari - marketing.png",
             linkedinUrl: "https://linkedin.com/in/rohit-sharma",
           },
           {
-            id: "36a",
+            id: "26b",
             name: "Sanjana Rai",
             position: "MARKETING",
             image: "/teams/EC/marketing/Sanjana Rai - marketing.png",
@@ -358,7 +358,7 @@ export const teamData: TeamCategory[] = [
         title: "MEDIA & COVERAGE TEAM",
         members: [
           {
-            id: "37a",
+            id: "27b",
             name: "Ayush garg",
             position: "MEDIA & COVERAGE",
             image:
@@ -366,7 +366,7 @@ export const teamData: TeamCategory[] = [
             linkedinUrl: "https://linkedin.com/in/kavya-sharma",
           },
           {
-            id: "38a",
+            id: "28b",
             name: "Krishna Chaturvedi",
             position: "MEDIA & COVERAGE",
             image:
@@ -374,7 +374,7 @@ export const teamData: TeamCategory[] = [
             linkedinUrl: "https://linkedin.com/in/aditya-singh",
           },
           {
-            id: "39a",
+            id: "29b",
             name: "Yashika Priyadarshi",
             position: "MEDIA & COVERAGE",
             image:
@@ -387,49 +387,49 @@ export const teamData: TeamCategory[] = [
         title: "OPERATIONS TEAM",
         members: [
           {
-            id: "41a",
+            id: "30b",
             name: "Kshtij Verma",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Kshitij Verma - operations.png",
             linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
           },
           {
-            id: "42a",
+            id: "31b",
             name: "Salaj Singh Bisht",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Salaj Bisht - operations.png",
             linkedinUrl: "https://linkedin.com/in/priya-sharma",
           },
           {
-            id: "43a",
+            id: "32b",
             name: "Bhavya Jaggi",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Bhavya Jaggi - operations.png",
             linkedinUrl: "https://linkedin.com/in/amit-singh",
           },
           {
-            id: "44a",
+            id: "33b",
             name: "Akshat Mishra",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Akshat Mishra - operations.png",
             linkedinUrl: "https://linkedin.com/in/sneha-patel",
           },
           {
-            id: "45a",
+            id: "34b",
             name: "Tanmay Shah",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Tanmay Shah - operations.png",
             linkedinUrl: "https://linkedin.com/in/vikram-gupta",
           },
           {
-            id: "46a",
+            id: "35b",
             name: "Vedica Saini",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Vedica Saini - operations.png",
             linkedinUrl: "https://linkedin.com/in/kavita-joshi",
           },
           {
-            id: "47a",
+            id: "36b",
             name: "Neil Gupta",
             position: "OPERATIONS",
             image: "/teams/EC/operations/Neil Gupta - operations.png",
@@ -441,21 +441,21 @@ export const teamData: TeamCategory[] = [
         title: "SOCIAL MEDIA TEAM",
         members: [
           {
-            id: "48a",
+            id: "37b",
             name: "Ananya Singh",
             position: "SOCIAL MEDIA",
             image: "/teams/EC/social media/Ananya Singh - social media.jpg",
             linkedinUrl: "https://linkedin.com/in/ananya-sharma",
           },
           {
-            id: "49a",
+            id: "38b",
             name: "Bhavya Dhingra",
             position: "SOCIAL MEDIA",
             image: "/teams/EC/social media/Bhavya Dhingra - social media.jpg",
             linkedinUrl: "https://linkedin.com/in/karan-patel",
           },
           {
-            id: "50a",
+            id: "39b",
             name: "Aayushi",
             position: "SOCIAL MEDIA",
             image: "/teams/EC/social media/Aayushi Pandey-social media.jpeg",
@@ -467,7 +467,7 @@ export const teamData: TeamCategory[] = [
         title: "SPONSORSHIP & FINANCE TEAM",
         members: [
           {
-            id: "51a",
+            id: "40b",
             name: "Devansh Kothari",
             position: "SPONSORSHIP & FINANCE",
             image:
@@ -475,7 +475,7 @@ export const teamData: TeamCategory[] = [
             linkedinUrl: "https://linkedin.com/in/arjun-sharma",
           },
           {
-            id: "52a",
+            id: "41b",
             name: "Tiya Chhabra",
             position: "SPONSORSHIP & FINANCE",
             image:
@@ -483,7 +483,7 @@ export const teamData: TeamCategory[] = [
             linkedinUrl: "https://linkedin.com/in/priya-gupta",
           },
           {
-            id: "53a",
+            id: "42b",
             name: "Sameet Maddawar",
             position: "SPONSORSHIP & FINANCE",
             image:
@@ -491,7 +491,7 @@ export const teamData: TeamCategory[] = [
             linkedinUrl: "https://linkedin.com/in/rohit-verma",
           },
           {
-            id: "54a",
+            id: "43b",
             name: "Arnab Roy",
             position: "SPONSORSHIP & FINANCE",
             image:
