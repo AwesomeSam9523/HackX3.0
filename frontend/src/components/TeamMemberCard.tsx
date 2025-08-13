@@ -26,9 +26,10 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
     </a>
   );
 
-  // Helper function to create phone link
+  // Helper function to create phone link (with key)
   const renderPhoneLink = (phoneNumber: string) => (
     <a
+      key={phoneNumber}
       href={`tel:${phoneNumber}`}
       className="inline-flex h-12 w-12 items-center justify-center transition-all duration-300 ease-in-out hover:scale-105"
     >
