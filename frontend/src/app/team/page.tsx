@@ -34,7 +34,7 @@ const TeamPage: React.FC = () => {
             MEET THE HUMANS BEHIND THE CURTAINS
           </button>
           <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
-            TEAM MUJ HACKX3.0
+            TEAM MUJ HACKX 3.0
           </div>
         </div>
         {/* Category Tabs */}

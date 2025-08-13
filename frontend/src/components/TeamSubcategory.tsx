@@ -10,9 +10,10 @@ const TeamSubcategoryComponent: React.FC<TeamSubcategoryProps> = ({
   subcategory,
 }) => {
   const memberRows = [];
-  for (let i = 0; i < subcategory.members.length; i += 3) {
-    memberRows.push(subcategory.members.slice(i, i + 3));
+  for (let i = 0; i < subcategory.members.length; i += 4) {
+    memberRows.push(subcategory.members.slice(i, i + 4));
   }
+  console.log(subcategory, memberRows);
 
   return (
     <div className="mb-16">
@@ -79,7 +80,7 @@ const TeamSubcategoryComponent: React.FC<TeamSubcategoryProps> = ({
             className="mx-auto flex flex-wrap items-center justify-center gap-8"
           >
             {row.map((member) => (
-              <div key={member.id} className="w-full max-w-sm md:w-auto">
+              <div key={member.id} className="w-[22%]">
                 <TeamMemberCard member={member} />
               </div>
             ))}

@@ -121,7 +121,49 @@ export const teamData: TeamCategory[] = [
     name: "EXECUTIVE",
     subcategories: [
       {
-        title: "MUJ HACX 3.0 ADVISORIES",
+        title: "STUDENT CONVENER 2024-25",
+        members: [
+          {
+            id: "4b",
+            name: "Aryan Verma",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/aryannnnverma/",
+            phoneNumber: "+91-8287044755",
+          },
+          {
+            id: "5b",
+            name: "Samaksh Gupta",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/samakshgupta04/",
+            phoneNumber: "+91-9871340076",
+            githubUrl: "https://github.com/AwesomeSam9523",
+          },
+          {
+            id: "6b",
+            name: "Tamanna Yadav",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNi6Tt2nPbaPb8_tamannayadav-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/tamanna-yadav-4251a6234/",
+            phoneNumber: "+91-8860514740",
+          },
+          {
+            id: "7b",
+            name: "Harshada Chandel",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNgaTt2nPbaPb5_harshadachandel-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/harshadachandel/",
+            phoneNumber: "+91-9821970872",
+          },
+        ],
+      },
+      {
+        title: "MUJ HACKX 3.0 ADVISORIES",
         members: [
           {
             id: "1b",
@@ -141,53 +183,12 @@ export const teamData: TeamCategory[] = [
           },
           {
             id: "3b",
-            name: "abhijeet anand jha",
+            name: "Abhijeet Anand Jha",
             position: "Advisor",
             image:
               "https://images.prismic.io/ieeemuj/aJu1sKTt2nPbaPxL_abhijeetanandjha-advisor.png?auto=format,compress",
             linkedinUrl:
               "https://www.linkedin.com/in/kanishka-bhatia-198294312/",
-          },
-        ],
-      },
-      {
-        title: "STUDENT CONVENER 2024-25",
-        members: [
-          {
-            id: "4b",
-            name: "Aryan Verma",
-            position: "STUDENT CONVENER",
-            image:
-              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://www.linkedin.com/in/aryannnnverma/",
-            phoneNumber: "+91-9876543210",
-          },
-          {
-            id: "5b",
-            name: "Samaksh Gupta",
-            position: "STUDENT CONVENER",
-            image:
-              "https://images.prismic.io/ieeemuj/aJuNhaTt2nPbaPb6_samakshgupta-convener-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://www.linkedin.com/in/samakshgupta04/",
-            phoneNumber: "+91-9876543211",
-          },
-          {
-            id: "6b",
-            name: "Tamanna Yadav",
-            position: "STUDENT CONVENER",
-            image:
-              "https://images.prismic.io/ieeemuj/aJuNi6Tt2nPbaPb8_tamannayadav-convener-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://www.linkedin.com/in/tamanna-yadav-4251a6234/",
-            phoneNumber: "+91-9876543212",
-          },
-          {
-            id: "7b",
-            name: "Harshada Chandel",
-            position: "STUDENT CONVENER",
-            image:
-              "https://images.prismic.io/ieeemuj/aJuNgaTt2nPbaPb5_harshadachandel-convener-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://www.linkedin.com/in/harshadachandel/",
-            phoneNumber: "+91-9876543212",
           },
         ],
       },
@@ -274,14 +275,6 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aJuNnaTt2nPbaPb__VanshJain-curations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
-          },
-          {
-            id: "16b",
-            name: "Anmol Priya",
-            position: "CURATIONS",
-            image:
-              "https://images.prismic.io/ieeemuj/aJuNm6Tt2nPbaPb9_ANMOLPRIYA-curations-hackX3.0.jpeg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/rahul-gupta",
           },
         ],
       },
