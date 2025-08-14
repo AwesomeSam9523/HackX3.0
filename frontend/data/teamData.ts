@@ -27,7 +27,7 @@ export const teamData: TeamCategory[] = [
           {
             id: "3a",
             name: "Dr. Anand Pandey",
-            position: "PROFESSOR & DIRECTOR, E-CELL",
+            position: "PROFESSOR & DIRECTOR, ENTREPRENEURSHIP CELL",
             image:
               "https://images.prismic.io/ieeemuj/aJx6XaTt2nPbaRP9_dr.anandpandey-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
