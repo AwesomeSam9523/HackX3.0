@@ -13,7 +13,6 @@ const TeamSubcategoryComponent: React.FC<TeamSubcategoryProps> = ({
   for (let i = 0; i < subcategory.members.length; i += 4) {
     memberRows.push(subcategory.members.slice(i, i + 4));
   }
-  console.log(subcategory, memberRows);
 
   return (
     <div className="mb-16">

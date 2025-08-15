@@ -6,110 +6,67 @@ export const teamData: TeamCategory[] = [
     name: "FACULTY",
     subcategories: [
       {
-        title: "PATRONS",
+        title: "FACULTY",
         members: [
           {
-            id: "1",
-            name: "Mr. S. Vaitheeswaran",
-            position: "CHIEF PATRON\nCHAIRPERSON, MUJ",
-            image: "/teams/person1.jpg",
+            id: "1a",
+            name: "Dr. Sandeep Joshi",
+            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
           {
-            id: "2",
-            name: "Dr. N N Sharma",
-            position: "PATRON\nPRESIDENT, MUJ",
-            image: "/teams/person1.jpg",
+            id: "2a",
+            name: "Dr. Ajay Kumar",
+            position: "ASSISTANT PROFESSOR (SELECTION GRADE), CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
           {
             id: "3a",
-            name: "Dr. N N Sharma",
-            position: "PATRON\nPRESIDENT, MUJ",
-            image: "/teams/person1.jpg",
+            name: "Dr. Anand Pandey",
+            position: "PROFESSOR & DIRECTOR, ENTREPRENEURSHIP CELL",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XaTt2nPbaRP9_dr.anandpandey-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "4a",
+            name: "Dr. CS Lambda",
+            position: "PROFESSOR & ASSOCIATE DEAN, CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XqTt2nPbaRP-_dr.CSlambda-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "5a",
+            name: "Dr. Neha Chaudhary",
+            position: "PROFESSOR & HEAD OF DEPARTMENT, CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
         ],
       },
       {
-        title: "CO-PATRONS",
+        title: "FACULTY CONVENERS",
         members: [
           {
-            id: "3b",
-            name: "Dr. Jawar N Jangir",
-            position: "CO-PATRON\nPRO PRESIDENT, MUJ",
-            image: "/teams/person1.jpg",
+            id: "1",
+            name: "Dr. Juhi Singh",
+            position: "CONVENER, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6X6Tt2nPbaRP__dr.juhisingh-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
           {
-            id: "4",
-            name: "Dr. Nitu Bhatnagar",
-            position: "CO-PATRON\nREGISTRAR, MUJ",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "5",
-            name: "Dr Kuldeep Singh Sangwan",
-            position: "CO-PATRON\nDEAN FOE,MUJ",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "CHAIR",
-        members: [
-          {
-            id: "6",
-            name: "Dr. Rajesh Kumar",
-            position: "CHAIR\nHEAD OF DEPARTMENT",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "7",
-            name: "Prof. Anita Sharma",
-            position: "CHAIR\nFACULTY COORDINATOR",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "PROGRAM CHAIR",
-        members: [
-          {
-            id: "8",
-            name: "Dr. Priya Gupta",
-            position: "PROGRAM CHAIR\nEVENT COORDINATOR",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "CONVENORS",
-        members: [
-          {
-            id: "9",
-            name: "Dr. Amit Singh",
-            position: "CONVENOR\nTECHNICAL HEAD",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "10",
-            name: "Prof. Meera Jain",
-            position: "CONVENOR\nACADEMIC HEAD",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "11",
-            name: "Dr. Vikram Patel",
-            position: "CONVENOR\nINDUSTRY LIAISON",
-            image: "/teams/person1.jpg",
+            id: "2",
+            name: "Mr. Shishir Singh",
+            position: "CONVENER, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
         ],
@@ -212,8 +169,8 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aJunQKTt2nPbaPrU_VaibhavVerma-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://www.linkedin.com/in/vaibhavverma01/",
-            githubUrl: "https://github.com/ankit-joshi",
-            instagramUrl: "https://instagram.com/ankit_joshi",
+            githubUrl: "https://github.com/thecoderwithHat/",
+            instagramUrl: "https://www.instagram.com/_vaibhav.01/",
           },
           {
             id: "10b",
