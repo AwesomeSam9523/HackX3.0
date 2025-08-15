@@ -87,6 +87,8 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://www.linkedin.com/in/aryannnnverma/",
+            githubUrl: "https://github.com/aryannverse",
+            instagramUrl: "https://www.instagram.com/aryannverse",
             phoneNumber: "+91-8287044755",
           },
           {
@@ -96,6 +98,7 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
             linkedinUrl: "https://www.linkedin.com/in/samakshgupta04/",
+            instagramUrl: "https://instagram.com/samaksh.gupta04",
             phoneNumber: "+91-9871340076",
             githubUrl: "https://github.com/AwesomeSam9523",
           },
