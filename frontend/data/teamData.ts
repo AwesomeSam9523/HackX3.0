@@ -169,8 +169,8 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aJunQKTt2nPbaPrU_VaibhavVerma-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://www.linkedin.com/in/vaibhavverma01/",
-            githubUrl: "https://github.com/ankit-joshi",
-            instagramUrl: "https://instagram.com/ankit_joshi",
+            githubUrl: "https://github.com/thecoderwithHat/",
+            instagramUrl: "https://www.instagram.com/_vaibhav.01/",
           },
           {
             id: "10b",
