@@ -383,7 +383,7 @@ export const teamData: TeamCategory[] = [
         members: [
           {
             id: "41a",
-            name: "Kshtij Verma",
+            name: "Neil Gupta",
             position: "OPERATIONS",
             image: "/teams/person1.jpg",
             linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
@@ -425,7 +425,7 @@ export const teamData: TeamCategory[] = [
           },
           {
             id: "47a",
-            name: "Neil Gupta",
+            name: "Kshtij Verma",
             position: "OPERATIONS",
             image: "/teams/person1.jpg",
             linkedinUrl: "https://linkedin.com/in/arjun-verma",
