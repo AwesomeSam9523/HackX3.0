@@ -1,6 +1,4 @@
-# HackX Website
-
-Made by Bois and 1 Gal
+# MUJ HackX 3.0- Official Website
 
 Made with ❤️ by Team HackX
 
@@ -36,7 +34,6 @@ Made with ❤️ by Team HackX
 4. **Start the development server**:
    ```bash
    npm run dev
-  
    ```
 
    The application will be available at [http://localhost:3000](http://localhost:3000)
