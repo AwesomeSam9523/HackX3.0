@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import TeamSubcategoryComponent from "@/components/TeamSubcategory";
 import XComponent from "@/components/XComponent";
 import Background from "@/components/Background";
+import LightBoxTeams from "@/components/LightBoxTeams";
 
 const TeamPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState("FACULTY");
@@ -21,7 +22,7 @@ const TeamPage: React.FC = () => {
       <Background />
       <Navbar />
       <XComponent />
-
+      <LightBoxTeams name={activeCategory} />
       <div className="relative z-10 container mx-auto px-4 py-12">
         <div className="absolute top-8 left-8 hidden h-8 w-8 border-t-4 border-l-4 border-white md:block"></div>
         <div className="absolute top-8 right-8 hidden h-8 w-8 border-t-4 border-r-4 border-white md:block"></div>
@@ -33,7 +34,7 @@ const TeamPage: React.FC = () => {
             MEET THE HUMANS BEHIND THE CURTAINS
           </button>
           <div className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
-            TEAM MUJ HACKX3.0
+            TEAM MUJ HACKX 3.0
           </div>
         </div>
         {/* Category Tabs */}

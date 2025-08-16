@@ -15,10 +15,10 @@ const WhyUsSection = () => {
 
       <div className="relative mx-auto grid max-w-[1100px] grid-cols-1 justify-items-center gap-4 px-4 py-6 sm:grid-cols-2 lg:grid-cols-3">
         {/* Corner Borders */}
-        <span className="absolute -top-1 left-0 h-[15px] w-[15px] border-3 border-r-0 border-b-0 border-white sm:-top-2 sm:-left-2" />
-        <span className="absolute -top-1 -right-1 h-[15px] w-[15px] border-3 border-b-0 border-l-0 border-white sm:-top-2 sm:-right-2" />
-        <span className="absolute -bottom-1 left-0 h-[15px] w-[15px] border-3 border-t-0 border-r-0 border-white sm:-bottom-2 sm:-left-2" />
-        <span className="absolute -right-1 -bottom-1 h-[15px] w-[15px] border-3 border-t-0 border-l-0 border-white sm:-right-2 sm:-bottom-2" />
+        <span className="absolute -top-1 left-4 h-[15px] w-[15px] border-3 border-r-0 border-b-0 border-white sm:-top-2 sm:left-2" />
+        <span className="absolute -top-1 right-4 h-[15px] w-[15px] border-3 border-b-0 border-l-0 border-white sm:-top-2 sm:right-2" />
+        <span className="absolute -bottom-1 left-4 h-[15px] w-[15px] border-3 border-t-0 border-r-0 border-white sm:-bottom-2 sm:left-2" />
+        <span className="absolute right-4 -bottom-1 h-[15px] w-[15px] border-3 border-t-0 border-l-0 border-white sm:right-2 sm:-bottom-2" />
 
         {cardData.map((card: CardProps, index: number) => (
           <div className="flex w-full justify-center" key={index}>

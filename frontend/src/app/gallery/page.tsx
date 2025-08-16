@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import { GalleryImage } from "../../../types/gallery";
 import { galleryData } from "../../../data/galleryData";
 import Background from "@/components/Background";
+import LightBoxGallery from "@/components/LightBoxGallery";
 
 const Page = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -190,6 +191,7 @@ const Page = () => {
     >
       <Background />
       <Navbar />
+      <LightBoxGallery />
       <div className="flex flex-col items-center justify-center gap-5">
         <button className="font-avgardn text-offwhite mt-20 rounded-full border-2 border-white bg-transparent px-4 py-3 text-base font-bold tracking-wider uppercase transition-all duration-300 lg:px-10 lg:text-lg">
           GLIMPSE OF OUR PREVIOUS EDITIONS

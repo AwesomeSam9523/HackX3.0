@@ -1,10 +1,12 @@
 import React from "react";
+import LightBoxOthers from "./LightBoxOthers";
 
 const HackathonStats = () => {
   return (
     <>
       <div className="mt-20 mb-20 flex flex-col items-center justify-center gap-10 lg:mt-25">
         {" "}
+        <LightBoxOthers name="about" id={2} />
         <div className="font-avgardn text-offwhite relative inline-block px-6 py-3 font-bold tracking-wider">
           {/* Corner Borders */}
           <span className="absolute top-0 left-0 h-[10px] w-[10px] border-3 border-r-0 border-b-0 border-white" />

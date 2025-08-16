@@ -14,29 +14,30 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex h-12 w-12 items-center justify-center transition-all duration-300 ease-in-out"
+      className="inline-flex h-8 w-8 items-center justify-center transition-all duration-300 ease-in-out"
     >
       <Image
         src={iconSrc}
         alt={alt}
-        height={20}
-        width={20}
+        height={16}
+        width={16}
         className="object-cover transition-transform duration-300 ease-in-out"
       />
     </a>
   );
 
-  // Helper function to create phone link
+  // Helper function to create phone link (with key)
   const renderPhoneLink = (phoneNumber: string) => (
     <a
+      key={phoneNumber}
       href={`tel:${phoneNumber}`}
-      className="inline-flex h-12 w-12 items-center justify-center transition-all duration-300 ease-in-out hover:scale-105"
+      className="inline-flex h-8 w-8 items-center justify-center transition-all duration-300 ease-in-out hover:scale-105"
     >
       <Image
         src="/phone.svg"
         alt="phone"
-        height={20}
-        width={20}
+        height={16}
+        width={16}
         className="object-cover transition-transform duration-300 ease-in-out"
       />
     </a>
@@ -55,7 +56,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
 
   return (
     <div className="transform rounded-2xl border border-white/20 bg-white/10 p-6 text-center shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white/15 hover:shadow-2xl">
-      <div className="mx-auto mb-4 h-72 w-72 overflow-hidden rounded-2xl border border-white/10 bg-gray-800/50 backdrop-blur-sm">
+      <div className="mx-auto mb-4 h-64 w-full overflow-hidden rounded-2xl border border-white/10 bg-gray-800/50 backdrop-blur-sm">
         <Image
           src={member.image}
           alt={member.name}

@@ -6,110 +6,67 @@ export const teamData: TeamCategory[] = [
     name: "FACULTY",
     subcategories: [
       {
-        title: "PATRONS",
+        title: "FACULTY",
         members: [
           {
-            id: "1",
-            name: "Mr. S. Vaitheeswaran",
-            position: "CHIEF PATRON\nCHAIRPERSON, MUJ",
-            image: "/teams/person1.jpg",
+            id: "1a",
+            name: "Dr. Sandeep Joshi",
+            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
           {
-            id: "2",
-            name: "Dr. N N Sharma",
-            position: "PATRON\nPRESIDENT, MUJ",
-            image: "/teams/person1.jpg",
+            id: "2a",
+            name: "Dr. Ajay Kumar",
+            position: "ASSISTANT PROFESSOR (SELECTION GRADE), CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
           {
             id: "3a",
-            name: "Dr. N N Sharma",
-            position: "PATRON\nPRESIDENT, MUJ",
-            image: "/teams/person1.jpg",
+            name: "Dr. Anand Pandey",
+            position: "PROFESSOR & DIRECTOR, ENTREPRENEURSHIP CELL",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XaTt2nPbaRP9_dr.anandpandey-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "4a",
+            name: "Dr. CS Lambda",
+            position: "PROFESSOR & ASSOCIATE DEAN, CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XqTt2nPbaRP-_dr.CSlambda-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "5a",
+            name: "Dr. Neha Chaudhary",
+            position: "PROFESSOR & HEAD OF DEPARTMENT, CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
         ],
       },
       {
-        title: "CO-PATRONS",
+        title: "FACULTY CONVENERS",
         members: [
           {
-            id: "3b",
-            name: "Dr. Jawar N Jangir",
-            position: "CO-PATRON\nPRO PRESIDENT, MUJ",
-            image: "/teams/person1.jpg",
+            id: "1",
+            name: "Dr. Juhi Singh",
+            position: "CONVENER, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6X6Tt2nPbaRP__dr.juhisingh-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
           {
-            id: "4",
-            name: "Dr. Nitu Bhatnagar",
-            position: "CO-PATRON\nREGISTRAR, MUJ",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "5",
-            name: "Dr Kuldeep Singh Sangwan",
-            position: "CO-PATRON\nDEAN FOE,MUJ",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "CHAIR",
-        members: [
-          {
-            id: "6",
-            name: "Dr. Rajesh Kumar",
-            position: "CHAIR\nHEAD OF DEPARTMENT",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "7",
-            name: "Prof. Anita Sharma",
-            position: "CHAIR\nFACULTY COORDINATOR",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "PROGRAM CHAIR",
-        members: [
-          {
-            id: "8",
-            name: "Dr. Priya Gupta",
-            position: "PROGRAM CHAIR\nEVENT COORDINATOR",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "CONVENORS",
-        members: [
-          {
-            id: "9",
-            name: "Dr. Amit Singh",
-            position: "CONVENOR\nTECHNICAL HEAD",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "10",
-            name: "Prof. Meera Jain",
-            position: "CONVENOR\nACADEMIC HEAD",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "#",
-          },
-          {
-            id: "11",
-            name: "Dr. Vikram Patel",
-            position: "CONVENOR\nINDUSTRY LIAISON",
-            image: "/teams/person1.jpg",
+            id: "2",
+            name: "Mr. Shishir Singh",
+            position: "CONVENER, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
           },
         ],
@@ -121,65 +78,77 @@ export const teamData: TeamCategory[] = [
     name: "EXECUTIVE",
     subcategories: [
       {
-        title: "MUJ HACX 3.0 ADVISORIES",
+        title: "STUDENT CONVENER 2024-25",
         members: [
           {
-            id: "12",
-            name: "Vaibhav Verma",
-            position: "Technical",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/arjun-mehta",
+            id: "4b",
+            name: "Aryan Verma",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/aryannnnverma/",
+            githubUrl: "https://github.com/aryannverse",
+            instagramUrl: "https://www.instagram.com/aryannverse",
+            phoneNumber: "+91-8287044755",
           },
           {
-            id: "13",
-            name: "Rohit Ganguly",
-            position: "Technical",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
+            id: "5b",
+            name: "Samaksh Gupta",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/samakshgupta04/",
+            instagramUrl: "https://instagram.com/samaksh.gupta04",
+            phoneNumber: "+91-9871340076",
+            githubUrl: "https://github.com/AwesomeSam9523",
           },
           {
-            id: "13a",
-            name: "Kanishka Bhatia",
-            position: "Technical",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
+            id: "6b",
+            name: "Tamanna Yadav",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNi6Tt2nPbaPb8_tamannayadav-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/tamanna-yadav-4251a6234/",
+            phoneNumber: "+91-8860514740",
+          },
+          {
+            id: "7b",
+            name: "Harshada Chandel",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNgaTt2nPbaPb5_harshadachandel-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/harshadachandel/",
+            phoneNumber: "+91-9821970872",
           },
         ],
       },
       {
-        title: "STUDENT CONVENER 2024-25",
+        title: "MUJ HACKX 3.0 ADVISORIES",
         members: [
           {
-            id: "14",
-            name: "Rahul Sharma",
-            position: "OPERATIONS MANAGER\nLOGISTICS HEAD",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/rahul-sharma",
-            phoneNumber: "+91-9876543210",
+            id: "1b",
+            name: "Rishi Joshi",
+            position: "Advisor",
+            image:
+              "https://images.prismic.io/ieeemuj/aJu1uKTt2nPbaPxN_rishijoshi-advisor.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/vaibhavverma01/",
           },
           {
-            id: "15",
-            name: "Priya Kapoor",
-            position: "MARKETING MANAGER\nPUBLIC RELATIONS",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/priya-kapoor",
-            phoneNumber: "+91-9876543211",
+            id: "2b",
+            name: "Pulkit Gupta",
+            position: "Advisor",
+            image:
+              "https://images.prismic.io/ieeemuj/aJu1tKTt2nPbaPxM_pulkitgupta-advisor-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/rohit-ganguly-42685521b/",
           },
           {
-            id: "16",
-            name: "Karan Singh",
-            position: "TECH MANAGER\nPLATFORM DEVELOPMENT",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/karan-singh",
-            phoneNumber: "+91-9876543212",
-          },
-          {
-            id: "99",
-            name: "Karan Singh",
-            position: "TECH MANAGER\nPLATFORM DEVELOPMENT",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/karan-singh",
-            phoneNumber: "+91-9876543212",
+            id: "3b",
+            name: "Abhijeet Anand Jha",
+            position: "Advisor",
+            image:
+              "https://images.prismic.io/ieeemuj/aJu1sKTt2nPbaPxL_abhijeetanandjha-advisor.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/kanishka-bhatia-198294312/",
           },
         ],
       },
@@ -187,29 +156,33 @@ export const teamData: TeamCategory[] = [
         title: "TECHNICAL TEAM",
         members: [
           {
-            id: "17",
+            id: "8b",
             name: "Rohit Ganguly",
             position: "TECHNICAL",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/rohit-verma",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunOaTt2nPbaPrS_RohitGanguly-hackX3.0.jpeg?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/rohit-ganguly-42685521b/",
             githubUrl: "https://github.com/rohit-verma",
             instagramUrl: "https://instagram.com/rohit_verma",
           },
           {
-            id: "18",
+            id: "9b",
             name: "Vaibhav Verma",
             position: "TECHNICAL",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/ankit-joshi",
-            githubUrl: "https://github.com/ankit-joshi",
-            instagramUrl: "https://instagram.com/ankit_joshi",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunQKTt2nPbaPrU_VaibhavVerma-hackX3.0.jpg?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/vaibhavverma01/",
+            githubUrl: "https://github.com/thecoderwithHat/",
+            instagramUrl: "https://www.instagram.com/_vaibhav.01/",
           },
           {
-            id: "19",
+            id: "10b",
             name: "Kanishka Bhatia",
             position: "TECHNICAL",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/neha-patel",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunN6Tt2nPbaPrR_KanishkaBhatia-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/kanishka-bhatia-198294312/",
             githubUrl: "https://github.com/neha-patel",
             instagramUrl: "https://instagram.com/neha_patel",
           },
@@ -219,24 +192,27 @@ export const teamData: TeamCategory[] = [
         title: "CONTENT TEAM",
         members: [
           {
-            id: "20a",
+            id: "11b",
             name: "Samar Chaubey",
             position: "CONTENT",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNZKTt2nPbaPb1_SamarChaubey-content-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/rohit-verma",
           },
           {
-            id: "21a",
+            id: "12b",
             name: "Dishita Sharma",
             position: "CONTENT",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNY6Tt2nPbaPb0_dishitasharma-content-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/ankit-joshi",
           },
           {
-            id: "22a",
+            id: "13b",
             name: "Sarah Sohaib ",
             position: "CONTENT",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNbaTt2nPbaPb2_SarahSohaib-content-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/neha-patel",
           },
         ],
@@ -245,25 +221,20 @@ export const teamData: TeamCategory[] = [
         title: "CURATIONS TEAM",
         members: [
           {
-            id: "23a",
+            id: "14b",
             name: "Archisha Garg",
             position: "CURATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNm6Tt2nPbaPb-_ArchishaGarg-curations-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/arjun-mehta",
           },
           {
-            id: "24a",
+            id: "15b",
             name: "Vansh Jain",
             position: "CURATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNnaTt2nPbaPb__VanshJain-curations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
-          },
-          {
-            id: "25a",
-            name: "Mehul",
-            position: "CURATIONS",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/rahul-gupta",
           },
         ],
       },
@@ -271,31 +242,35 @@ export const teamData: TeamCategory[] = [
         title: "GRAPHIC DESIGN TEAM",
         members: [
           {
-            id: "26a",
+            id: "17b",
             name: "Arsh Adil",
             position: "GRAPHIC DESIGN",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNrqTt2nPbaPcG_ArshAdil-GD-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/priya-sharma",
           },
           {
-            id: "27a",
+            id: "18b",
             name: "Prakhar Mahant",
             position: "GRAPHIC DESIGN",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNsqTt2nPbaPcL_PrakharMahant-GD-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/amit-patel",
           },
           {
-            id: "28a",
-            name: "ASHUTOSH",
+            id: "19b",
+            name: "Ashutosh Sharma",
             position: "GRAPHIC DESIGN",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNr6Tt2nPbaPcI_AshutoshSharma-GD-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/kavita-singh",
           },
           {
-            id: "29a",
+            id: "20b",
             name: "Sankalp Jhamb",
             position: "GRAPHIC DESIGN",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNtaTt2nPbaPcN_SankalpJhamb-GD-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sankalp-jhamb",
           },
         ],
@@ -304,24 +279,27 @@ export const teamData: TeamCategory[] = [
         title: "HOSPITALITY TEAM",
         members: [
           {
-            id: "30a",
+            id: "21b",
             name: "Paarth Yadav",
             position: "HOSPITALITY",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNwqTt2nPbaPcP_PaarthYadav-hospitality-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
           },
           {
-            id: "31a",
+            id: "22b",
             name: "Satya Agrawal",
             position: "HOSPITALITY",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNxaTt2nPbaPcQ_SatyaAgrawal-hospitality-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/meera-joshi",
           },
           {
-            id: "32a",
+            id: "23b",
             name: "Vansh Devgun",
             position: "HOSPITALITY",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuOIqTt2nPbaPcn_VANSHDEVGUN-hospitality-hackX3.0.jpeg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/vikram-singh",
           },
         ],
@@ -330,24 +308,27 @@ export const teamData: TeamCategory[] = [
         title: "MARKETING TEAM",
         members: [
           {
-            id: "34a",
+            id: "24b",
             name: "Nitin Bharadwaj",
             position: "MARKETING",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuOuKTt2nPbaPdG_NitinBharadwaj-marketing-hackX3.0.jpeg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/priya-kapoor",
           },
           {
-            id: "35a",
+            id: "25b",
             name: "Yash Maheshwari",
             position: "MARKETING",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuOqaTt2nPbaPdF_YashMaheshwari-marketing-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/rohit-sharma",
           },
           {
-            id: "36a",
+            id: "26b",
             name: "Sanjana Rai",
             position: "MARKETING",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuOpaTt2nPbaPdD_SanjanaRai-marketing-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sneha-patel",
           },
         ],
@@ -356,24 +337,27 @@ export const teamData: TeamCategory[] = [
         title: "MEDIA & COVERAGE TEAM",
         members: [
           {
-            id: "37a",
+            id: "27b",
             name: "Ayush garg",
             position: "MEDIA & COVERAGE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuO4KTt2nPbaPdP_AyushGarg-media%26coverage-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/kavya-sharma",
           },
           {
-            id: "38a",
+            id: "28b",
             name: "Krishna Chaturvedi",
             position: "MEDIA & COVERAGE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuO4qTt2nPbaPdQ_KRISHNA_CHATURVEDI_-_media_%26_coverage-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/aditya-singh",
           },
           {
-            id: "39a",
+            id: "29b",
             name: "Yashika Priyadarshi",
             position: "MEDIA & COVERAGE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuO5aTt2nPbaPdR_YashikaPriyadarshi-media%26coverage-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/riya-patel",
           },
         ],
@@ -382,53 +366,60 @@ export const teamData: TeamCategory[] = [
         title: "OPERATIONS TEAM",
         members: [
           {
-            id: "41a",
+            id: "36b",
             name: "Neil Gupta",
             position: "OPERATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJum-6Tt2nPbaPrE_NeilGupta-operations-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://linkedin.com/in/arjun-verma",
+          },
+          {
+            id: "30b",
+            name: "Kshtij Verma",
+            position: "OPERATIONS",
+            image:
+              "https://images.prismic.io/ieeemuj/aJum-qTt2nPbaPrD_KshitijVerma-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
           },
           {
-            id: "42a",
+            id: "31b",
             name: "Salaj Singh Bisht",
             position: "OPERATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJum_6Tt2nPbaPrF_SalajBisht-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/priya-sharma",
           },
           {
-            id: "43a",
+            id: "32b",
             name: "Bhavya Jaggi",
             position: "OPERATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJum-KTt2nPbaPrC_BhavyaJaggi-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/amit-singh",
           },
           {
-            id: "44a",
+            id: "33b",
             name: "Akshat Mishra",
             position: "OPERATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJum8KTt2nPbaPq__AkshatMishra-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sneha-patel",
           },
           {
-            id: "45a",
+            id: "34b",
             name: "Tanmay Shah",
             position: "OPERATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunAqTt2nPbaPrG_TanmayShah-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/vikram-gupta",
           },
           {
-            id: "46a",
+            id: "35b",
             name: "Vedica Saini",
             position: "OPERATIONS",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunBKTt2nPbaPrH_VedicaSaini-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/kavita-joshi",
-          },
-          {
-            id: "47a",
-            name: "Kshtij Verma",
-            position: "OPERATIONS",
-            image: "/teams/person1.jpg",
-            linkedinUrl: "https://linkedin.com/in/arjun-verma",
           },
         ],
       },
@@ -436,24 +427,27 @@ export const teamData: TeamCategory[] = [
         title: "SOCIAL MEDIA TEAM",
         members: [
           {
-            id: "48a",
+            id: "37b",
             name: "Ananya Singh",
             position: "SOCIAL MEDIA",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunEaTt2nPbaPrK_AnanyaSingh-socialmedia-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/ananya-sharma",
           },
           {
-            id: "49a",
+            id: "38b",
             name: "Bhavya Dhingra",
             position: "SOCIAL MEDIA",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunEqTt2nPbaPrL_BhavyaDhingra-socialmedia-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/karan-patel",
           },
           {
-            id: "50a",
-            name: "Aayushi",
+            id: "39b",
+            name: "Aayushi Pandey",
             position: "SOCIAL MEDIA",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunD6Tt2nPbaPrI_AayushiPandey-socialmedia-hackX3.0.jpeg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/riya-singh",
           },
         ],
@@ -462,31 +456,35 @@ export const teamData: TeamCategory[] = [
         title: "SPONSORSHIP & FINANCE TEAM",
         members: [
           {
-            id: "51a",
+            id: "40b",
             name: "Devansh Kothari",
             position: "SPONSORSHIP & FINANCE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunI6Tt2nPbaPrN_DevanshKothari-sponsorandfinance-hackX3.0.jpeg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/arjun-sharma",
           },
           {
-            id: "52a",
+            id: "41b",
             name: "Tiya Chhabra",
             position: "SPONSORSHIP & FINANCE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunKKTt2nPbaPrP_TiyaChhabra-sponsorandfinance-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/priya-gupta",
           },
           {
-            id: "53a",
+            id: "42b",
             name: "Sameet Maddawar",
             position: "SPONSORSHIP & FINANCE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunJaTt2nPbaPrO_SameetMaddawar-sponsorandfinance-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/rohit-verma",
           },
           {
-            id: "54a",
+            id: "43b",
             name: "Arnab Roy",
             position: "SPONSORSHIP & FINANCE",
-            image: "/teams/person1.jpg",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunIaTt2nPbaPrM_ArnabRoy-sponsorandfinance-hackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sneha-patel",
           },
         ],
