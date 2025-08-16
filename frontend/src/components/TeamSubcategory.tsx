@@ -76,7 +76,7 @@ const TeamSubcategoryComponent: React.FC<TeamSubcategoryProps> = ({
         {memberRows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="mx-auto flex flex-wrap items-center justify-center gap-8 flex-col md:flex-row"
+            className="mx-auto flex flex-col flex-wrap items-center justify-center gap-8 md:flex-row"
           >
             {row.map((member) => (
               <div key={member.id} className="md:w-[22%]">

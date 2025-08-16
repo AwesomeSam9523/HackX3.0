@@ -366,6 +366,14 @@ export const teamData: TeamCategory[] = [
         title: "OPERATIONS TEAM",
         members: [
           {
+            id: "36b",
+            name: "Neil Gupta",
+            position: "OPERATIONS",
+            image:
+              "https://images.prismic.io/ieeemuj/aJum-6Tt2nPbaPrE_NeilGupta-operations-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://linkedin.com/in/arjun-verma",
+          },
+          {
             id: "30b",
             name: "Kshtij Verma",
             position: "OPERATIONS",
@@ -412,14 +420,6 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aJunBKTt2nPbaPrH_VedicaSaini-operations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/kavita-joshi",
-          },
-          {
-            id: "36b",
-            name: "Neil Gupta",
-            position: "OPERATIONS",
-            image:
-              "https://images.prismic.io/ieeemuj/aJum-6Tt2nPbaPrE_NeilGupta-operations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/arjun-verma",
           },
         ],
       },

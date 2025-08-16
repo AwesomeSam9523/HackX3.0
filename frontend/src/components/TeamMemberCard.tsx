@@ -55,8 +55,7 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
   ].filter(Boolean); // Remove null/undefined values
 
   return (
-    <div className="transform rounded-2xl border border-white/20 bg-white/10 p-6 text-center shadow-xl
-    backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white/15 hover:shadow-2xl">
+    <div className="transform rounded-2xl border border-white/20 bg-white/10 p-6 text-center shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white/15 hover:shadow-2xl">
       <div className="mx-auto mb-4 h-64 w-full overflow-hidden rounded-2xl border border-white/10 bg-gray-800/50 backdrop-blur-sm">
         <Image
           src={member.image}
