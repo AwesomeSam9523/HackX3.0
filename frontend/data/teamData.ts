@@ -236,6 +236,14 @@ export const teamData: TeamCategory[] = [
               "https://images.prismic.io/ieeemuj/aJuNnaTt2nPbaPb__VanshJain-curations-hackX3.0.png?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
           },
+          {
+            id: "15c",
+            name: "Mehul Bhardwaj",
+            position: "CURATIONS",
+            image:
+              "https://images.prismic.io/ieeemuj/aKJdQqTt2nPbaZaq_WhatsAppImage2025-08-18at04.20.00.jpeg?auto=format,compress",
+            linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
+          },
         ],
       },
       {
