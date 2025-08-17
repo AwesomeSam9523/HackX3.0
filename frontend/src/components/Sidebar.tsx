@@ -80,7 +80,7 @@ const Sidebar: React.FC = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <nav className="flex flex-col space-y-6">
+        <nav className="flex flex-col space-y-3">
           {sidebarItems.map((item) => {
             const isActive = pathname === item.path;
             return (
@@ -101,7 +101,7 @@ const Sidebar: React.FC = () => {
                     alt={item.alt}
                     width={32}
                     height={32}
-                    className={`h-8 w-8 ${
+                    className={`h-6 w-6 ${
                       isActive ? "filter-none" : "brightness-0 invert filter"
                     }`}
                   />
@@ -115,7 +115,7 @@ const Sidebar: React.FC = () => {
                   }`}
                 >
                   <span
-                    className={`text-lg font-medium whitespace-nowrap ${
+                    className={`text-base font-medium whitespace-nowrap ${
                       isActive ? "text-gray-800" : "text-offwhite"
                     }`}
                   >
