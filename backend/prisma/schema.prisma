@@ -1,0 +1,283 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  PARTICIPANT
+  MENTOR
+  JUDGE
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum TeamStatus {
+  REGISTERED
+  PROBLEM_SELECTED
+  ROUND1_SUBMITTED
+  ROUND2_QUALIFIED
+  ROUND2_SUBMITTED
+  ELIMINATED
+}
+
+enum SubmissionStatus {
+  NOT_SUBMITTED
+  PARTIAL
+  SUBMITTED
+}
+
+enum EvaluationStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum QueueStatus {
+  WAITING
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
+model User {
+  id        String     @id @default(cuid())
+  username  String     @unique
+  password  String
+  email     String?
+  role      UserRole
+  status    UserStatus @default(ACTIVE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Role-specific relations
+  participantTeam Team?   @relation("TeamParticipants", fields: [teamId], references: [id])
+  mentorProfile   Mentor?
+  judgeProfile    Judge?
+
+  // Activity tracking
+  activityLogs  ActivityLog[]
+  announcements Announcement[]
+  teamId        String?
+  PSBookmark    PSBookmark[]
+}
+
+model Team {
+  id               String           @id @default(cuid())
+  name             String
+  teamId           String           @unique // Display team ID
+  password         String
+  roomNumber       String?
+  status           TeamStatus       @default(REGISTERED)
+  submissionStatus SubmissionStatus @default(NOT_SUBMITTED)
+  githubRepo       String?
+  presentationLink String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  // Relations
+  participants       User[]            @relation("TeamParticipants")
+  problemStatement   ProblemStatement? @relation(fields: [problemStatementId], references: [id])
+  problemStatementId String?
+
+  // Submissions and evaluations
+  submissions Submission[]
+  evaluations Evaluation[]
+  teamScores  TeamScore[]
+
+  // Mentorship
+  mentorshipQueue MentorshipQueue[]
+
+  // Round 2
+  round2Room   Round2Room? @relation(fields: [round2RoomId], references: [id])
+  round2RoomId String?
+
+  // Checkpoints
+  checkpoints TeamCheckpoint[]
+}
+
+model Domain {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  problemStatements ProblemStatement[]
+}
+
+model ProblemStatement {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  domain      Domain   @relation(fields: [domainId], references: [id])
+  domainId    String
+  isLocked    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  teams     Team[]
+  bookmarks PSBookmark[]
+}
+
+model PSBookmark {
+  id                 String           @id @default(cuid())
+  user               User             @relation(fields: [userId], references: [id])
+  userId             String
+  problemStatement   ProblemStatement @relation(fields: [problemStatementId], references: [id])
+  problemStatementId String
+  createdAt          DateTime         @default(now())
+
+  @@unique([userId, problemStatementId])
+}
+
+model Mentor {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
+  expertise   String[]
+  meetLink    String?
+  isAvailable Boolean  @default(true)
+  floor       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  mentorshipQueue MentorshipQueue[]
+}
+
+model Judge {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  floor     String?
+  expertise String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  evaluations  Evaluation[]
+  teamScores   TeamScore[]
+  round2Room   Round2Room?  @relation(fields: [round2RoomId], references: [id])
+  round2RoomId String?
+}
+
+model MentorshipQueue {
+  id        String      @id @default(cuid())
+  team      Team        @relation(fields: [teamId], references: [id])
+  teamId    String
+  mentor    Mentor      @relation(fields: [mentorId], references: [id])
+  mentorId  String
+  status    QueueStatus @default(WAITING)
+  query     String?
+  notes     String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Evaluation {
+  id        String           @id @default(cuid())
+  team      Team             @relation(fields: [teamId], references: [id])
+  teamId    String
+  judge     Judge            @relation(fields: [judgeId], references: [id])
+  judgeId   String
+  status    EvaluationStatus @default(PENDING)
+  round     Int              @default(1)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@unique([teamId, judgeId, round])
+}
+
+model TeamScore {
+  id      String @id @default(cuid())
+  team    Team   @relation(fields: [teamId], references: [id])
+  teamId  String
+  judge   Judge  @relation(fields: [judgeId], references: [id])
+  judgeId String
+
+  // Scoring criteria
+  innovation   Float?
+  technical    Float?
+  presentation Float?
+  impact       Float?
+  feasibility  Float?
+  totalScore   Float?
+
+  feedback  String?
+  round     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([teamId, judgeId, round])
+}
+
+model Submission {
+  id               String   @id @default(cuid())
+  team             Team     @relation(fields: [teamId], references: [id])
+  teamId           String
+  githubRepo       String?
+  presentationLink String?
+  submittedAt      DateTime @default(now())
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  action    String
+  details   String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+model Round2Room {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  capacity  Int      @default(10)
+  floor     String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  teams  Team[]
+  judges Judge[]
+}
+
+model TeamCheckpoint {
+  id          String    @id @default(cuid())
+  team        Team      @relation(fields: [teamId], references: [id])
+  teamId      String
+  checkpoint  Int
+  status      String    @default("pending")
+  data        Json?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([teamId, checkpoint])
+}
+
+model SystemSettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
