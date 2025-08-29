@@ -183,8 +183,8 @@ export const teamData: TeamCategory[] = [
               "https://images.prismic.io/ieeemuj/aJunN6Tt2nPbaPrR_KanishkaBhatia-hackX3.0.png?auto=format,compress",
             linkedinUrl:
               "https://www.linkedin.com/in/kanishka-bhatia-198294312/",
-            githubUrl: "https://github.com/neha-patel",
-            instagramUrl: "https://instagram.com/neha_patel",
+            githubUrl: "https://github.com/cookiesandcoding",
+            instagramUrl: "https://instagram.com/kkanishkaaa",
           },
         ],
       },
@@ -424,6 +424,14 @@ export const teamData: TeamCategory[] = [
           {
             id: "35b",
             name: "Vedica Saini",
+            position: "OPERATIONS",
+            image:
+              "https://images.prismic.io/ieeemuj/aJunBKTt2nPbaPrH_VedicaSaini-operations-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://linkedin.com/in/kavita-joshi",
+          },
+          {
+            id: "36b",
+            name: "Moksh Chugh",
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJunBKTt2nPbaPrH_VedicaSaini-operations-hackX3.0.png?auto=format,compress",
