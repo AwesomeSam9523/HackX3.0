@@ -4,6 +4,7 @@ import BecomeAmbassadorBanner from "./BecomeAmbassadorBanner";
 import FAQClient from "./FAQClient";
 import LightBoxOthers from "./LightBoxOthers";
 //import  AbassadorFAQ from "./AmbassadorFAQ";
+import Link from "next/link";
 
 const WhyApplySection = () => {
   const campusAmbassadorFaqs = [
@@ -63,12 +64,15 @@ const WhyApplySection = () => {
           >
             OF MUJ HACKX 3.0!
           </div>
-          <button
+          <Link
+            href="https://forms.gle/m7rXsLXkuv4gbPHh9"
+            target="_blank"
+            rel="noopener noreferrer"
             className="font-avgardn text-offwhite mt-2 rounded-full border-2 border-white bg-transparent px-6 py-2 text-base font-bold tracking-wider uppercase transition-all duration-300"
             style={{ fontSize: "clamp(0.7rem,1vw,1rem)" }}
           >
             Apply Now
-          </button>
+          </Link>
           {/* ABOUT Section */}
           <div
             className="rectangleDiv relative mx-auto mt-8 mb-8 min-h-[500px] w-full max-w-6xl overflow-hidden rounded-[40px] bg-[rgba(0,0,0,0.17)] px-6 py-8 shadow-lg backdrop-blur-[48.9px] md:px-12"
