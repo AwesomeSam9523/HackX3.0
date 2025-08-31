@@ -13,7 +13,7 @@ router.post("/login", authLimiter, async (req, res, next) => {
     const result = await authService.login(req.body);
     res.json(result);
   } catch (error: any) {
-    res.status(401).json({ error: error.message });
+    res.status(401).json({ error: error.message || "Authentication failed" });
   }
 });
 
@@ -24,10 +24,10 @@ router.post(
   logActivity("CHANGE_PASSWORD"),
   async (req: AuthRequest, res, next) => {
     try {
-      await authService.changePassword(req.user!.userId, req.body);
+      await authService.changePassword(req.user!.id, req.body);
       res.json({ message: "Password changed successfully" });
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      next(error)
     }
   },
 );
@@ -45,14 +45,14 @@ router.post(
       }
 
       const { userId } = req.body;
-      const newPassword = await authService.resetPassword(userId);
+      const newPassword = await authService.resetPassword(req.user, userId);
 
       res.json({
         message: "Password reset successfully",
         newPassword, // In production, this should be sent via secure channel
       });
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      next(error)
     }
   },
 );
@@ -60,10 +60,10 @@ router.post(
 // Get current user profile
 router.get("/profile", authenticateToken, async (req: AuthRequest, res, next) => {
   try {
-    const user = await authService.getUserById(req.user!.userId);
+    const user = await authService.getUserById(req.user!.id);
     res.json(user);
   } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    next(error)
   }
 });
 

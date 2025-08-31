@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -25,184 +26,68 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Users,
-  Megaphone,
-  Eye,
-  RefreshCw,
-  UserCheck,
   Clock,
+  Eye,
   Gavel,
+  Megaphone,
+  RefreshCw,
   Search,
+  UserCheck,
+  Users,
 } from "lucide-react";
 import { JudgeTeamMappingTab } from "@/components/admin/judge-team-mapping-tab";
-import { Team, Judge } from "@/lib/types";
+import { Judge, Mentor, ProblemStatement, Team } from "@/lib/types";
+import { apiService } from "@/lib/service";
+import { Checkpoint, Checkpoint2Data } from "@/lib/types";
+
+function isCheckpointCompleted(team: Team, checkpoint: number) {
+  return team.checkpoints.some(
+    (c) => c.checkpoint === checkpoint && c.status === "COMPLETED",
+  );
+}
 
 export default function AdminDashboard() {
   const [passwordChanged, setPasswordChanged] = useState(true); // Bypass password change logic
   const [announcement, setAnnouncement] = useState("");
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [teamSearch, setTeamSearch] = useState("");
+  const [wifiOptIn, setWifiOptIn] = useState(false);
+  const [checkpoint1DialogOpen, setCheckpoint1DialogOpen] = useState(false);
+  const [checkpoint2Data, setCheckpoint2Data] = useState({ username: "", password: "", round1Room: "" });
 
   // Mock data with real-time updates
-  const [teams, setTeams] = useState<Team[]>([
-    {
-      id: "t1",
-      teamName: "Code Warriors",
-      problemStatement: "Smart Traffic Management System",
-      roomNumber: "AB1-201",
-      checkpoint1: true,
-      checkpoint2: true,
-      checkpoint3: false,
-      credentialsGiven: true,
-      status: "In Progress",
-      wifiOptIn: true,
-      generatedId: "TEAM1234",
-      generatedPassword: "AbC123Xy",
-      members: [],
-    },
-    {
-      id: "t2",
-      teamName: "Tech Innovators",
-      problemStatement: "Healthcare Diagnosis Assistant",
-      roomNumber: "AB1-203",
-      checkpoint1: true,
-      checkpoint2: false,
-      checkpoint3: false,
-      credentialsGiven: false,
-      status: "Registration",
-      wifiOptIn: false,
-      generatedId: null,
-      generatedPassword: null,
-      members: [],
-    },
-    {
-      id: "t3",
-      teamName: "Digital Pioneers",
-      problemStatement: "E-commerce Platform",
-      roomNumber: "AB1-205",
-      checkpoint1: false,
-      checkpoint2: false,
-      checkpoint3: false,
-      credentialsGiven: false,
-      status: "Not Started",
-      wifiOptIn: false,
-      generatedId: null,
-      generatedPassword: null,
-      members: [],
-    },
-  ]);
-
-  const [judges, setJudges] = useState<Judge[]>([
-    {
-      id: "j1",
-      name: "Prof. Michael Johnson",
-      floor: "Ground Floor",
-      teamsCompleted: 2,
-      teamsLeft: 6,
-      status: "Active",
-      round: 1,
-    },
-    {
-      id: "j2",
-      name: "Dr. Sarah Wilson",
-      floor: "First Floor",
-      teamsCompleted: 4,
-      teamsLeft: 4,
-      status: "Active",
-      round: 1,
-    },
-  ]);
-
-  const [mentors, setMentors] = useState([
-    {
-      id: "m1",
-      name: "Dr. Sarah Chen",
-      domain: "AI/ML",
-      currentQueue: 3,
-      maxCapacity: 5,
-      status: "Available",
-    },
-    {
-      id: "m2",
-      name: "Prof. Mike Johnson",
-      domain: "Web Development",
-      currentQueue: 5,
-      maxCapacity: 5,
-      status: "Full",
-    },
-  ]);
-
-  const problemStatements = [
-    {
-      id: "ps1",
-      title: "Smart Traffic Management System",
-      domain: "AI/ML",
-      selectedCount: 12,
-    },
-    {
-      id: "ps2",
-      title: "Healthcare Diagnosis Assistant",
-      domain: "Healthcare",
-      selectedCount: 8,
-    },
-    {
-      id: "ps3",
-      title: "E-commerce Platform",
-      domain: "Web Development",
-      selectedCount: 15,
-    },
-  ];
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [judges, setJudges] = useState<Judge[]>([]);
+  const [mentors, setMentors] = useState<Mentor[]>([]);
+  const [problemStatements, setProblemStatements] = useState<
+    ProblemStatement[]
+  >([]);
 
   // Add filtered teams logic
   const filteredTeams = teams.filter((team) =>
-    team.teamName.toLowerCase().includes(teamSearch.toLowerCase()),
+    team.name.toLowerCase().includes(teamSearch.toLowerCase()),
   );
 
-  // Helper functions for checkpoint management
-  const generateTeamId = () => {
-    return `TEAM${Math.floor(Math.random() * 9000) + 1000}`;
-  };
-
-  const generatePassword = () => {
-    const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let password = "";
-    for (let i = 0; i < 8; i++) {
-      password += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return password;
-  };
-
-  const handleWifiOptIn = (teamId: string, optIn: boolean) => {
-    setTeams((prev) =>
-      prev.map((team) =>
-        team.id === teamId ? { ...team, wifiOptIn: optIn } : team,
-      ),
-    );
-  };
-
-  const handleCheckpoint1Complete = (teamId: string) => {
+  const handleCheckpoint1Complete = async (teamId: string, wifi: boolean) => {
+    const checkpoint = await apiService.updateCheckpoint(1, { teamId, wifi }) as Checkpoint;
     setTeams((prev) =>
       prev.map((team) =>
         team.id === teamId
-          ? { ...team, checkpoint1: true, status: "Checkpoint 1 Complete" }
+          ? { ...team, checkpoints: [...team.checkpoints, checkpoint] }
           : team,
       ),
     );
+    setCheckpoint1DialogOpen(false);
   };
 
-  const handleCheckpoint2Complete = (teamId: string) => {
+  const handleCheckpoint2Complete = async (teamId: string) => {
+    const { username, password, round1Room, checkpoint } = await apiService.updateCheckpoint(2, { teamId }) as Checkpoint2Data;
+    console.log(username, password, round1Room, checkpoint);
+    setCheckpoint2Data({ username, password, round1Room: round1Room.name });
     setTeams((prev) =>
       prev.map((team) =>
         team.id === teamId
-          ? {
-              ...team,
-              checkpoint2: true,
-              credentialsGiven: true,
-              generatedId: team.generatedId || generateTeamId(),
-              generatedPassword: team.generatedPassword || generatePassword(),
-              status: "Checkpoint 2 Complete",
-            }
+          ? { ...team, checkpoints: [...team.checkpoints, checkpoint] }
           : team,
       ),
     );
@@ -219,12 +104,10 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    // Simulate real-time updates via WebSocket
-    const interval = setInterval(() => {
-      // Update team statuses, judge progress, etc.
-      console.log("Real-time update via WebSocket");
-    }, 5000);
-    return () => clearInterval(interval);
+    apiService.getTeams().then(setTeams);
+    apiService.getJudges().then(setJudges);
+    apiService.getMentors().then(setMentors);
+    apiService.getProblemStatements().then(setProblemStatements);
   }, []);
 
   const handleResetPassword = (teamId: string) => {
@@ -312,7 +195,10 @@ export default function AdminDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-hackx text-2xl font-bold sm:text-3xl">
-                    {teams.filter((team) => team.checkpoint3).length}
+                    {
+                      teams.filter((team) => isCheckpointCompleted(team, 3))
+                        .length
+                    }
                   </div>
                   <p className="text-xs text-slate-500 sm:text-sm">
                     Ready for judging
@@ -375,7 +261,7 @@ export default function AdminDashboard() {
                             {ps.title}
                           </span>
                           <p className="text-xs text-slate-500 sm:text-sm">
-                            {ps.domain}
+                            {ps.domain.name}
                           </p>
                         </div>
                         <Badge
@@ -395,9 +281,6 @@ export default function AdminDashboard() {
                   <CardTitle className="text-lg sm:text-xl">
                     Registration Status
                   </CardTitle>
-                  <CardDescription className="text-sm">
-                    Real-time checkpoint completion status
-                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -408,7 +291,7 @@ export default function AdminDashboard() {
                       >
                         <div className="flex-1">
                           <h4 className="text-sm font-medium sm:text-base">
-                            {team.teamName}
+                            {team.name}
                           </h4>
                           <p className="text-xs break-all text-slate-500 sm:text-sm">
                             ID: {team.generatedId} | Room: {team.roomNumber}
@@ -418,7 +301,9 @@ export default function AdminDashboard() {
                           <div className="flex items-center gap-2">
                             <Badge
                               variant={
-                                team.checkpoint1 ? "default" : "secondary"
+                                isCheckpointCompleted(team, 1)
+                                  ? "default"
+                                  : "secondary"
                               }
                               className="text-xs"
                             >
@@ -426,7 +311,9 @@ export default function AdminDashboard() {
                             </Badge>
                             <Badge
                               variant={
-                                team.checkpoint2 ? "default" : "secondary"
+                                isCheckpointCompleted(team, 2)
+                                  ? "default"
+                                  : "secondary"
                               }
                               className="text-xs"
                             >
@@ -434,7 +321,9 @@ export default function AdminDashboard() {
                             </Badge>
                             <Badge
                               variant={
-                                team.checkpoint3 ? "default" : "secondary"
+                                isCheckpointCompleted(team, 3)
+                                  ? "default"
+                                  : "secondary"
                               }
                               className="text-xs"
                             >
@@ -472,7 +361,7 @@ export default function AdminDashboard() {
                     >
                       <div>
                         <h4 className="text-sm font-medium sm:text-base">
-                          {team.teamName}
+                          {team.name}
                         </h4>
                         <p className="text-xs text-slate-500 sm:text-sm">
                           Room: {team.roomNumber}
@@ -481,19 +370,31 @@ export default function AdminDashboard() {
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
                         <div className="flex items-center gap-2">
                           <Badge
-                            variant={team.checkpoint1 ? "default" : "secondary"}
+                            variant={
+                              isCheckpointCompleted(team, 1)
+                                ? "default"
+                                : "secondary"
+                            }
                             className="text-xs"
                           >
                             CP1
                           </Badge>
                           <Badge
-                            variant={team.checkpoint2 ? "default" : "secondary"}
+                            variant={
+                              isCheckpointCompleted(team, 2)
+                                ? "default"
+                                : "secondary"
+                            }
                             className="text-xs"
                           >
                             CP2
                           </Badge>
                           <Badge
-                            variant={team.checkpoint3 ? "default" : "secondary"}
+                            variant={
+                              isCheckpointCompleted(team, 3)
+                                ? "default"
+                                : "secondary"
+                            }
                             className="text-xs"
                           >
                             CP3
@@ -592,7 +493,7 @@ export default function AdminDashboard() {
                 <div className="flex flex-col gap-4 sm:flex-row">
                   <Input
                     placeholder="Search teams..."
-                    className="flex-1 text-sm outline-none border-border"
+                    className="border-border flex-1 text-sm outline-none"
                     value={teamSearch}
                     onChange={(e) => setTeamSearch(e.target.value)}
                   />
@@ -613,13 +514,14 @@ export default function AdminDashboard() {
                       <div className="flex flex-col space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
                         <div className="flex-1">
                           <CardTitle className="text-base sm:text-lg">
-                            {team.teamName}
+                            {team.name}
                           </CardTitle>
                           <CardDescription className="mt-1 text-sm">
-                            {team.problemStatement}
+                            {team.problemStatement.title}
                           </CardDescription>
                           <p className="mt-1 text-xs break-all text-slate-500 sm:text-sm">
-                            Team ID: {team.generatedId} | Room: {team.roomNumber}
+                            Team ID: {team.generatedId} | Room:{" "}
+                            {team.roomNumber}
                           </p>
                         </div>
                         <div className="text-left lg:text-right">
@@ -636,19 +538,31 @@ export default function AdminDashboard() {
                       {/* Checkpoint Status */}
                       <div className="flex flex-wrap items-center gap-2">
                         <Badge
-                          variant={team.checkpoint1 ? "default" : "secondary"}
+                          variant={
+                            isCheckpointCompleted(team, 1)
+                              ? "default"
+                              : "secondary"
+                          }
                           className="text-xs"
                         >
                           CP1
                         </Badge>
                         <Badge
-                          variant={team.checkpoint2 ? "default" : "secondary"}
+                          variant={
+                            isCheckpointCompleted(team, 2)
+                              ? "default"
+                              : "secondary"
+                          }
                           className="text-xs"
                         >
                           CP2
                         </Badge>
                         <Badge
-                          variant={team.checkpoint3 ? "default" : "secondary"}
+                          variant={
+                            isCheckpointCompleted(team, 3)
+                              ? "default"
+                              : "secondary"
+                          }
                           className="text-xs"
                         >
                           CP3
@@ -661,15 +575,18 @@ export default function AdminDashboard() {
                       {/* Checkpoint Actions */}
                       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                         {/* Checkpoint 1 */}
-                        <Dialog>
+                        <Dialog
+                          open={checkpoint1DialogOpen}
+                          onOpenChange={setCheckpoint1DialogOpen}
+                        >
                           <DialogTrigger asChild>
                             <Button
                               size="sm"
                               variant="outline"
-                              disabled={team.checkpoint1}
+                              disabled={isCheckpointCompleted(team, 1)}
                               className="bg-transparent text-xs"
                             >
-                              {team.checkpoint1
+                              {isCheckpointCompleted(team, 1)
                                 ? "CP1 Complete"
                                 : "Checkpoint 1"}
                             </Button>
@@ -677,7 +594,7 @@ export default function AdminDashboard() {
                           <DialogContent className="w-[95vw] max-w-md">
                             <DialogHeader>
                               <DialogTitle className="text-lg">
-                                Checkpoint 1 - {team.teamName}
+                                Checkpoint 1 - {team.name}
                               </DialogTitle>
                               <DialogDescription className="text-sm">
                                 Team details confirmation and WiFi opt-in
@@ -687,9 +604,9 @@ export default function AdminDashboard() {
                               <div className="flex items-center space-x-2">
                                 <Switch
                                   id={`wifi-${team.id}`}
-                                  checked={team.wifiOptIn || false}
+                                  checked={wifiOptIn}
                                   onCheckedChange={(checked) =>
-                                    handleWifiOptIn(team.id, checked)
+                                    setWifiOptIn(checked)
                                   }
                                 />
                                 <Label
@@ -703,9 +620,9 @@ export default function AdminDashboard() {
                             <DialogFooter className="flex-col gap-2 sm:flex-row">
                               <Button
                                 onClick={() =>
-                                  handleCheckpoint1Complete(team.id)
+                                  handleCheckpoint1Complete(team.id, wifiOptIn)
                                 }
-                                className="w-full sm:w-auto bg-hackx text-white"
+                                className="bg-hackx w-full text-white sm:w-auto"
                               >
                                 Complete Checkpoint 1
                               </Button>
@@ -719,10 +636,14 @@ export default function AdminDashboard() {
                             <Button
                               size="sm"
                               variant="outline"
-                              disabled={team.checkpoint2 || !team.checkpoint1}
+                              disabled={
+                                isCheckpointCompleted(team, 2) ||
+                                !isCheckpointCompleted(team, 1)
+                              }
                               className="bg-transparent text-xs"
+                              onClick={() => handleCheckpoint2Complete(team.id)}
                             >
-                              {team.checkpoint2
+                              {isCheckpointCompleted(team, 2)
                                 ? "CP2 Complete"
                                 : "Checkpoint 2"}
                             </Button>
@@ -730,7 +651,7 @@ export default function AdminDashboard() {
                           <DialogContent className="w-[95vw] max-w-md">
                             <DialogHeader>
                               <DialogTitle className="text-lg">
-                                Checkpoint 2 - {team.teamName}
+                                Checkpoint 2 - {team.name}
                               </DialogTitle>
                               <DialogDescription className="text-sm">
                                 Generate team credentials and distribute
@@ -748,7 +669,7 @@ export default function AdminDashboard() {
                                       Team ID:
                                     </Label>
                                     <p className="font-mono text-sm sm:text-base">
-                                      {team.generatedId || generateTeamId()}
+                                      {checkpoint2Data.username}
                                     </p>
                                   </div>
                                   <div>
@@ -756,8 +677,15 @@ export default function AdminDashboard() {
                                       Password:
                                     </Label>
                                     <p className="font-mono text-sm sm:text-base">
-                                      {team.generatedPassword ||
-                                        generatePassword()}
+                                      {checkpoint2Data.password}
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <Label className="text-xs font-medium">
+                                      Room Number:
+                                    </Label>
+                                    <p className="font-mono text-sm sm:text-base">
+                                      {checkpoint2Data.roomNumber}
                                     </p>
                                   </div>
                                 </div>
@@ -765,18 +693,14 @@ export default function AdminDashboard() {
                               <div className="text-xs text-slate-600 sm:text-sm">
                                 <p>✓ Participant ID cards distributed</p>
                                 <p>✓ Welcome kits given</p>
-                                <p>✓ Room number assigned: {team.roomNumber}</p>
                               </div>
                             </div>
                             <DialogFooter className="flex-col gap-2 sm:flex-row">
-                              <Button
-                                onClick={() =>
-                                  handleCheckpoint2Complete(team.id)
-                                }
-                                className="w-full sm:w-auto bg-hackx text-white border-[1px] hover:text-hackx hover:border-hackx"
+                              <DialogClose
+                                className="bg-hackx hover:text-hackx hover:border-hackx w-full border-[1px] text-white sm:w-auto"
                               >
-                                Complete Checkpoint 2
-                              </Button>
+                                Done
+                              </DialogClose>
                             </DialogFooter>
                           </DialogContent>
                         </Dialog>
@@ -785,11 +709,16 @@ export default function AdminDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
-                          disabled={team.checkpoint3 || !team.checkpoint2}
+                          disabled={
+                            isCheckpointCompleted(team, 3) ||
+                            !isCheckpointCompleted(team, 2)
+                          }
                           onClick={() => handleCheckpoint3Complete(team.id)}
                           className="text-xs"
                         >
-                          {team.checkpoint3 ? "CP3 Complete" : "Checkpoint 3"}
+                          {isCheckpointCompleted(team, 3)
+                            ? "CP3 Complete"
+                            : "Checkpoint 3"}
                         </Button>
                       </div>
 
@@ -843,7 +772,7 @@ export default function AdminDashboard() {
                     {judges.map((judge) => (
                       <Card
                         key={judge.id}
-                        className="border-l-4 border-l-hackx"
+                        className="border-l-hackx border-l-4"
                       >
                         <CardHeader className="pb-3">
                           <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
@@ -929,7 +858,7 @@ export default function AdminDashboard() {
                     {mentors.map((mentor) => (
                       <Card
                         key={mentor.id}
-                        className="border-l-4 border-l-hackx"
+                        className="border-l-hackx border-l-4"
                       >
                         <CardHeader className="pb-3">
                           <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
@@ -947,7 +876,7 @@ export default function AdminDashboard() {
                                   ? "outline"
                                   : "default"
                               }
-                              className={`w-fit text-xs ${mentor.status === 'Available' ? 'text-hackx border-hackx border-[1px]' : ''}`}
+                              className={`w-fit text-xs ${mentor.status === "Available" ? "text-hackx border-hackx border-[1px]" : ""}`}
                             >
                               {mentor.status}
                             </Badge>
@@ -958,7 +887,7 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-4">
                               <div className="text-center">
                                 <p className="text-xl font-bold text-blue-600 sm:text-2xl">
-                                  {mentor.currentQueue}/{mentor.maxCapacity}
+                                  {mentor.currentQueue}/5
                                 </p>
                                 <p className="text-xs text-slate-500">
                                   Queue Status
@@ -979,7 +908,7 @@ export default function AdminDashboard() {
                               <DialogContent className="w-[95vw] max-w-md">
                                 <DialogHeader>
                                   <DialogTitle className="text-lg">
-                                    {mentor.name} - Queue Details
+                                    {mentor.user.username} - Queue Details
                                   </DialogTitle>
                                   <DialogDescription className="text-sm">
                                     Current teams in mentorship queue

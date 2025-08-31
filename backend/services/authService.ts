@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { hashPassword, comparePassword, generateRandomPassword } from "../utils/password";
 import { generateToken } from "../utils/jwt";
-import type { LoginRequest, ChangePasswordRequest } from "../types";
+import type {LoginRequest, ChangePasswordRequest, JWTPayload} from "../types";
 
 const prisma = new PrismaClient();
 
@@ -35,7 +35,7 @@ export class AuthService {
 
     // Generate JWT token
     const token = generateToken({
-      userId: user.id,
+      id: user.id,
       username: user.username,
       role: user.role,
     });
@@ -77,10 +77,30 @@ export class AuthService {
     });
   }
 
-  async resetPassword(userId: string) {
+  async resetPassword(user: JWTPayload | undefined, userId: string) {
     // Generate new random password
     const newPassword = generateRandomPassword();
     const hashedPassword = await hashPassword(newPassword);
+
+    // check if new user role is lower than current user role
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+
+    const targetUser = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        role: true,
+      },
+    });
+
+    if (!targetUser) {
+      throw new Error("User not found");
+    }
+
+    if (user.role === 'ADMIN' && ['ADMIN', 'SUPER_ADMIN'].includes(targetUser.role)) {
+      throw new Error("Cannot reset password for users with higher or equal role");
+    }
 
     // Update user password
     await prisma.user.update({

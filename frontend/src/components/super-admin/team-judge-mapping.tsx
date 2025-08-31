@@ -79,9 +79,9 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
   const filteredTeams = useMemo(() => {
     return teams.filter((team) => {
       const matchesSearch =
-        team.teamName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        team.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         team.roomNumber.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesPS = selectedPS === "all" || team.problemStatement === selectedPS
+      const matchesPS = selectedPS === "all" || team.problemStatement.title === selectedPS
       const isMapped = mappings.some((m) => m.teamId === team.id)
       const matchesMappedFilter = !showMappedOnly || isMapped
 
@@ -120,6 +120,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
       setIsAssignDialogOpen(false)
       loadMappings()
     } catch (error) {
+      console.error(error)
       toast({
         title: "Error",
         description: "Failed to assign teams to judge",
@@ -137,6 +138,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
       })
       loadMappings()
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to remove mapping",
@@ -163,11 +165,11 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
   }
 
   const getJudgeName = (judgeId: string) => {
-    return judges.find((j) => j.id === judgeId)?.name || "Unknown Judge"
+    return judges.find((j) => j.id === judgeId)?.user.username || "Unknown Judge"
   }
 
   const getTeamName = (teamId: string) => {
-    return teams.find((t) => t.id === teamId)?.teamName || "Unknown Team"
+    return teams.find((t) => t.id === teamId)?.name || "Unknown Team"
   }
 
   const getTeamScore = (teamId: string) => {
@@ -235,7 +237,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                         const stats = getJudgeStats(judge.id)
                         return (
                           <SelectItem key={judge.id} value={judge.id}>
-                            {judge.name} - {judge.floor} ({stats.assigned} teams)
+                            {judge.user.username} - {judge.floor} ({stats.assigned} teams)
                           </SelectItem>
                         )
                       })}
@@ -285,8 +287,8 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                 <SelectContent>
                   <SelectItem value="all">All Problem Statements</SelectItem>
                   {uniquePS.map((ps) => (
-                    <SelectItem key={ps} value={ps}>
-                      {ps}
+                    <SelectItem key={ps.id} value={ps.title}>
+                      {ps.title}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -372,7 +374,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                           )}
                           <div>
                             <div className="flex items-center gap-2">
-                              <h4 className="font-medium">{team.teamName}</h4>
+                              <h4 className="font-medium">{team.name}</h4>
                               {hasScore && (
                                 <Badge variant="default" className="text-xs">
                                   <Trophy className="h-3 w-3 mr-1" />
@@ -381,7 +383,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                               )}
                             </div>
                             <p className="text-sm text-slate-500">
-                              {team.roomNumber} • {team.problemStatement}
+                              {team.roomNumber} • {team.problemStatement.title}
                             </p>
                             {isMapped && (
                               <p className="text-sm text-green-600">Assigned to: {getJudgeName(mapping.judgeId)}</p>
@@ -428,7 +430,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                     <div key={judge.id} className="p-3 border rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <div>
-                          <h4 className="font-medium">{judge.name}</h4>
+                          <h4 className="font-medium">{judge.user.username}</h4>
                           <p className="text-sm text-slate-500">{judge.floor}</p>
                         </div>
                         <Badge variant="outline">{stats.assigned} teams</Badge>

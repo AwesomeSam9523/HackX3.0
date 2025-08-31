@@ -1,100 +1,128 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, Filter, RotateCcw, UserCheck, UserX } from "lucide-react"
-import { apiService } from "@/lib/service"
-import { useToast } from "@/hooks/use-toast"
-import type { User } from "@/lib/types"
+import { useMemo, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Filter, RotateCcw, Search, UserCheck, UserX } from "lucide-react";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
+import type { User } from "@/lib/types";
 
 interface UserManagementTabProps {
-  users: User[]
-  onUserUpdate: () => void
+  users: User[];
+  onUserUpdateAction: () => void;
 }
 
-export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [roleFilter, setRoleFilter] = useState<string>("all")
-  const [statusFilter, setStatusFilter] = useState<string>("all")
-  const { toast } = useToast()
+export function UserManagementTab({
+  users,
+  onUserUpdateAction,
+}: UserManagementTabProps) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [roleFilter, setRoleFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const { toast } = useToast();
 
   // Get unique roles for filter
   const uniqueRoles = useMemo(() => {
-    const roleSet = new Set(users.filter((user) => user.role).map((user) => user.role))
-    return Array.from(roleSet).sort()
-  }, [users])
+    const roleSet = new Set(
+      users.filter((user) => user.role).map((user) => user.role),
+    );
+    return Array.from(roleSet).sort();
+  }, [users]);
 
   // Filter users based on search and filters
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
-      const matchesSearch = user.username?.toLowerCase().includes(searchTerm.toLowerCase()) || false
-      const matchesRole = roleFilter === "all" || user.role === roleFilter
-      const matchesStatus = statusFilter === "all" || user.status === statusFilter
+      const matchesSearch =
+        user.username?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        false;
+      const matchesRole = roleFilter === "all" || user.role === roleFilter;
+      const matchesStatus =
+        statusFilter === "all" || user.status === statusFilter;
 
-      return matchesSearch && matchesRole && matchesStatus
-    })
-  }, [users, searchTerm, roleFilter, statusFilter])
+      return matchesSearch && matchesRole && matchesStatus;
+    });
+  }, [users, searchTerm, roleFilter, statusFilter]);
 
   const handleResetUserPassword = async (userId: string) => {
     try {
-      await apiService.resetPassword(userId)
+      const { message, newPassword } = await apiService.resetPassword(userId);
       toast({
         title: "Success",
-        description: "Password reset successfully",
-      })
-      onUserUpdate()
+        description: message,
+      });
+      alert(`New password for user is:\n${newPassword}`);
+      onUserUpdateAction();
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to reset password",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleToggleUserStatus = async (userId: string) => {
     try {
-      await apiService.toggleUserStatus(userId)
+      await apiService.toggleUserStatus(userId);
       toast({
         title: "Success",
         description: "User status updated successfully",
-      })
-      onUserUpdate()
+      });
+      onUserUpdateAction();
+      users.forEach((user) => {
+        if (user.id === userId) {
+          user.status = user.status === "ACTIVE" ? "DISABLED" : "ACTIVE";
+        }
+      });
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to update user status",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const clearFilters = () => {
-    setSearchTerm("")
-    setRoleFilter("all")
-    setStatusFilter("all")
-  }
+    setSearchTerm("");
+    setRoleFilter("all");
+    setStatusFilter("all");
+  };
 
   const getRoleColor = (role: string) => {
     const colors: { [key: string]: string } = {
-      participant: "bg-blue-500",
-      mentor: "bg-green-500",
-      judge: "bg-purple-500",
-      admin: "bg-orange-500",
-      super_admin: "bg-red-500",
-    }
-    return colors[role] || "bg-gray-500"
-  }
+      TEAM: "bg-blue-500",
+      MENTOR: "bg-green-500",
+      JUDGE: "bg-purple-500",
+      ADMIN: "bg-orange-500",
+      SUPER_ADMIN: "bg-red-500",
+    };
+    return colors[role] || "bg-gray-500";
+  };
 
   const formatRole = (role: string | undefined | null) => {
-    if (!role) return "Unknown"
-    return role.replace("_", " ").toUpperCase()
-  }
+    if (!role) return "Unknown";
+    return role.replace("_", " ").toUpperCase();
+  };
 
   return (
     <div className="space-y-6">
@@ -114,19 +142,21 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
             <Filter className="h-5 w-5" />
             Search & Filters
           </CardTitle>
-          <CardDescription>Filter users by username, role, or status</CardDescription>
+          <CardDescription>
+            Filter users by username, role, or status
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="space-y-2">
+          <div className="flex flex-col md:flex-row gap-2 w-full">
+            <div className="space-y-2 w-full">
               <Label>Search Users</Label>
               <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-slate-400" />
+                <Search className="absolute top-2.5 left-2 h-4 w-4 text-slate-400" />
                 <Input
                   placeholder="Search by username..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8"
+                  className="pl-8 w-full"
                 />
               </div>
             </div>
@@ -161,8 +191,12 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
             </div>
             <div className="space-y-2">
               <Label>Actions</Label>
-              <Button variant="outline" onClick={clearFilters} className="w-full bg-transparent">
-                <RotateCcw className="h-4 w-4 mr-2" />
+              <Button
+                variant="outline"
+                onClick={clearFilters}
+                className="w-full bg-transparent"
+              >
+                <RotateCcw className="mr-2 h-4 w-4" />
                 Clear Filters
               </Button>
             </div>
@@ -179,7 +213,9 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
       <Card>
         <CardHeader>
           <CardTitle>All Users</CardTitle>
-          <CardDescription>Manage user accounts, passwords, and access</CardDescription>
+          <CardDescription>
+            Manage user accounts, passwords, and access
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -187,51 +223,75 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
               filteredUsers.map((user) => (
                 <div
                   key={user.id}
-                  className="flex items-center justify-between p-4 border rounded-lg hover:bg-slate-50"
+                  className="flex items-center justify-between rounded-lg border p-4 hover:bg-slate-50"
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-3 h-3 rounded-full ${getRoleColor(user.role || "")}`} />
+                    <div
+                      className={`h-3 w-3 rounded-full ${getRoleColor(user.role || "")}`}
+                    />
                     <div>
-                      <h4 className="font-medium">{user.username || "Unknown User"}</h4>
-                      <div className="flex items-center gap-2 mt-1">
+                      <h4 className="font-medium">
+                        {user.username || "Unknown User"}
+                      </h4>
+                      <div className="mt-1 flex items-center gap-2">
                         <Badge variant="outline" className="text-xs">
                           {formatRole(user.role)}
                         </Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          ID: {user.id}
+                        </Badge>
                         {user.teamId && (
                           <Badge variant="secondary" className="text-xs">
-                            Team ID: {user.teamId}
+                            Team Name: {user.participantTeam.name}
                           </Badge>
                         )}
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge variant={user.status === "Active" ? "default" : "destructive"}>
-                      {user.status === "Active" ? (
-                        <UserCheck className="h-3 w-3 mr-1" />
+                    <Badge
+                      variant={
+                        user.status === "ACTIVE" ? "default" : "destructive"
+                      }
+                    >
+                      {user.status === "ACTIVE" ? (
+                        <UserCheck className="mr-1 h-3 w-3" />
                       ) : (
-                        <UserX className="h-3 w-3 mr-1" />
+                        <UserX className="mr-1 h-3 w-3" />
                       )}
                       {user.status || "Unknown"}
                     </Badge>
-                    <Button size="sm" variant="outline" onClick={() => handleResetUserPassword(user.id)}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleResetUserPassword(user.id)}
+                    >
                       Reset Password
                     </Button>
                     <Button
                       size="sm"
-                      variant={user.status === "Active" ? "destructive" : "default"}
+                      variant={
+                        user.status === "ACTIVE" ? "destructive" : "default"
+                      }
                       onClick={() => handleToggleUserStatus(user.id)}
                     >
-                      {user.status === "Active" ? "Disable" : "Enable"}
+                      {user.status === "ACTIVE" ? "Disable" : "Enable"}
                     </Button>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="text-center py-8">
-                <Search className="h-12 w-12 mx-auto text-slate-300 mb-4" />
-                <p className="text-slate-500">No users found matching the current filters</p>
-                <Button variant="outline" size="sm" className="mt-2 bg-transparent" onClick={clearFilters}>
+              <div className="py-8 text-center">
+                <Search className="mx-auto mb-4 h-12 w-12 text-slate-300" />
+                <p className="text-slate-500">
+                  No users found matching the current filters
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 bg-transparent"
+                  onClick={clearFilters}
+                >
                   Clear Filters
                 </Button>
               </div>
@@ -241,13 +301,15 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
       </Card>
 
       {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm">Active Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{users.filter((u) => u.status === "Active").length}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {users.filter((u) => u.status === "ACTIVE").length}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -255,7 +317,9 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
             <CardTitle className="text-sm">Disabled Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{users.filter((u) => u.status === "Disabled").length}</div>
+            <div className="text-2xl font-bold text-red-600">
+              {users.filter((u) => u.status === "DISABLED").length}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -263,10 +327,12 @@ export function UserManagementTab({ users, onUserUpdate }: UserManagementTabProp
             <CardTitle className="text-sm">Total Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{users.length}</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {users.length}
+            </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
+  );
 }

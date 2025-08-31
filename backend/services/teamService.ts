@@ -1,50 +1,50 @@
-import { PrismaClient } from "@prisma/client";
+import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export class ParticipantService {
+export class TeamService {
   // Get participant's team information
   async getTeamInfo(userId: string) {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: {id: userId},
       include: {
         participantTeam: {
           include: {
             participants: {
-              select: { id: true, username: true, email: true },
+              select: {id: true, username: true, email: true},
             },
             problemStatement: {
-              include: { domain: true },
+              include: {domain: true},
             },
             submissions: {
-              orderBy: { submittedAt: "desc" },
+              orderBy: {submittedAt: "desc"},
               take: 1,
             },
             checkpoints: {
-              orderBy: { checkpoint: "asc" },
+              orderBy: {checkpoint: "asc"},
             },
             mentorshipQueue: {
               include: {
                 mentor: {
                   include: {
-                    user: { select: { username: true } },
+                    user: {select: {username: true}},
                   },
                 },
               },
-              orderBy: { createdAt: "desc" },
+              orderBy: {createdAt: "desc"},
             },
             evaluations: {
               select: {
                 status: true,
                 judge: {
                   include: {
-                    user: { select: { username: true } },
+                    user: {select: {username: true}},
                   },
                 },
               },
             },
             round2Room: {
-              select: { id: true, name: true, floor: true },
+              select: {id: true, name: true},
             },
           },
         },
@@ -65,12 +65,12 @@ export class ParticipantService {
         problemStatements: {
           include: {
             _count: {
-              select: { teams: true },
+              select: {teams: true},
             },
           },
         },
       },
-      orderBy: { name: "asc" },
+      orderBy: {name: "asc"},
     });
   }
 
@@ -80,18 +80,18 @@ export class ParticipantService {
       include: {
         domain: true,
         _count: {
-          select: { teams: true },
+          select: {teams: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
     });
   }
 
   // Select problem statement for team
   async selectProblemStatement(userId: string, problemStatementId: string) {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
+      where: {id: userId},
+      include: {participantTeam: true},
     });
 
     if (!user || !user.participantTeam) {
@@ -100,7 +100,7 @@ export class ParticipantService {
 
     // Check if problem statements are locked
     const psLockSetting = await prisma.systemSettings.findUnique({
-      where: { key: "problem_statements_locked" },
+      where: {key: "problem_statements_locked"},
     });
 
     if (psLockSetting && psLockSetting.value === "true") {
@@ -114,14 +114,14 @@ export class ParticipantService {
 
     // Update team with selected problem statement
     const updatedTeam = await prisma.team.update({
-      where: { id: user.participantTeam.id },
+      where: {id: user.participantTeam.id},
       data: {
         problemStatementId,
         status: "PROBLEM_SELECTED",
       },
       include: {
         problemStatement: {
-          include: { domain: true },
+          include: {domain: true},
         },
       },
     });
@@ -144,9 +144,9 @@ export class ParticipantService {
     if (existingBookmark) {
       // Remove bookmark
       await prisma.pSBookmark.delete({
-        where: { id: existingBookmark.id },
+        where: {id: existingBookmark.id},
       });
-      return { bookmarked: false };
+      return {bookmarked: false};
     } else {
       // Add bookmark
       await prisma.pSBookmark.create({
@@ -155,20 +155,20 @@ export class ParticipantService {
           problemStatementId,
         },
       });
-      return { bookmarked: true };
+      return {bookmarked: true};
     }
   }
 
   // Get bookmarked problem statements
   async getBookmarkedProblemStatements(userId: string) {
     const bookmarks = await prisma.pSBookmark.findMany({
-      where: { userId },
+      where: {userId},
       include: {
         problemStatement: {
           include: {
             domain: true,
             _count: {
-              select: { teams: true },
+              select: {teams: true},
             },
           },
         },
@@ -179,10 +179,14 @@ export class ParticipantService {
   }
 
   // Submit project
-  async submitProject(userId: string, data: { githubLink?: string; pptLink?: string }) {
+  async submitProject(userId: string, data: { githubLink: string; pptLink: string }) {
+    if (!data.githubLink && !data.pptLink) {
+      throw new Error("Submission link (GitHub and PPT) is required");
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
+      where: {id: userId},
+      include: {participantTeam: true},
     });
 
     if (!user || !user.participantTeam) {
@@ -191,7 +195,7 @@ export class ParticipantService {
 
     // Check if round 1 is locked
     const round1LockSetting = await prisma.systemSettings.findUnique({
-      where: { key: "round1_locked" },
+      where: {key: "round1_locked"},
     });
 
     if (round1LockSetting && round1LockSetting.value === "true") {
@@ -211,7 +215,7 @@ export class ParticipantService {
     const submissionStatus = data.githubLink && data.pptLink ? "SUBMITTED" : "PARTIAL";
 
     await prisma.team.update({
-      where: { id: user.participantTeam.id },
+      where: {id: user.participantTeam.id},
       data: {
         submissionStatus,
         githubRepo: data.githubLink,
@@ -226,8 +230,8 @@ export class ParticipantService {
   // Get team submissions
   async getTeamSubmissions(userId: string) {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
+      where: {id: userId},
+      include: {participantTeam: true},
     });
 
     if (!user || !user.participantTeam) {
@@ -235,16 +239,16 @@ export class ParticipantService {
     }
 
     return prisma.submission.findMany({
-      where: { teamId: user.participantTeam.id },
-      orderBy: { submittedAt: "desc" },
+      where: {teamId: user.participantTeam.id},
+      orderBy: {submittedAt: "desc"},
     });
   }
 
   // Book mentorship session
   async bookMentorshipSession(userId: string, data: { mentorId: string; query?: string }) {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
+      where: {id: userId},
+      include: {participantTeam: true},
     });
 
     if (!user || !user.participantTeam) {
@@ -253,7 +257,7 @@ export class ParticipantService {
 
     // Check if mentorship is locked
     const mentorshipLockSetting = await prisma.systemSettings.findUnique({
-      where: { key: "mentorship_locked" },
+      where: {key: "mentorship_locked"},
     });
 
     if (mentorshipLockSetting && mentorshipLockSetting.value === "true") {
@@ -262,7 +266,7 @@ export class ParticipantService {
 
     // Check if mentor exists and is available
     const mentor = await prisma.mentor.findUnique({
-      where: { id: data.mentorId },
+      where: {id: data.mentorId},
     });
 
     if (!mentor) {
@@ -278,7 +282,7 @@ export class ParticipantService {
       where: {
         teamId: user.participantTeam.id,
         mentorId: data.mentorId,
-        status: { in: ["WAITING", "IN_PROGRESS"] },
+        status: "WAITING",
       },
     });
 
@@ -298,7 +302,7 @@ export class ParticipantService {
         mentor: {
           include: {
             user: {
-              select: { username: true },
+              select: {username: true},
             },
           },
         },
@@ -309,71 +313,29 @@ export class ParticipantService {
   // Get available mentors
   async getAvailableMentors() {
     return prisma.mentor.findMany({
-      where: { isAvailable: true },
+      where: {isAvailable: true},
       include: {
         user: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         _count: {
           select: {
             mentorshipQueue: {
-              where: { status: { in: ["WAITING", "IN_PROGRESS"] } },
+              where: {status: "WAITING"},
             },
           },
         },
       },
-      orderBy: [{ _count: { mentorshipQueue: "asc" } }, { createdAt: "desc" }],
-    });
-  }
-
-  // Update team checkpoint
-  async updateTeamCheckpoint(userId: string, checkpoint: number, data: any) {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
-    });
-
-    if (!user || !user.participantTeam) {
-      throw new Error("Team not found for this participant");
-    }
-
-    return prisma.teamCheckpoint.upsert({
-      where: {
-        teamId_checkpoint: {
-          teamId: user.participantTeam.id,
-          checkpoint,
+      orderBy: [
+        {
+          mentorshipQueue: {
+            _count: "asc",
+          },
         },
-      },
-      update: {
-        data,
-        status: "completed",
-        completedAt: new Date(),
-      },
-      create: {
-        teamId: user.participantTeam.id,
-        checkpoint,
-        data,
-        status: "completed",
-        completedAt: new Date(),
-      },
-    });
-  }
-
-  // Get team checkpoints
-  async getTeamCheckpoints(userId: string) {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
+        {createdAt: "desc"},
+      ],
     });
 
-    if (!user || !user.participantTeam) {
-      throw new Error("Team not found for this participant");
-    }
-
-    return prisma.teamCheckpoint.findMany({
-      where: { teamId: user.participantTeam.id },
-      orderBy: { checkpoint: "asc" },
-    });
   }
 
   // Get announcements
@@ -381,10 +343,10 @@ export class ParticipantService {
     return prisma.announcement.findMany({
       include: {
         author: {
-          select: { username: true, role: true },
+          select: {username: true, role: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
       take: 50,
     });
   }
@@ -404,8 +366,8 @@ export class ParticipantService {
   // Cancel mentorship session
   async cancelMentorshipSession(userId: string, queueItemId: string) {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
-      include: { participantTeam: true },
+      where: {id: userId},
+      include: {participantTeam: true},
     });
 
     if (!user || !user.participantTeam) {
@@ -414,7 +376,7 @@ export class ParticipantService {
 
     // Check if the queue item belongs to this team
     const queueItem = await prisma.mentorshipQueue.findUnique({
-      where: { id: queueItemId },
+      where: {id: queueItemId},
     });
 
     if (!queueItem || queueItem.teamId !== user.participantTeam.id) {
@@ -426,10 +388,10 @@ export class ParticipantService {
     }
 
     return prisma.mentorshipQueue.update({
-      where: { id: queueItemId },
-      data: { status: "CANCELLED" },
+      where: {id: queueItemId},
+      data: {status: "CANCELLED"},
     });
   }
 }
 
-export const participantService = new ParticipantService();
+export const teamService = new TeamService();

@@ -232,7 +232,7 @@ export class JudgeService {
       throw new Error("Judge profile not found");
     }
 
-    const teamScore = await prisma.teamScore.findUnique({
+    return prisma.teamScore.findUnique({
       where: {
         teamId_judgeId_round: {
           teamId,
@@ -241,12 +241,10 @@ export class JudgeService {
         },
       },
     });
-
-    return teamScore;
   }
 
   // Update evaluation status
-  async updateEvaluationStatus(userId: string, teamId: string, status: "PENDING" | "IN_PROGRESS" | "COMPLETED") {
+  async updateEvaluationStatus(userId: string, teamId: string, status: "PENDING" | "COMPLETED") {
     const judge = await prisma.judge.findUnique({
       where: { userId },
     });
@@ -323,7 +321,6 @@ export class JudgeService {
         totalAssigned: evaluations.length,
         completed: evaluations.filter((e) => e.status === "COMPLETED").length,
         pending: evaluations.filter((e) => e.status === "PENDING").length,
-        inProgress: evaluations.filter((e) => e.status === "IN_PROGRESS").length,
       },
     };
   }

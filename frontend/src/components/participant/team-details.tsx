@@ -27,7 +27,7 @@ export function TeamDetails({ team, selectedPS, selectedMentor, psLocked }: Team
         <CardContent className="space-y-4">
           <div>
             <Label className="text-sm font-medium">Team Name</Label>
-            <p className="text-lg">{team.teamName}</p>
+            <p className="text-lg">{team.name}</p>
           </div>
           <div>
             <Label className="text-sm font-medium">Room Number</Label>

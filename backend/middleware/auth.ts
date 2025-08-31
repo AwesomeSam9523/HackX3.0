@@ -1,6 +1,6 @@
-import type { Request, Response, NextFunction } from "express";
-import { verifyToken, extractTokenFromHeader } from "../utils/jwt";
-import type { JWTPayload } from "../types";
+import type {NextFunction, Request, Response} from "express";
+import {extractTokenFromHeader, verifyToken} from "../utils/jwt";
+import type {JWTPayload} from "../types";
 
 export interface AuthRequest extends Request {
   user?: JWTPayload
@@ -14,8 +14,7 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
   }
 
   try {
-    const decoded = verifyToken(token);
-    req.user = decoded;
+    req.user = verifyToken(token);
     next();
   } catch (error) {
     return res.status(403).json({ error: "Invalid or expired token" });
@@ -24,6 +23,7 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
 
 export const requireRole = (roles: string[]) => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
+    authenticateToken(req, res, () => {});
     if (!req.user) {
       return res.status(401).json({ error: "Authentication required" });
     }
@@ -40,4 +40,4 @@ export const requireSuperAdmin = requireRole(["SUPER_ADMIN"]);
 export const requireAdmin = requireRole(["ADMIN", "SUPER_ADMIN"]);
 export const requireJudge = requireRole(["JUDGE", "ADMIN", "SUPER_ADMIN"]);
 export const requireMentor = requireRole(["MENTOR", "ADMIN", "SUPER_ADMIN"]);
-export const requireParticipant = requireRole(["PARTICIPANT", "MENTOR", "JUDGE", "ADMIN", "SUPER_ADMIN"]);
+export const requireParticipant = requireRole(["TEAM", "MENTOR", "JUDGE", "ADMIN", "SUPER_ADMIN"]);

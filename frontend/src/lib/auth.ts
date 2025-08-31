@@ -3,10 +3,9 @@
 import { jwtDecode } from "jwt-decode"
 
 interface JWTPayload {
-  sub: string
+  id: string
   username: string
-  role: string
-  teamId?: string
+  role: 'ADMIN' | 'MENTOR' | 'JUDGE' | 'TEAM' | 'SUPER_ADMIN'
   exp: number
 }
 
@@ -16,7 +15,7 @@ export class AuthService {
 
   private constructor() {
     if (typeof window !== "undefined") {
-      this.token = localStorage.getItem("hackathon_token")
+      this.token = localStorage.getItem("token")
     }
   }
 
@@ -30,7 +29,7 @@ export class AuthService {
   setToken(token: string): void {
     this.token = token
     if (typeof window !== "undefined") {
-      localStorage.setItem("hackathon_token", token)
+      localStorage.setItem("token", token)
     }
   }
 
@@ -41,7 +40,7 @@ export class AuthService {
   removeToken(): void {
     this.token = null
     if (typeof window !== "undefined") {
-      localStorage.removeItem("hackathon_token")
+      localStorage.removeItem("token")
     }
   }
 
@@ -74,7 +73,7 @@ export class AuthService {
   logout(): void {
     this.removeToken()
     if (typeof window !== "undefined") {
-      window.location.href = "/login"
+      window.location.href = "/dashboard/login"
     }
   }
 }

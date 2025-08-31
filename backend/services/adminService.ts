@@ -1,7 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import type { LogFilter } from "../types";
+import {hashPassword} from "../utils/password";
 
 const prisma = new PrismaClient();
+
+interface Checkpoint1Data {
+  teamId: string;
+  wifi: boolean;
+}
+
+interface Checkpoint2Data {
+  teamId: string;
+}
 
 export class AdminService {
   // Dashboard Overview
@@ -17,7 +27,7 @@ export class AdminService {
       totalEvaluations,
     ] = await Promise.all([
       prisma.team.count(),
-      prisma.user.count({ where: { role: "PARTICIPANT" } }),
+      prisma.user.count({ where: { role: "TEAM" } }),
       prisma.user.count({ where: { role: "MENTOR" } }),
       prisma.user.count({ where: { role: "JUDGE" } }),
       prisma.team.count({ where: { problemStatementId: { not: null } } }),
@@ -79,9 +89,15 @@ export class AdminService {
         submissions: {
           select: { id: true, githubRepo: true, presentationLink: true, submittedAt: true },
         },
-        round2Room: {
-          select: { id: true, name: true, floor: true },
+        round1Room: {
+          select: { id: true, name: true, block: true },
         },
+        round2Room: {
+          select: { id: true, name: true, block: true },
+        },
+        checkpoints: {
+          select: { checkpoint: true, status: true, completedAt: true, data: true },
+        }
       },
       orderBy: { createdAt: "desc" },
     });
@@ -117,6 +133,7 @@ export class AdminService {
             },
           },
         },
+        round1Room: true,
         round2Room: true,
       },
     });
@@ -159,7 +176,6 @@ export class AdminService {
       judge: {
         id: judge.id,
         user: judge.user,
-        floor: judge.floor,
         expertise: judge.expertise,
       },
       assignedTeams: judge.evaluations.map((evaluation) => ({
@@ -194,6 +210,7 @@ export class AdminService {
             },
           },
         },
+        round1Room: true,
         round2Room: true,
       },
     });
@@ -208,6 +225,11 @@ export class AdminService {
   // User Management (Limited)
   async getAllUsers() {
     return prisma.user.findMany({
+      where: {
+        role: {
+          in: ["TEAM", "MENTOR", "JUDGE"],
+        }
+      },
       select: {
         id: true,
         username: true,
@@ -219,10 +241,10 @@ export class AdminService {
           select: { id: true, name: true, teamId: true },
         },
         mentorProfile: {
-          select: { id: true, expertise: true, floor: true },
+          select: { id: true, expertise: true },
         },
         judgeProfile: {
-          select: { id: true, expertise: true, floor: true },
+          select: { id: true, expertise: true },
         },
       },
       orderBy: { createdAt: "desc" },
@@ -250,7 +272,14 @@ export class AdminService {
     }
 
     return prisma.activityLog.findMany({
-      where,
+      where: {
+        user: {
+          role: {
+            notIn: ['SUPER_ADMIN'],
+          },
+        },
+        ...where,
+      },
       include: {
         user: {
           select: { username: true, role: true },
@@ -319,13 +348,8 @@ export class AdminService {
         total: team.evaluations.length,
         completed: team.evaluations.filter((e) => e.status === "COMPLETED").length,
         pending: team.evaluations.filter((e) => e.status === "PENDING").length,
-        inProgress: team.evaluations.filter((e) => e.status === "IN_PROGRESS").length,
       },
       hasScores: team.teamScores.length > 0,
-      averageScore:
-        team.teamScores.length > 0
-          ? team.teamScores.reduce((sum, score) => sum + (score.totalScore || 0), 0) / team.teamScores.length
-          : null,
       judgedBy: team.evaluations.map((e) => e.judge.user.username),
     }));
   }
@@ -376,18 +400,173 @@ export class AdminService {
     });
   }
 
-  async getProblemStatements() {
-    return prisma.problemStatement.findMany({
+  async getAllProblemStatements() {
+    const psList = await prisma.problemStatement.findMany({
       include: {
         domain: true,
         teams: {
-          select: { id: true, name: true, teamId: true },
+          select: {id: true, name: true, teamId: true},
         },
         _count: {
-          select: { teams: true },
+          select: {teams: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
+    });
+    return psList.map((ps) => ({
+      ...ps,
+      selectedCount: ps._count.teams,
+    }));
+  }
+
+  // Update team checkpoint
+  async updateTeamCheckpoint1(data: Checkpoint1Data) {
+    const { teamId, wifi } = data;
+    return prisma.teamCheckpoint.upsert({
+      where: {
+        teamId_checkpoint: {
+          teamId,
+          checkpoint: 1,
+        },
+      },
+      update: {
+        data: { wifi },
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+      create: {
+        teamId,
+        checkpoint: 1,
+        data: { wifi },
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+    });
+  }
+
+  async updateTeamCheckpoint2(payload: Checkpoint2Data) {
+    const team = await prisma.team.findUnique({
+      where: {id: payload.teamId},
+    });
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    const username = team.teamId;
+    const password = Math.random().toString(36).slice(-6);
+    const hash = await hashPassword(password);
+
+    const t1 = prisma.user.create({
+      data: {
+        username,
+        password: hash,
+        role: "TEAM",
+      },
+      select: {
+        username: true,
+        password: true,
+      }
+    });
+    const t2 = prisma.teamCheckpoint.upsert({
+      where: {
+        teamId_checkpoint: {
+          teamId: payload.teamId,
+          checkpoint: 2,
+        },
+      },
+      update: {
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+      create: {
+        teamId: payload.teamId,
+        checkpoint: 2,
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+    });
+
+    const emptyRoom = await prisma.round1Room.findFirst({
+      where: {
+        teams: {
+          none: {},
+        },
+      },
+    })
+
+    const t3 = prisma.team.update({
+      where: {id: payload.teamId},
+      data: {
+        round1Room: {
+          connect: {
+            name: "001",
+          },
+        },
+      },
+      select: {round1Room: true},
+    });
+
+    const [user, checkpoint, round1Room] = await prisma.$transaction([t1, t2, t3]);
+    return {
+      username: user.username,
+      round1Room,
+      password,
+      checkpoint,
+    }
+  }
+
+  async updateTeamCheckpoint3(data: { teamId: string }) {
+    const { teamId } = data;
+    return prisma.teamCheckpoint.upsert({
+      where: {
+        teamId_checkpoint: {
+          teamId,
+          checkpoint: 1,
+        },
+      },
+      update: {
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+      create: {
+        teamId,
+        checkpoint: 1,
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+    });
+  }
+
+  // Get team checkpoints
+  async getTeamCheckpoints(teamId: string) {
+    return prisma.teamCheckpoint.findMany({
+      where: {teamId},
+      orderBy: {checkpoint: "asc"},
+    });
+  }
+
+  async getAllJudges() {
+    return prisma.judge.findMany({
+      include: {
+        user: {select: {id: true, username: true, role: true}},
+      }
+    });
+  }
+
+  async getAllMentors() {
+    return prisma.mentor.findMany({
+      include: {
+        user: {select: {id: true, username: true, role: true}},
+        mentorshipQueue: {
+          include: {
+            team: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      }
     });
   }
 }

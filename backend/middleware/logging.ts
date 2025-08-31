@@ -10,9 +10,10 @@ export const logActivity = (action: string) => {
       // Log the activity
       await prisma.activityLog.create({
         data: {
-          userId: req.user?.userId || null,
+          userId: req.user?.id || null,
           action,
           details: `${req.method} ${req.originalUrl}`,
+          payload: JSON.stringify(req.body || {}),
           ipAddress: req.ip,
           userAgent: req.get("User-Agent") || null,
         },
@@ -25,14 +26,13 @@ export const logActivity = (action: string) => {
 };
 
 export const logError = (error: any, req: Request, res: Response, next: NextFunction) => {
-  console.error("API Error:", {
-    error: error.message,
-    stack: error.stack,
+  console.error({
     url: req.originalUrl,
     method: req.method,
     ip: req.ip,
     userAgent: req.get("User-Agent"),
   });
+  console.error(error);
 
   res.status(500).json({
     error: "Internal server error",

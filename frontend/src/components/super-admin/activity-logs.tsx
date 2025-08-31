@@ -1,126 +1,140 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { FileText, Search, Filter, Download, RefreshCw } from "lucide-react"
-import { apiService } from "@/lib/service"
-import { useToast } from "@/hooks/use-toast"
-import type { LogEntry, LogFilter } from "@/lib/types"
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Download, FileText, Filter, RefreshCw, Search } from "lucide-react";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
+import type { LogEntry, LogFilter } from "@/lib/types";
 
 interface ActivityLogsProps {
-  logs: LogEntry[]
-  onRefresh: () => void
+  logs: LogEntry[];
+  onRefreshAction: () => void;
 }
 
-export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps) {
-  const [logs, setLogs] = useState<LogEntry[]>(initialLogs)
-  const [filteredLogs, setFilteredLogs] = useState<LogEntry[]>(initialLogs)
+export function ActivityLogs({
+  logs: initialLogs,
+  onRefreshAction,
+}: ActivityLogsProps) {
+  const [logs, setLogs] = useState<LogEntry[]>(initialLogs);
+  const [filteredLogs, setFilteredLogs] = useState<LogEntry[]>(initialLogs);
   const [filters, setFilters] = useState<LogFilter>({
     action: "all",
     user: "all",
-    dateFrom: "",
-    dateTo: "",
     search: "",
-  })
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   // Get unique actions and users for filter dropdowns
-  const uniqueActions = Array.from(new Set(logs.map((log) => log.action)))
-  const uniqueUsers = Array.from(new Set(logs.map((log) => log.user)))
+  const uniqueActions = Array.from(new Set(logs.map((log) => log.action)));
+  const uniqueUsers = Array.from(new Set(logs.map((log) => log.user.username)));
 
   useEffect(() => {
-    setLogs(initialLogs)
-    setFilteredLogs(initialLogs)
-  }, [initialLogs])
+    setLogs(initialLogs);
+    setFilteredLogs(initialLogs);
+  }, [initialLogs]);
 
   useEffect(() => {
-    applyFilters()
-  }, [filters, logs])
+    applyFilters();
+  }, [filters, logs]);
 
   const applyFilters = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       // If any filters are applied, fetch from API
-      const hasFilters = Object.values(filters).some((value) => value && value.trim() !== "")
+      const hasFilters = Object.values(filters).some(
+        (value) => value && value.trim() !== "",
+      );
 
       if (hasFilters) {
-        const filteredData = await apiService.getFilteredLogs(filters)
-        setFilteredLogs(filteredData)
+        const filteredData = await apiService.getFilteredLogs(filters);
+        setFilteredLogs(filteredData);
       } else {
         // No filters, show all logs
-        setFilteredLogs(logs)
+        setFilteredLogs(logs);
       }
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to filter logs",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleFilterChange = (key: keyof LogFilter, value: string) => {
     setFilters((prev) => ({
       ...prev,
       [key]: value,
-    }))
-  }
+    }));
+  };
 
   const clearFilters = () => {
     setFilters({
       action: "all",
       user: "all",
-      dateFrom: "",
-      dateTo: "",
       search: "",
-    })
-  }
+    });
+  };
 
   const exportLogs = () => {
     const csvContent = [
-      ["Timestamp", "Action", "User", "Target", "Details"].join(","),
+      ["Timestamp", "Action", "Username", "Role"].join(","),
       ...filteredLogs.map((log) =>
         [
-          log.timestamp,
+          log.createdAt,
           log.action,
-          log.user,
-          log.target,
-          log.details.replace(/,/g, ";"), // Replace commas to avoid CSV issues
+          log.user.username,
+          log.user.role,
         ].join(","),
       ),
-    ].join("\n")
+    ].join("\n");
 
-    const blob = new Blob([csvContent], { type: "text/csv" })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `activity-logs-${new Date().toISOString().split("T")[0]}.csv`
-    a.click()
-    window.URL.revokeObjectURL(url)
-  }
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `activity-logs-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
 
   const getActionColor = (action: string) => {
     const colors: { [key: string]: string } = {
-      "Password Reset": "bg-yellow-500",
-      "PS Selection": "bg-blue-500",
-      "PS Locked": "bg-red-500",
-      "PS Unlocked": "bg-green-500",
-      "Judge Scoring": "bg-purple-500",
-      "Mentor Booking": "bg-indigo-500",
-      "Team Creation": "bg-emerald-500",
-      "User Login": "bg-gray-500",
-      "User Logout": "bg-gray-400",
-    }
-    return colors[action] || "bg-slate-500"
-  }
+      TOGGLE_PS_LOCK: "bg-yellow-500",
+      TOGGLE_MENTORSHIP_LOCK: "bg-yellow-500",
+      TOGGLE_USER_STATUS: "bg-blue-500",
+      RESET_PASSWORD: "bg-red-500",
+      DELETE_USER: "bg-red-500",
+      REMOVE_TEAM_JUDGE_MAPPING: "bg-orange-500",
+      MAP_TEAM_TO_JUDGE: "bg-green-500",
+      CREATE_USER: "bg-purple-500",
+      CREATE_ANNOUNCEMENT: "bg-indigo-500",
+      UPDATE_PROBLEM_STATEMENT: "bg-emerald-500",
+    };
+    return colors[action] || "bg-slate-500";
+  };
 
   return (
     <div className="space-y-6">
@@ -128,11 +142,11 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
         <h2 className="text-2xl font-bold">Activity Logs</h2>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={exportLogs}>
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="mr-2 h-4 w-4" />
             Export CSV
           </Button>
-          <Button variant="outline" size="sm" onClick={onRefresh}>
-            <RefreshCw className="h-4 w-4 mr-2" />
+          <Button variant="outline" size="sm" onClick={onRefreshAction}>
+            <RefreshCw className="mr-2 h-4 w-4" />
             Refresh
           </Button>
         </div>
@@ -145,14 +159,16 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
             <Filter className="h-5 w-5" />
             Filters & Search
           </CardTitle>
-          <CardDescription>Filter logs by action, user, date range, or search terms</CardDescription>
+          <CardDescription>
+            Filter logs by action, user, date range, or search terms
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            <div className="space-y-2">
+          <div className="flex flex-col md:flex-row gap-2">
+            <div className="w-full space-y-2">
               <Label htmlFor="search">Search</Label>
               <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-slate-400" />
+                <Search className="absolute top-2.5 left-2 h-4 w-4 text-slate-400" />
                 <Input
                   id="search"
                   placeholder="Search logs..."
@@ -165,7 +181,10 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
 
             <div className="space-y-2">
               <Label htmlFor="action-filter">Action</Label>
-              <Select value={filters.action} onValueChange={(value) => handleFilterChange("action", value)}>
+              <Select
+                value={filters.action}
+                onValueChange={(value) => handleFilterChange("action", value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All Actions" />
                 </SelectTrigger>
@@ -182,7 +201,10 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
 
             <div className="space-y-2">
               <Label htmlFor="user-filter">User</Label>
-              <Select value={filters.user} onValueChange={(value) => handleFilterChange("user", value)}>
+              <Select
+                value={filters.user}
+                onValueChange={(value) => handleFilterChange("user", value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="All Users" />
                 </SelectTrigger>
@@ -196,29 +218,9 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
                 </SelectContent>
               </Select>
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="date-from">From Date</Label>
-              <Input
-                id="date-from"
-                type="date"
-                value={filters.dateFrom}
-                onChange={(e) => handleFilterChange("dateFrom", e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="date-to">To Date</Label>
-              <Input
-                id="date-to"
-                type="date"
-                value={filters.dateTo}
-                onChange={(e) => handleFilterChange("dateTo", e.target.value)}
-              />
-            </div>
           </div>
 
-          <div className="flex items-center gap-2 mt-4">
+          <div className="mt-4 flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={clearFilters}>
               Clear Filters
             </Button>
@@ -237,31 +239,47 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
             Activity Logs
             {isLoading && <RefreshCw className="h-4 w-4 animate-spin" />}
           </CardTitle>
-          <CardDescription>Complete system activity and audit trail</CardDescription>
+          <CardDescription>
+            Complete system activity and audit trail
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3 max-h-96 overflow-y-auto">
+          <div className="max-h-96 space-y-3 overflow-y-auto">
             {filteredLogs.length > 0 ? (
               filteredLogs.map((log) => (
-                <div key={log.id} className="p-4 border rounded-lg hover:bg-slate-50">
-                  <div className="flex items-center justify-between mb-2">
+                <div
+                  key={log.id}
+                  className="rounded-lg border p-4 hover:bg-slate-50"
+                >
+                  <div className="mb-2 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Badge className={`${getActionColor(log.action)} text-white`}>{log.action}</Badge>
-                      <span className="text-sm font-medium">{log.user}</span>
+                      <Badge
+                        className={`${getActionColor(log.action)} text-white`}
+                      >
+                        {log.action}
+                      </Badge>
+                      <span className="text-sm font-medium">By: {log.user.username}</span>
+                      <span className="text-xs text-slate-500 font-medium">@ {log.details}</span>
                     </div>
-                    <span className="text-xs text-slate-500">{log.timestamp}</span>
+                    <span className="text-xs text-slate-500">
+                      {log.createdAt}
+                    </span>
                   </div>
-                  <p className="text-sm text-slate-600 mb-1">
-                    <strong>Target:</strong> {log.target}
-                  </p>
-                  <p className="text-sm text-slate-500">{log.details}</p>
+                  <p className="text-sm text-slate-500">{log.payload}</p>
                 </div>
               ))
             ) : (
-              <div className="text-center py-8">
-                <FileText className="h-12 w-12 mx-auto text-slate-300 mb-4" />
-                <p className="text-slate-500">No logs found matching the current filters</p>
-                <Button variant="outline" size="sm" className="mt-2 bg-transparent" onClick={clearFilters}>
+              <div className="py-8 text-center">
+                <FileText className="mx-auto mb-4 h-12 w-12 text-slate-300" />
+                <p className="text-slate-500">
+                  No logs found matching the current filters
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 bg-transparent"
+                  onClick={clearFilters}
+                >
                   Clear Filters
                 </Button>
               </div>
@@ -270,5 +288,5 @@ export function ActivityLogs({ logs: initialLogs, onRefresh }: ActivityLogsProps
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

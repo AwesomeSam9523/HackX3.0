@@ -11,22 +11,22 @@ const router = Router();
 router.use(requireMentor);
 
 // Get mentor profile
-router.get("/profile", async (req: AuthRequest, res) => {
+router.get("/profile", async (req: AuthRequest, res, next) => {
   try {
-    const profile = await mentorService.getMentorProfile(req.user!.userId);
+    const profile = await mentorService.getMentorProfile(req.user!.id);
     res.json(profile);
   } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    next(error)
   }
 });
 
 // Get mentor queue
-router.get("/queue", async (req: AuthRequest, res) => {
+router.get("/queue", async (req: AuthRequest, res, next) => {
   try {
-    const queue = await mentorService.getMentorQueue(req.user!.userId);
+    const queue = await mentorService.getMentorQueue(req.user!.id);
     res.json(queue);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error)
   }
 });
 
@@ -35,133 +35,134 @@ router.post(
   "/availability",
   modifyLimiter,
   logActivity("UPDATE_MENTOR_AVAILABILITY"),
-  async (req: AuthRequest, res) => {
+  async (req: AuthRequest, res, next) => {
     try {
       const { isAvailable } = req.body;
-      const mentor = await mentorService.updateAvailability(req.user!.userId, isAvailable);
+      const mentor = await mentorService.updateAvailability(req.user!.id, isAvailable);
       res.json(mentor);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      next(error)
     }
   },
 );
 
 // Update meet link
-router.post("/meet-link", modifyLimiter, logActivity("UPDATE_MEET_LINK"), async (req: AuthRequest, res) => {
+router.post("/meet-link", modifyLimiter, logActivity("UPDATE_MEET_LINK"), async (req: AuthRequest, res, next) => {
   try {
     const { meetLink } = req.body;
-    const mentor = await mentorService.updateMeetLink(req.user!.userId, meetLink);
+    const mentor = await mentorService.updateMeetLink(req.user!.id, meetLink);
     res.json(mentor);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    next(error)
   }
 });
 
 // Start mentorship session
 router.post(
-  "/queue/:queueItemId/start",
+  "/queue/start",
   modifyLimiter,
   logActivity("START_MENTORSHIP_SESSION"),
-  async (req: AuthRequest, res) => {
+  async (req: AuthRequest, res, next) => {
     try {
-      const session = await mentorService.startMentorshipSession(req.user!.userId, req.params.queueItemId);
+      const { queueItemId } = req.body;
+      const session = await mentorService.startMentorshipSession(req.user!.id, queueItemId);
       res.json(session);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      next(error)
     }
   },
 );
 
 // Resolve mentorship session
 router.post(
-  "/queue/:queueItemId/resolve",
+  "/queue/resolve",
   modifyLimiter,
   logActivity("RESOLVE_MENTORSHIP_SESSION"),
-  async (req: AuthRequest, res) => {
+  async (req: AuthRequest, res, next) => {
     try {
-      const { notes } = req.body;
-      const session = await mentorService.resolveMentorshipSession(req.user!.userId, req.params.queueItemId, notes);
+      const { queueItemId, notes } = req.body;
+      const session = await mentorService.resolveMentorshipSession(req.user!.id, queueItemId, notes);
       res.json(session);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      next(error)
     }
   },
 );
 
 // Cancel mentorship session
 router.post(
-  "/queue/:queueItemId/cancel",
+  "/queue/cancel",
   modifyLimiter,
   logActivity("CANCEL_MENTORSHIP_SESSION"),
-  async (req: AuthRequest, res) => {
+  async (req: AuthRequest, res, next) => {
     try {
-      const { reason } = req.body;
-      const session = await mentorService.cancelMentorshipSession(req.user!.userId, req.params.queueItemId, reason);
+      const { queueItemId, reason } = req.body;
+      const session = await mentorService.cancelMentorshipSession(req.user!.id, queueItemId, reason);
       res.json(session);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      next(error)
     }
   },
 );
 
 // Get mentorship history
-router.get("/history", async (req: AuthRequest, res) => {
+router.get("/history", async (req: AuthRequest, res, next) => {
   try {
-    const history = await mentorService.getMentorshipHistory(req.user!.userId);
+    const history = await mentorService.getMentorshipHistory(req.user!.id);
     res.json(history);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error)
   }
 });
 
 // Update mentor profile
-router.put("/profile", modifyLimiter, logActivity("UPDATE_MENTOR_PROFILE"), async (req: AuthRequest, res) => {
+router.put("/profile", modifyLimiter, logActivity("UPDATE_MENTOR_PROFILE"), async (req: AuthRequest, res, next) => {
   try {
-    const mentor = await mentorService.updateMentorProfile(req.user!.userId, req.body);
+    const mentor = await mentorService.updateMentorProfile(req.user!.id, req.body);
     res.json(mentor);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    next(error)
   }
 });
 
 // Get announcements
-router.get("/announcements", async (req, res) => {
+router.get("/announcements", async (req: AuthRequest, res, next) => {
   try {
     const announcements = await mentorService.getAnnouncements();
     res.json(announcements);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error)
   }
 });
 
 // Get all mentors (for reference)
-router.get("/all", async (req, res) => {
+router.get("/all", async (req: AuthRequest, res, next) => {
   try {
     const mentors = await mentorService.getAllMentors();
     res.json(mentors);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error)
   }
 });
 
 // Get available mentors for booking
-router.get("/available", async (req, res) => {
+router.get("/available", async (req: AuthRequest, res, next) => {
   try {
     const mentors = await mentorService.getAvailableMentors();
     res.json(mentors);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    next(error)
   }
 });
 
 // Book mentorship session (accessible by participants)
-router.post("/book", modifyLimiter, logActivity("BOOK_MENTORSHIP_SESSION"), async (req, res) => {
+router.post("/book", modifyLimiter, logActivity("BOOK_MENTORSHIP_SESSION"), async (req: AuthRequest, res, next) => {
   try {
     const { teamId, mentorId, query } = req.body;
     const session = await mentorService.bookMentorshipSession(teamId, mentorId, query);
     res.status(201).json(session);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    next(error)
   }
 });
 

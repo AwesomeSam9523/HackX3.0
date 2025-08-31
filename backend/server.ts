@@ -15,13 +15,13 @@ import superAdminRoutes from "./routes/superAdmin";
 import adminRoutes from "./routes/admin";
 import judgeRoutes from "./routes/judge";
 import mentorRoutes from "./routes/mentor";
-import participantRoutes from "./routes/participant";
+import teamRoutes from "./routes/team";
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4000;
 const prisma = new PrismaClient();
 
 // Security middleware
@@ -51,7 +51,7 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 // Rate limiting
-app.use("/api", apiLimiter);
+// app.use("/api", apiLimiter);
 
 // Health check endpoint
 app.get("/health", (req, res) => {
@@ -68,70 +68,7 @@ app.use("/api/super-admin", superAdminRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/judges", judgeRoutes);
 app.use("/api/mentors", mentorRoutes);
-app.use("/api/participants", participantRoutes);
-
-// Generic routes for shared resources
-app.use(
-  "/api",
-  express
-    .Router()
-    .get("/announcements", async (req, res) => {
-      try {
-        const announcements = await prisma.announcement.findMany({
-          include: {
-            author: {
-              select: {username: true, role: true},
-            },
-          },
-          orderBy: {createdAt: "desc"},
-          take: 50,
-        });
-        res.json(announcements);
-      } catch (error: any) {
-        res.status(500).json({error: error.message});
-      }
-    })
-    .get("/domains", async (req, res) => {
-      try {
-        const domains = await prisma.domain.findMany({
-          include: {
-            problemStatements: {
-              include: {
-                _count: {
-                  select: {teams: true},
-                },
-              },
-            },
-          },
-          orderBy: {name: "asc"},
-        });
-        res.json(domains);
-      } catch (error: any) {
-        res.status(500).json({error: error.message});
-      }
-    })
-    .get("/teams", async (req, res) => {
-      try {
-        const teams = await prisma.team.findMany({
-          select: {
-            id: true,
-            name: true,
-            teamId: true,
-            status: true,
-            submissionStatus: true,
-            roomNumber: true,
-            problemStatement: {
-              include: {domain: true},
-            },
-          },
-          orderBy: {createdAt: "desc"},
-        });
-        res.json(teams);
-      } catch (error: any) {
-        res.status(500).json({error: error.message});
-      }
-    }),
-);
+app.use("/api/teams", teamRoutes);
 
 // 404 handler
 app.use("*", (req, res) => {

@@ -1,67 +1,97 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Search, Filter, Eye, CheckCircle, Clock, Github, FileText, Trophy } from "lucide-react"
-import type { Team, Judge } from "@/lib/types"
+import { useMemo, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  CheckCircle,
+  Clock,
+  Eye,
+  FileText,
+  Filter,
+  Github,
+  Search,
+  Trophy,
+} from "lucide-react";
+import type { Judge, Team } from "@/lib/types";
 
 interface TeamPageProps {
-  teams: Team[]
-  judges: Judge[]
+  teams: Team[];
+  judges: Judge[];
 }
 
 export function TeamPage({ teams, judges }: TeamPageProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState<string>("all")
-  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
-  const [isTeamDialogOpen, setIsTeamDialogOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+  const [isTeamDialogOpen, setIsTeamDialogOpen] = useState(false);
 
   // Filter teams based on search and filters
   const filteredTeams = useMemo(() => {
     return teams.filter((team) => {
-      const matchesSearch = team.teamName.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesStatus = statusFilter === "all" || team.judgementStatus === statusFilter
+      const matchesSearch = team.name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      const matchesStatus =
+        statusFilter === "all" || team.status === statusFilter;
 
-      return matchesSearch && matchesStatus
-    })
-  }, [teams, searchTerm, statusFilter])
+      return matchesSearch && matchesStatus;
+    });
+  }, [teams, searchTerm, statusFilter]);
 
   const getJudgeName = (teamId: string) => {
     if (!judges || judges.length === 0) {
-      return "Not Assigned"
+      return "Not Assigned";
     }
     // Mock logic to find judge assigned to team
-    const judgeIndex = teams.findIndex((t) => t.id === teamId) % judges.length
-    return judges[judgeIndex]?.name || "Not Assigned"
-  }
+    const judgeIndex = teams.findIndex((t) => t.id === teamId) % judges.length;
+    return judges[judgeIndex]?.user.username || "Not Assigned";
+  };
 
   const getTeamScore = (teamId: string) => {
     // Mock scoring logic
-    const scores = { t1: 8.5, t2: 7.8, t3: 9.2, t4: 6.9 }
-    return scores[teamId as keyof typeof scores] || 0
-  }
+    const scores = { t1: 8.5, t2: 7.8, t3: 9.2, t4: 6.9 };
+    return `${scores[teamId as keyof typeof scores] || 0}/10`;
+  };
 
   const getJudgingTime = (teamId: string) => {
     // Mock judging time
-    const times = { t1: "14:30", t2: "15:15", t3: "16:00", t4: "Not judged" }
-    return times[teamId as keyof typeof times] || "Not judged"
-  }
+    const times = { t1: "14:30", t2: "15:15", t3: "16:00", t4: "Not judged" };
+    return times[teamId as keyof typeof times] || "Not judged";
+  };
 
   const viewTeamDetails = (team: Team) => {
-    setSelectedTeam(team)
-    setIsTeamDialogOpen(true)
-  }
+    setSelectedTeam(team);
+    setIsTeamDialogOpen(true);
+  };
 
   const clearFilters = () => {
-    setSearchTerm("")
-    setStatusFilter("all")
-  }
+    setSearchTerm("");
+    setStatusFilter("all");
+  };
 
   if (!teams || !judges) {
     return (
@@ -72,7 +102,7 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -80,7 +110,9 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Team Management</h2>
-          <p className="text-slate-600">View team status, scores, submissions, and judging details</p>
+          <p className="text-slate-600">
+            View team status, scores, submissions, and judging details
+          </p>
         </div>
       </div>
 
@@ -94,11 +126,11 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
           <CardDescription>Filter teams by name or status</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
+          <div className="flex w-full flex-col gap-2 md:flex-row">
+            <div className="w-full space-y-2">
               <Label>Search Teams</Label>
               <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-slate-400" />
+                <Search className="absolute top-2.5 left-2 h-4 w-4 text-slate-400" />
                 <Input
                   placeholder="Search by team name..."
                   value={searchTerm}
@@ -115,21 +147,30 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
+                  <SelectItem value="REGISTERED">Registered</SelectItem>
+                  <SelectItem value="PROBLEM_SELECTED">PS Selected</SelectItem>
+                  <SelectItem value="ROUND1_SUBMITTED">R1 Submitted</SelectItem>
+                  <SelectItem value="ROUND1_QUALIFIED">R1 Qualified</SelectItem>
+                  <SelectItem value="ROUND2_SUBMITTED">R2 Submitted</SelectItem>
+                  <SelectItem value="ELIMINATED">Eliminated</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
               <Label>Actions</Label>
-              <Button variant="outline" onClick={clearFilters} className="w-full bg-transparent">
+              <Button
+                variant="outline"
+                onClick={clearFilters}
+                className="w-full bg-transparent"
+              >
                 Clear Filters
               </Button>
             </div>
           </div>
           <div className="mt-4">
-            <Badge variant="outline">Showing {filteredTeams.length} teams</Badge>
+            <Badge variant="outline">
+              Showing {filteredTeams.length} teams
+            </Badge>
           </div>
         </CardContent>
       </Card>
@@ -141,37 +182,43 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
             <Trophy className="h-5 w-5" />
             All Teams
           </CardTitle>
-          <CardDescription>Complete team overview with scores and submission status</CardDescription>
+          <CardDescription>
+            Complete team overview with scores and submission status
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {filteredTeams.map((team) => {
-              const score = getTeamScore(team.id)
-              const judgingTime = getJudgingTime(team.id)
-              const judgeName = getJudgeName(team.id)
-              const isJudged = team.judgementStatus === "Completed"
+              const score = getTeamScore(team.id);
+              const judgingTime = getJudgingTime(team.id);
+              const judgeName = getJudgeName(team.id);
+              const isJudged = team.judgementStatus === "Completed";
 
               return (
-                <Card key={team.id} className={`border-l-4 ${isJudged ? "border-l-green-500" : "border-l-orange-500"}`}>
+                <Card
+                  key={team.id}
+                  className={`border-l-4 ${isJudged ? "border-l-green-500" : "border-l-orange-500"}`}
+                >
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-lg flex items-center gap-2">
-                          {team.teamName}
+                        <CardTitle className="flex items-center gap-2 text-lg">
+                          {team.name}
                           {isJudged ? (
                             <Badge variant="default">
-                              <CheckCircle className="h-3 w-3 mr-1" />
+                              <CheckCircle className="mr-1 h-3 w-3" />
                               Judged
                             </Badge>
                           ) : (
                             <Badge variant="secondary">
-                              <Clock className="h-3 w-3 mr-1" />
+                              <Clock className="mr-1 h-3 w-3" />
                               Pending
                             </Badge>
                           )}
                         </CardTitle>
                         <CardDescription className="mt-1">
-                          PS: {team.problemStatement} • Room: {team.roomNumber}
+                          PS: {team.problemStatement.title} • Room:{" "}
+                          {team.roomNumber}
                         </CardDescription>
                       </div>
                       <div className="text-right">
@@ -196,9 +243,11 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                   <CardContent className="pt-0">
                     <div className="space-y-3">
                       {/* Team Stats */}
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-blue-600">{isJudged ? score : "N/A"}</div>
+                          <div className="text-2xl font-bold text-blue-600">
+                            {isJudged ? score : "N/A"}
+                          </div>
                           <p className="text-xs text-slate-500">Score</p>
                         </div>
                         <div className="text-center">
@@ -206,54 +255,70 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                           <p className="text-xs text-slate-500">Judge</p>
                         </div>
                         <div className="text-center">
-                          <div className="text-sm font-medium">{judgingTime}</div>
+                          <div className="text-sm font-medium">
+                            {judgingTime}
+                          </div>
                           <p className="text-xs text-slate-500">Judged At</p>
                         </div>
                         <div className="text-center">
-                          <div className="text-sm font-medium">{team.round2Status || "Not Selected"}</div>
-                          <p className="text-xs text-slate-500">Round 2</p>
+                          <div className="text-sm font-medium">
+                            {team.status}
+                          </div>
+                          <p className="text-xs text-slate-500">Team Status</p>
                         </div>
                       </div>
 
                       {/* Submission Links */}
                       <div className="flex gap-2">
-                        {team.githubLink ? (
-                          <Button size="sm" variant="outline" onClick={() => window.open(team.githubLink, "_blank")}>
-                            <Github className="h-4 w-4 mr-2" />
+                        {team.githubRepo ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() =>
+                              window.open(team.githubRepo, "_blank")
+                            }
+                          >
+                            <Github className="mr-2 h-4 w-4" />
                             GitHub
                           </Button>
                         ) : (
                           <Button size="sm" variant="outline" disabled>
-                            <Github className="h-4 w-4 mr-2" />
+                            <Github className="mr-2 h-4 w-4" />
                             No GitHub
                           </Button>
                         )}
 
-                        {team.presentationLink ? (
+                        {team.presentationLink !== null ? (
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => window.open(team.presentationLink, "_blank")}
+                            onClick={() =>
+                              window.open(team.presentationLink, "_blank")
+                            }
                           >
-                            <FileText className="h-4 w-4 mr-2" />
+                            <FileText className="mr-2 h-4 w-4" />
                             Presentation
                           </Button>
                         ) : (
                           <Button size="sm" variant="outline" disabled>
-                            <FileText className="h-4 w-4 mr-2" />
+                            <FileText className="mr-2 h-4 w-4" />
                             No Presentation
                           </Button>
                         )}
 
-                        <Button size="sm" variant="outline" onClick={() => viewTeamDetails(team)}>
-                          <Eye className="h-4 w-4 mr-2" />
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => viewTeamDetails(team)}
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
                           View Details
                         </Button>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-              )
+              );
             })}
           </div>
         </CardContent>
@@ -261,39 +326,49 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
 
       {/* Team Details Dialog */}
       <Dialog open={isTeamDialogOpen} onOpenChange={setIsTeamDialogOpen}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-5xl">
           <DialogHeader>
-            <DialogTitle>Team Details: {selectedTeam?.teamName}</DialogTitle>
-            <DialogDescription>Complete team information and evaluation details</DialogDescription>
+            <DialogTitle>Team Details: {selectedTeam?.name}</DialogTitle>
+            <DialogDescription>
+              Complete team information and evaluation details
+            </DialogDescription>
           </DialogHeader>
           {selectedTeam && (
             <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg">Team Information</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-2">
+                  <CardContent className="space-y-2 text-sm font-medium *:space-y-1">
                     <div>
-                      <Label className="text-sm font-medium">Team Name:</Label>
-                      <p>{selectedTeam.teamName}</p>
+                      <Label className="font-bold">Team Name:</Label>
+                      <p>{selectedTeam.name}</p>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Problem Statement:</Label>
-                      <p>{selectedTeam.problemStatement}</p>
+                      <Label className="font-bold">Problem Statement:</Label>
+                      <p>{selectedTeam.problemStatement.title}</p>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Room Number:</Label>
+                      <Label className="font-bold">Room Number:</Label>
                       <p>{selectedTeam.roomNumber}</p>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Team Members:</Label>
-                      <div className="flex flex-wrap gap-1 mt-1">
+                      <Label className="font-bold">Team Members:</Label>
+                      <div className="mt-1 flex flex-wrap gap-1">
                         {selectedTeam.members?.map((member, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-xs"
+                          >
                             {member}
                           </Badge>
-                        )) || <span className="text-sm text-slate-500">No members listed</span>}
+                        )) || (
+                          <span className="text-sm text-slate-500">
+                            No members listed
+                          </span>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -303,27 +378,26 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                   <CardHeader>
                     <CardTitle className="text-lg">Evaluation Status</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-2">
+                  <CardContent className="space-y-2 text-sm font-medium *:space-y-1">
                     <div>
-                      <Label className="text-sm font-medium">Judge:</Label>
+                      <Label className="font-bold">Judge:</Label>
                       <p>{getJudgeName(selectedTeam.id)}</p>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Score:</Label>
-                      <p className="text-2xl font-bold text-blue-600">
-                        {selectedTeam.judgementStatus === "Completed" ? getTeamScore(selectedTeam.id) : "Not judged"}
-                        /10
+                      <Label className="font-bold">Score:</Label>
+                      <p>
+                        {selectedTeam.judgementStatus === "Completed"
+                          ? getTeamScore(selectedTeam.id)
+                          : "Not judged"}
                       </p>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Judging Time:</Label>
+                      <Label className="font-bold">Judging Time:</Label>
                       <p>{getJudgingTime(selectedTeam.id)}</p>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium">Round 2 Status:</Label>
-                      <Badge variant={selectedTeam.round2Status === "Selected" ? "default" : "secondary"}>
-                        {selectedTeam.round2Status || "Not Selected"}
-                      </Badge>
+                      <Label className="font-bold">Status:</Label>
+                      <p>{selectedTeam.status || "Not Selected"}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -337,13 +411,15 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <span>GitHub Repository:</span>
-                      {selectedTeam.githubLink ? (
+                      {selectedTeam.githubRepo ? (
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => window.open(selectedTeam.githubLink!, "_blank")}
+                          onClick={() =>
+                            window.open(selectedTeam?.githubRepo, "_blank")
+                          }
                         >
-                          <Github className="h-4 w-4 mr-2" />
+                          <Github className="mr-2 h-4 w-4" />
                           View Repository
                         </Button>
                       ) : (
@@ -356,9 +432,14 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => window.open(selectedTeam.presentationLink!, "_blank")}
+                          onClick={() =>
+                            window.open(
+                              selectedTeam.presentationLink!,
+                              "_blank",
+                            )
+                          }
                         >
-                          <FileText className="h-4 w-4 mr-2" />
+                          <FileText className="mr-2 h-4 w-4" />
                           View Presentation
                         </Button>
                       ) : (
@@ -392,13 +473,15 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
       </Dialog>
 
       {/* Summary Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm">Total Teams</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">{teams.length}</div>
+            <div className="text-2xl font-bold text-blue-600">
+              {teams.length}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -433,5 +516,5 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
         </Card>
       </div>
     </div>
-  )
+  );
 }

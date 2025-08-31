@@ -3,6 +3,30 @@ import { hashPassword } from "../utils/password";
 
 const prisma = new PrismaClient();
 
+async function rooms() {
+  const data: { name: string; capacity: number }[] = [];
+  const floors = [0, 1, 2, 3];
+
+  floors.forEach(floor => {
+    for (let room = 1; room <= 30; room++) {
+      const roomNumber = `${floor}${room.toString().padStart(2, '0')}`;
+      const capacity = Math.random() < 0.5 ? 5 : 6;
+
+      data.push({
+        name: roomNumber,
+        capacity: capacity
+      });
+    }
+  });
+
+  await prisma.round1Room.createMany({
+    data,
+    skipDuplicates: true,
+  });
+
+  console.log("✅ Created round 1 rooms");
+}
+
 async function main() {
   console.log("🌱 Starting database seed...");
 
@@ -136,7 +160,6 @@ async function main() {
     create: {
       userId: judgeUser.id,
       expertise: ["Web Development", "Mobile Development"],
-      floor: "Ground Floor",
     },
   });
 
@@ -159,7 +182,6 @@ async function main() {
     create: {
       userId: mentorUser.id,
       expertise: ["React", "Node.js", "Python"],
-      floor: "First Floor",
       meetLink: "https://meet.google.com/sample-link",
     },
   });
@@ -173,7 +195,7 @@ async function main() {
       username: "participant1",
       password: participantPassword,
       email: "participant1@hackathon.com",
-      role: "PARTICIPANT",
+      role: "TEAM",
     },
   });
 
@@ -184,7 +206,7 @@ async function main() {
       username: "participant2",
       password: participantPassword,
       email: "participant2@hackathon.com",
-      role: "PARTICIPANT",
+      role: "TEAM",
     },
   });
 
@@ -263,6 +285,15 @@ async function main() {
 }
 
 main()
+  .catch((e) => {
+    console.error("❌ Seed failed:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+
+rooms()
   .catch((e) => {
     console.error("❌ Seed failed:", e);
     process.exit(1);

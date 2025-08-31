@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -46,24 +46,22 @@ export class MentorService {
       throw new Error("Mentor profile not found");
     }
 
-    const queue = await prisma.mentorshipQueue.findMany({
-      where: { mentorId: mentor.id },
+    return prisma.mentorshipQueue.findMany({
+      where: {mentorId: mentor.id},
       include: {
         team: {
           include: {
             participants: {
-              select: { id: true, username: true, email: true },
+              select: {id: true, username: true, email: true},
             },
             problemStatement: {
-              include: { domain: true },
+              include: {domain: true},
             },
           },
         },
       },
-      orderBy: { createdAt: "asc" },
+      orderBy: {createdAt: "asc"},
     });
-
-    return queue;
   }
 
   // Update mentor availability
@@ -144,10 +142,10 @@ export class MentorService {
       throw new Error("Queue item not found or not assigned to this mentor");
     }
 
-    return prisma.mentorshipQueue.update({
-      where: { id: queueItemId },
-      data: { status: "IN_PROGRESS" },
-    });
+    // return prisma.mentorshipQueue.update({
+    //   where: { id: queueItemId },
+    //   data: { status: "IN_PROGRESS" },
+    // });
   }
 
   // Cancel mentorship session
@@ -220,7 +218,6 @@ export class MentorService {
         resolved: stats.find((s) => s.status === "RESOLVED")?._count.status || 0,
         cancelled: stats.find((s) => s.status === "CANCELLED")?._count.status || 0,
         waiting: stats.find((s) => s.status === "WAITING")?._count.status || 0,
-        inProgress: stats.find((s) => s.status === "IN_PROGRESS")?._count.status || 0,
       },
     };
   }
@@ -251,12 +248,19 @@ export class MentorService {
         _count: {
           select: {
             mentorshipQueue: {
-              where: { status: { in: ["WAITING", "IN_PROGRESS"] } },
+              where: { status: "WAITING" },
             },
           },
         },
       },
-      orderBy: [{ _count: { mentorshipQueue: "asc" } }, { createdAt: "desc" }],
+      orderBy: [
+        {
+          mentorshipQueue: {
+            _count: "asc",
+          },
+        },
+        {createdAt: "desc"},
+      ],
     });
   }
 
@@ -280,7 +284,7 @@ export class MentorService {
       where: {
         teamId,
         mentorId,
-        status: { in: ["WAITING", "IN_PROGRESS"] },
+        status: "WAITING",
       },
     });
 
@@ -333,7 +337,6 @@ export class MentorService {
     userId: string,
     data: {
       expertise?: string[]
-      floor?: string
       meetLink?: string
     },
   ) {
@@ -347,7 +350,10 @@ export class MentorService {
 
     return prisma.mentor.update({
       where: { id: mentor.id },
-      data,
+      data: {
+        expertise: data.expertise,
+        meetLink: data.meetLink,
+      },
     });
   }
 }
