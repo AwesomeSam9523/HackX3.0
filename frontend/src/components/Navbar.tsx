@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
       alt: "Gallery",
       label: "Gallery",
       path: "/gallery",
-      darkIcon: "gallery.svg",
+      darkIcon: "galleryDark.svg",
     },
     {
       icon: "contact.svg",
@@ -118,7 +118,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 transition-all duration-500 ease-in-out md:hidden ${
+        className={`fixed inset-0 z-40 backdrop-blur-lg transition-opacity duration-500 ease-in-out md:hidden ${
           isMenuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
       >
         {/* Backdrop - Transparent */}
         <div
-          className="backdrop-transparent absolute inset-0 bg-black/30"
+          className="absolute inset-0 bg-black/30"
           onClick={() => setIsMenuOpen(false)}
         />
 
@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
             isMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="h-full rounded-l-3xl border-t border-b border-l border-white/20 bg-black/20 p-6 shadow-2xl backdrop-blur-md">
+          <div className="h-full rounded-l-3xl border-t border-b border-l border-white/20 bg-black/20 p-6 shadow-2xl">
             {/* Close Button */}
             {/* <div className="flex justify-end mb-8">
               <button 
@@ -149,7 +149,7 @@ const Navbar: React.FC = () => {
             </div> */}
 
             {/* Nav Items */}
-            <div className="mt-8 rounded-4xl bg-white/15 p-4 backdrop-blur-sm">
+            <div className="mt-8 rounded-4xl bg-white/15 p-4">
               <nav className="space-y-2">
                 {sidebarItems.map((item) => {
                   const isActive = pathname === item.path;
