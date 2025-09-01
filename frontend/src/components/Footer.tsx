@@ -117,19 +117,19 @@ const Footer: React.FC = () => {
           <div className="flex flex-1 justify-center">
             <div className="bg-footer flex w-fit items-center rounded-full p-2 backdrop-blur-sm lg:gap-4 lg:px-6 lg:py-4">
               <a
-                href="#"
+                href="https://jaipur.manipal.edu/"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
               >
                 <Target size={24} className="text-offwhite" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/muj.hackx/"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
               >
                 <Instagram size={24} className="text-offwhite" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/company/mujhackx/"
                 className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10"
               >
                 <Image
