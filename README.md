@@ -51,7 +51,6 @@ Made with ❤️ by Team HackX
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion, GSAP
-- **3D Graphics**: Spline Tool
 - **Icons**: Lucide React
 
 

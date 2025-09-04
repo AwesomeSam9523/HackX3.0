@@ -7,6 +7,7 @@ import { GalleryImage } from "../../../types/gallery";
 import { galleryData } from "../../../data/galleryData";
 import Background from "@/components/Background";
 import LightBoxGallery from "@/components/LightBoxGallery";
+import XComponent from "@/components/XComponent";
 
 const Page = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -187,10 +188,11 @@ const Page = () => {
   return (
     <div
       ref={sectionRef}
-      className="text-offwhite relative min-h-screen w-full overflow-hidden"
+      className="text-offwhite relative min-h-screen w-full overflow-hidden bg-[rgba(0,0,0,1)]"
     >
       <Background />
       <Navbar />
+      <XComponent />
       <LightBoxGallery />
       <div className="flex flex-col items-center justify-center gap-5">
         <button className="font-avgardn text-offwhite mt-20 rounded-full border-2 border-white bg-transparent px-4 py-3 text-base font-bold tracking-wider uppercase transition-all duration-300 lg:px-10 lg:text-lg">

@@ -24,7 +24,7 @@ const BecomeAmbassadorBanner = () => {
           </span>
         </h2>{" "}
         {/* top-[1.6rem] right-[3rem] w-[7.5rem] text-[0.7rem] */}
-        <button className="text-offwhite absolute top-[clamp(0.85rem,1.6vw,1.6rem)] right-[clamp(0rem,3.2vw,3.2rem)] w-[clamp(5rem,7.5vw,7.5rem)] self-end rounded-full border-2 border-white px-0 py-1 text-base text-[clamp(0.5rem,0.8vw,0.8rem)] font-bold transition hover:bg-white hover:text-[#181c27] sm:right-[clamp(0rem,2.1vw,2.1rem)] xl:right-[clamp(0rem,3vw,3rem)]">
+        <button className="text-offwhite absolute top-[clamp(0.85rem,1.6vw,1.6rem)] right-[clamp(0rem,3.2vw,3.2rem)] w-[clamp(5rem,7.5vw,7.5rem)] self-end rounded-full border-2 border-white px-0 py-1 text-base text-[clamp(0.5rem,0.8vw,0.8rem)] font-bold transition hover:bg-white hover:text-[#181c27] sm:right-[clamp(0rem,2.1vw,2.1rem)] lg:w-[10rem] lg:px-3 lg:py-2 lg:text-[1rem] xl:right-[clamp(0rem,3vw,3rem)]">
           APPLY NOW!
         </button>
       </div>

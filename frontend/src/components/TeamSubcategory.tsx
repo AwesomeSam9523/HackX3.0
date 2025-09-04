@@ -79,7 +79,7 @@ const TeamSubcategoryComponent: React.FC<TeamSubcategoryProps> = ({
             className="mx-auto flex flex-col flex-wrap items-center justify-center gap-8 md:flex-row"
           >
             {row.map((member) => (
-              <div key={member.id} className="md:w-[22%]">
+              <div key={member.id} className="w-5/6 md:w-[22%]">
                 <TeamMemberCard member={member} />
               </div>
             ))}
