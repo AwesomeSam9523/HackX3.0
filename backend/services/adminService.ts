@@ -509,7 +509,7 @@ export class AdminService {
     const [user, checkpoint, round1Room] = await prisma.$transaction([t1, t2, t3]);
     return {
       username: user.username,
-      round1Room,
+      round1Room: round1Room.round1Room,
       password,
       checkpoint,
     }
@@ -521,7 +521,7 @@ export class AdminService {
       where: {
         teamId_checkpoint: {
           teamId,
-          checkpoint: 1,
+          checkpoint: 3,
         },
       },
       update: {
@@ -530,7 +530,7 @@ export class AdminService {
       },
       create: {
         teamId,
-        checkpoint: 1,
+        checkpoint: 3,
         status: "COMPLETED",
         completedAt: new Date(),
       },

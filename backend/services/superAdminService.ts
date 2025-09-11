@@ -577,8 +577,6 @@ export class SuperAdminService {
       where: {id: mentorId},
     });
 
-    console.log(mentor);
-
     if (!mentor) {
       throw new Error("Mentor not found");
     }

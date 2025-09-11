@@ -19,9 +19,27 @@ export interface Checkpoint2Data {
     id: string;
     name: string;
     block: string;
+    capacity: number;
   };
   checkpoint: Checkpoint;
 }
+
+export interface WebsocketAuthenticated {
+  type: 'authenticated';
+}
+
+export interface WebsocketCheckpoint {
+  type: 'checkpoint';
+  teamId: string;
+  checkpoint: Checkpoint;
+}
+
+export interface WebsocketSubscribe {
+  type: 'subscribed';
+  channel: string;
+}
+
+export type WebsocketData = WebsocketAuthenticated | WebsocketCheckpoint | WebsocketSubscribe;
 
 export interface User extends BaseUser {
   teamId?: string;

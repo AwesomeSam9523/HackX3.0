@@ -36,9 +36,20 @@ import {
   Users,
 } from "lucide-react";
 import { JudgeTeamMappingTab } from "@/components/admin/judge-team-mapping-tab";
-import { Judge, Mentor, ProblemStatement, Team } from "@/lib/types";
+import {
+  Announcement,
+  Checkpoint,
+  Checkpoint2Data,
+  Judge,
+  Mentor,
+  ProblemStatement,
+  Team,
+  WebsocketData,
+} from "@/lib/types";
 import { apiService } from "@/lib/service";
-import { Checkpoint, Checkpoint2Data } from "@/lib/types";
+import { wsService } from "@/lib/ws";
+import { authService } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
 
 function isCheckpointCompleted(team: Team, checkpoint: number) {
   return team.checkpoints.some(
@@ -46,14 +57,44 @@ function isCheckpointCompleted(team: Team, checkpoint: number) {
   );
 }
 
+function ago(dateString: string) {
+  const date = new Date(dateString);
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+
+  const intervals = {
+    year: 31536000,
+    month: 2592000,
+    week: 604800,
+    day: 86400,
+    hour: 3600,
+    minute: 60,
+    second: 1,
+  };
+
+  for (const [unit, value] of Object.entries(intervals)) {
+    const amount = Math.floor(seconds / value);
+    if (amount >= 1) {
+      return amount === 1 ? `${amount} ${unit} ago` : `${amount} ${unit}s ago`;
+    }
+  }
+  return "Just Now";
+}
+
 export default function AdminDashboard() {
-  const [passwordChanged, setPasswordChanged] = useState(true); // Bypass password change logic
+  // const [passwordChanged, setPasswordChanged] = useState(true); // Bypass password change logic
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [announcement, setAnnouncement] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [teamSearch, setTeamSearch] = useState("");
   const [wifiOptIn, setWifiOptIn] = useState(false);
   const [checkpoint1DialogOpen, setCheckpoint1DialogOpen] = useState(false);
-  const [checkpoint2Data, setCheckpoint2Data] = useState({ username: "", password: "", round1Room: "" });
+  const [checkpoint2Data, setCheckpoint2Data] = useState({
+    username: "",
+    password: "",
+    round1Room: "",
+  });
+  const [authenticated, setAuthenticated] = useState(false);
+  const [socket, setSocket] = useState<WebSocket>();
 
   // Mock data with real-time updates
   const [teams, setTeams] = useState<Team[]>([]);
@@ -62,14 +103,14 @@ export default function AdminDashboard() {
   const [problemStatements, setProblemStatements] = useState<
     ProblemStatement[]
   >([]);
+  const { toast } = useToast();
 
   // Add filtered teams logic
   const filteredTeams = teams.filter((team) =>
     team.name.toLowerCase().includes(teamSearch.toLowerCase()),
   );
 
-  const handleCheckpoint1Complete = async (teamId: string, wifi: boolean) => {
-    const checkpoint = await apiService.updateCheckpoint(1, { teamId, wifi }) as Checkpoint;
+  function updateTeamCheckpoint(teamId: string, checkpoint: Checkpoint) {
     setTeams((prev) =>
       prev.map((team) =>
         team.id === teamId
@@ -77,37 +118,97 @@ export default function AdminDashboard() {
           : team,
       ),
     );
+  }
+
+  function updateWebsocketCheckpoint(checkpoint: Checkpoint) {
+    if (!socket) return;
+
+    socket.send(
+      JSON.stringify({
+        type: "checkpoint",
+        checkpoint,
+      }),
+    );
+  }
+
+  const handleCheckpoint1Complete = async (teamId: string, wifi: boolean) => {
+    const checkpoint = (await apiService.updateCheckpoint(1, {
+      teamId,
+      wifi,
+    })) as Checkpoint;
+    updateWebsocketCheckpoint(checkpoint);
+    updateTeamCheckpoint(teamId, checkpoint);
     setCheckpoint1DialogOpen(false);
   };
 
   const handleCheckpoint2Complete = async (teamId: string) => {
-    const { username, password, round1Room, checkpoint } = await apiService.updateCheckpoint(2, { teamId }) as Checkpoint2Data;
-    console.log(username, password, round1Room, checkpoint);
-    setCheckpoint2Data({ username, password, round1Room: round1Room.name });
-    setTeams((prev) =>
-      prev.map((team) =>
-        team.id === teamId
-          ? { ...team, checkpoints: [...team.checkpoints, checkpoint] }
-          : team,
-      ),
-    );
+    const { username, password, round1Room, checkpoint } =
+      (await apiService.updateCheckpoint(2, { teamId })) as Checkpoint2Data;
+    updateWebsocketCheckpoint(checkpoint);
+    setCheckpoint2Data({
+      username,
+      password,
+      round1Room: round1Room.block + "-" + round1Room.name,
+    });
+    updateTeamCheckpoint(teamId, checkpoint);
   };
 
-  const handleCheckpoint3Complete = (teamId: string) => {
-    setTeams((prev) =>
-      prev.map((team) =>
-        team.id === teamId
-          ? { ...team, checkpoint3: true, status: "Complete" }
-          : team,
-      ),
-    );
+  const handleCheckpoint3Complete = async (teamId: string) => {
+    const checkpoint = (await apiService.updateCheckpoint(3, {
+      teamId,
+    })) as Checkpoint;
+    updateWebsocketCheckpoint(checkpoint);
+    updateTeamCheckpoint(teamId, checkpoint);
   };
+
+  async function onWebsocketMessage(ws: WebSocket, ev: MessageEvent) {
+    const data = JSON.parse(ev.data) as WebsocketData;
+    console.log(data);
+    if (data.type === "authenticated") {
+      setAuthenticated(true);
+      ws.send(
+        JSON.stringify({
+          type: "subscribe_checkpoints",
+        }),
+      );
+    }
+
+    if (!authenticated) {
+      return;
+    }
+
+    if (data.type === "checkpoint") {
+      updateTeamCheckpoint(data.teamId, data.checkpoint);
+    } else if (data.type === "subscribed") {
+      toast({
+        title: "Event subscribed!",
+        description: `Updating ${data.channel} in real time`,
+      });
+    }
+  }
+
+  async function handleWebsocket(ws: WebSocket) {
+    setSocket(ws);
+    ws.send(
+      JSON.stringify({
+        type: "authenticate",
+        token: authService.getToken(),
+      }),
+    );
+    ws.onmessage = (data) => onWebsocketMessage(ws, data);
+  }
 
   useEffect(() => {
     apiService.getTeams().then(setTeams);
     apiService.getJudges().then(setJudges);
     apiService.getMentors().then(setMentors);
     apiService.getProblemStatements().then(setProblemStatements);
+    apiService.getAnnouncements().then(setAnnouncements);
+    wsService.connect().then(handleWebsocket);
+
+    return () => {
+      wsService.disconnect();
+    };
   }, []);
 
   const handleResetPassword = (teamId: string) => {
@@ -685,7 +786,7 @@ export default function AdminDashboard() {
                                       Room Number:
                                     </Label>
                                     <p className="font-mono text-sm sm:text-base">
-                                      {checkpoint2Data.roomNumber}
+                                      {checkpoint2Data.round1Room}
                                     </p>
                                   </div>
                                 </div>
@@ -696,9 +797,7 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                             <DialogFooter className="flex-col gap-2 sm:flex-row">
-                              <DialogClose
-                                className="bg-hackx hover:text-hackx hover:border-hackx w-full border-[1px] text-white sm:w-auto"
-                              >
+                              <DialogClose className="bg-hackx hover:text-hackx hover:border-hackx w-full rounded-sm border-[1px] px-3 py-1 text-white hover:bg-white sm:w-auto">
                                 Done
                               </DialogClose>
                             </DialogFooter>
@@ -778,7 +877,7 @@ export default function AdminDashboard() {
                           <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
                             <div>
                               <CardTitle className="text-base sm:text-lg">
-                                {judge.name}
+                                {judge.user.username}
                               </CardTitle>
                               <CardDescription className="text-sm">
                                 {judge.floor}
@@ -993,35 +1092,26 @@ export default function AdminDashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    <div className="rounded-lg border p-3">
-                      <div className="mb-2 flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-                        <h4 className="text-sm font-medium sm:text-base">
-                          Lunch Break
-                        </h4>
-                        <Badge variant="outline" className="w-fit text-xs">
-                          11:30 AM
-                        </Badge>
+                  <div className="space-y-4">
+                    {announcements.map((announcement) => (
+                      // Made announcement cards responsive
+                      <div
+                        key={announcement.id}
+                        className="rounded-lg border p-4"
+                      >
+                        <div className="mb-2 flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                          <h4 className="text-sm font-medium sm:text-base">
+                            {announcement.title}
+                          </h4>
+                          <Badge variant="outline" className="w-fit text-xs">
+                            {ago(announcement.createdAt)}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-slate-600 sm:text-sm">
+                          {announcement.message}
+                        </p>
                       </div>
-                      <p className="text-xs text-slate-600 sm:text-sm">
-                        Lunch will be served from 12:30 PM to 1:30 PM in the
-                        cafeteria.
-                      </p>
-                    </div>
-                    <div className="rounded-lg border p-3">
-                      <div className="mb-2 flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-                        <h4 className="text-sm font-medium sm:text-base">
-                          Mentorship Round
-                        </h4>
-                        <Badge variant="outline" className="w-fit text-xs">
-                          1:00 PM
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-slate-600 sm:text-sm">
-                        Mentorship round will begin at 2:00 PM. Please book your
-                        slots.
-                      </p>
-                    </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>

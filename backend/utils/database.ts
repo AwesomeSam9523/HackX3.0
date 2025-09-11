@@ -1,15 +1,40 @@
-import { PrismaClient } from "@prisma/client";
+import {Prisma, PrismaClient} from "@prisma/client";
 
 // Singleton pattern for Prisma client
 declare global {
   var __prisma: PrismaClient | undefined;
 }
 
-export const prisma =
+const clientOptions = {
+  log: [
+    {
+      emit: 'event',
+      level: 'query',
+    },
+    {
+      emit: 'event',
+      level: 'error',
+    },
+    {
+      emit: 'event',
+      level: 'info',
+    },
+    {
+      emit: 'event',
+      level: 'warn',
+    },
+  ],
+} satisfies Prisma.PrismaClientOptions;
+
+export const prisma: PrismaClient<typeof clientOptions> =
   globalThis.__prisma ||
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["info", "query", "error", "warn"] : ["error"],
-  });
+  new PrismaClient(clientOptions);
+
+prisma.$on('query', (e) => {
+  console.log('Query: ' + e.query)
+  console.log('Params: ' + e.params)
+  console.log('Duration: ' + e.duration + 'ms')
+});
 
 if (process.env.NODE_ENV !== "production") {
   globalThis.__prisma = prisma;

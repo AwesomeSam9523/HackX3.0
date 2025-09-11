@@ -207,7 +207,6 @@ export default function SuperAdminDashboard() {
     const { newMentor, rawPassword } = await apiService.addMentor(
       addMentorDetails as MentorDetails,
     );
-    console.log(newMentor);
     const username = addMentorDetails.name.toLowerCase().replace(/\s+/g, "_");
     setMentors((prev) => [...prev, newMentor]);
     alert(
@@ -220,7 +219,7 @@ export default function SuperAdminDashboard() {
     setMentors((prev) => prev.filter((m) => m.id !== mentorId));
   };
 
-  const handleAddJudge = (judgeData: any) => {
+  const handleAddJudge = (judgeData: unknown) => {
     const newJudge = {
       id: `j${judges.length + 1}`,
       name: judgeData.name,

@@ -209,7 +209,6 @@ export function ProblemStatementManagement({
       setDomains(data);
       const domain = data.find((d) => d.id === formData.domainId);
       if (domain) {
-        console.log('setting', domain);
         setSelectedDomain(domain.name);
       }
     } );
@@ -288,7 +287,6 @@ export function ProblemStatementManagement({
 
   const openEditDialog = (ps: ProblemStatement) => {
     setEditingPS(ps);
-    console.log("open edit dialog", ps);
     setFormData({
       title: ps.title,
       description: ps.description,
