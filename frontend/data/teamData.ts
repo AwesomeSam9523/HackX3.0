@@ -63,7 +63,7 @@ export const teamData: TeamCategory[] = [
           },
           {
             id: "2",
-            name: "Mr. Shishir Singh",
+            name: "Dr. Shishir Singh",
             position: "CONVENER, MUJ",
             image:
               "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
