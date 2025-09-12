@@ -16,7 +16,7 @@ export class SuperAdminService {
           select: {id: true, expertise: true},
         },
         judgeProfile: {
-          select: {id: true, expertise: true},
+          select: {id: true},
         },
       },
       orderBy: {createdAt: "desc"},
@@ -60,9 +60,7 @@ export class SuperAdminService {
         }),
         ...(role === "JUDGE" && {
           judgeProfile: {
-            create: {
-              expertise: expertise || [],
-            },
+            create: {},
           },
         }),
       },
@@ -466,11 +464,6 @@ export class SuperAdminService {
         teams: {
           select: {id: true, name: true, teamId: true},
         },
-        judges: {
-          include: {
-            user: {select: {username: true}},
-          },
-        },
       },
     });
   }
@@ -488,7 +481,7 @@ export class SuperAdminService {
   async assignJudgeToRoom(judgeId: string, roomId: string) {
     return prisma.judge.update({
       where: {id: judgeId},
-      data: {round2RoomId: roomId},
+      data: {},
     });
   }
 
@@ -502,7 +495,14 @@ export class SuperAdminService {
   async getAllJudges() {
     return prisma.judge.findMany({
       include: {
-        user: {select: {id: true, username: true, role: true}},
+        user: {
+          select: {
+            id: true,
+            username: true,
+            role: true
+          }
+        },
+        evaluations: true,
       }
     });
   }
@@ -567,7 +567,6 @@ export class SuperAdminService {
       include: {user: {select: {id: true, username: true, role: true}}},
     });
 
-    const {password, ...userWithoutPassword} = user;
     return {newMentor, rawPassword};
   }
 
@@ -584,6 +583,80 @@ export class SuperAdminService {
     // Delete the user, which will cascade to delete the mentor profile
     return prisma.user.delete({
       where: {id: mentor.userId},
+    });
+  }
+
+  async addJudge(payload: { name: string; }) {
+    // Generate a random password
+    const rawPassword = Math.random().toString(36).slice(-6);
+    const hashedPassword = await hashPassword(rawPassword);
+
+    // Create user and judge profile
+    const user = await prisma.user.create({
+      data: {
+        username: payload.name
+          .replace(/^(Dr\.?|Mr\.?|Mrs\.?|Ms\.?|Prof\.?)\s+/i, "") // remove title at start
+          .toLowerCase()
+          .replace(/\s+/g, "_"),
+        password: hashedPassword,
+        role: "JUDGE",
+        judgeProfile: {
+          create: {},
+        },
+      }
+    });
+
+    const newJudge = await prisma.judge.findUnique({
+      where: {userId: user.id},
+      include: {user: {select: {id: true, username: true, role: true}}},
+    });
+
+    return {newJudge, rawPassword};
+  }
+
+  async deleteJudge(judgeId: string) {
+    // Check if judge exists
+    const judge = await prisma.judge.findUnique({
+      where: {id: judgeId},
+    });
+
+    if (!judge) {
+      throw new Error("Judge not found");
+    }
+
+    // Delete the user, which will cascade to delete the judge profile
+    return prisma.user.delete({
+      where: {id: judge.userId},
+    });
+  }
+
+  async getTeamScores() {
+    return prisma.team.findMany({
+      include: {
+        teamScores: {
+          select: {
+            id: true,
+            totalScore: true,
+            round: true,
+            createdAt: true,
+            judge: {
+              include: {
+                user: { select: { username: true } },
+              },
+            },
+          },
+        },
+        evaluations: {
+          select: {
+            status: true,
+            judge: {
+              include: {
+                user: { select: { username: true } },
+              },
+            },
+          },
+        },
+      },
     });
   }
 }

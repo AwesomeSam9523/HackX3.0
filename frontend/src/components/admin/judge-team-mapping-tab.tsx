@@ -51,22 +51,15 @@ export function JudgeTeamMappingTab({ teams, judges }: JudgeTeamMappingTabProps)
     }
   }
 
-  // Get unique floors for filtering
-  const uniqueFloors = useMemo(() => {
-    const floorSet = new Set(judges.map((judge) => judge.floor))
-    return Array.from(floorSet).sort()
-  }, [judges])
-
   // Filter judges based on search and filters
   const filteredJudges = useMemo(() => {
     return judges.filter((judge) => {
-      const matchesSearch = judge.name.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesFloor = selectedFloor === "all" || judge.floor === selectedFloor
+      const matchesSearch = judge.user.username.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesJudge = selectedJudge === "all" || judge.id === selectedJudge
 
-      return matchesSearch && matchesFloor && matchesJudge
+      return matchesSearch && matchesJudge
     })
-  }, [judges, searchTerm, selectedFloor, selectedJudge])
+  }, [judges, searchTerm, selectedJudge])
 
   const getJudgeStats = (judgeId: string) => {
     const assignedTeams = mappings.filter((m) => m.judgeId === judgeId)
@@ -134,22 +127,6 @@ export function JudgeTeamMappingTab({ teams, judges }: JudgeTeamMappingTabProps)
               </div>
             </div>
             <div className="space-y-2">
-              <Label>Floor</Label>
-              <Select value={selectedFloor} onValueChange={setSelectedFloor}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Floors</SelectItem>
-                  {uniqueFloors.map((floor) => (
-                    <SelectItem key={floor} value={floor}>
-                      {floor}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
               <Label>Actions</Label>
               <Button variant="outline" onClick={clearFilters} className="w-full bg-transparent">
                 Clear Filters
@@ -182,8 +159,7 @@ export function JudgeTeamMappingTab({ teams, judges }: JudgeTeamMappingTabProps)
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-lg">{judge.name}</CardTitle>
-                        <CardDescription>{judge.floor}</CardDescription>
+                        <CardTitle className="text-lg">{judge.user.username}</CardTitle>
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge variant="outline">{stats.assigned} teams assigned</Badge>
@@ -276,7 +252,7 @@ export function JudgeTeamMappingTab({ teams, judges }: JudgeTeamMappingTabProps)
                     <div className="flex items-center justify-between">
                       <div>
                         <CardTitle className="text-lg flex items-center gap-2">
-                          {team.teamName}
+                          {team.name}
                           {isEvaluated ? (
                             <Badge variant="default">
                               <CheckCircle className="h-3 w-3 mr-1" />
@@ -290,7 +266,7 @@ export function JudgeTeamMappingTab({ teams, judges }: JudgeTeamMappingTabProps)
                           )}
                         </CardTitle>
                         <CardDescription className="mt-1">
-                          Room: {team.roomNumber} • PS: {team.problemStatement}
+                          Room: {team.roomNumber} • PS: {team.problemStatement.title}
                         </CardDescription>
                       </div>
                     </div>

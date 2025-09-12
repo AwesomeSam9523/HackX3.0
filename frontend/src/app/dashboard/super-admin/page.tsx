@@ -88,13 +88,14 @@ export default function SuperAdminDashboard() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-  const [problemStatements, setProblemStatements] = useState<
-    ProblemStatement[]
-  >([]);
+  const [problemStatements, setProblemStatements] = useState<ProblemStatement[]>([]);
   const [addMentorDetails, setAddMentorDetails] = useState({
     name: "",
     domain: "",
     mode: "ONLINE",
+  });
+  const [addJudgeDetails, setAddJudgeDetails] = useState({
+    name: "",
   });
 
   const { toast } = useToast();
@@ -185,17 +186,18 @@ export default function SuperAdminDashboard() {
     });
   };
 
-  const handleToggleRound1Lock = () => {
+  const handleToggleRound1Lock = async () => {
     const user = authService.getUser();
     if (!user) {
       console.error("User not found");
       return;
     }
-    setRound1Locked(!round1Locked);
+    const { locked } = await apiService.lockRound1(!round1Locked);
+    setRound1Locked(locked);
     const newLog = {
       id: logs.length + 1,
       createdAt: new Date().toLocaleString(),
-      action: round1Locked ? "Round 1 Unlocked" : "Round 1 Locked",
+      action: locked ? "Round 1 Unlocked" : "Round 1 Locked",
       user: user,
       details: `Round 1 evaluation ${round1Locked ? "unlocked" : "locked"}`,
       payload: JSON.stringify({ locked: !round1Locked }),
@@ -219,20 +221,22 @@ export default function SuperAdminDashboard() {
     setMentors((prev) => prev.filter((m) => m.id !== mentorId));
   };
 
-  const handleAddJudge = (judgeData: unknown) => {
-    const newJudge = {
-      id: `j${judges.length + 1}`,
-      name: judgeData.name,
-      floor: judgeData.floor,
-      status: "Active",
-      round: judgeData.round,
-      teamsAssigned: 0,
-    };
+  const handleAddJudge = async () => {
+    const { newJudge, rawPassword } = await apiService.addJudge(addJudgeDetails);
+    const username = newJudge.user.username;
     setJudges((prev) => [...prev, newJudge]);
+    alert(
+      `Judge added successfully.\nUsername: ${username}\nPassword: ${rawPassword}`,
+    );
   };
 
-  const handleRemoveJudge = (judgeId: string) => {
+  const handleRemoveJudge = async (judgeId: string) => {
+    await apiService.removeJudge(judgeId);
     setJudges((prev) => prev.filter((judge) => judge.id !== judgeId));
+    toast({
+      title: "Success",
+      description: "Judge removed successfully",
+    });
   };
 
   const handlePromoteToRound2 = (teamIds: string[]) => {
@@ -272,7 +276,7 @@ export default function SuperAdminDashboard() {
         user.id === userId
           ? {
               ...user,
-              status: user.status === "Active" ? "Disabled" : "Active",
+              status: user.status === "ACTIVE" ? "DISABLED" : "ACTIVE",
             }
           : user,
       ),
@@ -282,6 +286,8 @@ export default function SuperAdminDashboard() {
   function ago(dateString: string) {
     const date = new Date(dateString);
     const now = new Date();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const seconds = Math.floor((now - date) / 1000);
 
     const intervals = {
@@ -832,21 +838,8 @@ export default function SuperAdminDashboard() {
                             id="judge-name"
                             placeholder="Prof. Jane Doe"
                             className="text-sm"
+                            onInput={(e) => setAddJudgeDetails({ name: (e.target as HTMLInputElement).value })}
                           />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="judge-round" className="text-sm">
-                            Round
-                          </Label>
-                          <Select>
-                            <SelectTrigger className="text-sm">
-                              <SelectValue placeholder="Select round" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="1">Round 1</SelectItem>
-                              <SelectItem value="2">Round 2</SelectItem>
-                            </SelectContent>
-                          </Select>
                         </div>
                       </div>
                       <DialogFooter className="flex-col gap-2 sm:flex-row">
@@ -856,7 +849,7 @@ export default function SuperAdminDashboard() {
                         >
                           Cancel
                         </Button>
-                        <Button className="w-full sm:w-auto">Add Judge</Button>
+                        <Button className="w-full sm:w-auto" onClick={handleAddJudge}>Add Judge</Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>
@@ -881,18 +874,16 @@ export default function SuperAdminDashboard() {
                           <h3 className="text-sm font-semibold sm:text-base">
                             {judge.user.username}
                           </h3>
-                          <p className="text-muted-foreground text-xs sm:text-sm">
-                            Round {judge.round}
-                          </p>
                         </div>
                         <div className="flex items-center gap-2">
                           <Badge variant="outline" className="text-xs">
-                            {judge.teamsAssigned} teams
+                            {judge.evaluations.length} teams assigned
                           </Badge>
                           <Button
                             variant="destructive"
                             size="sm"
                             className="text-xs"
+                            onClick={() => handleRemoveJudge(judge.id)}
                           >
                             <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                           </Button>

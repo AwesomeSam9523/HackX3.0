@@ -122,12 +122,16 @@ export interface Judge {
   id: string;
   userId: string;
   expertise: string[];
-  round2RoomId: string;
+  round1RoomId?: string;
+  round2RoomId?: string;
   user: {
     username: string;
     role: Role;
   };
-  floor: string;
+  evaluations: {
+    id: string;
+    teamId: string;
+  }[];
 }
 
 export interface Announcement {
@@ -177,12 +181,17 @@ export interface TeamJudgeMappingType {
 
 export interface TeamScore {
   teamId: string;
-  teamName: string;
+  name: string;
   judgeId: string;
   judgeName: string;
-  scores: { [criteriaId: string]: number };
-  totalScore: number;
-  evaluatedAt: string;
+  teamScores: {
+    totalScore: string;
+    round: number;
+    createdAt: string;
+  };
+  evaluations: {
+    status: string;
+  };
 }
 
 export interface Round2Room {

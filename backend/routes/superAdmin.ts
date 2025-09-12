@@ -226,7 +226,6 @@ router.post("/team-judge-mappings", modifyLimiter, logActivity("MAP_TEAM_TO_JUDG
 
 router.delete(
   "/team-judge-mappings/:teamId/:judgeId",
-  modifyLimiter,
   logActivity("REMOVE_TEAM_JUDGE_MAPPING"),
   async (req: AuthRequest, res, next) => {
     try {
@@ -246,6 +245,35 @@ router.get("/judges", async (req: AuthRequest, res, next) => {
     next(error)
   }
 });
+
+router.post("/judges", logActivity("ADD_JUDGE"), async (req: AuthRequest, res, next) => {
+  try {
+    const judges = await superAdminService.addJudge(req.body);
+    res.json(judges);
+  } catch (error: any) {
+    next(error)
+  }
+});
+
+router.delete("/judges/:judgeId", logActivity("REMOVE_JUDGE"), async (req: AuthRequest, res, next) => {
+  try {
+    await superAdminService.deleteJudge(req.params.judgeId);
+    res.json({message: "Judge removed successfully"});
+  } catch (error: any) {
+    next(error)
+  }
+});
+
+router.get("/team-scores", async (req: AuthRequest, res, next) => {
+  try {
+    const scores = await superAdminService.getTeamScores();
+    res.json(scores);
+  }
+  catch (error: any) {
+    next(error)
+  }
+});
+
 
 // Round 2 Management
 router.post("/round2/promote", modifyLimiter, logActivity("PROMOTE_TO_ROUND2"), async (req: AuthRequest, res, next) => {

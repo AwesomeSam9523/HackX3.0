@@ -1,13 +1,25 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useMemo, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -16,85 +28,75 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Users, MapPin, Trophy, Search, Filter, UserCheck, ArrowRight, CheckSquare, Square, Trash2 } from "lucide-react"
-import { apiService } from "@/lib/service"
-import { useToast } from "@/hooks/use-toast"
-import type { Team, Judge, TeamJudgeMappingType, TeamScore } from "@/lib/types"
+} from "@/components/ui/dialog";
+import {
+  ArrowRight,
+  CheckSquare,
+  Filter,
+  MapPin,
+  Search,
+  Square,
+  Trash2,
+  Trophy,
+  UserCheck,
+  Users,
+} from "lucide-react";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
+import type { Judge, Team, TeamJudgeMappingType, TeamScore } from "@/lib/types";
 
 interface TeamJudgeMappingProps {
-  teams: Team[]
-  judges: Judge[]
+  teams: Team[];
+  judges: Judge[];
 }
 
 export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
-  const [mappings, setMappings] = useState<TeamJudgeMappingType[]>([])
-  const [teamScores, setTeamScores] = useState<TeamScore[]>([])
-  const [selectedTeams, setSelectedTeams] = useState<string[]>([])
-  const [selectedJudge, setSelectedJudge] = useState<string>("")
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedPS, setSelectedPS] = useState<string>("all")
-  const [selectedFloor, setSelectedFloor] = useState<string>("all")
-  const [showMappedOnly, setShowMappedOnly] = useState(false)
-  const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false)
-  const [isScoreDialogOpen, setIsScoreDialogOpen] = useState(false)
-  const [selectedTeamScores, setSelectedTeamScores] = useState<TeamScore[]>([])
-  const { toast } = useToast()
+  const [mappings, setMappings] = useState<TeamJudgeMappingType[]>([]);
+  const [teamScores, setTeamScores] = useState<TeamScore[]>([]);
+  const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
+  const [selectedJudge, setSelectedJudge] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedPS, setSelectedPS] = useState<string>("all");
+  const [showMappedOnly, setShowMappedOnly] = useState(false);
+  const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false);
+  const [isScoreDialogOpen, setIsScoreDialogOpen] = useState(false);
+  const [selectedTeamScores, setSelectedTeamScores] = useState<TeamScore[]>([]);
+  const { toast } = useToast();
 
   useEffect(() => {
-    loadMappings()
-    loadTeamScores()
-  }, [])
+    apiService.getTeamJudgeMappings().then(setMappings);
+    apiService.getTeamScores().then(setTeamScores);
+  }, []);
 
   const loadMappings = async () => {
     try {
-      const data = await apiService.getTeamJudgeMappings()
-      setMappings(data)
+      const data = await apiService.getTeamJudgeMappings();
+      setMappings(data);
     } catch (error) {
-      console.error("Failed to load mappings:", error)
+      console.error("Failed to load mappings:", error);
     }
-  }
-
-  const loadTeamScores = async () => {
-    try {
-      const data = await apiService.getTeamScores()
-      setTeamScores(data)
-    } catch (error) {
-      console.error("Failed to load team scores:", error)
-    }
-  }
+  };
 
   // Get unique problem statements and floors for filtering
   const uniquePS = useMemo(() => {
-    const psSet = new Set(teams.map((team) => team.problemStatement))
-    return Array.from(psSet).sort()
-  }, [teams])
-
-  const uniqueFloors = useMemo(() => {
-    const floorSet = new Set(judges.map((judge) => judge.floor))
-    return Array.from(floorSet).sort()
-  }, [judges])
+    const psSet = new Set(teams.map((team) => team.problemStatement));
+    return Array.from(psSet).sort();
+  }, [teams]);
 
   // Filter teams based on search and filters
   const filteredTeams = useMemo(() => {
     return teams.filter((team) => {
       const matchesSearch =
         team.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        team.roomNumber.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesPS = selectedPS === "all" || team.problemStatement.title === selectedPS
-      const isMapped = mappings.some((m) => m.teamId === team.id)
-      const matchesMappedFilter = !showMappedOnly || isMapped
+        team.roomNumber.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesPS =
+        selectedPS === "all" || team.problemStatement.title === selectedPS;
+      const isMapped = mappings.some((m) => m.teamId === team.id);
+      const matchesMappedFilter = !showMappedOnly || isMapped;
 
-      return matchesSearch && matchesPS && matchesMappedFilter
-    })
-  }, [teams, searchTerm, selectedPS, showMappedOnly, mappings])
-
-  // Filter judges based on floor
-  const filteredJudges = useMemo(() => {
-    return judges.filter((judge) => {
-      return selectedFloor === "all" || judge.floor === selectedFloor
-    })
-  }, [judges, selectedFloor])
+      return matchesSearch && matchesPS && matchesMappedFilter;
+    });
+  }, [teams, searchTerm, selectedPS, showMappedOnly, mappings]);
 
   const handleBulkAssign = async () => {
     if (selectedTeams.length === 0 || !selectedJudge) {
@@ -102,96 +104,106 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
         title: "Error",
         description: "Please select teams and a judge",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
     try {
       // Assign all selected teams to the judge
-      await Promise.all(selectedTeams.map((teamId) => apiService.mapTeamToJudge(teamId, selectedJudge)))
+      await Promise.all(
+        selectedTeams.map((teamId) =>
+          apiService.mapTeamToJudge(teamId, selectedJudge),
+        ),
+      );
 
       toast({
         title: "Success",
         description: `${selectedTeams.length} teams assigned to judge successfully`,
-      })
+      });
 
-      setSelectedTeams([])
-      setSelectedJudge("")
-      setIsAssignDialogOpen(false)
-      loadMappings()
+      setSelectedTeams([]);
+      setSelectedJudge("");
+      setIsAssignDialogOpen(false);
+      loadMappings();
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to assign teams to judge",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
-  const handleRemoveMapping = async (teamId: string) => {
+  const handleRemoveMapping = async (teamId: string, judgeId: string) => {
     try {
-      await apiService.removeTeamJudgeMapping(teamId)
+      await apiService.removeTeamJudgeMapping(teamId, judgeId);
       toast({
         title: "Success",
         description: "Team mapping removed successfully",
-      })
-      loadMappings()
+      });
+      loadMappings();
     } catch (error) {
       console.error(error);
       toast({
         title: "Error",
         description: "Failed to remove mapping",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleSelectAll = () => {
-    const unmappedTeams = filteredTeams.filter((team) => !mappings.some((m) => m.teamId === team.id))
-    setSelectedTeams(unmappedTeams.map((team) => team.id))
-  }
+    const unmappedTeams = filteredTeams.filter(
+      (team) => !mappings.some((m) => m.teamId === team.id),
+    );
+    setSelectedTeams(unmappedTeams.map((team) => team.id));
+  };
 
   const handleDeselectAll = () => {
-    setSelectedTeams([])
-  }
+    setSelectedTeams([]);
+  };
 
   const handleTeamSelect = (teamId: string, checked: boolean) => {
     if (checked) {
-      setSelectedTeams((prev) => [...prev, teamId])
+      setSelectedTeams((prev) => [...prev, teamId]);
     } else {
-      setSelectedTeams((prev) => prev.filter((id) => id !== teamId))
+      setSelectedTeams((prev) => prev.filter((id) => id !== teamId));
     }
-  }
+  };
 
   const getJudgeName = (judgeId: string) => {
-    return judges.find((j) => j.id === judgeId)?.user.username || "Unknown Judge"
-  }
+    return (
+      judges.find((j) => j.id === judgeId)?.user.username || "Unknown Judge"
+    );
+  };
 
   const getTeamName = (teamId: string) => {
-    return teams.find((t) => t.id === teamId)?.name || "Unknown Team"
-  }
+    return teams.find((t) => t.id === teamId)?.name || "Unknown Team";
+  };
 
   const getTeamScore = (teamId: string) => {
-    return teamScores.find((score) => score.teamId === teamId)
-  }
+    return teamScores.find((score) => score.teamId === teamId);
+  };
 
   const getJudgeStats = (judgeId: string) => {
-    const assignedTeams = mappings.filter((m) => m.judgeId === judgeId)
-    const evaluatedTeams = assignedTeams.filter((m) => getTeamScore(m.teamId))
+    const assignedTeams = mappings.filter((m) => m.judgeId === judgeId);
+    const evaluatedTeams = assignedTeams.filter((m) => getTeamScore(m.teamId));
     return {
       assigned: assignedTeams.length,
       evaluated: evaluatedTeams.length,
-    }
-  }
+    };
+  };
 
   const viewTeamScores = (teamId: string) => {
-    const scores = teamScores.filter((score) => score.teamId === teamId)
-    setSelectedTeamScores(scores)
-    setIsScoreDialogOpen(true)
-  }
+    const scores = teamScores.filter((score) => score.teamId === teamId);
+    setSelectedTeamScores(scores);
+    setIsScoreDialogOpen(true);
+  };
 
-  const unmappedTeamsCount = filteredTeams.filter((team) => !mappings.some((m) => m.teamId === team.id)).length
+  const unmappedTeamsCount = filteredTeams.filter(
+    (team) => !mappings.some((m) => m.teamId === team.id),
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -199,28 +211,34 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
         <div>
           <h2 className="text-2xl font-bold">Team-Judge Mapping</h2>
           <p className="text-slate-600">
-            {teams.length} total teams • {mappings.length} mapped • {unmappedTeamsCount} unmapped
+            {teams.length} total teams • {mappings.length} mapped •{" "}
+            {unmappedTeamsCount} unmapped
           </p>
         </div>
         <div className="flex gap-2">
-          <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
+          <Dialog
+            open={isAssignDialogOpen}
+            onOpenChange={setIsAssignDialogOpen}
+          >
             <DialogTrigger asChild>
               <Button disabled={selectedTeams.length === 0}>
-                <UserCheck className="h-4 w-4 mr-2" />
+                <UserCheck className="mr-2 h-4 w-4" />
                 Assign Selected ({selectedTeams.length})
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Assign Teams to Judge</DialogTitle>
-                <DialogDescription>Assign {selectedTeams.length} selected teams to a judge</DialogDescription>
+                <DialogDescription>
+                  Assign {selectedTeams.length} selected teams to a judge
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label>Selected Teams ({selectedTeams.length})</Label>
-                  <div className="max-h-32 overflow-y-auto border rounded p-2">
+                  <div className="max-h-32 overflow-y-auto rounded border p-2">
                     {selectedTeams.map((teamId) => (
-                      <div key={teamId} className="text-sm py-1">
+                      <div key={teamId} className="py-1 text-sm">
                         {getTeamName(teamId)}
                       </div>
                     ))}
@@ -228,28 +246,36 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                 </div>
                 <div className="space-y-2">
                   <Label>Select Judge</Label>
-                  <Select value={selectedJudge} onValueChange={setSelectedJudge}>
+                  <Select
+                    value={selectedJudge}
+                    onValueChange={setSelectedJudge}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a judge" />
                     </SelectTrigger>
                     <SelectContent>
-                      {filteredJudges.map((judge) => {
-                        const stats = getJudgeStats(judge.id)
+                      {judges.map((judge) => {
+                        const stats = getJudgeStats(judge.id);
                         return (
                           <SelectItem key={judge.id} value={judge.id}>
-                            {judge.user.username} - {judge.floor} ({stats.assigned} teams)
+                            {judge.user.username} ({stats.assigned} teams)
                           </SelectItem>
-                        )
+                        );
                       })}
                     </SelectContent>
                   </Select>
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setIsAssignDialogOpen(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsAssignDialogOpen(false)}
+                >
                   Cancel
                 </Button>
-                <Button onClick={handleBulkAssign}>Assign {selectedTeams.length} Teams</Button>
+                <Button onClick={handleBulkAssign}>
+                  Assign {selectedTeams.length} Teams
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -265,11 +291,11 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-2">
               <Label>Search Teams</Label>
               <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-slate-400" />
+                <Search className="absolute top-2.5 left-2 h-4 w-4 text-slate-400" />
                 <Input
                   placeholder="Team name or room..."
                   value={searchTerm}
@@ -295,25 +321,13 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Judge Floor</Label>
-              <Select value={selectedFloor} onValueChange={setSelectedFloor}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Floors</SelectItem>
-                  {uniqueFloors.map((floor) => (
-                    <SelectItem key={floor} value={floor}>
-                      {floor}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
               <Label>View Options</Label>
               <div className="flex items-center space-x-2">
-                <Checkbox id="show-mapped" checked={showMappedOnly} onCheckedChange={setShowMappedOnly} />
+                <Checkbox
+                  id="show-mapped"
+                  checked={showMappedOnly}
+                  onCheckedChange={(value) => setShowMappedOnly(value as boolean)}
+                />
                 <Label htmlFor="show-mapped" className="text-sm">
                   Show mapped only
                 </Label>
@@ -323,7 +337,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Teams Panel */}
         <div className="lg:col-span-2">
           <Card>
@@ -335,32 +349,36 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                 </CardTitle>
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline" onClick={handleSelectAll}>
-                    <CheckSquare className="h-4 w-4 mr-1" />
+                    <CheckSquare className="mr-1 h-4 w-4" />
                     Select All Unmapped
                   </Button>
-                  <Button size="sm" variant="outline" onClick={handleDeselectAll}>
-                    <Square className="h-4 w-4 mr-1" />
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleDeselectAll}
+                  >
+                    <Square className="mr-1 h-4 w-4" />
                     Deselect All
                   </Button>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="max-h-96 overflow-y-auto space-y-2">
+              <div className="max-h-96 space-y-2 overflow-y-auto">
                 {filteredTeams.map((team) => {
-                  const mapping = mappings.find((m) => m.teamId === team.id)
-                  const isMapped = !!mapping
-                  const isSelected = selectedTeams.includes(team.id)
-                  const hasScore = !!getTeamScore(team.id)
+                  const mapping = mappings.find((m) => m.teamId === team.id);
+                  const isMapped = !!mapping;
+                  const isSelected = selectedTeams.includes(team.id);
+                  const hasScore = !!getTeamScore(team.id);
 
                   return (
                     <div
                       key={team.id}
-                      className={`p-3 border rounded-lg transition-colors ${
+                      className={`rounded-lg border p-3 transition-colors ${
                         isSelected
-                          ? "bg-blue-50 border-blue-200"
+                          ? "border-blue-200 bg-blue-50"
                           : isMapped
-                            ? "bg-green-50 border-green-200"
+                            ? "border-green-200 bg-green-50"
                             : "hover:bg-slate-50"
                       }`}
                     >
@@ -369,7 +387,9 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                           {!isMapped && (
                             <Checkbox
                               checked={isSelected}
-                              onCheckedChange={(checked) => handleTeamSelect(team.id, checked as boolean)}
+                              onCheckedChange={(checked) =>
+                                handleTeamSelect(team.id, checked as boolean)
+                              }
                             />
                           )}
                           <div>
@@ -377,7 +397,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                               <h4 className="font-medium">{team.name}</h4>
                               {hasScore && (
                                 <Badge variant="default" className="text-xs">
-                                  <Trophy className="h-3 w-3 mr-1" />
+                                  <Trophy className="mr-1 h-3 w-3" />
                                   Scored
                                 </Badge>
                               )}
@@ -386,25 +406,35 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                               {team.roomNumber} • {team.problemStatement.title}
                             </p>
                             {isMapped && (
-                              <p className="text-sm text-green-600">Assigned to: {getJudgeName(mapping.judgeId)}</p>
+                              <p className="text-sm text-green-600">
+                                Assigned to: {getJudgeName(mapping.judgeId)}
+                              </p>
                             )}
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
                           {hasScore && (
-                            <Button size="sm" variant="outline" onClick={() => viewTeamScores(team.id)}>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => viewTeamScores(team.id)}
+                            >
                               View Score
                             </Button>
                           )}
                           {isMapped && (
-                            <Button size="sm" variant="destructive" onClick={() => handleRemoveMapping(team.id)}>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleRemoveMapping(team.id, mapping.judgeId)}
+                            >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           )}
                         </div>
                       </div>
                     </div>
-                  )
+                  );
                 })}
               </div>
             </CardContent>
@@ -417,21 +447,22 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MapPin className="h-5 w-5" />
-                Judges ({filteredJudges.length})
+                Judges ({judges.length})
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {filteredJudges.map((judge) => {
-                  const stats = getJudgeStats(judge.id)
-                  const assignedTeams = mappings.filter((m) => m.judgeId === judge.id)
+                {judges.map((judge) => {
+                  const stats = getJudgeStats(judge.id);
+                  const assignedTeams = mappings.filter(
+                    (m) => m.judgeId === judge.id,
+                  );
 
                   return (
-                    <div key={judge.id} className="p-3 border rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
+                    <div key={judge.id} className="rounded-lg border p-3">
+                      <div className="mb-2 flex items-center justify-between">
                         <div>
                           <h4 className="font-medium">{judge.user.username}</h4>
-                          <p className="text-sm text-slate-500">{judge.floor}</p>
                         </div>
                         <Badge variant="outline">{stats.assigned} teams</Badge>
                       </div>
@@ -443,11 +474,14 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                             {stats.evaluated}/{stats.assigned} evaluated
                           </span>
                         </div>
-                        <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div className="h-2 w-full rounded-full bg-slate-200">
                           <div
-                            className="bg-green-500 h-2 rounded-full"
+                            className="h-2 rounded-full bg-green-500"
                             style={{
-                              width: stats.assigned > 0 ? `${(stats.evaluated / stats.assigned) * 100}%` : "0%",
+                              width:
+                                stats.assigned > 0
+                                  ? `${(stats.evaluated / stats.assigned) * 100}%`
+                                  : "0%",
                             }}
                           />
                         </div>
@@ -456,34 +490,41 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                       {selectedTeams.length > 0 && (
                         <Button
                           size="sm"
-                          className="w-full mt-2"
+                          className="mt-2 w-full"
                           onClick={() => {
-                            setSelectedJudge(judge.id)
-                            setIsAssignDialogOpen(true)
+                            setSelectedJudge(judge.id);
+                            setIsAssignDialogOpen(true);
                           }}
                         >
-                          <ArrowRight className="h-4 w-4 mr-1" />
+                          <ArrowRight className="mr-1 h-4 w-4" />
                           Assign {selectedTeams.length} Teams
                         </Button>
                       )}
 
                       {assignedTeams.length > 0 && (
                         <div className="mt-2">
-                          <Label className="text-xs text-slate-500">Assigned Teams:</Label>
+                          <Label className="text-xs text-slate-500">
+                            Assigned Teams:
+                          </Label>
                           <div className="max-h-20 overflow-y-auto">
                             {assignedTeams.slice(0, 3).map((mapping) => (
-                              <div key={mapping.teamId} className="text-xs text-slate-600">
+                              <div
+                                key={mapping.teamId}
+                                className="text-xs text-slate-600"
+                              >
                                 {getTeamName(mapping.teamId)}
                               </div>
                             ))}
                             {assignedTeams.length > 3 && (
-                              <div className="text-xs text-slate-400">+{assignedTeams.length - 3} more...</div>
+                              <div className="text-xs text-slate-400">
+                                +{assignedTeams.length - 3} more...
+                              </div>
                             )}
                           </div>
                         </div>
                       )}
                     </div>
-                  )
+                  );
                 })}
               </div>
             </CardContent>
@@ -501,37 +542,52 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
           <div className="space-y-4">
             {selectedTeamScores.length > 0 ? (
               selectedTeamScores.map((score) => (
-                <Card key={score.teamId} className="border-l-4 border-l-green-500">
+                <Card
+                  key={score.teamId}
+                  className="border-l-4 border-l-green-500"
+                >
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-lg">{score.teamName}</CardTitle>
-                        <CardDescription>Evaluated by {score.judgeName}</CardDescription>
+                        <CardTitle className="text-lg">
+                          {score.name}
+                        </CardTitle>
+                        <CardDescription>
+                          Evaluated by {score.judgeName}
+                        </CardDescription>
                       </div>
-                      <Badge variant="default" className="text-lg px-3 py-1">
-                        {score.totalScore.toFixed(1)}/10
+                      <Badge variant="default" className="px-3 py-1 text-lg">
+                        {parseFloat(score.teamScores.totalScore).toFixed(1)}/10
                       </Badge>
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
                     <div className="space-y-2">
-                      {Object.entries(score.scores).map(([criteria, value]) => (
-                        <div key={criteria} className="flex items-center justify-between">
-                          <span className="text-sm capitalize">{criteria.replace(/([A-Z])/g, " $1")}</span>
+                      {Object.entries(score.teamScores).map(([criteria, value]) => (
+                        <div
+                          key={criteria}
+                          className="flex items-center justify-between"
+                        >
+                          <span className="text-sm capitalize">
+                            {criteria.replace(/([A-Z])/g, " $1")}
+                          </span>
                           <Badge variant="outline">{value}/10</Badge>
                         </div>
                       ))}
-                      <div className="text-xs text-slate-500 mt-2">
-                        Evaluated on: {new Date(score.evaluatedAt).toLocaleString()}
+                      <div className="mt-2 text-xs text-slate-500">
+                        Evaluated on:{" "}
+                        {new Date(score.teamScores.createdAt).toLocaleString()}
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               ))
             ) : (
-              <div className="text-center py-8">
-                <Trophy className="h-12 w-12 mx-auto text-slate-300 mb-4" />
-                <p className="text-slate-500">No scores available for this team</p>
+              <div className="py-8 text-center">
+                <Trophy className="mx-auto mb-4 h-12 w-12 text-slate-300" />
+                <p className="text-slate-500">
+                  No scores available for this team
+                </p>
               </div>
             )}
           </div>
@@ -541,5 +597,5 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

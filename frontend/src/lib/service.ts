@@ -328,36 +328,36 @@ class ApiService {
   }
 
   async mapTeamToJudge(teamId: string, judgeId: string): Promise<void> {
-    return this.request("/admin/team-judge-mappings", {
+    return this.request("/team-judge-mappings", {
       method: "POST",
       body: JSON.stringify({ teamId, judgeId }),
     });
   }
 
-  async removeTeamJudgeMapping(teamId: string): Promise<void> {
-    return this.request(`/admin/team-judge-mappings/${teamId}`, {
+  async removeTeamJudgeMapping(teamId: string, judgeId: string): Promise<void> {
+    return this.request(`/team-judge-mappings/${teamId}/${judgeId}`, {
       method: "DELETE",
     });
   }
 
   async getTeamScores(): Promise<TeamScore[]> {
-    return this.request("/admin/team-scores");
+    return this.request("/team-scores");
   }
 
   // Round 2 Room Management
   async getRound2Rooms(): Promise<Round2Room[]> {
-    return this.request("/admin/round2/rooms");
+    return this.request("/round2/rooms");
   }
 
   async mapJudgeToRoom(judgeId: string, roomId: string): Promise<void> {
-    return this.request("/admin/round2/map-judge", {
+    return this.request("/round2/map-judge", {
       method: "POST",
       body: JSON.stringify({ judgeId, roomId }),
     });
   }
 
   async assignTeamToRoom(teamId: string, roomId: string): Promise<void> {
-    return this.request("/admin/round2/assign-team", {
+    return this.request("/round2/assign-team", {
       method: "POST",
       body: JSON.stringify({ teamId, roomId }),
     });
@@ -369,6 +369,13 @@ class ApiService {
 
   async lockMentorship(locked: boolean): Promise<{ locked: boolean }> {
     return this.request("/mentorship/lock", {
+      method: "POST",
+      body: JSON.stringify({ locked }),
+    });
+  }
+
+  async lockRound1(locked: boolean): Promise<{ locked: boolean }> {
+    return this.request("/round1/lock", {
       method: "POST",
       body: JSON.stringify({ locked }),
     });
@@ -387,6 +394,21 @@ class ApiService {
 
   async removeMentor(mentorId: string): Promise<void> {
     return this.request(`/mentors/${mentorId}`, {
+      method: "DELETE",
+    });
+  }
+
+  async addJudge(payload: {
+    name: string;
+  }): Promise<{ newJudge: Judge; rawPassword: string }> {
+    return this.request("/judges", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async removeJudge(judgeId: string): Promise<void> {
+    return this.request(`/judges/${judgeId}`, {
       method: "DELETE",
     });
   }

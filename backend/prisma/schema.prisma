@@ -146,15 +146,10 @@ model Judge {
   id           String       @id @default(cuid())
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String       @unique
-  expertise    String[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   evaluations  Evaluation[]
   teamScores   TeamScore[]
-  round1Room   Round1Room?  @relation(fields: [round1RoomId], references: [id])
-  round1RoomId String?
-  round2Room   Round2Room?  @relation(fields: [round2RoomId], references: [id])
-  round2RoomId String?
 }
 
 model MentorshipQueue {
@@ -242,7 +237,6 @@ model Round1Room {
   filled    Int      @default(0)
   createdAt DateTime @default(now())
   teams     Team[]
-  judges    Judge[]
 }
 
 model Round2Room {
@@ -252,7 +246,6 @@ model Round2Room {
   capacity  Int      @default(10)
   createdAt DateTime @default(now())
   teams     Team[]
-  judges    Judge[]
 }
 
 model TeamCheckpoint {
