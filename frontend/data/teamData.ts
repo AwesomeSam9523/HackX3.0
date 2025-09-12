@@ -34,7 +34,7 @@ export const teamData: TeamCategory[] = [
           },
           {
             id: "4a",
-            name: "Dr. CS Lambda",
+            name: "Dr. CS Lamba",
             position: "PROFESSOR & ASSOCIATE DEAN, CSE",
             image:
               "https://images.prismic.io/ieeemuj/aJx6XqTt2nPbaRP-_dr.CSlambda-faculty-hackX3.0.png?auto=format,compress",
