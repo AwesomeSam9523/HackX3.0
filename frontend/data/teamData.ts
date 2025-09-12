@@ -434,7 +434,7 @@ export const teamData: TeamCategory[] = [
             name: "Moksh Chugh",
             position: "OPERATIONS",
             image:
-              "https://images.prismic.io/ieeemuj/aJunBKTt2nPbaPrH_VedicaSaini-operations-hackX3.0.png?auto=format,compress",
+              "https://images.prismic.io/ieeemuj/aMP9E2GNHVfTPFbG_WhatsAppImage2025-09-12at16.28.43.jpeg?auto=format,compress",
             linkedinUrl: "https://linkedin.com/in/kavita-joshi",
           },
         ],
