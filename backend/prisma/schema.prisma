@@ -74,7 +74,6 @@ model Team {
   name               String
   teamId             String            @unique
   password           String
-  roomNumber         String?
   status             TeamStatus        @default(REGISTERED)
   submissionStatus   SubmissionStatus  @default(NOT_SUBMITTED)
   githubRepo         String?

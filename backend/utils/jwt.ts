@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
-import type { JWTPayload } from "../types";
+import type {JWTPayload} from "../types";
+import ms from "ms";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret-key";
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "24h";
+const JWT_EXPIRES_IN = (process.env.JWT_EXPIRES_IN || "24h") as ms.StringValue;
 
 export const generateToken = (payload: JWTPayload): string => {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });

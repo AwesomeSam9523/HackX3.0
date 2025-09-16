@@ -1,14 +1,14 @@
-import { Router } from "express";
-import { teamService } from "../services/teamService";
-import { requireParticipant } from "../middleware/auth";
-import { modifyLimiter } from "../middleware/rateLimiter";
-import { logActivity } from "../middleware/logging";
-import type { AuthRequest } from "../middleware/auth";
+import {Router} from "express";
+import {teamService} from "../services/teamService";
+import type {AuthRequest} from "../middleware/auth";
+import {requireTeam} from "../middleware/auth";
+import {modifyLimiter} from "../middleware/rateLimiter";
+import {logActivity} from "../middleware/logging";
 
 const router = Router();
 
 // Apply participant authentication to all routes
-router.use(requireParticipant);
+router.use(requireTeam);
 
 // Get team information
 router.get("/team", async (req: AuthRequest, res, next) => {
@@ -37,6 +37,24 @@ router.get("/problem-statements", async (req: AuthRequest, res, next) => {
     res.json(problemStatements);
   } catch (error: any) {
     next(error)
+  }
+});
+
+router.get("/problem-statements/selected", async (req: AuthRequest, res, next) => {
+  try {
+    const selectedPs = await teamService.getSelectedProblemStatement(req.user!.id);
+    res.json(selectedPs);
+  } catch (error: any) {
+    next(error);
+  }
+});
+
+router.get("/locked", async (req: AuthRequest, res, next) => {
+  try {
+    const data = await teamService.getLockedOverview()
+    res.json(data);
+  } catch (error: any) {
+    next(error);
   }
 });
 
@@ -121,6 +139,15 @@ router.post("/mentors/book", modifyLimiter, logActivity("BOOK_MENTORSHIP"), asyn
     next(error)
   }
 });
+
+router.get("/mentors/selected", async (req: AuthRequest, res, next) => {
+  try {
+    const session = await teamService.getSelectedMentor(req.user!.id);
+    res.status(200).json(session);
+  } catch (error: any) {
+    next(error);
+  }
+})
 
 // Cancel mentorship session
 router.post(

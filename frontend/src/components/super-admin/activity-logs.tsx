@@ -44,8 +44,11 @@ export function ActivityLogs({
   const { toast } = useToast();
 
   // Get unique actions and users for filter dropdowns
-  const uniqueActions = Array.from(new Set(logs.map((log) => log.action)));
-  const uniqueUsers = Array.from(new Set(logs.map((log) => log.user.username)));
+  const actions = Array.from(new Set(logs.map((log) => log.action)));
+  const uniqueActions = actions.sort((a, b) => a.localeCompare(b));
+  const uniqueUsers = Array.from(
+    new Set(logs.map((log) => log.user?.username)),
+  ).filter((log) => log);
 
   useEffect(() => {
     setLogs(initialLogs);
@@ -102,12 +105,9 @@ export function ActivityLogs({
     const csvContent = [
       ["Timestamp", "Action", "Username", "Role"].join(","),
       ...filteredLogs.map((log) =>
-        [
-          log.createdAt,
-          log.action,
-          log.user.username,
-          log.user.role,
-        ].join(","),
+        [log.createdAt, log.action, log.user?.username, log.user?.role].join(
+          ",",
+        ),
       ),
     ].join("\n");
 
@@ -164,7 +164,7 @@ export function ActivityLogs({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col md:flex-row gap-2">
+          <div className="flex flex-col gap-2 md:flex-row">
             <div className="w-full space-y-2">
               <Label htmlFor="search">Search</Label>
               <div className="relative">
@@ -258,8 +258,12 @@ export function ActivityLogs({
                       >
                         {log.action}
                       </Badge>
-                      <span className="text-sm font-medium">By: {log.user.username}</span>
-                      <span className="text-xs text-slate-500 font-medium">@ {log.details}</span>
+                      <span className="text-sm font-medium">
+                        By: {log.user?.username || "Deleted User"}
+                      </span>
+                      <span className="text-xs font-medium text-slate-500">
+                        @ {log.details}
+                      </span>
                     </div>
                     <span className="text-xs text-slate-500">
                       {log.createdAt}

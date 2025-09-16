@@ -40,4 +40,4 @@ export const requireSuperAdmin = requireRole(["SUPER_ADMIN"]);
 export const requireAdmin = requireRole(["ADMIN", "SUPER_ADMIN"]);
 export const requireJudge = requireRole(["JUDGE", "ADMIN", "SUPER_ADMIN"]);
 export const requireMentor = requireRole(["MENTOR", "ADMIN", "SUPER_ADMIN"]);
-export const requireParticipant = requireRole(["TEAM", "MENTOR", "JUDGE", "ADMIN", "SUPER_ADMIN"]);
+export const requireTeam = requireRole(["TEAM", "MENTOR", "JUDGE", "ADMIN", "SUPER_ADMIN"]);

@@ -43,8 +43,11 @@ export class TeamService {
                 },
               },
             },
+            round1Room: {
+              select: {id: true, block: true, name: true},
+            },
             round2Room: {
-              select: {id: true, name: true},
+              select: {id: true, block: true, name: true},
             },
           },
         },
@@ -107,13 +110,8 @@ export class TeamService {
       throw new Error("Problem statement selection is currently locked");
     }
 
-    // Check if team already has a problem statement
-    if (user.participantTeam.problemStatementId) {
-      throw new Error("Team has already selected a problem statement");
-    }
-
     // Update team with selected problem statement
-    const updatedTeam = await prisma.team.update({
+    return prisma.team.update({
       where: {id: user.participantTeam.id},
       data: {
         problemStatementId,
@@ -125,8 +123,30 @@ export class TeamService {
         },
       },
     });
+  }
 
-    return updatedTeam;
+  async getSelectedProblemStatement(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: {id: userId},
+      include: {participantTeam: true},
+    });
+    if (!user || !user.teamId) {
+      throw new Error("Team not found for this participant");
+    }
+
+    const team = await prisma.team.findUnique({
+      where: {id: user.teamId},
+      include: {
+        problemStatement: {
+          include: {domain: true},
+        }
+      }
+    });
+    if (!team) {
+      throw new Error("Team not found for this participant");
+    }
+
+    return team.problemStatement;
   }
 
   // Bookmark problem statement
@@ -202,6 +222,27 @@ export class TeamService {
       throw new Error("Round 1 submissions are currently locked");
     }
 
+    // check if githubLink is a valid URL
+    if (data.githubLink) {
+      try {
+        new URL(data.githubLink);
+      } catch (_) {
+        throw new Error("Invalid GitHub URL");
+      }
+    }
+    if (!data.githubLink.startsWith('https://github.com/')) {
+      throw new Error("GitHub link is invalid");
+    }
+    // check if pptLink is a valid URL
+    if (data.pptLink) {
+      try {
+        new URL(data.pptLink);
+      } catch (_) {
+        throw new Error("Invalid PPT URL");
+      }
+    }
+
+
     // Create submission
     const submission = await prisma.submission.create({
       data: {
@@ -245,7 +286,7 @@ export class TeamService {
   }
 
   // Book mentorship session
-  async bookMentorshipSession(userId: string, data: { mentorId: string; query?: string }) {
+  async bookMentorshipSession(userId: string, data: { mentorId: string; query: string }) {
     const user = await prisma.user.findUnique({
       where: {id: userId},
       include: {participantTeam: true},
@@ -312,30 +353,120 @@ export class TeamService {
 
   // Get available mentors
   async getAvailableMentors() {
-    return prisma.mentor.findMany({
+    const mentors = await prisma.mentor.findMany({
       where: {isAvailable: true},
       include: {
         user: {
-          select: {id: true, username: true, email: true},
+          select: {id: true, username: true},
         },
-        _count: {
-          select: {
-            mentorshipQueue: {
-              where: {status: "WAITING"},
-            },
+        mentorshipQueue: {
+          include: {
+            team: {select: {id: true, name: true}},
           },
+          orderBy: {createdAt: "desc"},
         },
       },
-      orderBy: [
-        {
-          mentorshipQueue: {
-            _count: "asc",
-          },
-        },
-        {createdAt: "desc"},
-      ],
+      orderBy: {createdAt: "desc"},
     });
 
+    return mentors.map((mentor) => {
+      const latestPerTeam = new Map<string, typeof mentor.mentorshipQueue[0]>();
+      for (const entry of mentor.mentorshipQueue) {
+        if (!latestPerTeam.has(entry.teamId)) {
+          latestPerTeam.set(entry.teamId, entry);
+        }
+      }
+
+      const waitingTeamsCount = Array.from(latestPerTeam.values()).filter(
+        (entry) => entry.status === "WAITING"
+      ).length;
+
+      const {mentorshipQueue, ...rest} = mentor;
+      return {
+        ...rest,
+        waitingTeamsCount,
+      };
+    });
+  }
+
+  // Get selected mentor
+  async getSelectedMentor(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: {id: userId},
+      include: {participantTeam: true},
+    });
+
+    if (!user || !user.participantTeam || !user.teamId) {
+      throw new Error("Team not found for this participant");
+    }
+
+    const team = await prisma.team.findUnique({
+      where: {id: user.teamId},
+    });
+
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    const session = await prisma.mentorshipQueue.findFirst({
+      where: {
+        teamId: user.teamId,
+      },
+      include: {
+        mentor: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+              }
+            },
+          }
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      }
+    });
+
+    if (!session || session.status !== "WAITING") {
+      return null;
+    }
+
+    const mentor = await prisma.mentor.findUnique({
+      where: {id: session.mentorId},
+      include: {
+        user: {
+          select: {id: true, username: true},
+        },
+        mentorshipQueue: {
+          include: {
+            team: {select: {id: true, name: true}},
+          },
+          orderBy: {createdAt: "desc"},
+        },
+      },
+    });
+
+    if (!mentor) {
+      throw new Error("Mentor not found");
+    }
+
+    const latestPerTeam = new Map<string, typeof mentor.mentorshipQueue[0]>();
+    for (const entry of mentor.mentorshipQueue) {
+      if (!latestPerTeam.has(entry.teamId)) {
+        latestPerTeam.set(entry.teamId, entry);
+      }
+    }
+
+    const waitingTeamsCount = Array.from(latestPerTeam.values()).filter(
+      (entry) => entry.status === "WAITING"
+    ).length;
+
+    const {notes, ...rest} = session;
+    // @ts-ignore
+    rest.mentor['waitingTeamsCount'] = waitingTeamsCount;
+    return rest;
   }
 
   // Get announcements
@@ -391,6 +522,17 @@ export class TeamService {
       where: {id: queueItemId},
       data: {status: "CANCELLED"},
     });
+  }
+
+  async getLockedOverview() {
+    const overview = await prisma.systemSettings.findMany();
+    return overview.reduce(
+      (acc, setting) => {
+        acc[setting.key] = setting.value;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
   }
 }
 

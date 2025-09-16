@@ -3,21 +3,23 @@
 import { authService } from "./auth";
 import type {
   Announcement,
+  Checkpoint,
+  Checkpoint2Data,
   Domain,
   Judge,
   LogEntry,
   LogFilter,
   Mentor,
+  MentorshipSession,
   ProblemStatement,
   ProblemStatementForm,
   QueueItem,
   Round2Room,
+  Submission,
   Team,
   TeamJudgeMapping,
   TeamScore,
   User,
-  Checkpoint,
-  Checkpoint2Data,
 } from "./types";
 
 const API_BASE_URL =
@@ -147,7 +149,9 @@ class ApiService {
     return this.request("/domains");
   }
 
-  async selectProblemStatement(psId: string): Promise<void> {
+  async selectProblemStatement(
+    psId: string,
+  ): Promise<{ problemStatement: ProblemStatement }> {
     return this.request("/problem-statements/select", {
       method: "POST",
       body: JSON.stringify({ problemStatementId: psId }),
@@ -161,7 +165,15 @@ class ApiService {
     });
   }
 
-  async getBookmarkedPS(): Promise<string[]> {
+  async getSelectedMentor(): Promise<MentorshipSession | null> {
+    return this.request(`/mentors/selected`);
+  }
+
+  async getSelectedProblemStatement(): Promise<ProblemStatement | null> {
+    return this.request("/problem-statements/selected");
+  }
+
+  async getBookmarkedPS(): Promise<ProblemStatement[]> {
     return this.request("/problem-statements/bookmarks");
   }
 
@@ -210,10 +222,13 @@ class ApiService {
     return this.request(`/mentors/${mentorId}`);
   }
 
-  async bookMentor(mentorId: string): Promise<void> {
+  async bookMentor(
+    mentorId: string,
+    query: string,
+  ): Promise<MentorshipSession> {
     return this.request("/mentors/book", {
       method: "POST",
-      body: JSON.stringify({ mentorId }),
+      body: JSON.stringify({ mentorId, query }),
     });
   }
 
@@ -277,8 +292,12 @@ class ApiService {
     });
   }
 
-  async getSubmissions(teamId: string): Promise<unknown[]> {
+  async getSubmissions(teamId: string): Promise<Submission[]> {
     return this.request(`/submissions/team/${teamId}`);
+  }
+
+  async getTeamSubmission(): Promise<Submission[]> {
+    return this.request(`/submissions`);
   }
 
   // Admin specific
@@ -306,6 +325,14 @@ class ApiService {
 
   async getProblemStatements(): Promise<ProblemStatement[]> {
     return this.request("/problem-statements");
+  }
+
+  async getLockedOverview(): Promise<{
+    problem_statements_locked: string;
+    mentorship_locked: string;
+    round1_locked: string;
+  }> {
+    return this.request(`/locked`);
   }
 
   async lockProblemStatements(locked: boolean): Promise<{ locked: boolean }> {
@@ -410,6 +437,13 @@ class ApiService {
   async removeJudge(judgeId: string): Promise<void> {
     return this.request(`/judges/${judgeId}`, {
       method: "DELETE",
+    });
+  }
+
+  async cancelMentorBooking(queueId: string): Promise<void> {
+    return this.request("/mentors/cancel", {
+      method: "POST",
+      body: JSON.stringify({ queueId }),
     });
   }
 }

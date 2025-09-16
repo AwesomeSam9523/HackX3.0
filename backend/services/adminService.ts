@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import type { LogFilter } from "../types";
+import {PrismaClient} from "@prisma/client";
+import type {LogFilter} from "../types";
 import {hashPassword} from "../utils/password";
 
 const prisma = new PrismaClient();
@@ -176,7 +176,6 @@ export class AdminService {
       judge: {
         id: judge.id,
         user: judge.user,
-        expertise: judge.expertise,
       },
       assignedTeams: judge.evaluations.map((evaluation) => ({
         team: evaluation.team,
@@ -210,8 +209,6 @@ export class AdminService {
             },
           },
         },
-        round1Room: true,
-        round2Room: true,
       },
     });
 
@@ -244,7 +241,7 @@ export class AdminService {
           select: { id: true, expertise: true },
         },
         judgeProfile: {
-          select: { id: true, expertise: true },
+          select: {id: true},
         },
       },
       orderBy: { createdAt: "desc" },
@@ -332,6 +329,12 @@ export class AdminService {
             },
           },
         },
+        round1Room: {
+          select: {
+            block: true,
+            name: true,
+          }
+        }
       },
       orderBy: { createdAt: "desc" },
     });
@@ -340,7 +343,7 @@ export class AdminService {
       id: team.id,
       name: team.name,
       teamId: team.teamId,
-      roomNumber: team.roomNumber,
+      roomNumber: `${team.round1Room?.block} ${team.round1Room?.name}`,
       status: team.status,
       submissionStatus: team.submissionStatus,
       problemStatement: team.problemStatement,
@@ -373,13 +376,8 @@ export class AdminService {
         teams: {
           select: { id: true, name: true, teamId: true },
         },
-        judges: {
-          include: {
-            user: { select: { username: true } },
-          },
-        },
         _count: {
-          select: { teams: true, judges: true },
+          select: {teams: true},
         },
       },
     });

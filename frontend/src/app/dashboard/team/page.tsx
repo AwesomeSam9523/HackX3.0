@@ -8,31 +8,33 @@ import { Mentorship } from "@/components/participant/mentorship";
 import { AnnouncementsTab } from "@/components/participant/announcements-tab";
 import { SubmissionsTab } from "@/components/participant/submissions-tab";
 import { BookmarksTab } from "@/components/participant/bookmarks-tab";
-import { authService } from "@/lib/auth";
 import { apiService } from "@/lib/service";
 import type {
   Announcement,
   Domain,
   Mentor,
+  MentorshipSession,
   ProblemStatement,
+  Submission,
   Team,
 } from "@/lib/types";
 
-export default function ParticipantDashboard() {
+export default function TeamDashboard() {
   const [passwordChanged, setPasswordChanged] = useState(true);
-  const [selectedPS, setSelectedPS] = useState<string | null>(null);
-  const [bookmarkedPS, setBookmarkedPS] = useState<string[]>([]);
-  const [selectedMentor, setSelectedMentor] = useState<string | null>(null);
+  const [selectedPS, setSelectedPS] = useState<ProblemStatement | null>(null);
+  const [bookmarkedPS, setBookmarkedPS] = useState<ProblemStatement[]>([]);
+  const [selectedMentor, setSelectedMentor] =
+    useState<MentorshipSession | null>(null);
   const [psLocked, setPsLocked] = useState(false);
+  const [mentorshipLocked, setMentorshipLocked] = useState(false);
+  const [round1Locked, setRound1Locked] = useState(false);
   const [round2Selected, setRound2Selected] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-
   const [team, setTeam] = useState<Team | null>(null);
   const [domains, setDomains] = useState<Domain[]>([]);
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-  const [submissions, setSubmissions] = useState<any[]>([]);
-  const [problemStatements, setProblemStatements] = useState<ProblemStatement[]>([]);
+  const [submissions, setSubmissions] = useState<Submission[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,40 +57,62 @@ export default function ParticipantDashboard() {
         setTeam(teamData);
       }
 
-      const [domainsData, mentorsData, bookmarks, announcementsData, problemStatementsData] =
-        await Promise.all([
-          apiService.getDomains(),
-          apiService.getMentors(),
-          apiService.getBookmarkedPS(),
-          apiService.getAnnouncements(),
-          apiService.getProblemStatements(),
-        ]);
+      const [
+        domainsData,
+        mentorsData,
+        bookmarks,
+        announcementsData,
+        selectedPsData,
+        lockedData,
+        selectedMentorData,
+        submissionsData,
+      ] = await Promise.all([
+        apiService.getDomains(),
+        apiService.getMentors(),
+        apiService.getBookmarkedPS(),
+        apiService.getAnnouncements(),
+        apiService.getSelectedProblemStatement(),
+        apiService.getLockedOverview(),
+        apiService.getSelectedMentor(),
+        apiService.getTeamSubmission(),
+      ]);
 
       setDomains(domainsData);
       setMentors(mentorsData);
       setBookmarkedPS(bookmarks);
       setAnnouncements(announcementsData);
-      setProblemStatements(problemStatementsData);
+      setSelectedPS(selectedPsData);
+      setPsLocked(lockedData.problem_statements_locked === "true");
+      setMentorshipLocked(lockedData.mentorship_locked === "true");
+      setRound1Locked(lockedData.round1_locked === "true");
+      setSelectedMentor(selectedMentorData);
+      setSubmissions(submissionsData);
     } catch (error) {
       console.error("Failed to load data:", error);
     }
   };
 
-  const handleBookmark = (psId: string) => {
-    setBookmarkedPS((prev) =>
-      prev.includes(psId) ? prev.filter((id) => id !== psId) : [...prev, psId],
-    );
+  const handleBookmark = async (psId: string) => {
+    await apiService.bookmarkProblemStatement(psId);
+    const updatedBookmarks = await apiService.getBookmarkedPS();
+    setBookmarkedPS(updatedBookmarks);
   };
 
   const handleSubmissionUpdate = () => {
-    // Reload submissions data
-    loadData();
+    apiService.getTeamSubmission().then(setSubmissions);
   };
 
-  // Get all problem statements for bookmarks tab
-  const allProblemStatements: ProblemStatement[] = domains.flatMap(
-    (domain) => domain.problemStatements,
-  );
+  const refreshDomains = () => {
+    apiService.getDomains().then(setDomains);
+  };
+
+  const refreshMentors = () => {
+    apiService.getMentors().then(setMentors);
+  };
+
+  const refreshAnnouncements = () => {
+    apiService.getAnnouncements().then(setAnnouncements);
+  };
 
   // if (!passwordChanged) {
   //   return <PasswordChangeForm onPasswordChanged={() => setPasswordChanged(true)} />
@@ -157,7 +181,10 @@ export default function ParticipantDashboard() {
               selectedPS={selectedPS}
               selectedMentor={selectedMentor}
               psLocked={psLocked}
+              mentorshipLocked={mentorshipLocked}
               round2Selected={round2Selected}
+              round1Locked={round1Locked}
+              submissions={submissions}
             />
           </TabsContent>
 
@@ -167,36 +194,47 @@ export default function ParticipantDashboard() {
               selectedPS={selectedPS}
               bookmarkedPS={bookmarkedPS}
               psLocked={psLocked}
-              onSelectPS={setSelectedPS}
-              onBookmark={handleBookmark}
+              onSelectPSAction={setSelectedPS}
+              onBookmarkAction={handleBookmark}
+              refreshDomainsAction={refreshDomains}
             />
           </TabsContent>
 
           <TabsContent value="mentorship">
-            <Mentorship
-              mentors={mentors}
-              selectedMentor={selectedMentor}
-              onSelectMentor={setSelectedMentor}
-            />
+            {mentorshipLocked && !selectedMentor ? (
+              <div className="w-full text-center">
+                Mentorship sessions are currently locked. Please check back
+                later.
+              </div>
+            ) : (
+              <Mentorship
+                mentors={mentors}
+                mentorshipSession={selectedMentor}
+                onSelectMentorAction={setSelectedMentor}
+                refreshMentorsAction={refreshMentors}
+              />
+            )}
           </TabsContent>
 
           <TabsContent value="announcements">
-            <AnnouncementsTab announcements={announcements} />
+            <AnnouncementsTab
+              announcements={announcements}
+              refreshAnnouncementAction={refreshAnnouncements}
+            />
           </TabsContent>
 
           <TabsContent value="submissions">
             <SubmissionsTab
-              teamId={team.id}
               submissions={submissions}
-              onSubmissionUpdate={handleSubmissionUpdate}
+              round1Locked={round1Locked}
+              onSubmissionUpdateAction={handleSubmissionUpdate}
             />
           </TabsContent>
 
           <TabsContent value="bookmarks">
             <BookmarksTab
               bookmarkedPS={bookmarkedPS}
-              allProblemStatements={allProblemStatements}
-              onBookmarkUpdate={handleBookmark}
+              onBookmarkUpdateAction={handleBookmark}
             />
           </TabsContent>
         </Tabs>

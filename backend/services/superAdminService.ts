@@ -233,6 +233,7 @@ export class SuperAdminService {
           },
         },
         submissions: true,
+        round1Room: true,
         round2Room: true,
       },
       orderBy: {createdAt: "desc"},

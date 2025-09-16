@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -23,23 +23,36 @@ import {
 import { RefreshCw } from "lucide-react";
 import { apiService } from "@/lib/service";
 import { useToast } from "@/hooks/use-toast";
-import type { Mentor } from "@/lib/types";
+import type { Mentor, MentorshipSession } from "@/lib/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface MentorshipProps {
   mentors: Mentor[];
-  selectedMentor: string | null;
-  onSelectMentor: (mentorId: string) => void;
+  mentorshipSession: MentorshipSession | null;
+  onSelectMentorAction: (mentorId: MentorshipSession | null) => void;
+  refreshMentorsAction: () => void;
 }
 
 export function Mentorship({
   mentors,
-  selectedMentor,
-  onSelectMentor,
+  mentorshipSession,
+  onSelectMentorAction,
+  refreshMentorsAction,
 }: MentorshipProps) {
   const [domainFilter, setDomainFilter] = useState("all");
   const [mentorSearch, setMentorSearch] = useState("");
   const [showOnline, setShowOnline] = useState(true);
   const [showOffline, setShowOffline] = useState(true);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const [query, setQuery] = useState("");
   const { toast } = useToast();
 
   const filteredMentors = mentors.filter((mentor) => {
@@ -57,8 +70,8 @@ export function Mentorship({
 
   const handleBookMentor = async (mentorId: string) => {
     try {
-      await apiService.bookMentor(mentorId);
-      onSelectMentor(mentorId);
+      const session = await apiService.bookMentor(mentorId, query);
+      onSelectMentorAction(session);
       toast({
         title: "Success",
         description: "Mentor booked successfully",
@@ -73,13 +86,71 @@ export function Mentorship({
     }
   };
 
+  const handleCancelMentor = async () => {
+    await apiService.cancelMentorBooking(mentorshipSession!.id);
+    onSelectMentorAction(null);
+    setShowCancelDialog(false);
+    toast({
+      title: "Cancelled",
+      description: "Mentor selection cancelled",
+    });
+  };
+
+  useEffect(() => {
+    const interval = setInterval(refreshMentorsAction, 10000);
+    return () => clearInterval(interval);
+  }, [refreshMentorsAction]);
+
+  if (mentorshipSession) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{mentorshipSession.mentor.user.username}</CardTitle>
+          <CardDescription>
+            {mentorshipSession.mentor.domain} • Mentorship Mode:{" "}
+            {mentorshipSession.mentor.mode}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="">
+            <Dialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
+              <p className="mb-4">
+                <strong>Query:</strong> {mentorshipSession.query}
+              </p>
+              <DialogTrigger asChild>
+                <Button variant="destructive">Cancel Booking</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Cancel Mentor Booking?</DialogTitle>
+                </DialogHeader>
+                <p>Are you sure you want to cancel your mentor booking?</p>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowCancelDialog(false)}
+                  >
+                    No
+                  </Button>
+                  <Button variant="destructive" onClick={handleCancelMentor}>
+                    Yes
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Mentor Booking</h2>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" disabled={true}>
           <RefreshCw className="mr-2 h-4 w-4" />
-          Refresh (10s)
+          Auto refresh (10s)
         </Button>
       </div>
 
@@ -89,7 +160,7 @@ export function Mentorship({
           <CardTitle>Filters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="flex w-full flex-col items-center gap-2 md:flex-row md:gap-4">
             <div className="space-y-2">
               <Label htmlFor="domain-filter">Domain</Label>
               <Select value={domainFilter} onValueChange={setDomainFilter}>
@@ -105,7 +176,7 @@ export function Mentorship({
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
+            <div className="w-full space-y-2">
               <Label htmlFor="mentor-search">Search Mentor</Label>
               <Input
                 id="mentor-search"
@@ -139,7 +210,7 @@ export function Mentorship({
         </CardContent>
       </Card>
 
-      <div className="grid gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {filteredMentors.map((mentor) => (
           <Card key={mentor.id}>
             <CardHeader>
@@ -147,33 +218,59 @@ export function Mentorship({
                 <div>
                   <CardTitle>{mentor.user.username}</CardTitle>
                   <CardDescription>
-                    {mentor.domain} • {mentor.mode}
+                    {mentor.domain} • Mode: {mentor.mode}
                   </CardDescription>
                 </div>
                 <div className="text-right">
                   <Badge
-                    variant={
-                      mentor.queueCount >= 5
-                        ? "destructive"
-                        : "default"
-                    }
+                    variant={mentor.queueCount >= 5 ? "destructive" : "default"}
                   >
-                    {mentor.queueCount}/{5} slots
+                    {mentor.waitingTeamsCount}/{5} slots
                   </Badge>
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <Button
-                className="w-full"
-                disabled={mentor.queueCount >= 5}
-                onClick={() => handleBookMentor(mentor.id)}
-              >
-                {mentor.queueCount >= 5
-                  ? "Queue Full"
-                  : "Book Mentor"}
-              </Button>
-            </CardContent>
+            <Dialog
+              open={showBookingDialog}
+              onOpenChange={setShowBookingDialog}
+            >
+              <DialogTrigger asChild>
+                <Button className="mx-5" disabled={mentor.queueCount >= 5}>
+                  {mentor.queueCount >= 5 ? "Queue Full" : "Book Mentor"}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>
+                    Book {mentor.user.username} for mentorship session
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="query">Your Query</Label>
+                    <Input
+                      id="query"
+                      placeholder="Describe what you want to discuss..."
+                      onChange={(e) => setQuery(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowBookingDialog(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={() => handleBookMentor(mentor.id)}
+                    disabled={!query || query.trim() === ""}
+                  >
+                    Confirm Booking
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </Card>
         ))}
       </div>

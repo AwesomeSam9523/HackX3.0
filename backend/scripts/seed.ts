@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { hashPassword } from "../utils/password";
+import {PrismaClient} from "@prisma/client";
+import {hashPassword} from "../utils/password";
 
 const prisma = new PrismaClient();
 
@@ -159,7 +159,6 @@ async function main() {
     update: {},
     create: {
       userId: judgeUser.id,
-      expertise: ["Web Development", "Mobile Development"],
     },
   });
 
@@ -217,7 +216,6 @@ async function main() {
       name: "Code Warriors",
       teamId: "TEAM001",
       password: "team123",
-      roomNumber: "R101",
       participants: {
         connect: [{ id: participant1.id }, { id: participant2.id }],
       },

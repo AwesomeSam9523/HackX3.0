@@ -62,15 +62,6 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
     });
   }, [teams, searchTerm, statusFilter]);
 
-  const getJudgeName = (teamId: string) => {
-    if (!judges || judges.length === 0) {
-      return "Not Assigned";
-    }
-    // Mock logic to find judge assigned to team
-    const judgeIndex = teams.findIndex((t) => t.id === teamId) % judges.length;
-    return judges[judgeIndex]?.user.username || "Not Assigned";
-  };
-
   const getTeamScore = (teamId: string) => {
     // Mock scoring logic
     const scores = { t1: 8.5, t2: 7.8, t3: 9.2, t4: 6.9 };
@@ -191,8 +182,9 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
             {filteredTeams.map((team) => {
               const score = getTeamScore(team.id);
               const judgingTime = getJudgingTime(team.id);
-              const judgeName = getJudgeName(team.id);
-              const isJudged = team.judgementStatus === "Completed";
+              const judgeName =
+                team.evaluations[0]?.judge.user.username || "Not assigned";
+              const isJudged = team.evaluations[0].status === "COMPLETED";
 
               return (
                 <Card
@@ -218,7 +210,7 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                         </CardTitle>
                         <CardDescription className="mt-1">
                           PS: {team.problemStatement.title} • Room:{" "}
-                          {team.roomNumber}
+                          {team.round1Room.block} {team.round1Room.name}
                         </CardDescription>
                       </div>
                       <div className="text-right">
@@ -347,29 +339,17 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                     </div>
                     <div>
                       <Label className="font-bold">Problem Statement:</Label>
-                      <p>{selectedTeam.problemStatement.title}</p>
+                      <p>
+                        {selectedTeam.problemStatement.title} (
+                        {selectedTeam.problemStatement.id})
+                      </p>
                     </div>
                     <div>
                       <Label className="font-bold">Room Number:</Label>
-                      <p>{selectedTeam.roomNumber}</p>
-                    </div>
-                    <div>
-                      <Label className="font-bold">Team Members:</Label>
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        {selectedTeam.members?.map((member, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {member}
-                          </Badge>
-                        )) || (
-                          <span className="text-sm text-slate-500">
-                            No members listed
-                          </span>
-                        )}
-                      </div>
+                      <p>
+                        {selectedTeam.round1Room.block}{" "}
+                        {selectedTeam.round1Room.name}
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
@@ -381,12 +361,15 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                   <CardContent className="space-y-2 text-sm font-medium *:space-y-1">
                     <div>
                       <Label className="font-bold">Judge:</Label>
-                      <p>{getJudgeName(selectedTeam.id)}</p>
+                      <p>
+                        {selectedTeam.evaluations[0]?.judge.user.username ||
+                          "Not assigned"}
+                      </p>
                     </div>
                     <div>
                       <Label className="font-bold">Score:</Label>
                       <p>
-                        {selectedTeam.judgementStatus === "Completed"
+                        {selectedTeam.evaluations[0].status === "COMPLETED"
                           ? getTeamScore(selectedTeam.id)
                           : "Not judged"}
                       </p>

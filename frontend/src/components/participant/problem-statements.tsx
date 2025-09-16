@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -24,15 +24,16 @@ import {
 import { RefreshCw, Star, StarOff } from "lucide-react";
 import { apiService } from "@/lib/service";
 import { useToast } from "@/hooks/use-toast";
-import type { Domain } from "@/lib/types";
+import type { Domain, ProblemStatement } from "@/lib/types";
 
 interface ProblemStatementsProps {
   domains: Domain[];
-  selectedPS: string | null;
-  bookmarkedPS: string[];
+  selectedPS: ProblemStatement | null;
+  bookmarkedPS: ProblemStatement[];
   psLocked: boolean;
-  onSelectPS: (psId: string) => void;
-  onBookmark: (psId: string) => void;
+  onSelectPSAction: (ps: ProblemStatement) => void;
+  onBookmarkAction: (psId: string) => void;
+  refreshDomainsAction: () => void;
 }
 
 export function ProblemStatements({
@@ -40,18 +41,27 @@ export function ProblemStatements({
   selectedPS,
   bookmarkedPS,
   psLocked,
-  onSelectPS,
-  onBookmark,
+  onSelectPSAction,
+  onBookmarkAction,
+  refreshDomainsAction,
 }: ProblemStatementsProps) {
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // refresh domains every 30 seconds
+    const interval = setInterval(refreshDomainsAction, 30000);
+    return () => clearInterval(interval);
+  }, [refreshDomainsAction]);
 
   const handleSelectPS = async (psId: string) => {
     if (psLocked) return;
 
     try {
-      await apiService.selectProblemStatement(psId);
-      onSelectPS(psId);
+      const ps = await apiService.selectProblemStatement(psId);
+      onSelectPSAction(ps.problemStatement);
+      setDialogOpen(false);
       toast({
         title: "Success",
         description: "Problem statement selected successfully",
@@ -68,8 +78,8 @@ export function ProblemStatements({
 
   const handleBookmark = async (psId: string) => {
     try {
-      await apiService.bookmarkProblemStatement(psId);
-      onBookmark(psId);
+      // await apiService.bookmarkProblemStatement(psId);
+      onBookmarkAction(psId);
     } catch (error) {
       console.error(error);
       toast({
@@ -84,9 +94,9 @@ export function ProblemStatements({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Problem Statements</h2>
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" disabled={true}>
           <RefreshCw className="mr-2 h-4 w-4" />
-          Refresh (30s)
+          Auto refreshing (30s)
         </Button>
       </div>
 
@@ -104,15 +114,15 @@ export function ProblemStatements({
               <CardTitle className="flex items-center justify-between text-lg">
                 {domain.name}
                 <Badge variant="outline">
-                  {domain.problemStatements.length} PS
+                  {domain.problemStatements.reduce(
+                    (sum, ps) => sum + ps._count.teams,
+                    0,
+                  )}{" "}
+                  selections
                 </Badge>
               </CardTitle>
               <CardDescription>
-                {domain.problemStatements.reduce(
-                  (sum, ps) => sum + ps.selectedCount,
-                  0,
-                )}{" "}
-                total selections
+                {domain.problemStatements.length} problem statements available
               </CardDescription>
             </CardHeader>
           </Card>
@@ -144,14 +154,17 @@ export function ProblemStatements({
                         size="sm"
                         onClick={() => handleBookmark(ps.id)}
                       >
-                        {bookmarkedPS.includes(ps.id) ? (
+                        {bookmarkedPS
+                          .map((problem) => problem.id)
+                          .includes(ps.id) ? (
                           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                         ) : (
                           <StarOff className="h-4 w-4" />
                         )}
                       </Button>
                       <Badge variant="outline">
-                        Selected by {ps.selectedCount} teams
+                        Selected by {ps._count.teams}{" "}
+                        {ps._count.teams > 1 ? "teams" : "team"}
                       </Badge>
                     </div>
                   </div>
@@ -168,16 +181,22 @@ export function ProblemStatements({
                         ))}
                       </ul>
                     </div>
-                    <Dialog>
+                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                       <DialogTrigger asChild>
                         <Button
                           className="w-full"
-                          disabled={psLocked}
+                          disabled={psLocked || selectedPS?.id === ps.id}
                           variant={
-                            selectedPS === ps.id ? "secondary" : "default"
+                            selectedPS?.id === ps.id ? "secondary" : "default"
                           }
+                          onClick={(event) => {
+                            if (selectedPS?.id === ps.id) {
+                              event.preventDefault();
+                              event.stopPropagation();
+                            }
+                          }}
                         >
-                          {selectedPS === ps.id
+                          {selectedPS?.id === ps.id
                             ? "Selected"
                             : "Select This Problem"}
                         </Button>
@@ -186,7 +205,8 @@ export function ProblemStatements({
                         <DialogHeader>
                           <DialogTitle>Confirm Selection</DialogTitle>
                           <DialogDescription>
-                            Are you sure you want to select &#34;{ps.title}&#34;?
+                            Are you sure you want to select &#34;{ps.title}
+                            &#34;?
                             {psLocked
                               ? " Selection is locked and cannot be changed."
                               : " You can change this selection within the first 2 hours of the start of hackathon."}

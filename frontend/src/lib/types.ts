@@ -59,7 +59,6 @@ export interface Team {
     title: string;
     domain: string;
   };
-  roomNumber: string;
   credentialsGiven: boolean;
   status: string;
   wifiOptIn: boolean;
@@ -74,6 +73,18 @@ export interface Team {
   presentationLink: string;
   submissionStatus?: "submitted" | "partial" | "not_submitted";
   checkpoints: Checkpoint[];
+  evaluations: {
+    id: string;
+    status: "PENDING" | "COMPLETED";
+    judge: {
+      user: BaseUser;
+    };
+  }[];
+  round1Room: {
+    id: string;
+    name: string;
+    block: string;
+  };
 }
 
 export interface ProblemStatement {
@@ -85,6 +96,9 @@ export interface ProblemStatement {
   domain: {
     id: string;
     name: string;
+  };
+  _count: {
+    teams: number;
   };
 }
 
@@ -116,6 +130,15 @@ export interface Mentor {
       name: string;
     };
   }[];
+  waitingTeamsCount: number;
+}
+
+export interface MentorshipSession {
+  id: string;
+  teamId: string;
+  status: "WAITING" | "CANCELLED" | "RESOLVED";
+  query: string;
+  mentor: Mentor;
 }
 
 export interface Judge {
@@ -218,4 +241,11 @@ export interface LogFilter {
   dateFrom?: string;
   dateTo?: string;
   search?: string;
+}
+
+export interface Submission {
+  id: string;
+  githubRepo: string;
+  presentationLink: string;
+  submittedAt: string;
 }
