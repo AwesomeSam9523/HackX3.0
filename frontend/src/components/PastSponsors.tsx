@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { sponsorsData } from "../../data/sponsorsData";
 
@@ -33,7 +33,14 @@ const PastSponsors = () => {
   }, [data.length]);
 
   // data for custom grid: 4, 4, 3
-  const rows = [data.slice(0, 4), data.slice(4, 8), data.slice(8, 11)];
+  const rows = [
+    data.slice(0, 4),
+    data.slice(4, 8),
+    data.slice(8, 12),
+    data.slice(12, 16),
+    data.slice(16, 20),
+    data.slice(20, 23),
+  ];
 
   return (
     <section
@@ -77,9 +84,7 @@ const PastSponsors = () => {
                     <Image
                       src={sponsor.logo}
                       alt={sponsor.name}
-                      width={
-                        sponsor.name === "Programming Pathshala" ? 80 : 140
-                      } //specific for this only
+                      width={140} //specific for this only
                       height={50}
                       className="object-contain"
                     />

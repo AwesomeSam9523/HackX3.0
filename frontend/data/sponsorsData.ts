@@ -1,60 +1,119 @@
 export const sponsorsData = [
   {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
+    logo: "/sponsors/sponsor1.svg",
+    name: "Casio",
     type: "HIRING PARTNER",
   },
   {
-    logo: "/scribbr.svg",
+    logo: "/sponsors/sponsor2.svg",
     name: "Scribbr",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/quillbot.svg",
+    logo: "/sponsors/sponsor3.svg",
     name: "QuillBot",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/languagetool.svg",
+    logo: "/sponsors/sponsor4.svg",
     name: "LanguageTool",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/programmingpathshala.svg",
+    logo: "/sponsors/sponsor5.svg",
     name: "Programming Pathshala",
     type: "HIRING PARTNER",
   },
   {
-    logo: "/scribbr.svg",
+    logo: "/sponsors/sponsor6.svg",
     name: "Scribbr",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/quillbot.svg",
+    logo: "/sponsors/sponsor7.svg",
     name: "QuillBot",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/languagetool.svg",
+    logo: "/sponsors/sponsor8.svg",
     name: "LanguageTool",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/programmingpathshala.svg",
+    logo: "/sponsors/sponsor9.svg",
     name: "Programming Pathshala",
     type: "HIRING PARTNER",
   },
   {
-    logo: "/scribbr.svg",
+    logo: "/sponsors/sponsor10.svg",
     name: "Scribbr",
     type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/quillbot.svg",
+    logo: "/sponsors/sponsor11.svg",
     name: "QuillBot",
     type: "LANGUAGE PARTNER",
   },
-  // Repeat or add more as needed
+  {
+    logo: "/sponsors/sponsor12.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor13.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor14.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor15.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor16.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor17.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor18.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor19.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor20.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor21.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor22.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
+  {
+    logo: "/sponsors/sponsor13.svg",
+    name: "QuillBot",
+    type: "LANGUAGE PARTNER",
+  },
 ];
 
 export const inKindSponsorsData = [

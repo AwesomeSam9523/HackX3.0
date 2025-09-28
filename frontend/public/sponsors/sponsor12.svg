@@ -1,0 +1,7 @@
+import os
+
+        i = 1
+        for file in os.listdir("./"):
+        print(file)
+        os.rename(file, f"sponsor{i}")
+        i = i+1

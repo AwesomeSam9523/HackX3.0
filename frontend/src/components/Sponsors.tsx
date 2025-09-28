@@ -8,15 +8,29 @@ interface SponsorLogo {
 }
 
 const sponsorLogos: SponsorLogo[] = [
-  { src: "axure.svg", alt: "Axure", width: 120, height: 30 },
-  { src: "axure2.svg", alt: "Axure", width: 120, height: 30 },
-  { src: "oracle.svg", alt: "Oracle Academy", width: 140, height: 30 },
-  { src: "cdac.svg", alt: "CDAC", width: 100, height: 30 },
-  { src: "bikesetu.svg", alt: "BikeSetu", width: 130, height: 30 },
-  { src: "radio.svg", alt: "Pin Store", width: 110, height: 30 },
-  { src: "bobble.svg", alt: "Bobble AI", width: 120, height: 30 },
-  { src: "ed.svg", alt: "EDU", width: 100, height: 30 },
-  { src: "design.svg", alt: "Design Studio", width: 140, height: 30 },
+  { src: "sponsor1.svg", alt: "Casio", width: 120, height: 30 },
+  { src: "sponsor2.svg", alt: "Radio Manipal Jaipur", width: 120, height: 30 },
+  { src: "sponsor3.svg", alt: "Femease", width: 140, height: 30 },
+  { src: "sponsor4.svg", alt: "ED Times", width: 100, height: 30 },
+  { src: "sponsor5.svg", alt: "Manipal Hospitals", width: 130, height: 30 },
+  { src: "sponsor6.svg", alt: "Programming Pathshala", width: 110, height: 30 },
+  { src: "sponsor7.svg", alt: "Threeway Studio", width: 120, height: 30 },
+  { src: "sponsor8.svg", alt: "E-cell", width: 100, height: 30 },
+  { src: "sponsor9.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor10.svg", alt: "Herody", width: 140, height: 30 },
+  { src: "sponsor11.svg", alt: "Oracle Academy", width: 140, height: 30 },
+  { src: "sponsor12.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor13.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor14.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor15.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor16.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor17.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor18.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor19.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor20.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor21.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor22.svg", alt: "", width: 140, height: 30 },
+  { src: "sponsor23.svg", alt: "", width: 140, height: 30 },
 ];
 
 const Sponsors: React.FC = () => {
