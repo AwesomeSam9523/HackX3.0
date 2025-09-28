@@ -28,11 +28,11 @@ export interface CreateUserRequest {
 export interface TeamScoreRequest {
   teamId: string
   scores: {
-    innovation?: number
-    technical?: number
-    presentation?: number
-    impact?: number
-    feasibility?: number
+    innovation: number
+    technical: number
+    presentation: number
+    impact: number
+    feasibility: number
     feedback?: string
   }
 }

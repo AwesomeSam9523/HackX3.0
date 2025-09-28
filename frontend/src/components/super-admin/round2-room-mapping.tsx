@@ -1,10 +1,22 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -13,108 +25,156 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { MapPin, Users, UserCheck } from "lucide-react"
-import { apiService } from "@/lib/service"
-import { useToast } from "@/hooks/use-toast"
-import type { Team, Judge, Round2Room } from "@/lib/types"
+} from "@/components/ui/dialog";
+import { MapPin, UserCheck, Users } from "lucide-react";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
+import type { Judge, Round2Room, Team } from "@/lib/types";
 
 interface Round2RoomMappingProps {
-  teams: Team[]
-  judges: Judge[]
+  teams: Team[];
+  judges: Judge[];
 }
 
 export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
-  const [rooms, setRooms] = useState<Round2Room[]>([])
-  const [selectedJudge, setSelectedJudge] = useState<string>("")
-  const [selectedRoom, setSelectedRoom] = useState<string>("")
-  const [selectedTeam, setSelectedTeam] = useState<string>("")
-  const [selectedRoomForTeam, setSelectedRoomForTeam] = useState<string>("")
-  const [isJudgeMapOpen, setIsJudgeMapOpen] = useState(false)
-  const [isTeamAssignOpen, setIsTeamAssignOpen] = useState(false)
-  const { toast } = useToast()
+  const [rooms, setRooms] = useState<Round2Room[]>([]);
+  const [selectedJudge, setSelectedJudge] = useState<string>("");
+  const [selectedRoom, setSelectedRoom] = useState<string>("");
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedRoomForTeam, setSelectedRoomForTeam] = useState<string>("");
+  const [isJudgeMapOpen, setIsJudgeMapOpen] = useState(false);
+  const [isTeamAssignOpen, setIsTeamAssignOpen] = useState(false);
+  const { toast } = useToast();
 
   // Mock Round 2 rooms data - in real app, this would come from API
   useEffect(() => {
     const mockRooms: Round2Room[] = [
-      { id: "r1", roomNumber: "AB2-301", floor: "Third Floor", capacity: 1, assignedTeams: [] },
-      { id: "r2", roomNumber: "AB2-302", floor: "Third Floor", capacity: 1, assignedTeams: [] },
-      { id: "r3", roomNumber: "AB2-303", floor: "Third Floor", capacity: 1, assignedTeams: [] },
-      { id: "r4", roomNumber: "AB2-304", floor: "Third Floor", capacity: 1, assignedTeams: [] },
-      { id: "r5", roomNumber: "AB2-305", floor: "Third Floor", capacity: 1, assignedTeams: [] },
-      { id: "r6", roomNumber: "AB2-306", floor: "Third Floor", capacity: 1, assignedTeams: [] },
-    ]
-    setRooms(mockRooms)
-  }, [])
+      {
+        id: "r1",
+        roomNumber: "AB2-301",
+        floor: "Third Floor",
+        capacity: 1,
+        assignedTeams: [],
+      },
+      {
+        id: "r2",
+        roomNumber: "AB2-302",
+        floor: "Third Floor",
+        capacity: 1,
+        assignedTeams: [],
+      },
+      {
+        id: "r3",
+        roomNumber: "AB2-303",
+        floor: "Third Floor",
+        capacity: 1,
+        assignedTeams: [],
+      },
+      {
+        id: "r4",
+        roomNumber: "AB2-304",
+        floor: "Third Floor",
+        capacity: 1,
+        assignedTeams: [],
+      },
+      {
+        id: "r5",
+        roomNumber: "AB2-305",
+        floor: "Third Floor",
+        capacity: 1,
+        assignedTeams: [],
+      },
+      {
+        id: "r6",
+        roomNumber: "AB2-306",
+        floor: "Third Floor",
+        capacity: 1,
+        assignedTeams: [],
+      },
+    ];
+    setRooms(mockRooms);
+  }, []);
 
   const handleMapJudgeToRoom = async () => {
-    if (!selectedJudge || !selectedRoom) return
+    if (!selectedJudge || !selectedRoom) return;
 
     try {
-      await apiService.mapJudgeToRoom(selectedJudge, selectedRoom)
-
-      // Update local state
-      setRooms((prev) =>
-        prev.map((room) => (room.id === selectedRoom ? { ...room, assignedJudge: selectedJudge } : room)),
-      )
-
-      toast({
-        title: "Success",
-        description: "Judge mapped to room successfully",
-      })
-      setIsJudgeMapOpen(false)
-      setSelectedJudge("")
-      setSelectedRoom("")
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to map judge to room",
-        variant: "destructive",
-      })
-    }
-  }
-
-  const handleAssignTeamToRoom = async () => {
-    if (!selectedTeam || !selectedRoomForTeam) return
-
-    try {
-      await apiService.assignTeamToRoom(selectedTeam, selectedRoomForTeam)
+      await apiService.mapJudgeToRoom(selectedJudge, selectedRoom);
 
       // Update local state
       setRooms((prev) =>
         prev.map((room) =>
-          room.id === selectedRoomForTeam ? { ...room, assignedTeams: [...room.assignedTeams, selectedTeam] } : room,
+          room.id === selectedRoom
+            ? { ...room, assignedJudge: selectedJudge }
+            : room,
         ),
-      )
+      );
+
+      toast({
+        title: "Success",
+        description: "Judge mapped to room successfully",
+      });
+      setIsJudgeMapOpen(false);
+      setSelectedJudge("");
+      setSelectedRoom("");
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Failed to map judge to room",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleAssignTeamToRoom = async () => {
+    if (!selectedTeam || !selectedRoomForTeam) return;
+
+    try {
+      await apiService.assignTeamToRoom(selectedTeam, selectedRoomForTeam);
+
+      // Update local state
+      setRooms((prev) =>
+        prev.map((room) =>
+          room.id === selectedRoomForTeam
+            ? { ...room, assignedTeams: [...room.assignedTeams, selectedTeam] }
+            : room,
+        ),
+      );
 
       toast({
         title: "Success",
         description: "Team assigned to room successfully",
-      })
-      setIsTeamAssignOpen(false)
-      setSelectedTeam("")
-      setSelectedRoomForTeam("")
+      });
+      setIsTeamAssignOpen(false);
+      setSelectedTeam("");
+      setSelectedRoomForTeam("");
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error",
         description: "Failed to assign team to room",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const getJudgeName = (judgeId: string) => {
-    return judges.find((j) => j.id === judgeId)?.name || "Unknown Judge"
-  }
+    return judges.find((j) => j.id === judgeId)?.name || "Unknown Judge";
+  };
 
   const getTeamName = (teamId: string) => {
-    return teams.find((t) => t.id === teamId)?.teamName || "Unknown Team"
-  }
+    return teams.find((t) => t.id === teamId)?.name || "Unknown Team";
+  };
 
-  const round2Teams = teams.filter((team) => team.round2Status === "Selected")
-  const availableJudges = judges.filter((judge) => !rooms.some((room) => room.assignedJudge === judge.id))
-  const availableRooms = rooms.filter((room) => !room.assignedJudge)
-  const availableTeams = round2Teams.filter((team) => !rooms.some((room) => room.assignedTeams.includes(team.id)))
+  const round2Teams = teams.filter((team) => team.round2Status === "Selected");
+  const availableJudges = judges.filter(
+    (judge) => !rooms.some((room) => room.assignedJudge === judge.id),
+  );
+  const availableRooms = rooms.filter((room) => !room.assignedJudge);
+  const availableTeams = round2Teams.filter(
+    (team) => !rooms.some((room) => room.assignedTeams.includes(team.id)),
+  );
 
   return (
     <div className="space-y-6">
@@ -124,26 +184,31 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
           <Dialog open={isJudgeMapOpen} onOpenChange={setIsJudgeMapOpen}>
             <DialogTrigger asChild>
               <Button>
-                <UserCheck className="h-4 w-4 mr-2" />
+                <UserCheck className="mr-2 h-4 w-4" />
                 Map Judges to Rooms
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Map Judge to Room</DialogTitle>
-                <DialogDescription>Assign judges to Round 2 evaluation rooms</DialogDescription>
+                <DialogDescription>
+                  Assign judges to Round 2 evaluation rooms
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Select Judge</label>
-                  <Select value={selectedJudge} onValueChange={setSelectedJudge}>
+                  <Select
+                    value={selectedJudge}
+                    onValueChange={setSelectedJudge}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a judge" />
                     </SelectTrigger>
                     <SelectContent>
                       {availableJudges.map((judge) => (
                         <SelectItem key={judge.id} value={judge.id}>
-                          {judge.name} - {judge.floor}
+                          {judge.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -166,7 +231,10 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setIsJudgeMapOpen(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsJudgeMapOpen(false)}
+                >
                   Cancel
                 </Button>
                 <Button onClick={handleMapJudgeToRoom}>Map Judge</Button>
@@ -177,14 +245,16 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
           <Dialog open={isTeamAssignOpen} onOpenChange={setIsTeamAssignOpen}>
             <DialogTrigger asChild>
               <Button variant="outline">
-                <Users className="h-4 w-4 mr-2" />
+                <Users className="mr-2 h-4 w-4" />
                 Assign Teams
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Assign Team to Room</DialogTitle>
-                <DialogDescription>Assign Round 2 teams to evaluation rooms</DialogDescription>
+                <DialogDescription>
+                  Assign Round 2 teams to evaluation rooms
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -196,7 +266,7 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
                     <SelectContent>
                       {availableTeams.map((team) => (
                         <SelectItem key={team.id} value={team.id}>
-                          {team.teamName}
+                          {team.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -204,16 +274,24 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Select Room</label>
-                  <Select value={selectedRoomForTeam} onValueChange={setSelectedRoomForTeam}>
+                  <Select
+                    value={selectedRoomForTeam}
+                    onValueChange={setSelectedRoomForTeam}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Choose a room" />
                     </SelectTrigger>
                     <SelectContent>
                       {rooms
-                        .filter((room) => room.assignedJudge && room.assignedTeams.length < room.capacity)
+                        .filter(
+                          (room) =>
+                            room.assignedJudge &&
+                            room.assignedTeams.length < room.capacity,
+                        )
                         .map((room) => (
                           <SelectItem key={room.id} value={room.id}>
-                            {room.roomNumber} - Judge: {getJudgeName(room.assignedJudge!)}
+                            {room.roomNumber} - Judge:{" "}
+                            {getJudgeName(room.assignedJudge!)}
                           </SelectItem>
                         ))}
                     </SelectContent>
@@ -221,7 +299,10 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setIsTeamAssignOpen(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsTeamAssignOpen(false)}
+                >
                   Cancel
                 </Button>
                 <Button onClick={handleAssignTeamToRoom}>Assign Team</Button>
@@ -231,7 +312,7 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {rooms.map((room) => (
           <Card
             key={room.id}
@@ -252,30 +333,40 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
               <div className="space-y-2">
                 {room.assignedJudge ? (
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="mb-2 flex items-center gap-2">
                       <UserCheck className="h-4 w-4 text-green-600" />
-                      <span className="text-sm font-medium">Judge: {getJudgeName(room.assignedJudge)}</span>
+                      <span className="text-sm font-medium">
+                        Judge: {getJudgeName(room.assignedJudge)}
+                      </span>
                     </div>
 
                     {room.assignedTeams.length > 0 ? (
                       <div>
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="mb-1 flex items-center gap-2">
                           <Users className="h-4 w-4 text-blue-600" />
-                          <span className="text-sm font-medium">Assigned Teams:</span>
+                          <span className="text-sm font-medium">
+                            Assigned Teams:
+                          </span>
                         </div>
                         {room.assignedTeams.map((teamId) => (
-                          <Badge key={teamId} variant="outline" className="mr-1 mb-1">
+                          <Badge
+                            key={teamId}
+                            variant="outline"
+                            className="mr-1 mb-1"
+                          >
                             {getTeamName(teamId)}
                           </Badge>
                         ))}
                       </div>
                     ) : (
-                      <div className="text-sm text-slate-500">No teams assigned yet</div>
+                      <div className="text-sm text-slate-500">
+                        No teams assigned yet
+                      </div>
                     )}
                   </div>
                 ) : (
                   <div className="text-sm text-slate-500">
-                    <MapPin className="h-4 w-4 inline mr-1" />
+                    <MapPin className="mr-1 inline h-4 w-4" />
                     Waiting for judge assignment
                   </div>
                 )}
@@ -288,10 +379,12 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
       <Card>
         <CardHeader>
           <CardTitle>Assignment Summary</CardTitle>
-          <CardDescription>Overview of Round 2 room assignments</CardDescription>
+          <CardDescription>
+            Overview of Round 2 room assignments
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-600">
                 {rooms.filter((r) => r.assignedJudge).length}/{rooms.length}
@@ -300,17 +393,22 @@ export function Round2RoomMapping({ teams, judges }: Round2RoomMappingProps) {
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-green-600">
-                {rooms.reduce((sum, room) => sum + room.assignedTeams.length, 0)}
+                {rooms.reduce(
+                  (sum, room) => sum + room.assignedTeams.length,
+                  0,
+                )}
               </div>
               <p className="text-sm text-slate-500">Teams Assigned</p>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">{availableTeams.length}</div>
+              <div className="text-2xl font-bold text-orange-600">
+                {availableTeams.length}
+              </div>
               <p className="text-sm text-slate-500">Teams Pending</p>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

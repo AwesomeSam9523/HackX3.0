@@ -51,7 +51,7 @@ export default function TeamDashboard() {
 
   const loadData = async () => {
     try {
-      const user = await apiService.getProfile();
+      const user = await apiService.getAuthProfile();
       if (user?.teamId) {
         const teamData = await apiService.getMyTeam();
         setTeam(teamData);

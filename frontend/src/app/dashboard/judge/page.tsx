@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -13,114 +19,151 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Slider } from "@/components/ui/slider"
-import { Switch } from "@/components/ui/switch"
-import { Separator } from "@/components/ui/separator"
-import { Gavel, Users, MapPin, Edit, Calculator, Github, FileText } from "lucide-react"
+} from "@/components/ui/dialog";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
+import {
+  Calculator,
+  Edit,
+  FileText,
+  Gavel,
+  Github,
+  MapPin,
+  Users,
+} from "lucide-react";
+import { Evaluation, Judge } from "@/lib/types";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
+
+type ScoreKeys =
+  | "innovation"
+  | "technical"
+  | "presentation"
+  | "feasibility"
+  | "impact";
+interface Criterion {
+  id: ScoreKeys;
+  name: string;
+  weight: number;
+  maxScore: number;
+}
 
 export default function JudgeDashboard() {
-  const [passwordChanged, setPasswordChanged] = useState(true)
-  const [hideEvaluated, setHideEvaluated] = useState(false)
-  const [selectedTeam, setSelectedTeam] = useState<string | null>(null)
-  const [scores, setScores] = useState<{ [key: string]: { [key: string]: number } }>({})
+  // const [passwordChanged, setPasswordChanged] = useState(true);
+  const [hideEvaluated, setHideEvaluated] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [scores, setScores] = useState<
+    Record<ScoreKeys, number> & { feedback: string }
+  >({
+    innovation: 0,
+    technical: 0,
+    feasibility: 0,
+    presentation: 0,
+    impact: 0,
+    feedback: "",
+  });
+  const [judge, setJudge] = useState<Judge>();
+  const [assignedTeams, setAssignedTeams] = useState<Evaluation[]>([]);
+  const { toast } = useToast();
 
-  // Mock data
-  const judgeInfo = {
-    name: "Prof. Michael Johnson",
-    floor: "Ground Floor",
-    assignedTeams: 8,
-  }
+  useEffect(() => {
+    apiService.getProfile().then((value) => setJudge(value as Judge));
+    apiService.getEvaluations().then(setAssignedTeams);
+  }, []);
 
-  const scoringCriteria = [
-    { id: "innovation", name: "Innovation & Creativity", weight: 25, maxScore: 10 },
-    { id: "technical", name: "Technical Implementation", weight: 30, maxScore: 10 },
-    { id: "presentation", name: "Presentation Quality", weight: 20, maxScore: 10 },
-    { id: "feasibility", name: "Feasibility & Impact", weight: 25, maxScore: 10 },
-  ]
-
-  const [teams, setTeams] = useState([
+  const scoringCriteria: Criterion[] = [
     {
-      id: "t1",
-      teamName: "Code Warriors",
-      problemStatement: "Smart Traffic Management System",
-      roomNumber: "AB1-201",
-      floor: "Ground Floor",
-      evaluated: false,
-      totalScore: 0,
-      githubLink: "https://github.com/codewarriors/traffic-system",
-      presentationLink: "https://drive.google.com/presentation/d/abc123",
-      submissionStatus: "submitted",
+      id: "innovation",
+      name: "Innovation & Creativity",
+      weight: 25,
+      maxScore: 10,
     },
     {
-      id: "t2",
-      teamName: "Tech Innovators",
-      problemStatement: "Healthcare Diagnosis Assistant",
-      roomNumber: "AB1-203",
-      floor: "Ground Floor",
-      evaluated: true,
-      totalScore: 8.5,
-      githubLink: "https://github.com/techinnovators/health-ai",
-      presentationLink: "https://drive.google.com/presentation/d/def456",
-      submissionStatus: "submitted",
+      id: "technical",
+      name: "Technical Implementation",
+      weight: 30,
+      maxScore: 10,
     },
     {
-      id: "t3",
-      teamName: "Digital Pioneers",
-      problemStatement: "E-commerce Platform",
-      roomNumber: "AB1-205",
-      floor: "Ground Floor",
-      evaluated: false,
-      totalScore: 0,
-      githubLink: null,
-      presentationLink: null,
-      submissionStatus: "not_submitted",
+      id: "presentation",
+      name: "Presentation Quality",
+      weight: 15,
+      maxScore: 10,
     },
     {
-      id: "t4",
-      teamName: "Innovation Squad",
-      problemStatement: "Smart Traffic Management System",
-      roomNumber: "AB1-207",
-      floor: "Ground Floor",
-      evaluated: true,
-      totalScore: 7.8,
-      githubLink: "https://github.com/innovationsquad/smart-traffic",
-      presentationLink: null,
-      submissionStatus: "partial",
+      id: "feasibility",
+      name: "Feasibility of the Project",
+      weight: 15,
+      maxScore: 10,
     },
-  ])
+    {
+      id: "impact",
+      name: "Impact on Real Life",
+      weight: 15,
+      maxScore: 10,
+    },
+  ];
 
-  const calculateWeightedScore = (teamId: string) => {
-    const teamScores = scores[teamId] || {}
-    let totalWeightedScore = 0
+  const loadScores = async (teamId: string) => {
+    const teamScores = await apiService.getTeamScoresById(teamId);
+    setScores({
+      innovation: teamScores.innovation,
+      impact: teamScores.impact,
+      technical: teamScores.technical,
+      presentation: teamScores.presentation,
+      feasibility: teamScores.feasibility,
+      feedback: teamScores.feedback || "",
+    });
+    setDialogOpen(true);
+  };
+
+  const calculateWeightedScore = () => {
+    let totalWeightedScore = 0;
 
     scoringCriteria.forEach((criteria) => {
-      const score = teamScores[criteria.id] || 0
-      totalWeightedScore += (score * criteria.weight) / 100
-    })
+      const score = scores[criteria.id] || 0;
+      totalWeightedScore += (score * criteria.weight) / 100;
+    });
+    return totalWeightedScore.toFixed(1);
+  };
 
-    return totalWeightedScore.toFixed(1)
-  }
-
-  const handleScoreChange = (teamId: string, criteriaId: string, value: number[]) => {
+  const handleScoreChange = (criteriaId: string, value: number[]) => {
     setScores((prev) => ({
       ...prev,
-      [teamId]: {
-        ...prev[teamId],
-        [criteriaId]: value[0],
+      [criteriaId]: value[0],
+    }));
+  };
+
+  const handleSaveScore = async (teamId: string) => {
+    const payload = {
+      teamId,
+      scores,
+    };
+    await apiService.submitScore(payload);
+    apiService.getEvaluations().then(setAssignedTeams);
+    toast({
+      title: "Team marked!",
+      description: `Successfully updated the score of team`,
+    });
+    setDialogOpen(false);
+  };
+
+  const resetScores = () => {
+    const reset = scoringCriteria.reduce(
+      (acc, criteria) => {
+        acc[criteria.id] = 0;
+        return acc;
       },
-    }))
-  }
+      {} as Record<ScoreKeys, number>,
+    );
 
-  const handleSaveScore = (teamId: string) => {
-    const weightedScore = Number.parseFloat(calculateWeightedScore(teamId))
-    setTeams((prev) =>
-      prev.map((team) => (team.id === teamId ? { ...team, evaluated: true, totalScore: weightedScore } : team)),
-    )
-    setSelectedTeam(null)
-  }
+    setScores({ ...reset, feedback: "" });
+  };
 
-  const filteredTeams = hideEvaluated ? teams.filter((team) => !team.evaluated) : teams
+  const filteredEvaluations = hideEvaluated
+    ? assignedTeams.filter((team) => !team.evaluated)
+    : assignedTeams;
 
   // if (!passwordChanged) {
   //   return (
@@ -152,17 +195,26 @@ export default function JudgeDashboard() {
   //   )
   // }
 
+  if (!judge) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 p-4 sm:p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 space-y-4 sm:space-y-0">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6 flex flex-col space-y-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Judge Dashboard</h1>
-            <p className="text-sm sm:text-base text-slate-600 mt-1">Welcome, {judgeInfo.name}</p>
+            <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+              Welcome, {judge.name}
+            </h1>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center space-x-2">
-              <Switch id="hide-evaluated" checked={hideEvaluated} onCheckedChange={setHideEvaluated} />
+              <Switch
+                id="hide-evaluated"
+                checked={hideEvaluated}
+                onCheckedChange={setHideEvaluated}
+              />
               <Label htmlFor="hide-evaluated" className="text-xs sm:text-sm">
                 Hide Evaluated Teams
               </Label>
@@ -170,7 +222,7 @@ export default function JudgeDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="mb-6 grid grid-cols-1 gap-4 sm:mb-8 sm:grid-cols-3 sm:gap-6">
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
@@ -180,12 +232,16 @@ export default function JudgeDashboard() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div>
-                <Label className="text-xs sm:text-sm font-medium">Assigned Floor</Label>
-                <p className="text-base sm:text-lg">{judgeInfo.floor}</p>
+                <Label className="text-xs font-medium sm:text-sm">
+                  User ID
+                </Label>
+                <p className="text-base sm:text-lg">{judge.user.username}</p>
               </div>
               <div>
-                <Label className="text-xs sm:text-sm font-medium">Total Teams</Label>
-                <p className="text-base sm:text-lg">{judgeInfo.assignedTeams}</p>
+                <Label className="text-xs font-medium sm:text-sm">
+                  Teams Assigned
+                </Label>
+                <p className="text-base sm:text-lg">{assignedTeams.length}</p>
               </div>
             </CardContent>
           </Card>
@@ -199,10 +255,13 @@ export default function JudgeDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-green-600">
-                  {teams.filter((t) => t.evaluated).length}/{teams.length}
+                <div className="text-2xl font-bold text-green-600 sm:text-3xl">
+                  {assignedTeams.filter((t) => t.evaluated).length}/
+                  {assignedTeams.length}
                 </div>
-                <p className="text-xs sm:text-sm text-slate-500">Teams Evaluated</p>
+                <p className="text-xs text-slate-500 sm:text-sm">
+                  Teams Evaluated
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -216,15 +275,19 @@ export default function JudgeDashboard() {
             </CardHeader>
             <CardContent>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-blue-600">
-                  {teams.filter((t) => t.evaluated).length > 0
+                <div className="text-2xl font-bold text-blue-600 sm:text-3xl">
+                  {assignedTeams.filter((t) => t.evaluated).length > 0
                     ? (
-                        teams.filter((t) => t.evaluated).reduce((sum, t) => sum + t.totalScore, 0) /
-                        teams.filter((t) => t.evaluated).length
+                        assignedTeams
+                          .filter((t) => t.evaluated)
+                          .reduce(
+                            (sum, t) => sum + t.team.latestScore.totalScore,
+                            0,
+                          ) / assignedTeams.filter((t) => t.evaluated).length
                       ).toFixed(1)
                     : "0.0"}
                 </div>
-                <p className="text-xs sm:text-sm text-slate-500">Out of 10</p>
+                <p className="text-xs text-slate-500 sm:text-sm">Out of 10</p>
               </div>
             </CardContent>
           </Card>
@@ -234,66 +297,72 @@ export default function JudgeDashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
               <MapPin className="h-4 w-4 sm:h-5 sm:w-5" />
-              Teams - {judgeInfo.floor}
+              Teams Assigned for Evaluation
             </CardTitle>
-            <CardDescription className="text-sm">Click on a team to evaluate or edit scores</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
-              {filteredTeams.map((team) => (
+              {filteredEvaluations.map((evaluation) => (
                 <Card
-                  key={team.id}
-                  className={`cursor-pointer transition-colors hover:bg-slate-50 border-l-4 ${team.evaluated ? "border-l-hackx" : ""}`}
+                  key={evaluation.evaluationId}
+                  className={`cursor-pointer border-l-4 transition-colors hover:bg-slate-50 ${evaluation.evaluated ? "border-l-hackx" : ""}`}
                 >
                   <CardHeader className="pb-3">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-3 lg:space-y-0">
+                    <div className="flex flex-col space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
                       <div className="flex-1">
-                        <CardTitle className="text-base sm:text-lg flex flex-col sm:flex-row sm:items-center gap-2">
-                          <span>{team.teamName}</span>
-                          {team.evaluated && (
-                            <Badge variant="default" className="bg-green-500 text-xs w-fit">
+                        <CardTitle className="flex flex-col gap-2 text-base sm:flex-row sm:items-center sm:text-lg">
+                          <span>{evaluation.team.name}</span>
+                          {evaluation.evaluated && (
+                            <Badge
+                              variant="default"
+                              className="w-fit bg-green-500 text-xs"
+                            >
                               Evaluated
                             </Badge>
                           )}
                         </CardTitle>
                         <CardDescription className="mt-1 text-sm">
-                          <strong>PS:</strong> {team.problemStatement}
+                          <strong>PS:</strong>{" "}
+                          {evaluation.team.problemStatement.title}
                         </CardDescription>
                         <CardDescription className="text-sm">
-                          <strong>Room:</strong> {team.roomNumber}
+                          <strong>Room:</strong>{" "}
+                          {evaluation.team.round1Room.block}{" "}
+                          {evaluation.team.round1Room.name}
                         </CardDescription>
                       </div>
                       <div className="text-left lg:text-right">
                         <Badge
                           variant={
-                            team.submissionStatus === "submitted"
+                            evaluation.team.submissionStatus === "SUBMITTED"
                               ? "default"
-                              : team.submissionStatus === "partial"
-                                ? "secondary"
-                                : "destructive"
+                              : "destructive"
                           }
                           className="text-xs"
                         >
-                          {team.submissionStatus === "submitted"
+                          {evaluation.team.submissionStatus === "SUBMITTED"
                             ? "Submitted"
-                            : team.submissionStatus === "partial"
-                              ? "Partial"
-                              : "Not Submitted"}
+                            : "Not Submitted"}
                         </Badge>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
                     <div className="space-y-3">
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        {team.githubLink ? (
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        {evaluation.team.latestSubmission.githubRepo ? (
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => window.open(team.githubLink, "_blank")}
-                            className="text-xs w-full sm:w-auto"
+                            onClick={() =>
+                              window.open(
+                                evaluation.team.latestSubmission.githubRepo,
+                                "_blank",
+                              )
+                            }
+                            className="w-full text-xs sm:w-auto"
                           >
-                            <Github className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                            <Github className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                             GitHub Repo
                           </Button>
                         ) : (
@@ -301,21 +370,27 @@ export default function JudgeDashboard() {
                             size="sm"
                             variant="outline"
                             disabled
-                            className="text-xs w-full sm:w-auto bg-transparent"
+                            className="w-full bg-transparent text-xs sm:w-auto"
                           >
-                            <Github className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                            <Github className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                             No GitHub
                           </Button>
                         )}
 
-                        {team.presentationLink ? (
+                        {evaluation.team.latestSubmission.presentationLink ? (
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => window.open(team.presentationLink, "_blank")}
-                            className="text-xs w-full sm:w-auto"
+                            onClick={() =>
+                              window.open(
+                                evaluation.team.latestSubmission
+                                  .presentationLink,
+                                "_blank",
+                              )
+                            }
+                            className="w-full text-xs sm:w-auto"
                           >
-                            <FileText className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                            <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                             Presentation
                           </Button>
                         ) : (
@@ -323,71 +398,91 @@ export default function JudgeDashboard() {
                             size="sm"
                             variant="outline"
                             disabled
-                            className="text-xs w-full sm:w-auto bg-transparent"
+                            className="w-full bg-transparent text-xs sm:w-auto"
                           >
-                            <FileText className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                            <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                             No Presentation
                           </Button>
                         )}
                       </div>
 
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                      <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
                         <div className="flex items-center gap-4">
-                          {team.evaluated && (
+                          {evaluation.evaluated && (
                             <div className="flex items-center gap-2">
-                              <span className="text-xs sm:text-sm text-slate-600">Score:</span>
-                              <Badge variant="outline" className="font-mono text-xs">
-                                {team.totalScore}/10
+                              <span className="text-xs text-slate-600 sm:text-sm">
+                                Score:
+                              </span>
+                              <Badge
+                                variant="outline"
+                                className="font-mono text-xs"
+                              >
+                                {evaluation.team.latestScore.totalScore}/10
                               </Badge>
                             </div>
                           )}
                         </div>
-                        <Dialog>
+                        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                           <DialogTrigger asChild>
                             <Button
                               size="sm"
-                              variant={team.evaluated ? "outline" : "default"}
-                              onClick={() => setSelectedTeam(team.id)}
-                              className="text-xs w-full sm:w-auto"
+                              variant={
+                                evaluation.evaluated ? "outline" : "default"
+                              }
+                              className="w-full text-xs sm:w-auto"
+                              onClick={() => loadScores(evaluation.team.id)}
                             >
-                              {team.evaluated ? (
+                              {evaluation.evaluated ? (
                                 <>
-                                  <Edit className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                                  <Edit className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                                   Edit Score
                                 </>
                               ) : (
                                 <>
-                                  <Gavel className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                                  <Gavel className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                                   Evaluate
                                 </>
                               )}
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="w-[95vw] max-w-2xl max-h-[90vh] overflow-y-auto">
+                          <DialogContent className="max-h-[90vh] w-[95vw] max-w-2xl overflow-y-auto">
                             <DialogHeader>
-                              <DialogTitle className="text-lg sm:text-xl">Evaluate Team: {team.teamName}</DialogTitle>
+                              <DialogTitle className="text-lg sm:text-xl">
+                                Evaluate Team: {evaluation.team.name}
+                              </DialogTitle>
                               <DialogDescription className="text-sm">
-                                Score each criteria on a scale of 0-10. The weighted score will be calculated
-                                automatically.
+                                Score each criteria on a scale of 0-10. The
+                                weighted score will be calculated automatically.
                               </DialogDescription>
                             </DialogHeader>
                             <div className="space-y-6">
                               {scoringCriteria.map((criteria) => (
                                 <div key={criteria.id} className="space-y-3">
-                                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
-                                    <Label className="text-sm font-medium">{criteria.name}</Label>
+                                  <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                                    <Label className="text-sm font-medium">
+                                      {criteria.name}
+                                    </Label>
                                     <div className="flex items-center gap-2">
-                                      <Badge variant="outline" className="text-xs">
+                                      <Badge
+                                        variant="outline"
+                                        className="text-xs"
+                                      >
                                         Weight: {criteria.weight}%
                                       </Badge>
-                                      <Badge variant="secondary" className="text-xs">
-                                        {scores[team.id]?.[criteria.id] || 0}/{criteria.maxScore}
+                                      <Badge
+                                        variant="secondary"
+                                        className="text-xs"
+                                      >
+                                        {scores[criteria.id] || 0}/
+                                        {criteria.maxScore}
                                       </Badge>
                                     </div>
                                   </div>
                                   <Slider
-                                    value={[scores[team.id]?.[criteria.id] || 0]}
-                                    onValueChange={(value) => handleScoreChange(team.id, criteria.id, value)}
+                                    value={[scores[criteria.id] || 0]}
+                                    onValueChange={(value) =>
+                                      handleScoreChange(criteria.id, value)
+                                    }
                                     max={criteria.maxScore}
                                     step={0.1}
                                     className="w-full"
@@ -395,24 +490,40 @@ export default function JudgeDashboard() {
                                 </div>
                               ))}
                               <Separator />
-                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
-                                <span className="text-base sm:text-lg font-semibold">Weighted Total Score:</span>
-                                <Badge variant="default" className="text-sm sm:text-lg px-3 py-1 w-fit">
-                                  {calculateWeightedScore(team.id)}/10
+                              <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                                <span className="text-base font-semibold sm:text-lg">
+                                  Weighted Total Score:
+                                </span>
+                                <Badge
+                                  variant="default"
+                                  className="w-fit px-3 py-1 text-sm sm:text-lg"
+                                >
+                                  {calculateWeightedScore()}
+                                  /10.0
                                 </Badge>
                               </div>
                             </div>
-                            <DialogFooter className="flex-col sm:flex-row gap-2">
-                              <Button variant="outline" className="w-full sm:w-auto bg-transparent">
+                            <DialogFooter className="flex-col gap-2 sm:flex-row">
+                              <Button
+                                variant="outline"
+                                className="w-full bg-transparent sm:w-auto"
+                                onClick={() => setDialogOpen(false)}
+                              >
                                 Cancel
                               </Button>
-                              <Button variant="outline" onClick={() => {
-                                setSelectedTeam(null)
-                                setScores((prev) => ({ ...prev, [team.id]: {} }))
-                              }} className="w-full sm:w-auto bg-transparent">
+                              <Button
+                                variant="outline"
+                                onClick={resetScores}
+                                className="w-full bg-transparent sm:w-auto"
+                              >
                                 Reset
                               </Button>
-                              <Button onClick={() => handleSaveScore(team.id)} className="w-full sm:w-auto">
+                              <Button
+                                onClick={() =>
+                                  handleSaveScore(evaluation.team.id)
+                                }
+                                className="w-full sm:w-auto"
+                              >
                                 Save Score
                               </Button>
                             </DialogFooter>
@@ -428,5 +539,5 @@ export default function JudgeDashboard() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

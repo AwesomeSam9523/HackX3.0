@@ -62,16 +62,8 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
     });
   }, [teams, searchTerm, statusFilter]);
 
-  const getTeamScore = (teamId: string) => {
-    // Mock scoring logic
-    const scores = { t1: 8.5, t2: 7.8, t3: 9.2, t4: 6.9 };
-    return `${scores[teamId as keyof typeof scores] || 0}/10`;
-  };
-
-  const getJudgingTime = (teamId: string) => {
-    // Mock judging time
-    const times = { t1: "14:30", t2: "15:15", t3: "16:00", t4: "Not judged" };
-    return times[teamId as keyof typeof times] || "Not judged";
+  const getTeamScore = (team: Team) => {
+    return `${team.teamScores[0]?.totalScore}/10` || "Not Judged";
   };
 
   const viewTeamDetails = (team: Team) => {
@@ -83,6 +75,12 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
     setSearchTerm("");
     setStatusFilter("all");
   };
+
+  function getJudgingTime(team: Team) {
+    return team.teamScores.length > 0
+      ? new Date(team.teamScores[0].updatedAt).toLocaleString()
+      : "Not Judged";
+  }
 
   if (!teams || !judges) {
     return (
@@ -180,10 +178,10 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
         <CardContent>
           <div className="space-y-4">
             {filteredTeams.map((team) => {
-              const score = getTeamScore(team.id);
-              const judgingTime = getJudgingTime(team.id);
+              const score = getTeamScore(team);
+              const judgingTime = getJudgingTime(team);
               const judgeName =
-                team.evaluations[0]?.judge.user.username || "Not assigned";
+                team.evaluations[0]?.judge.name || "Not assigned";
               const isJudged = team.evaluations[0].status === "COMPLETED";
 
               return (
@@ -216,18 +214,14 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                       <div className="text-right">
                         <Badge
                           variant={
-                            team.submissionStatus === "submitted"
+                            team.submissionStatus === "SUBMITTED"
                               ? "default"
-                              : team.submissionStatus === "partial"
-                                ? "secondary"
-                                : "destructive"
+                              : "destructive"
                           }
                         >
-                          {team.submissionStatus === "submitted"
+                          {team.submissionStatus === "SUBMITTED"
                             ? "Submitted"
-                            : team.submissionStatus === "partial"
-                              ? "Partial"
-                              : "Not Submitted"}
+                            : "Not Submitted"}
                         </Badge>
                       </div>
                     </div>
@@ -338,6 +332,10 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                       <p>{selectedTeam.name}</p>
                     </div>
                     <div>
+                      <Label className="font-bold">Team ID:</Label>
+                      <p>{selectedTeam.teamId}</p>
+                    </div>
+                    <div>
                       <Label className="font-bold">Problem Statement:</Label>
                       <p>
                         {selectedTeam.problemStatement.title} (
@@ -362,7 +360,7 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                     <div>
                       <Label className="font-bold">Judge:</Label>
                       <p>
-                        {selectedTeam.evaluations[0]?.judge.user.username ||
+                        {selectedTeam.evaluations[0]?.judge.name ||
                           "Not assigned"}
                       </p>
                     </div>
@@ -370,13 +368,13 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                       <Label className="font-bold">Score:</Label>
                       <p>
                         {selectedTeam.evaluations[0].status === "COMPLETED"
-                          ? getTeamScore(selectedTeam.id)
+                          ? getTeamScore(selectedTeam)
                           : "Not judged"}
                       </p>
                     </div>
                     <div>
                       <Label className="font-bold">Judging Time:</Label>
-                      <p>{getJudgingTime(selectedTeam.id)}</p>
+                      <p>{getJudgingTime(selectedTeam)}</p>
                     </div>
                     <div>
                       <Label className="font-bold">Status:</Label>
@@ -433,18 +431,14 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                       <span>Overall Status:</span>
                       <Badge
                         variant={
-                          selectedTeam.submissionStatus === "submitted"
+                          selectedTeam.submissionStatus === "SUBMITTED"
                             ? "default"
-                            : selectedTeam.submissionStatus === "partial"
-                              ? "secondary"
-                              : "destructive"
+                            : "destructive"
                         }
                       >
-                        {selectedTeam.submissionStatus === "submitted"
+                        {selectedTeam.submissionStatus === "SUBMITTED"
                           ? "Complete"
-                          : selectedTeam.submissionStatus === "partial"
-                            ? "Partial"
-                            : "Not Submitted"}
+                          : "Not Submitted"}
                       </Badge>
                     </div>
                   </div>
@@ -483,7 +477,7 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-600">
-              {teams.filter((t) => t.submissionStatus === "submitted").length}
+              {teams.filter((t) => t.submissionStatus === "SUBMITTED").length}
             </div>
           </CardContent>
         </Card>

@@ -1,37 +1,47 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Users, Clock, MapPin, CheckCircle } from "lucide-react"
-import { apiService } from "@/lib/service"
-import { useToast } from "@/hooks/use-toast"
-import type { QueueItem } from "@/lib/types"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Clock, MapPin, Users } from "lucide-react";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
+import type { QueueItem } from "@/lib/types";
 
 interface QueueManagementProps {
-  queue: QueueItem[]
-  onMarkResolved: (queueItemId: string) => void
+  queue: QueueItem[];
+  onMarkResolvedAction: (queueItemId: string) => void;
 }
 
-export function QueueManagement({ queue, onMarkResolved }: QueueManagementProps) {
-  const { toast } = useToast()
+export function QueueManagement({
+  queue,
+  onMarkResolvedAction,
+}: QueueManagementProps) {
+  const { toast } = useToast();
 
   const handleMarkResolved = async (queueItemId: string) => {
     try {
-      await apiService.markMentorshipResolved(queueItemId)
-      onMarkResolved(queueItemId)
+      await apiService.markMentorshipResolved(queueItemId);
+      onMarkResolvedAction(queueItemId);
       toast({
         title: "Success",
         description: "Mentorship session marked as resolved",
-      })
+      });
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to mark session as resolved",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   return (
     <Card>
@@ -43,30 +53,36 @@ export function QueueManagement({ queue, onMarkResolved }: QueueManagementProps)
           </CardTitle>
           <Badge variant="outline">Updates every 10s</Badge>
         </div>
-        <CardDescription>Teams waiting for mentorship in FCFS order</CardDescription>
+        <CardDescription>
+          Teams waiting for mentorship in FCFS order
+        </CardDescription>
       </CardHeader>
       <CardContent>
         {queue.length === 0 ? (
-          <div className="text-center py-8">
-            <Users className="h-12 w-12 mx-auto text-slate-300 mb-4" />
+          <div className="py-8 text-center">
+            <Users className="mx-auto mb-4 h-12 w-12 text-slate-300" />
             <p className="text-slate-500">No teams in queue</p>
-            <p className="text-sm text-slate-400 mt-2">Teams will appear here when they book mentorship slots</p>
+            <p className="mt-2 text-sm text-slate-400">
+              Teams will appear here when they book mentorship slots
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
-            {queue.map((team, index) => (
+            {queue.map((queueItem, index) => (
               <Card
-                key={team.id}
+                key={queueItem.id}
                 className={`border-l-4 ${index === 0 ? "border-l-green-500 bg-green-50" : "border-l-blue-500"}`}
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle className="text-lg flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-lg">
                         {index === 0 && <Badge variant="default">Next</Badge>}
-                        {team.teamName}
+                        {queueItem.team.name}
                       </CardTitle>
-                      <CardDescription className="mt-1">{team.problemStatement}</CardDescription>
+                      <CardDescription className="mt-1">
+                        {queueItem.team.problemStatement.title}
+                      </CardDescription>
                     </div>
                     <div className="text-right">
                       <Badge variant="outline">#{index + 1}</Badge>
@@ -78,14 +94,19 @@ export function QueueManagement({ queue, onMarkResolved }: QueueManagementProps)
                     <div className="flex items-center gap-4 text-sm text-slate-600">
                       <span className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
-                        {team.roomNumber}
+                        {queueItem.team.round1Room.block}-{" "}
+                        {queueItem.team.round1Room.name}
                       </span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
-                        Waiting {team.waitTime}
+                        Waiting
                       </span>
                     </div>
-                    <Button size="sm" onClick={() => handleMarkResolved(team.id)} className="flex items-center gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => handleMarkResolved(queueItem.id)}
+                      className="flex items-center gap-2"
+                    >
                       <CheckCircle className="h-4 w-4" />
                       Mark as Resolved
                     </Button>
@@ -97,5 +118,5 @@ export function QueueManagement({ queue, onMarkResolved }: QueueManagementProps)
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

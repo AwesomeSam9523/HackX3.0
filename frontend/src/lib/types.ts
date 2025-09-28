@@ -49,11 +49,17 @@ export interface User extends BaseUser {
     name: string;
     teamId: string;
   };
+  judgeProfile: {
+    id: string;
+    userId: string;
+    name: string;
+  };
 }
 
 export interface Team {
   id: string;
   name: string;
+  teamId: string;
   problemStatement: {
     id: string;
     title: string;
@@ -71,19 +77,55 @@ export interface Team {
   judgementStatus?: string;
   githubRepo: string;
   presentationLink: string;
-  submissionStatus?: "submitted" | "partial" | "not_submitted";
+  submissionStatus: "SUBMITTED" | "NOT_SUBMITTED";
   checkpoints: Checkpoint[];
   evaluations: {
     id: string;
+    createdAt: string;
+    updatedAt: string;
     status: "PENDING" | "COMPLETED";
-    judge: {
-      user: BaseUser;
-    };
+    judge: Judge;
   }[];
   round1Room: {
     id: string;
     name: string;
     block: string;
+  };
+  teamScores: {
+    innovation: number;
+    impact: number;
+    feasibility: number;
+    presentation: number;
+    technical: number;
+    feedback: string;
+    totalScore: string;
+    round: number;
+    createdAt: string;
+    updatedAt: string;
+    judge: Judge;
+  }[];
+}
+
+export interface Evaluation {
+  evaluationId: string;
+  evaluationStatus: "PENDING" | "COMPLETED";
+  evaluated: boolean;
+  round: number;
+  team: Team & {
+    hasScore: boolean;
+    latestScore: {
+      id: string;
+      totalScore: number;
+      round: number;
+      createdAt: string;
+    };
+    submissionStatus: "SUBMITTED" | "NOT_SUBMITTED";
+    problemStatement: ProblemStatement;
+    latestSubmission: {
+      githubRepo: string;
+      presentationLink: string;
+      submittedAt: string;
+    };
   };
 }
 
@@ -111,6 +153,7 @@ export interface Domain {
 export interface Mentor {
   queueCount: number;
   id: string;
+  name: string;
   meetLink: string;
   isAvailable: boolean;
   user: BaseUser;
@@ -144,17 +187,17 @@ export interface MentorshipSession {
 export interface Judge {
   id: string;
   userId: string;
+  name: string;
   expertise: string[];
   round1RoomId?: string;
   round2RoomId?: string;
-  user: {
-    username: string;
-    role: Role;
-  };
+  user: BaseUser;
   evaluations: {
     id: string;
     teamId: string;
   }[];
+  teamsLeft: number;
+  teamsCompleted: number;
 }
 
 export interface Announcement {
@@ -166,11 +209,13 @@ export interface Announcement {
 
 export interface QueueItem {
   id: string;
-  teamName: string;
-  problemStatement: string;
-  roomNumber: string;
-  waitTime: string;
-  status: string;
+  teamId: string;
+  status: "CANCELLED" | "RESOLVED" | "WAITING";
+  query: string;
+  notes: string | null;
+  createdAt: string;
+  updatedAt: string;
+  team: Team;
 }
 
 export interface ScoringCriteria {
@@ -190,31 +235,37 @@ export interface ProblemStatementForm {
 
 export interface TeamJudgeMapping {
   teamId: string;
-  judgeId: string;
-  floor: string;
-  roomNumber: string;
-}
-
-export interface TeamJudgeMappingType {
-  teamId: string;
-  judgeId: string;
-  floor: string;
-  roomNumber?: string;
+  judge: Judge;
+  team: {
+    id: string;
+    name: string;
+    teamId: string;
+  };
 }
 
 export interface TeamScore {
+  id: string;
   teamId: string;
   name: string;
   judgeId: string;
   judgeName: string;
   teamScores: {
+    innovation: number;
+    impact: number;
+    feasibility: number;
+    presentation: number;
+    technical: number;
+    feedback: string;
     totalScore: string;
     round: number;
     createdAt: string;
-  };
+    judge: Judge;
+  }[];
   evaluations: {
     status: string;
   };
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Round2Room {
@@ -248,4 +299,13 @@ export interface Submission {
   githubRepo: string;
   presentationLink: string;
   submittedAt: string;
+}
+
+export interface Scores {
+  innovation: number;
+  impact: number;
+  feasibility: number;
+  presentation: number;
+  technical: number;
+  feedback: string;
 }

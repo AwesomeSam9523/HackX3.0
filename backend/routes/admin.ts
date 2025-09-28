@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { adminService } from "../services/adminService";
+import {Router} from "express";
+import {adminService} from "../services/adminService";
 import {AuthRequest, requireAdmin} from "../middleware/auth";
 import {logActivity} from "../middleware/logging";
 
@@ -200,6 +200,15 @@ router.get("/mentors", async (req: AuthRequest, res, next) => {
     res.json(judges);
   } catch (error: any) {
     next(error)
+  }
+});
+
+router.get("/team-judge-mappings", async (req, res, next) => {
+  try {
+    const mappings = await adminService.getTeamJudgeMappings();
+    res.json(mappings);
+  } catch (error: any) {
+    next(error);
   }
 });
 

@@ -1,63 +1,73 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { apiService } from "@/lib/service"
-import { useToast } from "@/hooks/use-toast"
+import type React from "react";
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { apiService } from "@/lib/service";
+import { useToast } from "@/hooks/use-toast";
 
 interface PasswordChangeFormProps {
-  onPasswordChanged: () => void
+  onPasswordChangedAction: () => void;
 }
 
-export function PasswordChangeForm({ onPasswordChanged }: PasswordChangeFormProps) {
-  const [currentPassword, setCurrentPassword] = useState("")
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+export function PasswordChangeForm({
+  onPasswordChangedAction,
+}: PasswordChangeFormProps) {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (newPassword !== confirmPassword) {
       toast({
         title: "Error",
         description: "New passwords do not match",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await apiService.changePassword(currentPassword, newPassword)
+      await apiService.changePassword(currentPassword, newPassword);
       toast({
         title: "Success",
         description: "Password changed successfully",
-      })
-      onPasswordChanged()
+      });
+      onPasswordChangedAction();
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to change password",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-6">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Change Password Required</CardTitle>
-          <CardDescription>You must change your password before accessing the dashboard.</CardDescription>
+          <CardDescription>
+            You must change your password before accessing the dashboard.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -98,5 +108,5 @@ export function PasswordChangeForm({ onPasswordChanged }: PasswordChangeFormProp
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

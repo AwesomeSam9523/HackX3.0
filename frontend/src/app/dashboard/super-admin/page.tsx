@@ -88,7 +88,9 @@ export default function SuperAdminDashboard() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-  const [problemStatements, setProblemStatements] = useState<ProblemStatement[]>([]);
+  const [problemStatements, setProblemStatements] = useState<
+    ProblemStatement[]
+  >([]);
   const [addMentorDetails, setAddMentorDetails] = useState({
     name: "",
     domain: "",
@@ -222,7 +224,8 @@ export default function SuperAdminDashboard() {
   };
 
   const handleAddJudge = async () => {
-    const { newJudge, rawPassword } = await apiService.addJudge(addJudgeDetails);
+    const { newJudge, rawPassword } =
+      await apiService.addJudge(addJudgeDetails);
     const username = newJudge.user.username;
     setJudges((prev) => [...prev, newJudge]);
     alert(
@@ -249,36 +252,6 @@ export default function SuperAdminDashboard() {
               round2Room: `AB2-${Math.floor(Math.random() * 400) + 300}`,
             }
           : team,
-      ),
-    );
-  };
-
-  const handleResetUserPassword = (userId: string) => {
-    const user = authService.getUser();
-    if (!user) {
-      console.error("User not found");
-      return;
-    }
-    const newLog = {
-      id: logs.length + 1,
-      createdAt: new Date().toLocaleString(),
-      action: "RESET_PASSWORD",
-      user: user,
-      payload: "",
-      details: `Password reset for user ID: ${userId}`,
-    };
-    setLogs((prev) => [newLog, ...prev]);
-  };
-
-  const handleToggleUserStatus = (userId: string) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId
-          ? {
-              ...user,
-              status: user.status === "ACTIVE" ? "DISABLED" : "ACTIVE",
-            }
-          : user,
       ),
     );
   };
@@ -750,12 +723,12 @@ export default function SuperAdminDashboard() {
                                             <Badge
                                               variant={
                                                 item.status === "WAITING"
-                                                ? "yellow"
-                                                : item.status === "CANCELLED"
-                                                ? "red"
-                                                : item.status === "RESOLVED"
-                                                ? "green"
-                                                : "outline"
+                                                  ? "yellow"
+                                                  : item.status === "CANCELLED"
+                                                    ? "red"
+                                                    : item.status === "RESOLVED"
+                                                      ? "green"
+                                                      : "outline"
                                               }
                                               className="mt-1 text-xs"
                                             >
@@ -838,7 +811,11 @@ export default function SuperAdminDashboard() {
                             id="judge-name"
                             placeholder="Prof. Jane Doe"
                             className="text-sm"
-                            onInput={(e) => setAddJudgeDetails({ name: (e.target as HTMLInputElement).value })}
+                            onInput={(e) =>
+                              setAddJudgeDetails({
+                                name: (e.target as HTMLInputElement).value,
+                              })
+                            }
                           />
                         </div>
                       </div>
@@ -849,7 +826,12 @@ export default function SuperAdminDashboard() {
                         >
                           Cancel
                         </Button>
-                        <Button className="w-full sm:w-auto" onClick={handleAddJudge}>Add Judge</Button>
+                        <Button
+                          className="w-full sm:w-auto"
+                          onClick={handleAddJudge}
+                        >
+                          Add Judge
+                        </Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>

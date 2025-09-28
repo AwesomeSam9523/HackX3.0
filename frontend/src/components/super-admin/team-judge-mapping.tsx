@@ -43,15 +43,22 @@ import {
 } from "lucide-react";
 import { apiService } from "@/lib/service";
 import { useToast } from "@/hooks/use-toast";
-import type { Judge, Team, TeamJudgeMappingType, TeamScore } from "@/lib/types";
+import type { Judge, Team, TeamJudgeMapping, TeamScore } from "@/lib/types";
 
 interface TeamJudgeMappingProps {
   teams: Team[];
   judges: Judge[];
 }
 
+type ScoreKeys =
+  | "innovation"
+  | "technical"
+  | "presentation"
+  | "feasibility"
+  | "impact";
+
 export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
-  const [mappings, setMappings] = useState<TeamJudgeMappingType[]>([]);
+  const [mappings, setMappings] = useState<TeamJudgeMapping[]>([]);
   const [teamScores, setTeamScores] = useState<TeamScore[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [selectedJudge, setSelectedJudge] = useState<string>("");
@@ -88,7 +95,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
     return teams.filter((team) => {
       const matchesSearch =
         team.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        team.roomNumber.toLowerCase().includes(searchTerm.toLowerCase());
+        team.round1Room.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPS =
         selectedPS === "all" || team.problemStatement.title === selectedPS;
       const isMapped = mappings.some((m) => m.teamId === team.id);
@@ -183,11 +190,11 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
   };
 
   const getTeamScore = (teamId: string) => {
-    return teamScores.find((score) => score.teamId === teamId);
+    return teamScores.find((score) => score.id === teamId);
   };
 
   const getJudgeStats = (judgeId: string) => {
-    const assignedTeams = mappings.filter((m) => m.judgeId === judgeId);
+    const assignedTeams = mappings.filter((m) => m.judge.id === judgeId);
     const evaluatedTeams = assignedTeams.filter((m) => getTeamScore(m.teamId));
     return {
       assigned: assignedTeams.length,
@@ -196,7 +203,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
   };
 
   const viewTeamScores = (teamId: string) => {
-    const scores = teamScores.filter((score) => score.teamId === teamId);
+    const scores = teamScores.filter((score) => score.id === teamId);
     setSelectedTeamScores(scores);
     setIsScoreDialogOpen(true);
   };
@@ -326,7 +333,9 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                 <Checkbox
                   id="show-mapped"
                   checked={showMappedOnly}
-                  onCheckedChange={(value) => setShowMappedOnly(value as boolean)}
+                  onCheckedChange={(value) =>
+                    setShowMappedOnly(value as boolean)
+                  }
                 />
                 <Label htmlFor="show-mapped" className="text-sm">
                   Show mapped only
@@ -403,11 +412,12 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                               )}
                             </div>
                             <p className="text-sm text-slate-500">
-                              {team.roomNumber} • {team.problemStatement.title}
+                              {team.round1Room.block} {team.round1Room.name} •{" "}
+                              {team.problemStatement.title}
                             </p>
                             {isMapped && (
                               <p className="text-sm text-green-600">
-                                Assigned to: {getJudgeName(mapping.judgeId)}
+                                Assigned to: {getJudgeName(mapping.judge.id)}
                               </p>
                             )}
                           </div>
@@ -426,7 +436,9 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                             <Button
                               size="sm"
                               variant="destructive"
-                              onClick={() => handleRemoveMapping(team.id, mapping.judgeId)}
+                              onClick={() =>
+                                handleRemoveMapping(team.id, mapping.judge.id)
+                              }
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>
@@ -455,7 +467,7 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                 {judges.map((judge) => {
                   const stats = getJudgeStats(judge.id);
                   const assignedTeams = mappings.filter(
-                    (m) => m.judgeId === judge.id,
+                    (m) => m.judge.id === judge.id,
                   );
 
                   return (
@@ -549,21 +561,26 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle className="text-lg">
-                          {score.name}
-                        </CardTitle>
+                        <CardTitle className="text-lg">{score.name}</CardTitle>
                         <CardDescription>
-                          Evaluated by {score.judgeName}
+                          Evaluated by {score.teamScores[0].judge.name}
                         </CardDescription>
                       </div>
                       <Badge variant="default" className="px-3 py-1 text-lg">
-                        {parseFloat(score.teamScores.totalScore).toFixed(1)}/10
+                        {parseFloat(score.teamScores[0].totalScore).toFixed(1)}
+                        /10
                       </Badge>
                     </div>
                   </CardHeader>
                   <CardContent className="pt-0">
                     <div className="space-y-2">
-                      {Object.entries(score.teamScores).map(([criteria, value]) => (
+                      {[
+                        "innovation",
+                        "impact",
+                        "technical",
+                        "feasibility",
+                        "presentation",
+                      ].map((criteria) => (
                         <div
                           key={criteria}
                           className="flex items-center justify-between"
@@ -571,12 +588,16 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                           <span className="text-sm capitalize">
                             {criteria.replace(/([A-Z])/g, " $1")}
                           </span>
-                          <Badge variant="outline">{value}/10</Badge>
+                          <Badge variant="outline">
+                            {score.teamScores[0][criteria as ScoreKeys]}/10
+                          </Badge>
                         </div>
                       ))}
                       <div className="mt-2 text-xs text-slate-500">
                         Evaluated on:{" "}
-                        {new Date(score.teamScores.createdAt).toLocaleString()}
+                        {new Date(
+                          score.teamScores[0].createdAt,
+                        ).toLocaleString()}
                       </div>
                     </div>
                   </CardContent>

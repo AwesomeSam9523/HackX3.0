@@ -1,7 +1,7 @@
 {
-  "name": "hackathon-backend",
+  "name": "hackx-backend",
   "version": "1.0.0",
-  "description": "Backend API for Hackathon Dashboard",
+  "description": "Backend API for MUJ HackX 3.0 Dashboard",
   "main": "server.ts",
   "type": "module",
   "scripts": {
@@ -18,7 +18,7 @@
     "db:reset": "prisma migrate reset --force && npm run db:seed"
   },
   "dependencies": {
-    "@prisma/client": "^6.14.0",
+    "@prisma/client": "^6.16.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -42,7 +42,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^17.21.3",
     "globals": "^16.3.0",
-    "prisma": "^6.15.0",
+    "prisma": "^6.16.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.39.1"

@@ -60,6 +60,8 @@ function isCheckpointCompleted(team: Team, checkpoint: number) {
 function ago(dateString: string) {
   const date = new Date(dateString);
   const now = new Date();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const seconds = Math.floor((now - date) / 1000);
 
   const intervals = {
@@ -161,43 +163,6 @@ export default function AdminDashboard() {
     updateTeamCheckpoint(teamId, checkpoint);
   };
 
-  async function onWebsocketMessage(ws: WebSocket, ev: MessageEvent) {
-    const data = JSON.parse(ev.data) as WebsocketData;
-    console.log(data);
-    if (data.type === "authenticated") {
-      setAuthenticated(true);
-      ws.send(
-        JSON.stringify({
-          type: "subscribe_checkpoints",
-        }),
-      );
-    }
-
-    if (!authenticated) {
-      return;
-    }
-
-    if (data.type === "checkpoint") {
-      updateTeamCheckpoint(data.teamId, data.checkpoint);
-    } else if (data.type === "subscribed") {
-      toast({
-        title: "Event subscribed!",
-        description: `Updating ${data.channel} in real time`,
-      });
-    }
-  }
-
-  async function handleWebsocket(ws: WebSocket) {
-    setSocket(ws);
-    ws.send(
-      JSON.stringify({
-        type: "authenticate",
-        token: authService.getToken(),
-      }),
-    );
-    ws.onmessage = (data) => onWebsocketMessage(ws, data);
-  }
-
   useEffect(() => {
     apiService.getTeams().then(setTeams);
     apiService.getJudges().then(setJudges);
@@ -206,10 +171,58 @@ export default function AdminDashboard() {
     apiService.getAnnouncements().then(setAnnouncements);
     wsService.connect().then(handleWebsocket);
 
+    async function onWebsocketMessage(ws: WebSocket, ev: MessageEvent) {
+      const data = JSON.parse(ev.data) as WebsocketData;
+      if (data.type === "authenticated") {
+        setAuthenticated(true);
+        ws.send(
+          JSON.stringify({
+            type: "subscribe_checkpoints",
+          }),
+        );
+      }
+
+      if (!authenticated) {
+        return;
+      }
+
+      if (data.type === "checkpoint") {
+        updateTeamCheckpoint(data.teamId, data.checkpoint);
+      } else if (data.type === "subscribed") {
+        toast({
+          title: "Event subscribed!",
+          description: `Updating ${data.channel} in real time`,
+        });
+      }
+    }
+
+    function waitForOpen(ws: WebSocket): Promise<void> {
+      return new Promise((resolve) => {
+        if (ws.readyState === WebSocket.OPEN) {
+          resolve();
+        } else {
+          ws.addEventListener("open", () => resolve(), { once: true });
+        }
+      });
+    }
+
+    async function handleWebsocket(ws: WebSocket) {
+      setSocket(ws);
+      await waitForOpen(ws);
+      console.log("sending");
+      ws.send(
+        JSON.stringify({
+          type: "authenticate",
+          token: authService.getToken(),
+        }),
+      );
+      ws.onmessage = (data) => onWebsocketMessage(ws, data);
+    }
+
     return () => {
       wsService.disconnect();
     };
-  }, []);
+  }, [toast]);
 
   const handleResetPassword = (teamId: string) => {
     console.log(`Resetting password for team: ${teamId}`);
@@ -229,9 +242,7 @@ export default function AdminDashboard() {
         <div className="mb-6 flex flex-col space-y-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
           <div>
             <h1 className="text-2xl font-bold sm:text-3xl">Admin Dashboard</h1>
-            <p className="mt-1 text-sm sm:text-base">
-              Hackathon Management Control Center
-            </p>
+            <p className="mt-1 text-sm sm:text-base">MUJ HackX 3.0</p>
           </div>
           <div className="flex items-center gap-2">
             <Badge
@@ -395,7 +406,8 @@ export default function AdminDashboard() {
                             {team.name}
                           </h4>
                           <p className="text-xs break-all text-slate-500 sm:text-sm">
-                            ID: {team.generatedId} | Room: {team.roomNumber}
+                            ID: {team.generatedId} | Room:{" "}
+                            {team.round1Room.block} {team.round1Room.name}
                           </p>
                         </div>
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -465,7 +477,7 @@ export default function AdminDashboard() {
                           {team.name}
                         </h4>
                         <p className="text-xs text-slate-500 sm:text-sm">
-                          Room: {team.roomNumber}
+                          Room: {team.round1Room.block} {team.round1Room.name}
                         </p>
                       </div>
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -622,7 +634,7 @@ export default function AdminDashboard() {
                           </CardDescription>
                           <p className="mt-1 text-xs break-all text-slate-500 sm:text-sm">
                             Team ID: {team.generatedId} | Room:{" "}
-                            {team.roomNumber}
+                            {team.round1Room.block} {team.round1Room.name}
                           </p>
                         </div>
                         <div className="text-left lg:text-right">
@@ -867,32 +879,19 @@ export default function AdminDashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 space-y-4">
                     {judges.map((judge) => (
                       <Card
                         key={judge.id}
-                        className="border-l-hackx border-l-4"
+                        className="border-l-hackx m-0 border-l-4"
                       >
                         <CardHeader className="pb-3">
                           <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
                             <div>
                               <CardTitle className="text-base sm:text-lg">
-                                {judge.user.username}
+                                {judge.name}
                               </CardTitle>
-                              <CardDescription className="text-sm">
-                                {judge.floor}
-                              </CardDescription>
                             </div>
-                            <Badge
-                              variant={
-                                judge.status === "Active"
-                                  ? "default"
-                                  : "secondary"
-                              }
-                              className="w-fit text-xs"
-                            >
-                              {judge.status}
-                            </Badge>
                           </div>
                         </CardHeader>
                         <CardContent className="pt-0">
@@ -966,18 +965,18 @@ export default function AdminDashboard() {
                                 {mentor.name}
                               </CardTitle>
                               <CardDescription className="text-sm">
-                                {mentor.domain}
+                                {mentor.domain} | ID: {mentor.user.username}
                               </CardDescription>
                             </div>
                             <Badge
                               variant={
-                                mentor.status === "Available"
-                                  ? "outline"
-                                  : "default"
+                                mentor.isAvailable ? "outline" : "default"
                               }
-                              className={`w-fit text-xs ${mentor.status === "Available" ? "text-hackx border-hackx border-[1px]" : ""}`}
+                              className={`w-fit text-xs ${mentor.isAvailable ? "text-hackx border-hackx border-[1px]" : ""}`}
                             >
-                              {mentor.status}
+                              {mentor.isAvailable
+                                ? "Available"
+                                : "Not available"}
                             </Badge>
                           </div>
                         </CardHeader>
@@ -986,7 +985,7 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-4">
                               <div className="text-center">
                                 <p className="text-xl font-bold text-blue-600 sm:text-2xl">
-                                  {mentor.currentQueue}/5
+                                  {mentor.waitingTeamsCount}/5
                                 </p>
                                 <p className="text-xs text-slate-500">
                                   Queue Status
@@ -1007,7 +1006,7 @@ export default function AdminDashboard() {
                               <DialogContent className="w-[95vw] max-w-md">
                                 <DialogHeader>
                                   <DialogTitle className="text-lg">
-                                    {mentor.user.username} - Queue Details
+                                    {mentor.name} - Queue Details
                                   </DialogTitle>
                                   <DialogDescription className="text-sm">
                                     Current teams in mentorship queue
@@ -1015,6 +1014,7 @@ export default function AdminDashboard() {
                                 </DialogHeader>
                                 <div className="space-y-2">
                                   <p className="text-sm text-slate-600">
+                                    {/*TODO*/}
                                     Queue implementation would show team details
                                     here
                                   </p>

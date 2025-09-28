@@ -1,22 +1,26 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Users, Clock, RefreshCw } from "lucide-react"
-import { GoogleMeetLink } from "./google-meet-link"
-import type { Mentor, QueueItem } from "@/lib/types"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Clock, RefreshCw, Users } from "lucide-react";
+import { GoogleMeetLink } from "./google-meet-link";
+import type { Mentor, QueueItem } from "@/lib/types";
 
 interface MentorInfoTabProps {
-  mentorInfo: Mentor
-  queue: QueueItem[]
-  onRefresh: () => void
+  mentorInfo: Mentor;
+  queue: QueueItem[];
+  onRefreshAction: () => void;
 }
 
-export function MentorInfoTab({ mentorInfo, queue, onRefresh }: MentorInfoTabProps) {
+export function MentorInfoTab({
+  mentorInfo,
+  queue,
+  onRefreshAction,
+}: MentorInfoTabProps) {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -26,8 +30,8 @@ export function MentorInfoTab({ mentorInfo, queue, onRefresh }: MentorInfoTabPro
           </CardHeader>
           <CardContent className="space-y-2">
             <div>
-              <Label className="text-sm font-medium">Name</Label>
-              <p className="text-lg">{mentorInfo.name}</p>
+              <Label className="text-sm font-medium">ID</Label>
+              <p className="text-lg">{mentorInfo.user.username}</p>
             </div>
             <div>
               <Label className="text-sm font-medium">Domain</Label>
@@ -35,7 +39,11 @@ export function MentorInfoTab({ mentorInfo, queue, onRefresh }: MentorInfoTabPro
             </div>
             <div>
               <Label className="text-sm font-medium">Mode</Label>
-              <Badge variant={mentorInfo.mode === "Online" ? "default" : "secondary"}>{mentorInfo.mode}</Badge>
+              <Badge
+                variant={mentorInfo.mode === "ONLINE" ? "default" : "secondary"}
+              >
+                {mentorInfo.mode}
+              </Badge>
             </div>
           </CardContent>
         </Card>
@@ -50,7 +58,7 @@ export function MentorInfoTab({ mentorInfo, queue, onRefresh }: MentorInfoTabPro
           <CardContent>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600">
-                {queue.length}/{mentorInfo.maxCapacity}
+                {queue.filter((q) => q.status === "WAITING").length}/5
               </div>
               <p className="text-sm text-slate-500">Teams in queue</p>
             </div>
@@ -65,8 +73,13 @@ export function MentorInfoTab({ mentorInfo, queue, onRefresh }: MentorInfoTabPro
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-slate-600 mb-2">Queue updates every 10 seconds automatically</p>
-            <button onClick={onRefresh} className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800">
+            <p className="mb-2 text-sm text-slate-600">
+              Queue updates every 10 seconds automatically
+            </p>
+            <button
+              onClick={onRefreshAction}
+              className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800"
+            >
               <RefreshCw className="h-4 w-4" />
               Refresh Now
             </button>
@@ -74,7 +87,7 @@ export function MentorInfoTab({ mentorInfo, queue, onRefresh }: MentorInfoTabPro
         </Card>
       </div>
 
-      {mentorInfo.mode === "Online" && <GoogleMeetLink />}
+      {mentorInfo.mode === "ONLINE" && <GoogleMeetLink />}
     </div>
-  )
+  );
 }

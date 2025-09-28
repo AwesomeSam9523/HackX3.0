@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Users, MapPin, Clock } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import type { Team } from "@/lib/types"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Clock, MapPin, Users } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import type { Team } from "@/lib/types";
 
 interface TeamDetailsProps {
-  team: Team
-  selectedPS: string | null
-  selectedMentor: string | null
-  psLocked: boolean
+  team: Team;
+  selectedPS: string | null;
+  selectedMentor: string | null;
+  psLocked: boolean;
 }
 
-export function TeamDetails({ team, selectedPS, selectedMentor, psLocked }: TeamDetailsProps) {
+export function TeamDetails({
+  team,
+  selectedPS,
+  selectedMentor,
+  psLocked,
+}: TeamDetailsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -31,9 +36,9 @@ export function TeamDetails({ team, selectedPS, selectedMentor, psLocked }: Team
           </div>
           <div>
             <Label className="text-sm font-medium">Room Number</Label>
-            <p className="text-lg flex items-center gap-2">
+            <p className="flex items-center gap-2 text-lg">
               <MapPin className="h-4 w-4" />
-              {team.roomNumber}
+              {team.round1Room.block} {team.round1Room.name}
             </p>
           </div>
           <div>
@@ -56,11 +61,15 @@ export function TeamDetails({ team, selectedPS, selectedMentor, psLocked }: Team
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <span>Problem Statement</span>
-            <Badge variant={selectedPS ? "default" : "secondary"}>{selectedPS ? "Selected" : "Not Selected"}</Badge>
+            <Badge variant={selectedPS ? "default" : "secondary"}>
+              {selectedPS ? "Selected" : "Not Selected"}
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span>Mentor Booking</span>
-            <Badge variant={selectedMentor ? "default" : "secondary"}>{selectedMentor ? "Booked" : "Available"}</Badge>
+            <Badge variant={selectedMentor ? "default" : "secondary"}>
+              {selectedMentor ? "Booked" : "Available"}
+            </Badge>
           </div>
           <div className="flex items-center justify-between">
             <span>Round 1 Submission</span>
@@ -69,11 +78,13 @@ export function TeamDetails({ team, selectedPS, selectedMentor, psLocked }: Team
           {psLocked && (
             <Alert>
               <Clock className="h-4 w-4" />
-              <AlertDescription>Problem statement selection is now locked.</AlertDescription>
+              <AlertDescription>
+                Problem statement selection is now locked.
+              </AlertDescription>
             </Alert>
           )}
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

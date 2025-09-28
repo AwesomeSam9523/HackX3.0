@@ -6,6 +6,7 @@ import type {
   Checkpoint,
   Checkpoint2Data,
   Domain,
+  Evaluation,
   Judge,
   LogEntry,
   LogFilter,
@@ -15,6 +16,7 @@ import type {
   ProblemStatementForm,
   QueueItem,
   Round2Room,
+  Scores,
   Submission,
   Team,
   TeamJudgeMapping,
@@ -33,44 +35,8 @@ const routeTypes = {
 };
 
 class ApiService {
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {},
-  ): Promise<T> {
-    const token = authService.getToken();
-    const user = authService.getUser();
-    const routeType =
-      user && !endpoint.startsWith("/auth") ? `/${routeTypes[user.role]}` : "";
-    const config: RequestInit = {
-      headers: {
-        "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
-        ...options.headers,
-      },
-      ...options,
-    };
-
-    if (!token && endpoint !== "/auth/login") {
-      // If no token and not a login request, redirect to login
-      authService.logout();
-      throw new Error("Unauthorized");
-    }
-
-    const response = await fetch(
-      `${API_BASE_URL}${routeType}${endpoint}`,
-      config,
-    );
-
-    if (response.status === 401 || response.status === 403) {
-      authService.logout();
-      throw new Error("Unauthorized");
-    }
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status} at ${endpoint}`);
-    }
-
-    return response.json();
+  async getMyQueue(): Promise<QueueItem[]> {
+    return this.request("/queue");
   }
 
   // Authentication
@@ -218,8 +184,8 @@ class ApiService {
     return this.request("/mentors");
   }
 
-  async getMentorInfo(mentorId: string): Promise<Mentor> {
-    return this.request(`/mentors/${mentorId}`);
+  async getTeamScoresById(teamId: string): Promise<Scores> {
+    return this.request(`/teams/${teamId}/score`);
   }
 
   async bookMentor(
@@ -256,13 +222,6 @@ class ApiService {
 
   async getTeamsForJudge(): Promise<Team[]> {
     return this.request("/judges/teams");
-  }
-
-  async submitScore(teamId: string, scores: TeamScore): Promise<void> {
-    return this.request("/judges/score", {
-      method: "POST",
-      body: JSON.stringify({ teamId, scores }),
-    });
   }
 
   async getTeamScore(teamId: string): Promise<TeamScore> {
@@ -371,6 +330,10 @@ class ApiService {
     return this.request("/team-scores");
   }
 
+  async getAuthProfile(): Promise<User> {
+    return this.request("/auth/profile");
+  }
+
   // Round 2 Room Management
   async getRound2Rooms(): Promise<Round2Room[]> {
     return this.request("/round2/rooms");
@@ -390,8 +353,12 @@ class ApiService {
     });
   }
 
-  async getProfile(): Promise<User> {
-    return this.request("/auth/profile");
+  async getProfile(): Promise<Judge | Mentor> {
+    return this.request("/profile");
+  }
+
+  async getEvaluations(): Promise<Evaluation[]> {
+    return this.request("/teams");
   }
 
   async lockMentorship(locked: boolean): Promise<{ locked: boolean }> {
@@ -445,6 +412,63 @@ class ApiService {
       method: "POST",
       body: JSON.stringify({ queueId }),
     });
+  }
+
+  async submitScore(payload: {
+    teamId: string;
+    scores: {
+      innovation: number;
+      technical: number;
+      feasibility: number;
+      presentation: number;
+      impact: number;
+      feedback: string;
+    };
+  }): Promise<void> {
+    return this.request("/score", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+
+  private async request<T>(
+    endpoint: string,
+    options: RequestInit = {},
+  ): Promise<T> {
+    const token = authService.getToken();
+    const user = authService.getUser();
+    const routeType =
+      user && !endpoint.startsWith("/auth") ? `/${routeTypes[user.role]}` : "";
+    const config: RequestInit = {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    if (!token && endpoint !== "/auth/login") {
+      // If no token and not a login request, redirect to log in
+      authService.logout();
+      throw new Error("Unauthorized");
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}${routeType}${endpoint}`,
+      config,
+    );
+
+    if (response.status === 401 || response.status === 403) {
+      authService.logout();
+      throw new Error("Unauthorized");
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status} at ${endpoint}`);
+    }
+
+    return response.json();
   }
 }
 

@@ -130,6 +130,7 @@ model PSBookmark {
 model Mentor {
   id              String            @id @default(cuid())
   user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name String
   userId          String            @unique
   expertise       String[]
   meetLink        String?
@@ -142,13 +143,14 @@ model Mentor {
 }
 
 model Judge {
-  id           String       @id @default(cuid())
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String       @unique
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  evaluations  Evaluation[]
-  teamScores   TeamScore[]
+  id          String       @id @default(cuid())
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String       @unique
+  name        String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  evaluations Evaluation[]
+  teamScores  TeamScore[]
 }
 
 model MentorshipQueue {

@@ -60,7 +60,9 @@ export class SuperAdminService {
         }),
         ...(role === "JUDGE" && {
           judgeProfile: {
-            create: {},
+            create: {
+              name: username,
+            },
           },
         }),
       },
@@ -602,7 +604,9 @@ export class SuperAdminService {
         password: hashedPassword,
         role: "JUDGE",
         judgeProfile: {
-          create: {},
+          create: {
+            name: payload.name,
+          },
         },
       }
     });
@@ -637,6 +641,11 @@ export class SuperAdminService {
         teamScores: {
           select: {
             id: true,
+            innovation: true,
+            technical: true,
+            presentation: true,
+            impact: true,
+            feasibility: true,
             totalScore: true,
             round: true,
             createdAt: true,
@@ -646,6 +655,7 @@ export class SuperAdminService {
               },
             },
           },
+          take: 1,
         },
         evaluations: {
           select: {

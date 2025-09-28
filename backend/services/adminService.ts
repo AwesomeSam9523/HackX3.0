@@ -27,12 +27,12 @@ export class AdminService {
       totalEvaluations,
     ] = await Promise.all([
       prisma.team.count(),
-      prisma.user.count({ where: { role: "TEAM" } }),
-      prisma.user.count({ where: { role: "MENTOR" } }),
-      prisma.user.count({ where: { role: "JUDGE" } }),
-      prisma.team.count({ where: { problemStatementId: { not: null } } }),
-      prisma.team.count({ where: { submissionStatus: "SUBMITTED" } }),
-      prisma.evaluation.count({ where: { status: "COMPLETED" } }),
+      prisma.user.count({where: {role: "TEAM"}}),
+      prisma.user.count({where: {role: "MENTOR"}}),
+      prisma.user.count({where: {role: "JUDGE"}}),
+      prisma.team.count({where: {problemStatementId: {not: null}}}),
+      prisma.team.count({where: {submissionStatus: "SUBMITTED"}}),
+      prisma.evaluation.count({where: {status: "COMPLETED"}}),
       prisma.evaluation.count(),
     ]);
 
@@ -41,10 +41,10 @@ export class AdminService {
       include: {
         domain: true,
         teams: {
-          select: { id: true, name: true, teamId: true },
+          select: {id: true, name: true, teamId: true},
         },
         _count: {
-          select: { teams: true },
+          select: {teams: true},
         },
       },
     });
@@ -70,10 +70,10 @@ export class AdminService {
     return prisma.team.findMany({
       include: {
         participants: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         problemStatement: {
-          include: { domain: true },
+          include: {domain: true},
         },
         evaluations: {
           select: {
@@ -81,43 +81,43 @@ export class AdminService {
             status: true,
             judge: {
               include: {
-                user: { select: { username: true } },
+                user: {select: {username: true}},
               },
             },
           },
         },
         submissions: {
-          select: { id: true, githubRepo: true, presentationLink: true, submittedAt: true },
+          select: {id: true, githubRepo: true, presentationLink: true, submittedAt: true},
         },
         round1Room: {
-          select: { id: true, name: true, block: true },
+          select: {id: true, name: true, block: true},
         },
         round2Room: {
-          select: { id: true, name: true, block: true },
+          select: {id: true, name: true, block: true},
         },
         checkpoints: {
-          select: { checkpoint: true, status: true, completedAt: true, data: true },
+          select: {checkpoint: true, status: true, completedAt: true, data: true},
         }
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
     });
   }
 
   async getTeamDetails(teamId: string) {
     const team = await prisma.team.findUnique({
-      where: { id: teamId },
+      where: {id: teamId},
       include: {
         participants: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         problemStatement: {
-          include: { domain: true },
+          include: {domain: true},
         },
         evaluations: {
           include: {
             judge: {
               include: {
-                user: { select: { username: true } },
+                user: {select: {username: true}},
               },
             },
           },
@@ -128,7 +128,7 @@ export class AdminService {
           include: {
             mentor: {
               include: {
-                user: { select: { username: true } },
+                user: {select: {username: true}},
               },
             },
           },
@@ -150,7 +150,7 @@ export class AdminService {
     const judges = await prisma.judge.findMany({
       include: {
         user: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         evaluations: {
           include: {
@@ -160,14 +160,14 @@ export class AdminService {
                 name: true,
                 teamId: true,
                 problemStatement: {
-                  include: { domain: true },
+                  include: {domain: true},
                 },
               },
             },
           },
         },
         _count: {
-          select: { evaluations: true },
+          select: {evaluations: true},
         },
       },
     });
@@ -189,10 +189,10 @@ export class AdminService {
 
   async getJudgeDetails(judgeId: string) {
     const judge = await prisma.judge.findUnique({
-      where: { id: judgeId },
+      where: {id: judgeId},
       include: {
         user: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         evaluations: {
           include: {
@@ -203,7 +203,7 @@ export class AdminService {
                 teamId: true,
                 submissionStatus: true,
                 problemStatement: {
-                  include: { domain: true },
+                  include: {domain: true},
                 },
               },
             },
@@ -235,16 +235,16 @@ export class AdminService {
         status: true,
         createdAt: true,
         participantTeam: {
-          select: { id: true, name: true, teamId: true },
+          select: {id: true, name: true, teamId: true},
         },
         mentorProfile: {
-          select: { id: true, expertise: true },
+          select: {id: true, expertise: true},
         },
         judgeProfile: {
           select: {id: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
     });
   }
 
@@ -253,7 +253,7 @@ export class AdminService {
     const where: any = {};
 
     if (filters?.action && filters.action !== "all") {
-      where.action = { contains: filters.action, mode: "insensitive" };
+      where.action = {contains: filters.action, mode: "insensitive"};
     }
 
     if (filters?.userId && filters.userId !== "all") {
@@ -261,11 +261,11 @@ export class AdminService {
     }
 
     if (filters?.startDate) {
-      where.createdAt = { ...where.createdAt, gte: new Date(filters.startDate) };
+      where.createdAt = {...where.createdAt, gte: new Date(filters.startDate)};
     }
 
     if (filters?.endDate) {
-      where.createdAt = { ...where.createdAt, lte: new Date(filters.endDate) };
+      where.createdAt = {...where.createdAt, lte: new Date(filters.endDate)};
     }
 
     return prisma.activityLog.findMany({
@@ -279,10 +279,10 @@ export class AdminService {
       },
       include: {
         user: {
-          select: { username: true, role: true },
+          select: {username: true, role: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
       take: 500, // Limit for admins
     });
   }
@@ -292,10 +292,10 @@ export class AdminService {
     return prisma.announcement.findMany({
       include: {
         author: {
-          select: { username: true, role: true },
+          select: {username: true, role: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
     });
   }
 
@@ -304,7 +304,7 @@ export class AdminService {
     const teams = await prisma.team.findMany({
       include: {
         problemStatement: {
-          include: { domain: true },
+          include: {domain: true},
         },
         teamScores: {
           select: {
@@ -314,7 +314,7 @@ export class AdminService {
             createdAt: true,
             judge: {
               include: {
-                user: { select: { username: true } },
+                user: {select: {username: true}},
               },
             },
           },
@@ -324,7 +324,7 @@ export class AdminService {
             status: true,
             judge: {
               include: {
-                user: { select: { username: true } },
+                user: {select: {username: true}},
               },
             },
           },
@@ -336,7 +336,7 @@ export class AdminService {
           }
         }
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
     });
 
     return teams.map((team) => ({
@@ -374,7 +374,7 @@ export class AdminService {
     return prisma.round2Room.findMany({
       include: {
         teams: {
-          select: { id: true, name: true, teamId: true },
+          select: {id: true, name: true, teamId: true},
         },
         _count: {
           select: {teams: true},
@@ -390,7 +390,7 @@ export class AdminService {
         problemStatements: {
           include: {
             _count: {
-              select: { teams: true },
+              select: {teams: true},
             },
           },
         },
@@ -419,7 +419,7 @@ export class AdminService {
 
   // Update team checkpoint
   async updateTeamCheckpoint1(data: Checkpoint1Data) {
-    const { teamId, wifi } = data;
+    const {teamId, wifi} = data;
     return prisma.teamCheckpoint.upsert({
       where: {
         teamId_checkpoint: {
@@ -428,14 +428,14 @@ export class AdminService {
         },
       },
       update: {
-        data: { wifi },
+        data: {wifi},
         status: "COMPLETED",
         completedAt: new Date(),
       },
       create: {
         teamId,
         checkpoint: 1,
-        data: { wifi },
+        data: {wifi},
         status: "COMPLETED",
         completedAt: new Date(),
       },
@@ -514,7 +514,7 @@ export class AdminService {
   }
 
   async updateTeamCheckpoint3(data: { teamId: string }) {
-    const { teamId } = data;
+    const {teamId} = data;
     return prisma.teamCheckpoint.upsert({
       where: {
         teamId_checkpoint: {
@@ -544,11 +544,28 @@ export class AdminService {
   }
 
   async getAllJudges() {
-    return prisma.judge.findMany({
+    const judges = await prisma.judge.findMany({
       include: {
         user: {select: {id: true, username: true, role: true}},
+        evaluations: {
+          select: {
+            id: true,
+            status: true,
+          }
+        }
       }
     });
+
+    judges.forEach((judge) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      judge['teamsLeft'] = judge.evaluations.filter(e => e.status === 'PENDING').length;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      judge['teamsCompleted'] = judge.evaluations.filter(e => e.status === 'COMPLETED').length;
+    })
+
+    return judges;
   }
 
   async getAllMentors() {
@@ -562,6 +579,23 @@ export class AdminService {
                 name: true,
               },
             },
+          },
+        },
+      }
+    });
+  }
+
+  async getTeamJudgeMappings() {
+    return prisma.evaluation.findMany({
+      select: {
+        id: true,
+        status: true,
+        team: {
+          select: {id: true, name: true, teamId: true},
+        },
+        judge: {
+          include: {
+            user: {select: {username: true}},
           },
         },
       }

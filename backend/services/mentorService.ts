@@ -6,25 +6,25 @@ export class MentorService {
   // Get mentor profile
   async getMentorProfile(userId: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
       include: {
         user: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         mentorshipQueue: {
           include: {
             team: {
               include: {
                 participants: {
-                  select: { id: true, username: true, email: true },
+                  select: {id: true, username: true, email: true},
                 },
                 problemStatement: {
-                  include: { domain: true },
+                  include: {domain: true},
                 },
               },
             },
           },
-          orderBy: { createdAt: "asc" },
+          orderBy: {createdAt: "asc"},
         },
       },
     });
@@ -39,7 +39,7 @@ export class MentorService {
   // Get mentor queue
   async getMentorQueue(userId: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -47,15 +47,18 @@ export class MentorService {
     }
 
     return prisma.mentorshipQueue.findMany({
-      where: {mentorId: mentor.id},
+      where: {
+        mentorId: mentor.id,
+        status: 'WAITING',
+      },
       include: {
         team: {
           include: {
-            participants: {
-              select: {id: true, username: true, email: true},
-            },
             problemStatement: {
               include: {domain: true},
+            },
+            round1Room: {
+              select: {id: true, block: true, name: true},
             },
           },
         },
@@ -67,7 +70,7 @@ export class MentorService {
   // Update mentor availability
   async updateAvailability(userId: string, isAvailable: boolean) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -75,15 +78,15 @@ export class MentorService {
     }
 
     return prisma.mentor.update({
-      where: { id: mentor.id },
-      data: { isAvailable },
+      where: {id: mentor.id},
+      data: {isAvailable},
     });
   }
 
   // Update meet link
   async updateMeetLink(userId: string, meetLink: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -91,15 +94,15 @@ export class MentorService {
     }
 
     return prisma.mentor.update({
-      where: { id: mentor.id },
-      data: { meetLink },
+      where: {id: mentor.id},
+      data: {meetLink},
     });
   }
 
   // Resolve mentorship session
   async resolveMentorshipSession(userId: string, queueItemId: string, notes?: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -108,7 +111,7 @@ export class MentorService {
 
     // Check if the queue item belongs to this mentor
     const queueItem = await prisma.mentorshipQueue.findUnique({
-      where: { id: queueItemId },
+      where: {id: queueItemId},
     });
 
     if (!queueItem || queueItem.mentorId !== mentor.id) {
@@ -116,7 +119,7 @@ export class MentorService {
     }
 
     return prisma.mentorshipQueue.update({
-      where: { id: queueItemId },
+      where: {id: queueItemId},
       data: {
         status: "RESOLVED",
         notes,
@@ -127,7 +130,7 @@ export class MentorService {
   // Start mentorship session
   async startMentorshipSession(userId: string, queueItemId: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -135,7 +138,7 @@ export class MentorService {
     }
 
     const queueItem = await prisma.mentorshipQueue.findUnique({
-      where: { id: queueItemId },
+      where: {id: queueItemId},
     });
 
     if (!queueItem || queueItem.mentorId !== mentor.id) {
@@ -151,7 +154,7 @@ export class MentorService {
   // Cancel mentorship session
   async cancelMentorshipSession(userId: string, queueItemId: string, reason?: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -159,7 +162,7 @@ export class MentorService {
     }
 
     const queueItem = await prisma.mentorshipQueue.findUnique({
-      where: { id: queueItemId },
+      where: {id: queueItemId},
     });
 
     if (!queueItem || queueItem.mentorId !== mentor.id) {
@@ -167,7 +170,7 @@ export class MentorService {
     }
 
     return prisma.mentorshipQueue.update({
-      where: { id: queueItemId },
+      where: {id: queueItemId},
       data: {
         status: "CANCELLED",
         notes: reason,
@@ -178,7 +181,7 @@ export class MentorService {
   // Get mentorship history
   async getMentorshipHistory(userId: string) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -188,27 +191,27 @@ export class MentorService {
     const history = await prisma.mentorshipQueue.findMany({
       where: {
         mentorId: mentor.id,
-        status: { in: ["RESOLVED", "CANCELLED"] },
+        status: {in: ["RESOLVED", "CANCELLED"]},
       },
       include: {
         team: {
           include: {
             participants: {
-              select: { id: true, username: true, email: true },
+              select: {id: true, username: true, email: true},
             },
             problemStatement: {
-              include: { domain: true },
+              include: {domain: true},
             },
           },
         },
       },
-      orderBy: { updatedAt: "desc" },
+      orderBy: {updatedAt: "desc"},
     });
 
     const stats = await prisma.mentorshipQueue.groupBy({
       by: ["status"],
-      where: { mentorId: mentor.id },
-      _count: { status: true },
+      where: {mentorId: mentor.id},
+      _count: {status: true},
     });
 
     return {
@@ -227,28 +230,28 @@ export class MentorService {
     return prisma.mentor.findMany({
       include: {
         user: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         _count: {
-          select: { mentorshipQueue: true },
+          select: {mentorshipQueue: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
     });
   }
 
   // Get available mentors for booking
   async getAvailableMentors() {
     return prisma.mentor.findMany({
-      where: { isAvailable: true },
+      where: {isAvailable: true},
       include: {
         user: {
-          select: { id: true, username: true, email: true },
+          select: {id: true, username: true, email: true},
         },
         _count: {
           select: {
             mentorshipQueue: {
-              where: { status: "WAITING" },
+              where: {status: "WAITING"},
             },
           },
         },
@@ -268,7 +271,7 @@ export class MentorService {
   async bookMentorshipSession(teamId: string, mentorId: string, query?: string) {
     // Check if mentor exists and is available
     const mentor = await prisma.mentor.findUnique({
-      where: { id: mentorId },
+      where: {id: mentorId},
     });
 
     if (!mentor) {
@@ -304,14 +307,14 @@ export class MentorService {
         team: {
           include: {
             participants: {
-              select: { id: true, username: true, email: true },
+              select: {id: true, username: true, email: true},
             },
           },
         },
         mentor: {
           include: {
             user: {
-              select: { username: true },
+              select: {username: true},
             },
           },
         },
@@ -324,10 +327,10 @@ export class MentorService {
     return prisma.announcement.findMany({
       include: {
         author: {
-          select: { username: true, role: true },
+          select: {username: true, role: true},
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: {createdAt: "desc"},
       take: 50,
     });
   }
@@ -341,7 +344,7 @@ export class MentorService {
     },
   ) {
     const mentor = await prisma.mentor.findUnique({
-      where: { userId },
+      where: {userId},
     });
 
     if (!mentor) {
@@ -349,7 +352,7 @@ export class MentorService {
     }
 
     return prisma.mentor.update({
-      where: { id: mentor.id },
+      where: {id: mentor.id},
       data: {
         expertise: data.expertise,
         meetLink: data.meetLink,

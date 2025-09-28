@@ -60,7 +60,7 @@ export default function LoginPage() {
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>
-            Enter your credentials to access the hackathon dashboard
+            Enter your credentials to access the dashboard
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -6,38 +6,6 @@ const CommunityPartners: React.FC = () => {
     <section className="text-offwhite relative overflow-hidden bg-black px-8 pt-0 pb-16">
       <LightBoxOthers name="about" id={1} />
 
-      {/* Ellipse background in top left corner */}
-      {/* <div
-        style={{
-          width: '728px',
-          height: '728px',
-          position: 'absolute',
-          top: '-120px',
-          left: '-150px',
-          filter: 'blur(100px)',
-          borderRadius: '50%',
-          background: 'radial-gradient(50% 50% at 50% 50%, #1a252f, #111)',
-          zIndex: 0,
-          opacity: 0.8,
-        }}
-        aria-hidden="true"
-      ></div> */}
-      {/* Bottom right ellipse background */}
-      {/* <div
-        style={{
-          width: '728px',
-          height: '728px',
-          position: 'absolute',
-          bottom: '-120px',
-          right: '-150px',
-          filter: 'blur(100px)',
-          borderRadius: '50%',
-          background: 'radial-gradient(50% 50% at 50% 50%, #1a252f, #111)',
-          zIndex: 0,
-          opacity: 0.8,
-        }}
-        aria-hidden="true"
-      ></div> */}
       {/* Corner decorative elements */}
       {/* Top left corner (desktop) */}
       <div className="absolute top-32 left-12 hidden h-8 w-8 border-t-2 border-l-2 border-white md:block"></div>
