@@ -96,9 +96,6 @@ const PastSponsors = () => {
                     <div className="text-offwhite font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold">
                       {sponsor.name}
                     </div>
-                    <div className="font-['AvantGarde-Bk-BT',sans-serif] text-xs tracking-wider text-gray-400 uppercase">
-                      {sponsor.type}
-                    </div>
                   </div>
                 </div>
               ))}
@@ -129,9 +126,6 @@ const PastSponsors = () => {
               <div className="bg-[#303030] p-4 text-center">
                 <div className="text-offwhite font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold">
                   {sponsor.name}
-                </div>
-                <div className="font-['AvantGarde-Bk-BT',sans-serif] text-xs tracking-wider text-gray-400 uppercase">
-                  {sponsor.type}
                 </div>
               </div>
             </div>

@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 const TARGET_DATE = new Date("2025-10-30T09:00:00");
 
 const events = [
-  { month: "SEP", day: "01", label: "REGISTRATIONS\nBEGIN" },
-  { month: "OCT", day: "15", label: "REGISTRATIONS\nEND" },
+  { month: "SEP", day: "30", label: "REGISTRATIONS\nBEGIN" },
+  { month: "OCT", day: "12", label: "REGISTRATIONS\nEND" },
   { month: "OCT", day: "30", label: "OPENING CEREMONY\n& HACKATHON BEGINS" },
   { month: "OCT", day: "31", label: "HACKATHON ENDS\n& CLOSING CEREMONY" },
 ];
