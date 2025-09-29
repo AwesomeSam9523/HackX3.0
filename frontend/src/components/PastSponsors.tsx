@@ -66,7 +66,7 @@ const PastSponsors = () => {
         aria-hidden="true"
       />
       <h2 className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
-        OUR PAST PARTNERS
+        OUR PARTNERS
       </h2>
 
       <div className="flex w-full max-w-6xl flex-col gap-8">
@@ -80,14 +80,16 @@ const PastSponsors = () => {
                   key={idx}
                   className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg transition-transform duration-300 hover:scale-105"
                 >
-                  <div className="flex flex-grow items-center justify-center p-4">
-                    <Image
-                      src={sponsor.logo}
-                      alt={sponsor.name}
-                      width={140} //specific for this only
-                      height={50}
-                      className="object-contain"
-                    />
+                  <div className="flex flex-grow items-center justify-center p-6">
+                    <div className="relative h-20 w-full max-w-[200px]">
+                      <Image
+                        src={sponsor.logo}
+                        alt={sponsor.name}
+                        fill
+                        className="object-contain"
+                        sizes="200px"
+                      />
+                    </div>
                   </div>
                   {/* Text container at the bottom */}
                   <div className="bg-[#303030] p-4 text-center">
@@ -113,14 +115,16 @@ const PastSponsors = () => {
               key={idx}
               className="flex h-60 w-72 flex-shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-[#212121] shadow-lg transition-transform duration-300 hover:scale-105"
             >
-              <div className="flex flex-grow items-center justify-center p-4">
-                <Image
-                  src={sponsor.logo}
-                  alt={sponsor.name}
-                  width={sponsor.name === "Programming Pathshala" ? 80 : 140}
-                  height={50}
-                  className="object-contain"
-                />
+              <div className="flex flex-grow items-center justify-center p-6">
+                <div className="relative h-20 w-full max-w-[200px]">
+                  <Image
+                    src={sponsor.logo}
+                    alt={sponsor.name}
+                    fill
+                    className="object-contain"
+                    sizes="200px"
+                  />
+                </div>
               </div>
               <div className="bg-[#303030] p-4 text-center">
                 <div className="text-offwhite font-['AvantGarde-Bk-BT',sans-serif] text-lg font-semibold">

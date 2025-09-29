@@ -6,22 +6,22 @@ export const sponsorsData = [
   },
   {
     logo: "/sponsors/sponsor2.svg",
-    name: "Scribbr",
+    name: "Radio Manipal Jaipur",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor3.svg",
-    name: "QuillBot",
+    name: "Femease",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor4.svg",
-    name: "LanguageTool",
+    name: "ED Times",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor5.svg",
-    name: "Programming Pathshala",
+    name: "Manipal Hospital",
     type: "HIRING PARTNER",
   },
   {
@@ -31,27 +31,27 @@ export const sponsorsData = [
   },
   {
     logo: "/sponsors/sponsor7.svg",
-    name: "QuillBot",
+    name: "Threeway Studio",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor8.svg",
-    name: "LanguageTool",
+    name: "E-Cell",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor9.svg",
-    name: "Programming Pathshala",
+    name: "Vivacity",
     type: "HIRING PARTNER",
   },
   {
     logo: "/sponsors/sponsor10.svg",
-    name: "Scribbr",
+    name: "Herody",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor11.svg",
-    name: "QuillBot",
+    name: "Oracle Academy",
     type: "LANGUAGE PARTNER",
   },
   {
@@ -61,32 +61,32 @@ export const sponsorsData = [
   },
   {
     logo: "/sponsors/sponsor13.svg",
-    name: "QuillBot",
+    name: "Namaste Dev",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor14.svg",
-    name: "QuillBot",
+    name: "Bobble",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor15.svg",
-    name: "QuillBot",
+    name: "Unstop",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor16.svg",
-    name: "QuillBot",
+    name: "C-DAC",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor17.svg",
-    name: "QuillBot",
+    name: "Design Studio",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor18.svg",
-    name: "QuillBot",
+    name: "Codeate",
     type: "LANGUAGE PARTNER",
   },
   {
@@ -96,22 +96,17 @@ export const sponsorsData = [
   },
   {
     logo: "/sponsors/sponsor20.svg",
-    name: "QuillBot",
+    name: "Scribbr",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor21.svg",
-    name: "QuillBot",
+    name: "Bikesetu",
     type: "LANGUAGE PARTNER",
   },
   {
     logo: "/sponsors/sponsor22.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/sponsors/sponsor13.svg",
-    name: "QuillBot",
+    name: "Axure",
     type: "LANGUAGE PARTNER",
   },
 ];
