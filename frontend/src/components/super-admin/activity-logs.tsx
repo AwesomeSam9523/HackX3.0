@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -55,14 +55,9 @@ export function ActivityLogs({
     setFilteredLogs(initialLogs);
   }, [initialLogs]);
 
-  useEffect(() => {
-    applyFilters();
-  }, [filters, logs]);
-
-  const applyFilters = async () => {
+  const applyFilters = useCallback(async () => {
     setIsLoading(true);
     try {
-      // If any filters are applied, fetch from API
       const hasFilters = Object.values(filters).some(
         (value) => value && value.trim() !== "",
       );
@@ -71,7 +66,6 @@ export function ActivityLogs({
         const filteredData = await apiService.getFilteredLogs(filters);
         setFilteredLogs(filteredData);
       } else {
-        // No filters, show all logs
         setFilteredLogs(logs);
       }
     } catch (error) {
@@ -84,7 +78,11 @@ export function ActivityLogs({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [filters, logs, toast]);
+
+  useEffect(() => {
+    applyFilters().then();
+  }, [filters, logs, applyFilters]);
 
   const handleFilterChange = (key: keyof LogFilter, value: string) => {
     setFilters((prev) => ({

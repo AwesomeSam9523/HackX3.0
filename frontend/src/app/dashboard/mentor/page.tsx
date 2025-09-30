@@ -19,6 +19,7 @@ export default function MentorDashboard() {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
+    setPasswordChanged(true); // TODO: Remove this line after implementing password change feature
     return () => clearInterval(timer);
   }, []);
 

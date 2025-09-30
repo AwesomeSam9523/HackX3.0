@@ -169,21 +169,11 @@ export default function AdminDashboard() {
     apiService.getMentors().then(setMentors);
     apiService.getProblemStatements().then(setProblemStatements);
     apiService.getAnnouncements().then(setAnnouncements);
-    wsService.connect().then(handleWebsocket);
 
     async function onWebsocketMessage(ws: WebSocket, ev: MessageEvent) {
       const data = JSON.parse(ev.data) as WebsocketData;
       if (data.type === "authenticated") {
         setAuthenticated(true);
-        ws.send(
-          JSON.stringify({
-            type: "subscribe_checkpoints",
-          }),
-        );
-      }
-
-      if (!authenticated) {
-        return;
       }
 
       if (data.type === "checkpoint") {
@@ -219,10 +209,23 @@ export default function AdminDashboard() {
       ws.onmessage = (data) => onWebsocketMessage(ws, data);
     }
 
+    wsService.connect().then(handleWebsocket);
+
     return () => {
       wsService.disconnect();
     };
   }, [toast]);
+
+  // 🔑 second effect reacts when authenticated/socket changes
+  useEffect(() => {
+    if (!socket || !authenticated) return;
+
+    socket.send(
+      JSON.stringify({
+        type: "subscribe_checkpoints",
+      }),
+    );
+  }, [authenticated, socket]);
 
   const handleResetPassword = (teamId: string) => {
     console.log(`Resetting password for team: ${teamId}`);

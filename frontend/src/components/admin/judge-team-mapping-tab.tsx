@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { CheckCircle, Clock, Eye, Filter, MapPin, Search } from "lucide-react";
 import { apiService } from "@/lib/service";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
 import type { Judge, Team, TeamJudgeMapping } from "@/lib/types";
 
 interface JudgeTeamMappingTabProps {
@@ -36,11 +36,10 @@ export function JudgeTeamMappingTab({
   const [mappings, setMappings] = useState<TeamJudgeMapping[]>([]);
   const [evaluatedTeams, setEvaluatedTeams] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedFloor, setSelectedFloor] = useState<string>("all");
   const [selectedJudge, setSelectedJudge] = useState<string>("all");
   const [selectedJudgeTeams, setSelectedJudgeTeams] = useState<Team[]>([]);
   const [isTeamsDialogOpen, setIsTeamsDialogOpen] = useState(false);
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   useEffect(() => {
     loadMappings();
@@ -116,7 +115,6 @@ export function JudgeTeamMappingTab({
 
   const clearFilters = () => {
     setSearchTerm("");
-    setSelectedFloor("all");
     setSelectedJudge("all");
   };
 

@@ -44,6 +44,9 @@ export default function TeamDashboard() {
   }, []);
 
   useEffect(() => {
+    // TODO remove later
+    setPasswordChanged(true);
+    setRound2Selected(false);
     if (passwordChanged) {
       loadData();
     }

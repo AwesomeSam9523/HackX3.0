@@ -242,19 +242,19 @@ export default function SuperAdminDashboard() {
     });
   };
 
-  const handlePromoteToRound2 = (teamIds: string[]) => {
-    setTeams((prev) =>
-      prev.map((team) =>
-        teamIds.includes(team.id)
-          ? {
-              ...team,
-              round2Status: "Selected",
-              round2Room: `AB2-${Math.floor(Math.random() * 400) + 300}`,
-            }
-          : team,
-      ),
-    );
-  };
+  // const handlePromoteToRound2 = (teamIds: string[]) => {
+  //   setTeams((prev) =>
+  //     prev.map((team) =>
+  //       teamIds.includes(team.id)
+  //         ? {
+  //             ...team,
+  //             round2Status: "Selected",
+  //             round2Room: `AB2-${Math.floor(Math.random() * 400) + 300}`,
+  //           }
+  //         : team,
+  //     ),
+  //   );
+  // };
 
   function ago(dateString: string) {
     const date = new Date(dateString);
