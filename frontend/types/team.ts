@@ -17,6 +17,7 @@ export interface TeamSubcategory {
 export interface TeamCategory {
   id: string;
   name: string;
+  year: number;
   subcategories: TeamSubcategory[];
 }
 

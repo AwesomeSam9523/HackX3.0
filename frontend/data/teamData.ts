@@ -4,6 +4,7 @@ export const teamData: TeamCategory[] = [
   {
     id: "faculty",
     name: "FACULTY",
+    year: 2025,
     subcategories: [
       {
         title: "FACULTY",
@@ -76,6 +77,7 @@ export const teamData: TeamCategory[] = [
   {
     id: "executive",
     name: "EXECUTIVE",
+    year: 2025,
     subcategories: [
       {
         title: "STUDENT CONVENER 2024-25",
@@ -510,6 +512,7 @@ export const teamData: TeamCategory[] = [
   {
     id: "core",
     name: "CORE",
+    year: 2025,
     subcategories: [
       {
         title: "TECHNICAL TEAM",
@@ -1131,6 +1134,104 @@ export const teamData: TeamCategory[] = [
               "https://images.prismic.io/ieeemuj/aLjE8WGNHVfTOoDI_AshutoshSharma-sponsorandfinance-HackX3.0.jpg?auto=format,compress",
             linkedinUrl:
               "https://www.linkedin.com/in/sharma-ashutosh-865039326",
+          },
+        ],
+      },
+    ],
+  },
+  // 2024 Team Data
+  {
+    id: "faculty-2024",
+    name: "FACULTY",
+    year: 2024,
+    subcategories: [
+      {
+        title: "FACULTY",
+        members: [
+          {
+            id: "1a-2024",
+            name: "Dr. Sandeep Joshi",
+            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "2a-2024",
+            name: "Dr. Ajay Kumar",
+            position: "ASSISTANT PROFESSOR (SELECTION GRADE), CSE",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "executive-2024",
+    name: "EXECUTIVE",
+    year: 2024,
+    subcategories: [
+      {
+        title: "STUDENT CONVENER 2023-24",
+        members: [
+          {
+            id: "4b-2024",
+            name: "Previous Student Convener 1",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "5b-2024",
+            name: "Previous Student Convener 2",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "#",
+          },
+        ],
+      },
+    ],
+  },
+  // 2023 Team Data
+  {
+    id: "faculty-2023",
+    name: "FACULTY",
+    year: 2023,
+    subcategories: [
+      {
+        title: "FACULTY",
+        members: [
+          {
+            id: "1a-2023",
+            name: "Dr. Sandeep Joshi",
+            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "executive-2023",
+    name: "EXECUTIVE",
+    year: 2023,
+    subcategories: [
+      {
+        title: "STUDENT CONVENER 2022-23",
+        members: [
+          {
+            id: "4b-2023",
+            name: "Legacy Student Convener 1",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
           },
         ],
       },
