@@ -1,60 +1,92 @@
 export const sponsorsData = [
   {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
-    type: "HIRING PARTNER",
+    logo: "/sponsors/sponsor1.svg",
+    name: "Casio",
   },
   {
-    logo: "/scribbr.svg",
+    logo: "/sponsors/sponsor2.svg",
+    name: "Radio Manipal Jaipur",
+  },
+  {
+    logo: "/sponsors/sponsor3.svg",
+    name: "Femease",
+  },
+  {
+    logo: "/sponsors/sponsor4.svg",
+    name: "ED Times",
+  },
+  {
+    logo: "/sponsors/sponsor5.svg",
+    name: "Manipal Hospital",
+  },
+  {
+    logo: "/sponsors/sponsor6.svg",
     name: "Scribbr",
-    type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/quillbot.svg",
+    logo: "/sponsors/sponsor7.svg",
+    name: "Threeway Studio",
+  },
+  {
+    logo: "/sponsors/sponsor8.svg",
+    name: "E-Cell",
+  },
+  {
+    logo: "/sponsors/sponsor9.svg",
+    name: "Vivacity",
+  },
+  {
+    logo: "/sponsors/sponsor10.svg",
+    name: "Herody",
+  },
+  {
+    logo: "/sponsors/sponsor11.svg",
+    name: "Oracle Academy",
+  },
+  {
+    logo: "/sponsors/sponsor12.svg",
     name: "QuillBot",
-    type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/languagetool.svg",
-    name: "LanguageTool",
-    type: "LANGUAGE PARTNER",
+    logo: "/sponsors/sponsor13.svg",
+    name: "Namaste Dev",
   },
   {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
-    type: "HIRING PARTNER",
+    logo: "/sponsors/sponsor14.svg",
+    name: "Bobble",
   },
   {
-    logo: "/scribbr.svg",
+    logo: "/sponsors/sponsor15.svg",
+    name: "Unstop",
+  },
+  {
+    logo: "/sponsors/sponsor16.svg",
+    name: "C-DAC",
+  },
+  {
+    logo: "/sponsors/sponsor17.svg",
+    name: "Design Studio",
+  },
+  {
+    logo: "/sponsors/sponsor18.svg",
+    name: "Codeate",
+  },
+  {
+    logo: "/sponsors/sponsor19.svg",
+    name: "QuillBot",
+  },
+  {
+    logo: "/sponsors/sponsor20.svg",
     name: "Scribbr",
-    type: "LANGUAGE PARTNER",
   },
   {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
+    logo: "/sponsors/sponsor21.svg",
+    name: "Bikesetu",
   },
   {
-    logo: "/languagetool.svg",
-    name: "LanguageTool",
-    type: "LANGUAGE PARTNER",
+    logo: "/sponsors/sponsor22.svg",
+    name: "Axure",
   },
-  {
-    logo: "/programmingpathshala.svg",
-    name: "Programming Pathshala",
-    type: "HIRING PARTNER",
-  },
-  {
-    logo: "/scribbr.svg",
-    name: "Scribbr",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  // Repeat or add more as needed
 ];
 
 export const inKindSponsorsData = [

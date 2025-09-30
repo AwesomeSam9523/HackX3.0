@@ -10,8 +10,13 @@ type TimelineItem = {
 
 const timelineData: TimelineItem[] = [
   {
-    date: "31ST OCT (OPENING)",
-    time: "10:00AM - 11:30AM",
+    date: "29TH SEP - 12TH OCT (ROUND 1)",
+    time: "",
+    points: ["Online shortlisting of Participants"],
+  },
+  {
+    date: "30TH OCT (OPENING)",
+    time: "4:00PM",
     points: [
       "Inauguration & Speech by dignitaries",
       "Announcement of track of event",
@@ -19,26 +24,26 @@ const timelineData: TimelineItem[] = [
     ],
   },
   {
-    date: "31ST OCT ( ROUND 1 )",
-    time: "12:00PM - 8:30PM",
+    date: "30TH OCT (ROUND 2)",
+    time: "5:00PM",
     points: [
       "HackX Round-1 begins",
       "Validation and checks for participant teams",
     ],
   },
   {
-    date: "1ST NOV ( ROUND 1 CONT'D )",
-    time: "Till 4:00AM",
+    date: "31ST OCT (ROUND 1 CONT'D)",
+    time: "Till 9:00AM",
     points: ["Round 1 continues", "Mentors check team progress"],
   },
   {
-    date: "1ST NOV ( ROUND 2 )",
-    time: "2:00PM - 5:00PM",
+    date: "31ST OCT (ROUND 2)",
+    time: "11:00AM - 2:00PM",
     points: ["Presentation pitch for Round 2 begins", "Final scoring of teams"],
   },
   {
-    date: "1ST NOV ( CLOSING )",
-    time: "6:00PM to 7:00PM",
+    date: "31ST OCT (CLOSING)",
+    time: "5:00PM to 6:00PM",
     points: [
       "Result declaration",
       "Closing ceremony & speeches",
