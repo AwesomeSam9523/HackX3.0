@@ -75,7 +75,16 @@ const Footer: React.FC = () => {
         <div className="absolute inset-x-0 bottom-0 z-0 h-[400px] transform" />
 
         {/* footer gradient */}
-        <div className="absolute left-1/2 block h-[60rem] w-[100rem] -translate-x-1/2 transform rounded-full bg-transparent bg-radial from-[#368BCC] to-[#020D85] blur-[200px]"></div>
+        <div
+          className="absolute left-1/2 block h-[60rem] w-[100rem] -translate-x-1/2 transform rounded-full"
+          style={{
+            background: "radial-gradient(circle, #368BCC, #020D85)",
+            backdropFilter: "blur(200px)",
+            WebkitBackdropFilter: "blur(75px)",
+            filter: "blur(200px)",
+            WebkitFilter: "blur(75px)",
+          }}
+        ></div>
 
         {/* Contact Us Expanded Panel */}
         {isContactExpanded && (
