@@ -552,6 +552,8 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aLjIXWGNHVfTOoNS_RaviBansal-technical-HackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://in.linkedin.com/in/ravi-bansal-925602227",
+            githubUrl: "https://github.com/shakarkandhi",
+            instagramUrl: "https://www.instagram.com/shakarkandhi/",
           },
           {
             id: "5c",
@@ -1146,23 +1148,114 @@ export const teamData: TeamCategory[] = [
     year: 2024,
     subcategories: [
       {
-        title: "FACULTY",
+        title: "PATRON",
         members: [
           {
             id: "1a-2024",
-            name: "Dr. Sandeep Joshi",
-            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            name: "Mr. S. Vaitheeswaran",
+            position: "CHAIRPERSON, MUJ",
             image:
               "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl: "https://www.linkedin.com/in/vaitheeswaran/",
           },
           {
             id: "2a-2024",
-            name: "Dr. Ajay Kumar",
-            position: "ASSISTANT PROFESSOR (SELECTION GRADE), CSE",
+            name: "Dr. N N Sharma",
+            position: "PRESIDENT, MUJ",
             image:
               "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl: "https://www.linkedin.com/in/sharma-nn-7988182/",
+          },
+        ],
+      },
+      {
+        title: "CO-PATRON",
+        members: [
+          {
+            id: "3a-2024",
+            name: "Dr. Jawar N Jangir",
+            position: "PRO PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/commodore-dr-jawaharjangir/",
+          },
+          {
+            id: "4a-2024",
+            name: "Dr. Nitu Bhatnagar",
+            position: "REGISTRAR, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/nitu-bhatnagar-496980172/",
+          },
+          {
+            id: "5a-2024",
+            name: "Dr Kuldeep Singh Sangwan",
+            position: "DEAN FOE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/kuldip-singh-sangwan-331a25b6",
+          },
+        ],
+      },
+      {
+        title: "CHAIR",
+        members: [
+          {
+            id: "6a-2024",
+            name: "Dr. Sandeep Chaurasia",
+            position: "CHAIR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/sandeep-chaurasia-0457568a/",
+          },
+          {
+            id: "7a-2024",
+            name: "Dr. Sandeep Joshi",
+            position: "CEO AIC",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-sandeep-joshi-7319a138/",
+          },
+        ],
+      },
+      {
+        title: "PROGRAM CHAIR",
+        members: [
+          {
+            id: "8a-2024",
+            name: "Dr. Neha Chaudhary",
+            position: "PROGRAM CHAIR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-neha-chaudhary-2b02bb31/",
+          },
+        ],
+      },
+      {
+        title: "CONVENER",
+        members: [
+          {
+            id: "9a-2024",
+            name: "Dr. Juhi Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dr-juhi-singh-171a4873/",
+          },
+          {
+            id: "10a-2024",
+            name: "Mr. Shishir Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/shishir-chauhan-b888b2129/",
           },
         ],
       },
@@ -1177,20 +1270,82 @@ export const teamData: TeamCategory[] = [
         title: "STUDENT CONVENER 2023-24",
         members: [
           {
-            id: "4b-2024",
-            name: "Previous Student Convener 1",
+            id: "1b-2024",
+            name: "Naad Dantale",
             position: "STUDENT CONVENER",
             image:
               "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl: "https://www.linkedin.com/in/naad/",
           },
           {
-            id: "5b-2024",
-            name: "Previous Student Convener 2",
+            id: "2b-2024",
+            name: "Rishi Joshi",
             position: "STUDENT CONVENER",
             image:
               "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl: "https://www.linkedin.com/in/rishijoshi1410/",
+          },
+          {
+            id: "3b-2024",
+            name: "Srishti Krishna",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/shristikrishna",
+          },
+          {
+            id: "4b-2024",
+            name: "Pulkit Gupta",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/pulkit-gupta-abb638249/",
+          },
+          {
+            id: "5b-2024",
+            name: "Roshmeet Chakraborty",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/roshmeet/",
+          },
+          {
+            id: "6b-2024",
+            name: "Abhijeet Anand Jha",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/abhijeet-anand-jha-b517b7249/",
+          },
+        ],
+      },
+      {
+        title: "MUJ HACKX 2.0 ADVISORIES",
+        members: [
+          {
+            id: "7b-2024",
+            name: "Samvrant Samantaray",
+            position: "ADVISOR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/samvrant-samanataray/",
+          },
+          {
+            id: "8b-2024",
+            name: "Manya Goel",
+            position: "ADVISOR",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/manya-goel-8a6335222/",
+          },
+          {
+            id: "9b-2024",
+            name: "Aeshna Kala",
+            position: "ADVISOR",
+            image:
+              "https://images.prismic.io/ieeemuj/aHKU2kMqNJQqH0Ug_IMG_0315.HEIC?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/aeshna-kala-929191233/",
           },
         ],
       },
@@ -1198,20 +1353,134 @@ export const teamData: TeamCategory[] = [
   },
   // 2023 Team Data
   {
-    id: "faculty-2023",
+    id: "faculty-2024",
     name: "FACULTY",
     year: 2023,
     subcategories: [
       {
-        title: "FACULTY",
+        title: "PATRON",
         members: [
           {
             id: "1a-2023",
-            name: "Dr. Sandeep Joshi",
-            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            name: "Mr. S. Vaitheeswaran",
+            position: "CHAIRPERSON, MUJ",
             image:
               "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl: "https://www.linkedin.com/in/vaitheeswaran/",
+          },
+          {
+            id: "2a-2023",
+            name: "Dr. N N Sharma",
+            position: "PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/sharma-nn-7988182/",
+          },
+        ],
+      },
+      {
+        title: "CO-PATRON",
+        members: [
+          {
+            id: "3a-2023",
+            name: "Dr. Thammaiah CS",
+            position: "PRO PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-thammaiah-chekkera-6014184/",
+          },
+          {
+            id: "4a-2023",
+            name: "Dr. Nitu Bhatnagar",
+            position: "REGISTRAR, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/nitu-bhatnagar-496980172/",
+          },
+          {
+            id: "5a-2023",
+            name: "Dr. Arun Shanbhag",
+            position: "DEAN FOE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/arunshanbhag/",
+          },
+        ],
+      },
+      {
+        title: "CHAIR",
+        members: [
+          {
+            id: "6a-2023",
+            name: "Dr. Sandeep Chaurasia",
+            position: "DIRECTOR SCSE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/sandeep-chaurasia-0457568a/",
+          },
+          {
+            id: "7a-2023",
+            name: "Dr. Amit Soni",
+            position: "CEO AIC",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dr-amit-soni-9b810812/",
+          },
+          {
+            id: "8a-2023",
+            name: "Dr. Dinesh Saini",
+            position: "DIRECTOR, ECELL MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dinesh-saini-4354028/",
+          },
+        ],
+      },
+      {
+        title: "PROGRAM CHAIR",
+        members: [
+          {
+            id: "9a-2023",
+            name: "Dr. Neha Chaudhary",
+            position: "HOD CSE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-neha-chaudhary-2b02bb31/",
+          },
+          {
+            id: "10a-2023",
+            name: "Dr. Santosh Kumar Vishwakarma",
+            position: "HOD AI-ML,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/santosh-kumar-vishwakarma-68005a66/",
+          },
+        ],
+      },
+      {
+        title: "CONVENER",
+        members: [
+          {
+            id: "11a-2023",
+            name: "Dr. Juhi Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dr-juhi-singh-171a4873/",
+          },
+          {
+            id: "12a-2023",
+            name: "Mr. Shishir Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/shishir-chauhan-b888b2129/",
           },
         ],
       },
@@ -1226,12 +1495,52 @@ export const teamData: TeamCategory[] = [
         title: "STUDENT CONVENER 2022-23",
         members: [
           {
-            id: "4b-2023",
-            name: "Legacy Student Convener 1",
+            id: "1b-2023",
+            name: "Preet",
             position: "STUDENT CONVENER",
             image:
               "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl: "https://www.linkedin.com/in/preet-kalani/",
+          },
+          {
+            id: "2b-2023",
+            name: "Dev Shalinkumar Agrawal",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dev-agrawal28/",
+          },
+          {
+            id: "3b-2023",
+            name: "Ayush Poddar",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/ayush-poddar-324909245/",
+          },
+          {
+            id: "4b-2023",
+            name: "Aneerban Saha",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/aneerban-saha/",
+          },
+          {
+            id: "5b-2023",
+            name: "Lakshya Goel",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/ilakshya1/",
+          },
+          {
+            id: "6b-2023",
+            name: "Manya Goel",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJuNfqTt2nPbaPb4_aryanverma-convener-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/manya-goel-8a6335222/",
           },
         ],
       },
