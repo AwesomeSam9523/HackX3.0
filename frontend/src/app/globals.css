@@ -61,30 +61,66 @@
 .font-kinetikaUltra {
   font-family: "KinetikaUltra", sans-serif;
 }
-/* Set up color variables */
+
+/* Base CSS variables */
 :root {
   --d9color: #d9d9d91a;
-  /* --font-sans: 'NortuneBlack', 'Inter', sans-serif; */
   --font-sans: "Inter", sans-serif;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
-/* Font-face for Nortune-Black */
-
-/* Theme variables */
+/* Theme variables (Tailwind v4) */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-footer: var(--d9color);
-  --color-offwhite: #fffff1;
+  --color-background: oklch(0.145 0 0);
+  --color-foreground: oklch(0.985 0 0);
+  --color-card: oklch(0.145 0 0);
+  --color-card-foreground: oklch(0.985 0 0);
+  --color-popover: oklch(0.145 0 0);
+  --color-popover-foreground: oklch(0.985 0 0);
+  --color-primary: oklch(0.985 0 0);
+  --color-primary-foreground: oklch(0.205 0 0);
+  --color-secondary: oklch(0.269 0 0);
+  --color-secondary-foreground: oklch(0.985 0 0);
+  --color-muted: #F5F5F5;
+  --color-active: #ffffff;
+  --color-muted-foreground: oklch(0.708 0 0);
+  --color-accent: oklch(0.269 0 0);
+  --color-hackx: #197EE2;
+  --color-accent-foreground: oklch(0.985 0 0);
+  --color-destructive: oklch(0.396 0.141 25.723);
+  --color-destructive-foreground: oklch(0.637 0.237 25.331);
+  --color-border: #cccccc;
+  --color-input: oklch(0.269 0 0);
+  --color-ring: oklch(0.439 0 0);
+  --color-chart-1: oklch(0.488 0.243 264.376);
+  --color-chart-2: oklch(0.696 0.17 162.48);
+  --color-chart-3: oklch(0.769 0.188 70.08);
+  --color-chart-4: oklch(0.627 0.265 303.9);
+  --color-chart-5: oklch(0.645 0.246 16.439);
+  --color-sidebar: oklch(0.205 0 0);
+  --color-sidebar-foreground: oklch(0.985 0 0);
+  --color-sidebar-primary: oklch(0.488 0.243 264.376);
+  --color-sidebar-primary-foreground: oklch(0.985 0 0);
+  --color-sidebar-accent: oklch(0.269 0 0);
+  --color-sidebar-accent-foreground: oklch(0.985 0 0);
+  --color-sidebar-border: oklch(0.269 0 0);
+  --color-sidebar-ring: oklch(0.439 0 0);
+  --color-offblack: #1e1e1e;
+
+  /* existing */
+  --color-footer: rgba(217, 217, 217, 0.1);
+  --color-offwhite: #f8f8f8;
+
   --font-sans: "Inter", sans-serif;
-  --font-mono: var(--font-geist-mono); /* if defined elsewhere */
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Dark mode override */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #ffffff;
   }
 }
 
@@ -102,7 +138,6 @@
 }
 
 body {
-  background: #000;
-  color: var(--foreground);
+  background: #000000 !important;
   font-family: var(--font-sans);
 }
