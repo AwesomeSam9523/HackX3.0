@@ -54,7 +54,7 @@ const TeamPage: React.FC = () => {
             <div className="flex rounded-full border-2 border-white bg-transparent p-1">
               <button
                 onClick={() => setActiveYear(2025)}
-                className={`rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${
+                className={`cursor-pointer rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${
                   activeYear === 2025
                     ? "bg-white text-black hover:bg-gray-200"
                     : "text-white hover:bg-gray-800"
@@ -64,7 +64,7 @@ const TeamPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveYear(2024)}
-                className={`rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${
+                className={`cursor-pointer rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${
                   activeYear === 2024
                     ? "bg-white text-black hover:bg-gray-200"
                     : "text-white hover:bg-gray-800"
@@ -74,7 +74,7 @@ const TeamPage: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveYear(2023)}
-                className={`rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${
+                className={`cursor-pointer rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${
                   activeYear === 2023
                     ? "bg-white text-black hover:bg-gray-200"
                     : "text-white hover:bg-gray-800"

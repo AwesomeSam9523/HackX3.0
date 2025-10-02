@@ -81,7 +81,7 @@ const LightBoxOthers = (props: { name: string; id: number }) => {
         <>
           {/*Lightbox desktop view*/}
           {/*left */}
-          <div className="absolute -top-[7rem] left-0 z-0 hidden h-[20rem] w-1/2 opacity-50 md:block">
+          <div className="absolute -top-[40rem] left-0 z-0 hidden h-[20rem] w-1/2 opacity-50 md:block">
             <LightBlock position="left" />
           </div>
           {/*right*/}
