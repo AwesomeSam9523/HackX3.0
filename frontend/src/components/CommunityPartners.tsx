@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { communityPartnersData } from "../../data/communityPartnersData";
+import LightBoxOthers from "./LightBoxOthers";
 
 const CommunityPartners: React.FC = () => {
   const data = communityPartnersData;
@@ -36,8 +37,9 @@ const CommunityPartners: React.FC = () => {
       className="flex w-full flex-col items-center bg-black px-4 py-16"
       style={{ position: "relative", zIndex: 0 }}
     >
+      <LightBoxOthers name="about" id={1} />
       {/* Blurred ellipse background, left center, always behind content */}
-      <div
+      {/*<div
         style={{
           width: "700px", // set a fixed width to avoid overflow
           maxWidth: "100vw", // never exceed viewport width
@@ -53,7 +55,7 @@ const CommunityPartners: React.FC = () => {
           pointerEvents: "none",
         }}
         aria-hidden="true"
-      />
+      />*/}
       <h2 className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
         COMMUNITY PARTNERS
       </h2>

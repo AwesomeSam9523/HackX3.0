@@ -66,7 +66,7 @@ const PastSponsors = () => {
         aria-hidden="true"
       />
       <h2 className="font-kinetikaUltra text-offwhite mb-8 text-center text-5xl leading-[79.9%] font-black md:text-6xl">
-        OUR PARTNERS
+        OUR PAST PARTNERS
       </h2>
 
       <div className="flex w-full max-w-6xl flex-col gap-8">

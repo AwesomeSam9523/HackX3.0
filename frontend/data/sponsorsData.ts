@@ -21,7 +21,7 @@ export const sponsorsData = [
   },
   {
     logo: "/sponsors/sponsor6.svg",
-    name: "Scribbr",
+    name: "Programming Pathshala",
   },
   {
     logo: "/sponsors/sponsor7.svg",

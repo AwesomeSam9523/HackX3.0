@@ -4,6 +4,7 @@ export const teamData: TeamCategory[] = [
   {
     id: "faculty",
     name: "FACULTY",
+    year: 2025,
     subcategories: [
       {
         title: "FACULTY",
@@ -14,7 +15,8 @@ export const teamData: TeamCategory[] = [
             position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
             image:
               "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
+            linkedinUrl:
+              "https://www.linkedin.com/in/prof-dr-sandeep-chaurasia-0457568a/",
           },
           {
             id: "2a",
@@ -76,6 +78,7 @@ export const teamData: TeamCategory[] = [
   {
     id: "executive",
     name: "EXECUTIVE",
+    year: 2025,
     subcategories: [
       {
         title: "STUDENT CONVENER 2024-25",
@@ -510,6 +513,7 @@ export const teamData: TeamCategory[] = [
   {
     id: "core",
     name: "CORE",
+    year: 2025,
     subcategories: [
       {
         title: "TECHNICAL TEAM",
@@ -549,6 +553,8 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aLjIXWGNHVfTOoNS_RaviBansal-technical-HackX3.0.jpg?auto=format,compress",
             linkedinUrl: "https://in.linkedin.com/in/ravi-bansal-925602227",
+            githubUrl: "https://github.com/shakarkandhi",
+            instagramUrl: "https://www.instagram.com/shakarkandhi/",
           },
           {
             id: "5c",
@@ -1131,6 +1137,411 @@ export const teamData: TeamCategory[] = [
               "https://images.prismic.io/ieeemuj/aLjE8WGNHVfTOoDI_AshutoshSharma-sponsorandfinance-HackX3.0.jpg?auto=format,compress",
             linkedinUrl:
               "https://www.linkedin.com/in/sharma-ashutosh-865039326",
+          },
+        ],
+      },
+    ],
+  },
+  // 2024 Team Data
+  {
+    id: "faculty-2024",
+    name: "FACULTY",
+    year: 2024,
+    subcategories: [
+      {
+        title: "PATRON",
+        members: [
+          {
+            id: "1a-2024",
+            name: "Mr. S. Vaitheeswaran",
+            position: "CHAIRPERSON, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6BUp5xUNkB1aeR_person1.jpg?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/vaitheeswaran/",
+          },
+          {
+            id: "2a-2024",
+            name: "Dr. N N Sharma",
+            position: "PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KA55xUNkB1alu_NNSharma.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/sharma-nn-7988182/",
+          },
+        ],
+      },
+      {
+        title: "CO-PATRON",
+        members: [
+          {
+            id: "3a-2024",
+            name: "Dr. Jawar N Jangir",
+            position: "PRO PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KAJ5xUNkB1alr_JawarJangir.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/commodore-dr-jawaharjangir/",
+          },
+          {
+            id: "4a-2024",
+            name: "Dr. Nitu Bhatnagar",
+            position: "REGISTRAR, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KAp5xUNkB1alt_NeetuBhatnagar.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/nitu-bhatnagar-496980172/",
+          },
+          {
+            id: "5a-2024",
+            name: "Dr Kuldeep Singh Sangwan",
+            position: "DEAN FOE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KAZ5xUNkB1als_KuldeepSingh.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/kuldip-singh-sangwan-331a25b6",
+          },
+        ],
+      },
+      {
+        title: "CHAIR",
+        members: [
+          {
+            id: "6a-2024",
+            name: "Dr. Sandeep Chaurasia",
+            position: "CHAIR",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KBJ5xUNkB1alv_SandeepChaurasia.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/sandeep-chaurasia-0457568a/",
+          },
+          {
+            id: "7a-2024",
+            name: "Dr. Sandeep Joshi",
+            position: "CEO AIC",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-sandeep-joshi-7319a138/",
+          },
+        ],
+      },
+      {
+        title: "PROGRAM CHAIR",
+        members: [
+          {
+            id: "8a-2024",
+            name: "Dr. Neha Chaudhary",
+            position: "PROGRAM CHAIR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-neha-chaudhary-2b02bb31/",
+          },
+        ],
+      },
+      {
+        title: "CONVENER",
+        members: [
+          {
+            id: "9a-2024",
+            name: "Dr. Juhi Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6X6Tt2nPbaRP__dr.juhisingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dr-juhi-singh-171a4873/",
+          },
+          {
+            id: "10a-2024",
+            name: "Mr. Shishir Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/shishir-chauhan-b888b2129/",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "executive-2024",
+    name: "EXECUTIVE",
+    year: 2024,
+    subcategories: [
+      {
+        title: "STUDENT CONVENER 2023-24",
+        members: [
+          {
+            id: "1b-2024",
+            name: "Naad Dantale",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/7f7d7d42-3cc2-4feb-8b3c-dfeb6369527f_WhatsApp+Image+2023-07-04+at+9.49.12+PM+-+Naad+Dantale.jpeg?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/naad/",
+          },
+          {
+            id: "2b-2024",
+            name: "Rishi Joshi",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJu1uKTt2nPbaPxN_rishijoshi-advisor.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/rishijoshi1410/",
+          },
+          {
+            id: "3b-2024",
+            name: "Srishti Krishna",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/8a647216-f4e2-4258-9879-5d90ed10fd0c_SHRISTI+KRISHNA.jpg?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/shristikrishna",
+          },
+          {
+            id: "4b-2024",
+            name: "Pulkit Gupta",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJu1tKTt2nPbaPxM_pulkitgupta-advisor-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/pulkit-gupta-abb638249/",
+          },
+          {
+            id: "5b-2024",
+            name: "Roshmeet Chakraborty",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6J9p5xUNkB1alf_roshmeet.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/roshmeet/",
+          },
+          {
+            id: "6b-2024",
+            name: "Abhijeet Anand Jha",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aJu1sKTt2nPbaPxL_abhijeetanandjha-advisor.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/abhijeet-anand-jha-b517b7249/",
+          },
+        ],
+      },
+      {
+        title: "MUJ HACKX 2.0 ADVISORIES",
+        members: [
+          {
+            id: "7b-2024",
+            name: "Samvrant Samantaray",
+            position: "ADVISOR",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6J6p5xUNkB1alc_SamvrantSamantaray.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/samvrant-samanataray/",
+          },
+          {
+            id: "8b-2024",
+            name: "Manya Goel",
+            position: "ADVISOR",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6J6Z5xUNkB1alb_Manya.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/manya-goel-8a6335222/",
+          },
+          {
+            id: "9b-2024",
+            name: "Aeshna Kala",
+            position: "ADVISOR",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6J6J5xUNkB1ala_AeshnaKala.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/aeshna-kala-929191233/",
+          },
+        ],
+      },
+    ],
+  },
+  // 2023 Team Data
+  {
+    id: "faculty-2024",
+    name: "FACULTY",
+    year: 2023,
+    subcategories: [
+      {
+        title: "PATRON",
+        members: [
+          {
+            id: "1a-2023",
+            name: "Mr. S. Vaitheeswaran",
+            position: "CHAIRPERSON, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6BUp5xUNkB1aeR_person1.jpg?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/vaitheeswaran/",
+          },
+          {
+            id: "2a-2023",
+            name: "Dr. N N Sharma",
+            position: "PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KA55xUNkB1alu_NNSharma.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/sharma-nn-7988182/",
+          },
+        ],
+      },
+      {
+        title: "CO-PATRON",
+        members: [
+          {
+            id: "3a-2023",
+            name: "Dr. Thammaiah CS",
+            position: "PRO PRESIDENT, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KJp5xUNkB1amA_ThammaiahCS.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-thammaiah-chekkera-6014184/",
+          },
+          {
+            id: "4a-2023",
+            name: "Dr. Nitu Bhatnagar",
+            position: "REGISTRAR, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KAp5xUNkB1alt_NeetuBhatnagar.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/nitu-bhatnagar-496980172/",
+          },
+          {
+            id: "5a-2023",
+            name: "Dr. Arun Shanbhag",
+            position: "DEAN FOE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KIp5xUNkB1al5_ArunShanbhag.webp?auto=format,compresss",
+            linkedinUrl: "https://www.linkedin.com/in/arunshanbhag/",
+          },
+        ],
+      },
+      {
+        title: "CHAIR",
+        members: [
+          {
+            id: "6a-2023",
+            name: "Dr. Sandeep Chaurasia",
+            position: "DIRECTOR SCSE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KJJ5xUNkB1al9_SandeepChaurasia.webp?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/sandeep-chaurasia-0457568a/",
+          },
+          {
+            id: "7a-2023",
+            name: "Dr. Amit Soni",
+            position: "CEO AIC",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KIZ5xUNkB1al4_AmitSoni.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dr-amit-soni-9b810812/",
+          },
+          {
+            id: "8a-2023",
+            name: "Dr. Dinesh Saini",
+            position: "DIRECTOR, ECELL MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KI55xUNkB1al6_DineshSaini.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dinesh-saini-4354028/",
+          },
+        ],
+      },
+      {
+        title: "PROGRAM CHAIR",
+        members: [
+          {
+            id: "9a-2023",
+            name: "Dr. Neha Chaudhary",
+            position: "HOD CSE,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dr-neha-chaudhary-2b02bb31/",
+          },
+          {
+            id: "10a-2023",
+            name: "Dr. Santosh Kumar Vishwakarma",
+            position: "HOD AI-ML,MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/e9326429-d4f7-46ab-98e6-7bffa56607a3_Santosh_Kumar_Vishwakarma.jpg?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/santosh-kumar-vishwakarma-68005a66/",
+          },
+        ],
+      },
+      {
+        title: "CONVENER",
+        members: [
+          {
+            id: "11a-2023",
+            name: "Dr. Juhi Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6X6Tt2nPbaRP__dr.juhisingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dr-juhi-singh-171a4873/",
+          },
+          {
+            id: "12a-2023",
+            name: "Mr. Shishir Singh",
+            position: "MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl:
+              "https://www.linkedin.com/in/shishir-chauhan-b888b2129/",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "executive-2023",
+    name: "EXECUTIVE",
+    year: 2023,
+    subcategories: [
+      {
+        title: "STUDENT CONVENER 2022-23",
+        members: [
+          {
+            id: "1b-2023",
+            name: "Preet",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KFp5xUNkB1al2_preet.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/preet-kalani/",
+          },
+          {
+            id: "2b-2023",
+            name: "Dev Agrawal",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KFJ5xUNkB1al0_Dev.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/dev-agrawal28/",
+          },
+          {
+            id: "3b-2023",
+            name: "Ayush Poddar",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KE55xUNkB1alz_Ayush.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/ayush-poddar-324909245/",
+          },
+          {
+            id: "4b-2023",
+            name: "Aneerban Saha",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KEp5xUNkB1aly_Aneerban.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/aneerban-saha/",
+          },
+          {
+            id: "5b-2023",
+            name: "Lakshya Goel",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6KFZ5xUNkB1al1_Lakshay.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/ilakshya1/",
+          },
+          {
+            id: "6b-2023",
+            name: "Manya Goel",
+            position: "STUDENT CONVENER",
+            image:
+              "https://images.prismic.io/ieeemuj/aN6J6Z5xUNkB1alb_Manya.webp?auto=format,compress",
+            linkedinUrl: "https://www.linkedin.com/in/manya-goel-8a6335222/",
           },
         ],
       },
