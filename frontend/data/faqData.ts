@@ -8,14 +8,13 @@ export const faqs = [
   {
     id: 2,
     question: "HOW MANY TEAM MEMBERS DO I NEED?",
-    answer:
-      "Teams can consist of 2-4 members. You can also participate as an individual and we'll help you find teammates.",
+    answer: "Teams can consist of 2-4 members. ",
   },
   {
     id: 3,
     question: "HOW MUCH IS THE PARTICIPATION FEES?",
     answer:
-      "The participation fee varies by category. Please check the registration page for current pricing details.",
+      "Round 1 is the online shortlisting based on your tech profile. Teams shortlisted for Round 2 will have to pay a fee of INR 899 per team",
   },
   {
     id: 4,
