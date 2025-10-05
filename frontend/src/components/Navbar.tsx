@@ -75,6 +75,14 @@ const Navbar: React.FC = () => {
         <div className="flex h-full justify-between px-4 pt-24 sm:px-8 sm:pt-0">
           <div className="flex w-sm items-center">
             <Image
+              src="muj-logo.svg"
+              alt="MUJ Logo"
+              width={120}
+              height={48}
+              className="h-10 w-auto pr-2 pb-1"
+              priority
+            />
+            <Image
               src="hackxlogo.svg"
               alt="HackX 3.0 Logo"
               width={140}
