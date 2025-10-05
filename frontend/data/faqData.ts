@@ -14,7 +14,7 @@ export const faqs = [
     id: 3,
     question: "HOW MUCH IS THE PARTICIPATION FEES?",
     answer:
-      "Round 1 is the online shortlisting based on your tech profile. Teams shortlisted for Round 2 will have to pay a fee of INR 899 per team",
+      "Round 1 is online shortlisting b based on the team’s LinkedIn and Github profiles. There is no fee for Round 1. Only teams shortlisted for Round 2 will have to pay a fee of INR 899.",
   },
   {
     id: 4,
