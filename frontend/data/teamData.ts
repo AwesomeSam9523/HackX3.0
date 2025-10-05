@@ -164,8 +164,9 @@ export const teamData: TeamCategory[] = [
             image:
               "https://images.prismic.io/ieeemuj/aJunOaTt2nPbaPrS_RohitGanguly-hackX3.0.jpeg?auto=format,compress",
             linkedinUrl: "https://www.linkedin.com/in/rohit-ganguly-42685521b/",
-            githubUrl: "https://github.com/rohit-verma",
-            instagramUrl: "https://instagram.com/rohit_verma",
+            githubUrl: "https://github.com/psychic-coder",
+            instagramUrl:
+              "https://www.instagram.com/neil.rohit_?igsh=NWV3MXY2NGM5MWtl",
           },
           {
             id: "9b",
@@ -199,7 +200,7 @@ export const teamData: TeamCategory[] = [
             position: "CONTENT",
             image:
               "https://images.prismic.io/ieeemuj/aJuNZKTt2nPbaPb1_SamarChaubey-content-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/rohit-verma",
+            linkedinUrl: "https://www.linkedin.com/in/samar-chaubey-4b02342b3/",
           },
           {
             id: "12b",
@@ -207,7 +208,8 @@ export const teamData: TeamCategory[] = [
             position: "CONTENT",
             image:
               "https://images.prismic.io/ieeemuj/aJuNY6Tt2nPbaPb0_dishitasharma-content-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/ankit-joshi",
+            linkedinUrl:
+              "https://www.linkedin.com/in/dishita-sharma-066b81367?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
           {
             id: "13b",
@@ -215,7 +217,8 @@ export const teamData: TeamCategory[] = [
             position: "CONTENT",
             image:
               "https://images.prismic.io/ieeemuj/aJuNbaTt2nPbaPb2_SarahSohaib-content-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/neha-patel",
+            linkedinUrl:
+              "https://www.linkedin.com/in/sarah-sohaib-ab5a212a6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
         ],
       },
@@ -228,7 +231,7 @@ export const teamData: TeamCategory[] = [
             position: "CURATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJuNm6Tt2nPbaPb-_ArchishaGarg-curations-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/arjun-mehta",
+            linkedinUrl: "https://www.linkedin.com/in/archisha-garg",
           },
           {
             id: "15b",
@@ -236,7 +239,8 @@ export const teamData: TeamCategory[] = [
             position: "CURATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJuNnaTt2nPbaPb__VanshJain-curations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/sneha-agarwal",
+            linkedinUrl:
+              "https://www.linkedin.com/in/vansh-jain-06bbb92aa?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
           {
             id: "15c",
@@ -265,7 +269,7 @@ export const teamData: TeamCategory[] = [
             position: "GRAPHIC DESIGN",
             image:
               "https://images.prismic.io/ieeemuj/aJuNsqTt2nPbaPcL_PrakharMahant-GD-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/amit-patel",
+            linkedinUrl: "http://linkedin.com/in/prakhar-mahant-79a7a3279/",
           },
           {
             id: "19b",
@@ -281,7 +285,7 @@ export const teamData: TeamCategory[] = [
             position: "GRAPHIC DESIGN",
             image:
               "https://images.prismic.io/ieeemuj/aJuNtaTt2nPbaPcN_SankalpJhamb-GD-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/sankalp-jhamb",
+            linkedinUrl: "https://www.linkedin.com/in/sankalp-jhamb",
           },
         ],
       },
@@ -294,7 +298,7 @@ export const teamData: TeamCategory[] = [
             position: "HOSPITALITY",
             image:
               "https://images.prismic.io/ieeemuj/aJuNwqTt2nPbaPcP_PaarthYadav-hospitality-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
+            linkedinUrl: "https://www.linkedin.com/in/paarth-yadav",
           },
           {
             id: "22b",
@@ -310,7 +314,7 @@ export const teamData: TeamCategory[] = [
             position: "HOSPITALITY",
             image:
               "https://images.prismic.io/ieeemuj/aJuOIqTt2nPbaPcn_VANSHDEVGUN-hospitality-hackX3.0.jpeg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/vikram-singh",
+            linkedinUrl: "http://linkedin.com/in/vansh-devgun",
           },
         ],
       },
@@ -323,7 +327,8 @@ export const teamData: TeamCategory[] = [
             position: "MARKETING",
             image:
               "https://images.prismic.io/ieeemuj/aJuOuKTt2nPbaPdG_NitinBharadwaj-marketing-hackX3.0.jpeg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/priya-kapoor",
+            linkedinUrl:
+              "https://www.linkedin.com/in/nitin-bharadwaj-0205432b3?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
           },
           {
             id: "25b",
@@ -331,7 +336,8 @@ export const teamData: TeamCategory[] = [
             position: "MARKETING",
             image:
               "https://images.prismic.io/ieeemuj/aJuOqaTt2nPbaPdF_YashMaheshwari-marketing-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/rohit-sharma",
+            linkedinUrl:
+              "https://www.linkedin.com/in/yash-maheshwari-3b891a307/",
           },
           {
             id: "26b",
@@ -339,7 +345,8 @@ export const teamData: TeamCategory[] = [
             position: "MARKETING",
             image:
               "https://images.prismic.io/ieeemuj/aJuOpaTt2nPbaPdD_SanjanaRai-marketing-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/sneha-patel",
+            linkedinUrl:
+              "https://www.linkedin.com/in/sanjana-rai-1b9164277?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
         ],
       },
@@ -352,7 +359,8 @@ export const teamData: TeamCategory[] = [
             position: "MEDIA & COVERAGE",
             image:
               "https://images.prismic.io/ieeemuj/aJuO4KTt2nPbaPdP_AyushGarg-media%26coverage-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/kavya-sharma",
+            linkedinUrl:
+              "https://www.linkedin.com/in/ayush-garg-b3914028b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
           {
             id: "28b",
@@ -360,7 +368,8 @@ export const teamData: TeamCategory[] = [
             position: "MEDIA & COVERAGE",
             image:
               "https://images.prismic.io/ieeemuj/aJuO4qTt2nPbaPdQ_KRISHNA_CHATURVEDI_-_media_%26_coverage-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/aditya-singh",
+            linkedinUrl:
+              "https://www.linkedin.com/in/krishna-chaturvedi-2387792a3?originalSubdomain=in",
           },
           {
             id: "29b",
@@ -368,7 +377,8 @@ export const teamData: TeamCategory[] = [
             position: "MEDIA & COVERAGE",
             image:
               "https://images.prismic.io/ieeemuj/aJuO5aTt2nPbaPdR_YashikaPriyadarshi-media%26coverage-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/riya-patel",
+            linkedinUrl:
+              "https://www.linkedin.com/in/yashika-priyadarshi-825305238",
           },
         ],
       },
@@ -381,7 +391,8 @@ export const teamData: TeamCategory[] = [
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJum-6Tt2nPbaPrE_NeilGupta-operations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/arjun-verma",
+            linkedinUrl:
+              "https://www.linkedin.com/in/neil-gupta-97a0242a1?trk=recent-searches",
           },
           {
             id: "30b",
@@ -389,7 +400,8 @@ export const teamData: TeamCategory[] = [
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJum-qTt2nPbaPrD_KshitijVerma-operations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/rajesh-kumar",
+            linkedinUrl:
+              "https://www.linkedin.com/in/kshitij-verma-7110252b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
           },
           {
             id: "31b",
@@ -397,7 +409,8 @@ export const teamData: TeamCategory[] = [
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJum_6Tt2nPbaPrF_SalajBisht-operations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/priya-sharma",
+            linkedinUrl:
+              "https://www.linkedin.com/in/salaj-singh-bisht-837899248/",
           },
           {
             id: "32b",
@@ -405,7 +418,8 @@ export const teamData: TeamCategory[] = [
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJum-KTt2nPbaPrC_BhavyaJaggi-operations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/amit-singh",
+            linkedinUrl:
+              "https://www.linkedin.com/in/bhavya-jaggi-20b768284?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
           {
             id: "33b",
@@ -429,7 +443,8 @@ export const teamData: TeamCategory[] = [
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aJunBKTt2nPbaPrH_VedicaSaini-operations-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/kavita-joshi",
+            linkedinUrl:
+              "https://www.linkedin.com/in/vedica-saini-aba984280?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
           {
             id: "36b",
@@ -437,7 +452,8 @@ export const teamData: TeamCategory[] = [
             position: "OPERATIONS",
             image:
               "https://images.prismic.io/ieeemuj/aMP9E2GNHVfTPFbG_WhatsAppImage2025-09-12at16.28.43.jpeg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/kavita-joshi",
+            linkedinUrl:
+              "https://www.linkedin.com/in/moksh-chugh?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           },
         ],
       },
@@ -458,7 +474,7 @@ export const teamData: TeamCategory[] = [
             position: "SOCIAL MEDIA",
             image:
               "https://images.prismic.io/ieeemuj/aJunEqTt2nPbaPrL_BhavyaDhingra-socialmedia-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/karan-patel",
+            linkedinUrl: "https://www.linkedin.com/in/bhavya-dhingra/",
           },
           {
             id: "39b",
@@ -487,7 +503,8 @@ export const teamData: TeamCategory[] = [
             position: "SPONSORSHIP & FINANCE",
             image:
               "https://images.prismic.io/ieeemuj/aJunKKTt2nPbaPrP_TiyaChhabra-sponsorandfinance-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/priya-gupta",
+            linkedinUrl:
+              "https://www.linkedin.com/in/tiya-chhabra-7a34a5275?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
           },
           {
             id: "42b",
@@ -503,7 +520,7 @@ export const teamData: TeamCategory[] = [
             position: "SPONSORSHIP & FINANCE",
             image:
               "https://images.prismic.io/ieeemuj/aJunIaTt2nPbaPrM_ArnabRoy-sponsorandfinance-hackX3.0.jpg?auto=format,compress",
-            linkedinUrl: "https://linkedin.com/in/sneha-patel",
+            linkedinUrl: "https://www.linkedin.com/in/arnab-roy-913548313/",
           },
         ],
       },
