@@ -24,7 +24,7 @@ export const galleryData: GallerySection[] = [
     ],
   },
   {
-    title: "MUJ2.0",
+    title: "MUJ HACKX 2.0",
     images: [
       { src: "/gallery/pic17.JPG", size: "tall" },
       { src: "/gallery/pic14.JPG", size: "small" },
