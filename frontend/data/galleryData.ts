@@ -6,9 +6,9 @@ export const galleryData: GallerySection[] = [
     images: [
       { src: "/gallery/pic1.png", size: "tall" },
       { src: "/gallery/pic2.png", size: "small" },
-      { src: "/gallery/DSC_0024.JPG", size: "small" },
+      { src: "/gallery/pic3.JPG", size: "small" },
       { src: "/gallery/pic4.png", size: "small" },
-      { src: "/gallery/DSC_0054.JPG", size: "small" },
+      { src: "/gallery/pic17.JPG", size: "small" },
       { src: "/gallery/image.png", size: "large" },
     ],
   },
@@ -28,7 +28,7 @@ export const galleryData: GallerySection[] = [
     images: [
       { src: "/gallery/pic17.JPG", size: "tall" },
       { src: "/gallery/pic14.JPG", size: "small" },
-      { src: "/gallery/DSC_0024.JPG", size: "small" },
+      { src: "/gallery/pic3.JPG", size: "small" },
       { src: "/gallery/pic16.JPG", size: "small" },
       { src: "/gallery/pic15.JPG", size: "small" },
       { src: "/gallery/pic12.png", size: "large" },
