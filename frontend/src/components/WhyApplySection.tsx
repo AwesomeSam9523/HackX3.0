@@ -30,13 +30,13 @@ const WhyApplySection = () => {
       id: 4,
       question: "HOW LONG DOES THE CAMPUS AMBASSADOR PROGRAM LAST?",
       answer:
-        "Click the 'APPLY NOW' button above and fill out the application form.",
+        "The Campus Ambassador Program typically lasts for one academic year, but ambassadors may reapply or be invited to continue based on their performance.",
     },
     {
       id: 5,
       question: "WHAT ARE THE RESPONSIBILITIES OF A CAMPUS AMBASSADOR? ",
       answer:
-        "Click the 'APPLY NOW' button above and fill out the application form.",
+        "Responsibilities include promoting MujHackX events, organizing coding workshops, engaging with the student community, and providing feedback to MujHackX.",
     },
   ];
 

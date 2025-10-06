@@ -10,9 +10,14 @@ const JoinHackathonBanner = () => {
           JOIN THE HACKATHON!
         </h2>
         {/*<button */}
-        <button className="text-offwhite absolute bottom-[clamp(1.4rem,3.0vw,3.0rem)] left-[clamp(1.7rem,4.6vw,4.6rem)] transform rounded-full border-[clamp(0.05rem,0.13vw,0.13rem)] border-white bg-transparent px-[clamp(0.7rem,2vw,2rem)] py-[clamp(0.3rem,0.35vw,0.35rem)] text-sm text-[clamp(0.5rem,0.9vw,0.9rem)] font-extrabold tracking-wide whitespace-nowrap shadow-lg transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white hover:text-black hover:shadow-xl focus:scale-105 focus:ring-4 focus:ring-white/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 sm:bottom-[clamp(0.4rem,2.9vw,2.9rem)] xl:bottom-[clamp(1.4rem,2.9vw,2.9rem)] 2xl:bottom-[clamp(1.4rem,2.6vw,2.6rem)]">
+        <a
+          href="https://unstop.com/hackathons/muj-hackx-30-manipal-university-mu-jaipur-1565633"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-offwhite absolute bottom-[clamp(1.4rem,3.0vw,3.0rem)] left-[clamp(1.7rem,4.6vw,4.6rem)] inline-block transform rounded-full border-[clamp(0.05rem,0.13vw,0.13rem)] border-white bg-transparent px-[clamp(0.7rem,2vw,2rem)] py-[clamp(0.3rem,0.35vw,0.35rem)] text-center text-sm text-[clamp(0.5rem,0.9vw,0.9rem)] font-extrabold tracking-wide whitespace-nowrap shadow-lg transition-all duration-300 hover:scale-105 hover:border-white/30 hover:bg-white hover:text-black hover:shadow-xl focus:scale-105 focus:ring-4 focus:ring-white/50 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 sm:bottom-[clamp(0.4rem,2.9vw,2.9rem)] xl:bottom-[clamp(1.4rem,2.9vw,2.9rem)] 2xl:bottom-[clamp(1.4rem,2.6vw,2.6rem)]"
+        >
           REGISTER NOW
-        </button>
+        </a>
       </div>
 
       {/* Right Image */}

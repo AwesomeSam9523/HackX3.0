@@ -5,9 +5,19 @@ import XComponent from "./XComponent";
 const Background = () => {
   return (
     <div>
+      <div
+        className="-transform-y-1/2 absolute left-1/2 -z-10 block h-[30rem] w-[100rem] -translate-x-1/2 rounded-full"
+        style={{
+          background: "radial-gradient(circle, #368BCC, #020D85)",
+          backdropFilter: "blur(200px)",
+          WebkitBackdropFilter: "blur(75px)",
+          filter: "blur(200px)",
+          WebkitFilter: "blur(75px)",
+          borderTopLeftRadius: "0%",
+          borderTopRightRadius: "0%",
+        }}
+      ></div>
       <XComponent />
-
-      <div className="absolute left-1/2 -z-10 block h-[60rem] w-[100rem] -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-transparent bg-radial from-[#368BCC] to-[#020D85] blur-[200px]"></div>
       <div className="pointer-events-none absolute top-0 left-0 z-6 flex h-screen w-full items-start lg:items-center lg:justify-center">
         <Image
           src={"/ChipsSpline1.svg"}

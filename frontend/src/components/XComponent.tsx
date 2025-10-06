@@ -2,7 +2,13 @@ import Image from "next/image";
 
 const XComponent = () => {
   return (
-    <div className="pointer-events-none absolute top-0 left-0 z-6 flex h-screen w-full items-start mix-blend-overlay lg:items-center lg:justify-center">
+    <div
+      className="pointer-events-none absolute top-0 left-0 z-6 flex h-screen w-full items-start mix-blend-overlay lg:items-center lg:justify-center"
+      style={{
+        willChange: "transform",
+        WebkitTransform: "translateZ(0)", // Force Safari GPU layer
+      }}
+    >
       <Image
         src={"/x2.svg"}
         alt="Background decoration"

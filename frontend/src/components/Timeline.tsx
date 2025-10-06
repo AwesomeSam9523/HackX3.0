@@ -81,7 +81,7 @@ const HackathonTimeline: React.FC = () => {
               >
                 {/* Horizontal line at the top of the box  */}
                 <div
-                  className={`absolute top-[68px] z-10 hidden lg:block ${
+                  className={`absolute ${index === 0 ? "top-[42px]" : "top-[68px]"} z-10 hidden lg:block ${
                     isLeft ? "right-15" : "left-15"
                   } w-[calc(42%-40px)]`}
                   style={{
@@ -103,14 +103,16 @@ const HackathonTimeline: React.FC = () => {
 
                 {/* Diagonal connector to the dot */}
                 <div
-                  className={`absolute top-[68px] z-10 hidden h-[4px] w-[56px] bg-white md:block ${
+                  className={`absolute ${index === 0 ? "top-[42px]" : "top-[68px]"} z-10 hidden h-[4px] w-[56px] bg-white md:block ${
                     isLeft
                       ? "left-[500px] origin-right -rotate-[25deg]"
                       : "right-[500px] origin-left rotate-[25deg]"
                   }`}
                 />
                 {/* white Dot */}
-                <div className="absolute top-[80px] left-1/2 z-20 hidden h-6 w-6 -translate-x-1/2 transform rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] md:block"></div>
+                <div
+                  className={`absolute ${index === 0 ? "top-[54px]" : "top-[80px]"} left-1/2 z-20 hidden h-6 w-6 -translate-x-1/2 transform rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] md:block`}
+                ></div>
                 {/* Dot inside box, half inside-half outside (mobile only) */}
                 <div className="absolute top-0 left-1/2 z-20 h-6 w-6 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,1)] md:hidden"></div>
                 {/* Container for date/time and the box */}
@@ -125,12 +127,25 @@ const HackathonTimeline: React.FC = () => {
                   <div
                     className={`mb-2 ${isLeft ? "text-right" : "text-left"} hidden md:block`}
                   >
-                    <div className="text-offwhite text-2xl font-bold">
-                      {item.date}
-                    </div>
-                    <div className="text-2xl font-bold text-gray-600">
-                      {item.time}
-                    </div>
+                    {item.time ? (
+                      <>
+                        <div className="text-offwhite text-2xl font-bold">
+                          {item.date}
+                        </div>
+                        <div className="text-2xl font-bold text-gray-600">
+                          {item.time}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-2xl font-bold text-gray-600">
+                          &nbsp;
+                        </div>
+                        <div className="text-offwhite text-2xl font-bold">
+                          {item.date}
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* Content Box */}
