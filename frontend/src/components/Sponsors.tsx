@@ -31,7 +31,6 @@ const sponsorLogos: SponsorLogo[] = [
   { src: "sponsor20.svg", alt: "", width: 140, height: 30 },
   { src: "sponsor21.svg", alt: "", width: 140, height: 30 },
   { src: "sponsor22.svg", alt: "", width: 140, height: 30 },
-  { src: "sponsor23.svg", alt: "", width: 140, height: 30 },
 ];
 
 const Sponsors: React.FC = () => {
@@ -78,7 +77,7 @@ const Sponsors: React.FC = () => {
                   alt={logo.alt}
                   width={logo.width}
                   height={logo.height}
-                  priority={index < 4}
+                  priority={true}
                 />
               </div>
             ))}
