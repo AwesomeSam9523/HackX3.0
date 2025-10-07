@@ -63,7 +63,8 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
   }, [teams, searchTerm, statusFilter]);
 
   const getTeamScore = (team: Team) => {
-    return `${team.teamScores[0]?.totalScore}/10` || "Not Judged";
+    const score = team.teamScores?.[0]?.totalScore;
+    return score != null ? `${score}/10` : "Not Judged";
   };
 
   const viewTeamDetails = (team: Team) => {
@@ -77,7 +78,9 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
   };
 
   function getJudgingTime(team: Team) {
-    return team.teamScores.length > 0
+    return team.teamScores &&
+      team.teamScores.length > 0 &&
+      team.teamScores[0]?.updatedAt
       ? new Date(team.teamScores[0].updatedAt).toLocaleString()
       : "Not Judged";
   }
@@ -181,8 +184,8 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
               const score = getTeamScore(team);
               const judgingTime = getJudgingTime(team);
               const judgeName =
-                team.evaluations[0]?.judge.name || "Not assigned";
-              const isJudged = team.evaluations[0].status === "COMPLETED";
+                team.evaluations?.[0]?.judge?.name ?? "Not assigned";
+              const isJudged = team.evaluations?.[0]?.status === "COMPLETED";
 
               return (
                 <Card
@@ -207,8 +210,9 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                           )}
                         </CardTitle>
                         <CardDescription className="mt-1">
-                          PS: {team.problemStatement.title} • Room:{" "}
-                          {team.round1Room.block} {team.round1Room.name}
+                          PS: {team.problemStatement?.title ?? "-"} • Room:{" "}
+                          {team.round1Room?.block ?? ""}{" "}
+                          {team.round1Room?.name ?? ""}
                         </CardDescription>
                       </div>
                       <div className="text-right">
@@ -338,15 +342,15 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                     <div>
                       <Label className="font-bold">Problem Statement:</Label>
                       <p>
-                        {selectedTeam.problemStatement.title} (
-                        {selectedTeam.problemStatement.id})
+                        {selectedTeam.problemStatement?.title ?? "-"} (
+                        {selectedTeam.problemStatement?.id ?? "-"})
                       </p>
                     </div>
                     <div>
                       <Label className="font-bold">Room Number:</Label>
                       <p>
-                        {selectedTeam.round1Room.block}{" "}
-                        {selectedTeam.round1Room.name}
+                        {selectedTeam.round1Room?.block ?? ""}{" "}
+                        {selectedTeam.round1Room?.name ?? ""}
                       </p>
                     </div>
                   </CardContent>
@@ -360,14 +364,14 @@ export function TeamPage({ teams, judges }: TeamPageProps) {
                     <div>
                       <Label className="font-bold">Judge:</Label>
                       <p>
-                        {selectedTeam.evaluations[0]?.judge.name ||
+                        {selectedTeam.evaluations?.[0]?.judge?.name ??
                           "Not assigned"}
                       </p>
                     </div>
                     <div>
                       <Label className="font-bold">Score:</Label>
                       <p>
-                        {selectedTeam.evaluations[0].status === "COMPLETED"
+                        {selectedTeam.evaluations?.[0]?.status === "COMPLETED"
                           ? getTeamScore(selectedTeam)
                           : "Not judged"}
                       </p>

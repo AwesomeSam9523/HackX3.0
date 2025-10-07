@@ -54,6 +54,7 @@ export class SuperAdminService {
         ...(role === "MENTOR" && {
           mentorProfile: {
             create: {
+              name: username,
               expertise: expertise || [],
             },
           },
@@ -555,6 +556,7 @@ export class SuperAdminService {
         role: "MENTOR",
         mentorProfile: {
           create: {
+            name: payload.name,
             domain: payload.domain,
             mode: payload.mode,
           },

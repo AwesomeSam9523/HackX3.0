@@ -159,6 +159,8 @@ async function main() {
     update: {},
     create: {
       userId: judgeUser.id,
+      // `name` is required by the Prisma schema
+      name: judgeUser.username,
     },
   });
 
@@ -180,6 +182,8 @@ async function main() {
     update: {},
     create: {
       userId: mentorUser.id,
+      // `name` is required by the Prisma schema
+      name: mentorUser.username,
       expertise: ["React", "Node.js", "Python"],
       meetLink: "https://meet.google.com/sample-link",
     },

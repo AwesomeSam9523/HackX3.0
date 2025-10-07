@@ -86,18 +86,25 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
 
   // Get unique problem statements and floors for filtering
   const uniquePS = useMemo(() => {
-    const psSet = new Set(teams.map((team) => team.problemStatement));
-    return Array.from(psSet).sort();
+    const map = new Map<string, { id: string; title: string }>();
+    teams.forEach((team) => {
+      if (team.problemStatement && team.problemStatement.id) {
+        map.set(team.problemStatement.id, team.problemStatement);
+      }
+    });
+    return Array.from(map.values()).sort((a, b) =>
+      (a.title || "").localeCompare(b.title || ""),
+    );
   }, [teams]);
 
   // Filter teams based on search and filters
   const filteredTeams = useMemo(() => {
     return teams.filter((team) => {
       const matchesSearch =
-        team.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        team.round1Room.name.toLowerCase().includes(searchTerm.toLowerCase());
+        team.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        team.round1Room?.name?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPS =
-        selectedPS === "all" || team.problemStatement.title === selectedPS;
+        selectedPS === "all" || team.problemStatement?.title === selectedPS;
       const isMapped = mappings.some((m) => m.teamId === team.id);
       const matchesMappedFilter = !showMappedOnly || isMapped;
 
@@ -412,8 +419,9 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
                               )}
                             </div>
                             <p className="text-sm text-slate-500">
-                              {team.round1Room.block} {team.round1Room.name} •{" "}
-                              {team.problemStatement.title}
+                              {team.round1Room?.block ?? ""}{" "}
+                              {team.round1Room?.name ?? ""} •{" "}
+                              {team.problemStatement?.title ?? "-"}
                             </p>
                             {isMapped && (
                               <p className="text-sm text-green-600">
