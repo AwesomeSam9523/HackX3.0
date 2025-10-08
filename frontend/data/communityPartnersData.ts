@@ -1,32 +1,37 @@
 export const communityPartnersData = [
   {
+    logo: "/partners/partner7.svg",
+    name: "ITC WebTeam, IIT Bombay",
+    type: "COMMUNITY PARTNER",
+  },
+  {
     logo: "/partners/partner1.svg",
-    name: "Partner 1",
+    name: "IEEE, Chandigarh University",
     type: "COMMUNITY PARTNER",
   },
   {
     logo: "/partners/partner2.svg",
-    name: "Partner 2",
+    name: "GDSC, JIIT",
     type: "COMMUNITY PARTNER",
   },
   {
     logo: "/partners/partner3.svg",
-    name: "Partner 3",
+    name: "IEEE, Bharati Vidyapeeth",
     type: "COMMUNITY PARTNER",
   },
   {
     logo: "/partners/partner4.svg",
-    name: "Partner 4",
+    name: "IEEE, MITB",
     type: "COMMUNITY PARTNER",
   },
   {
     logo: "/partners/partner5.svg",
-    name: "Partner 5",
+    name: "IEEE, GTBIT",
     type: "COMMUNITY PARTNER",
   },
   {
     logo: "/partners/partner6.svg",
-    name: "Partner 6",
+    name: "CodeChef",
     type: "COMMUNITY PARTNER",
   },
 ];

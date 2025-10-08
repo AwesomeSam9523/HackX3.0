@@ -60,9 +60,9 @@ const CommunityPartners: React.FC = () => {
         COMMUNITY PARTNERS
       </h2>
 
-      <div className="flex w-full max-w-6xl flex-col gap-8">
+      <div className="z-10 flex w-full max-w-6xl flex-col gap-8">
         {/* Desktop grid - 3 columns for 6 items (2 rows of 3) */}
-        <div className="hidden place-items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="hidden place-items-center gap-6 md:grid md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {data.map((partner, idx) => (
             <div
               key={idx}
