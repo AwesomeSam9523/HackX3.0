@@ -10,7 +10,7 @@ type TimelineItem = {
 
 const timelineData: TimelineItem[] = [
   {
-    date: "29TH SEP - 12TH OCT (ROUND 1)",
+    date: "29TH SEP - 15TH OCT (ROUND 1)",
     time: "",
     points: ["Online shortlisting of Participants"],
   },
