@@ -16,7 +16,7 @@ const timelineData: TimelineItem[] = [
   },
   {
     date: "30TH OCT (OPENING)",
-    time: "4:00PM",
+    time: "10:00AM",
     points: [
       "Inauguration & Speech by dignitaries",
       "Announcement of track of event",
@@ -25,7 +25,7 @@ const timelineData: TimelineItem[] = [
   },
   {
     date: "30TH OCT (ROUND 2)",
-    time: "5:00PM",
+    time: "12:00PM",
     points: [
       "HackX Round-1 begins",
       "Validation and checks for participant teams",
@@ -43,7 +43,7 @@ const timelineData: TimelineItem[] = [
   },
   {
     date: "31ST OCT (CLOSING)",
-    time: "5:00PM to 6:00PM",
+    time: "4:00PM to 6:00PM",
     points: [
       "Result declaration",
       "Closing ceremony & speeches",
