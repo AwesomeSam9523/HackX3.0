@@ -7,10 +7,23 @@ const prisma = new PrismaClient();
 interface Checkpoint1Data {
   teamId: string;
   wifi: boolean;
+  participants: {
+    id?: string;
+    name: string;
+    email: string;
+    phone?: string;
+    isPresent: boolean;
+  }[];
 }
 
 interface Checkpoint2Data {
   teamId: string;
+}
+
+interface ParticipantData {
+  name: string;
+  email: string;
+  phone?: string;
 }
 
 export class AdminService {
@@ -418,27 +431,153 @@ export class AdminService {
   }
 
   // Update team checkpoint
-  async updateTeamCheckpoint1(data: Checkpoint1Data) {
-    const {teamId, wifi} = data;
-    return prisma.teamCheckpoint.upsert({
-      where: {
-        teamId_checkpoint: {
-          teamId,
-          checkpoint: 1,
+  async getTeamForCheckpoint1(teamId: string) {
+    const team = await prisma.team.findUnique({
+      where: {id: teamId},
+      include: {
+        teamParticipants: {
+          orderBy: {createdAt: "asc"},
+        },
+        checkpoints: {
+          where: {checkpoint: 1},
         },
       },
-      update: {
-        data: {wifi},
-        status: "COMPLETED",
-        completedAt: new Date(),
-      },
-      create: {
+    });
+
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    // Get existing checkpoint 1 data if it exists
+    const checkpoint1 = team.checkpoints.find(cp => cp.checkpoint === 1);
+    const existingData = checkpoint1?.data as any;
+
+    return {
+      id: team.id,
+      name: team.name,
+      teamId: team.teamId,
+      participants: team.teamParticipants.map(p => ({
+        id: p.id,
+        participantId: p.participantId,
+        name: p.name,
+        email: p.email,
+        phone: p.phone || '',
+        role: p.role,
+        isPresent: p.isPresent,
+      })),
+      wifi: existingData?.wifi || false,
+      status: checkpoint1?.status || 'pending',
+    };
+  }
+
+  async updateTeamCheckpoint1(data: Checkpoint1Data) {
+    const {teamId, wifi, participants} = data;
+    
+    // Validate that at least 2 participants are present
+    const presentParticipants = participants.filter(p => p.isPresent);
+    if (presentParticipants.length < 2) {
+      throw new Error("At least 2 participants must be marked as present to complete checkpoint 1");
+    }
+
+    // Use transaction to ensure data consistency
+    return await prisma.$transaction(async (tx) => {
+      // 1. Delete existing team participants
+      await tx.teamParticipant.deleteMany({
+        where: { teamId }
+      });
+
+      // 2. Create new team participants from the frontend data
+      for (const participant of participants) {
+        await tx.teamParticipant.create({
+          data: {
+            teamId,
+            name: participant.name,
+            email: participant.email,
+            phone: participant.phone,
+            role: participant.role || "MEMBER",
+            Verified: participant.isPresent || false, // Use Verified field to track presence
+          },
+        });
+      }
+
+      // 3. Create or update checkpoint record
+      return tx.teamCheckpoint.upsert({
+        where: {
+          teamId_checkpoint: {
+            teamId,
+            checkpoint: 1,
+          },
+        },
+        update: {
+          data: {
+            wifi, 
+            participants: participants.map(p => ({
+              name: p.name,
+              email: p.email,
+              phone: p.phone,
+              role: p.role,
+              isPresent: p.isPresent,
+            })),
+            totalParticipants: participants.length,
+            presentCount: presentParticipants.length,
+          },
+          status: "COMPLETED",
+          completedAt: new Date(),
+        },
+        create: {
+          teamId,
+          checkpoint: 1,
+          data: {
+            wifi, 
+            participants: participants.map(p => ({
+              name: p.name,
+              email: p.email,
+              phone: p.phone,
+              role: p.role,
+              isPresent: p.isPresent,
+            })),
+            totalParticipants: participants.length,
+            presentCount: presentParticipants.length,
+          },
+          status: "COMPLETED",
+          completedAt: new Date(),
+        },
+      });
+    });
+  }
+
+  async addParticipantToTeam(teamId: string, participantData: ParticipantData) {
+    const team = await prisma.team.findUnique({
+      where: {id: teamId},
+    });
+
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    // Generate unique participant ID
+    const participantCount = await prisma.teamParticipant.count({
+      where: {teamId},
+    });
+    
+    const participantId = `${team.teamId}-P${participantCount + 1}`;
+
+    return prisma.teamParticipant.create({
+      data: {
         teamId,
-        checkpoint: 1,
-        data: {wifi},
-        status: "COMPLETED",
-        completedAt: new Date(),
+        participantId,
+        name: participantData.name,
+        email: participantData.email,
+        phone: participantData.phone,
+        role: "MEMBER",
+        isPresent: false,
       },
+    });
+  }
+
+  async removeParticipantFromTeam(participantId: string) {
+    return prisma.teamParticipant.delete({
+      where: {participantId},
     });
   }
 
@@ -600,6 +739,78 @@ export class AdminService {
         },
       }
     });
+  }
+
+  // Refresh team back to checkpoint 1
+  async refreshTeamToCheckpoint1(teamId: string) {
+    const team = await prisma.team.findUnique({
+      where: {id: teamId},
+      select: {teamId: true, round1RoomId: true}
+    });
+
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    // Start transaction to refresh team to checkpoint 1
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Delete the team user account if it exists
+      await tx.user.deleteMany({
+        where: {
+          username: team.teamId,
+          role: "TEAM"
+        }
+      });
+
+      // 2. Remove team from round1 room and update room filled count
+      if (team.round1RoomId) {
+        await tx.round1Room.update({
+          where: {id: team.round1RoomId},
+          data: {
+            filled: {
+              decrement: 1
+            }
+          }
+        });
+      }
+
+      // 3. Update team to remove round1 room assignment
+      await tx.team.update({
+        where: {id: teamId},
+        data: {
+          round1RoomId: null
+        }
+      });
+
+      // 4. Delete checkpoint 2 and 3 records
+      await tx.teamCheckpoint.deleteMany({
+        where: {
+          teamId: teamId,
+          checkpoint: {
+            in: [2, 3]
+          }
+        }
+      });
+
+      // 5. Reset checkpoint 1 to pending if it exists
+      await tx.teamCheckpoint.updateMany({
+        where: {
+          teamId: teamId,
+          checkpoint: 1
+        },
+        data: {
+          status: "pending",
+          completedAt: null,
+        }
+      });
+
+      return {
+        success: true,
+        message: `Team ${team.teamId} has been refreshed back to checkpoint 1`
+      };
+    });
+
+    return result;
   }
 }
 

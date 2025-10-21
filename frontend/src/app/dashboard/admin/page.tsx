@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogClose,
@@ -36,6 +35,7 @@ import {
   Users,
 } from "lucide-react";
 import { JudgeTeamMappingTab } from "@/components/admin/judge-team-mapping-tab";
+import { Checkpoint1Modal } from "@/components/admin/checkpoint1";
 import {
   Announcement,
   Checkpoint,
@@ -52,8 +52,10 @@ import { authService } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 
 function isCheckpointCompleted(team: Team, checkpoint: number) {
-  return team.checkpoints.some(
-    (c) => c.checkpoint === checkpoint && c.status === "COMPLETED",
+  return (
+    team?.checkpoints?.some(
+      (c) => c.checkpoint === checkpoint && c.status === "COMPLETED",
+    ) ?? false
   );
 }
 
@@ -88,8 +90,11 @@ export default function AdminDashboard() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [announcement, setAnnouncement] = useState("");
   const [teamSearch, setTeamSearch] = useState("");
-  const [wifiOptIn, setWifiOptIn] = useState(false);
   const [checkpoint1DialogOpen, setCheckpoint1DialogOpen] = useState(false);
+  const [selectedTeamForCheckpoint1, setSelectedTeamForCheckpoint1] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
   const [checkpoint2Data, setCheckpoint2Data] = useState({
     username: "",
     password: "",
@@ -133,14 +138,11 @@ export default function AdminDashboard() {
     );
   }
 
-  const handleCheckpoint1Complete = async (teamId: string, wifi: boolean) => {
-    const checkpoint = (await apiService.updateCheckpoint(1, {
-      teamId,
-      wifi,
-    })) as Checkpoint;
+  const handleCheckpoint1Complete = async (checkpoint: Checkpoint) => {
     updateWebsocketCheckpoint(checkpoint);
-    updateTeamCheckpoint(teamId, checkpoint);
+    updateTeamCheckpoint(selectedTeamForCheckpoint1?.id || "", checkpoint);
     setCheckpoint1DialogOpen(false);
+    setSelectedTeamForCheckpoint1(null);
   };
 
   const handleCheckpoint2Complete = async (teamId: string) => {
@@ -161,6 +163,24 @@ export default function AdminDashboard() {
     })) as Checkpoint;
     updateWebsocketCheckpoint(checkpoint);
     updateTeamCheckpoint(teamId, checkpoint);
+  };
+
+  const handleRefreshToCheckpoint1 = async (teamId: string) => {
+    try {
+      const result = await apiService.refreshTeamToCheckpoint1(teamId);
+      // Reload teams to reflect the changes
+      apiService.getTeams().then(setTeams);
+      toast({
+        title: "Success",
+        description: result.message,
+      });
+    } catch {
+      toast({
+        title: "Error",
+        description: "Failed to refresh team to checkpoint 1",
+        variant: "destructive",
+      });
+    }
   };
 
   useEffect(() => {
@@ -409,8 +429,16 @@ export default function AdminDashboard() {
                             {team.name}
                           </h4>
                           <p className="text-xs break-all text-slate-500 sm:text-sm">
-                            ID: {team.generatedId} | Room:{" "}
-                            {team.round1Room.block} {team.round1Room.name}
+                            ID: {team.generatedId}
+                            {team.round1Room ? (
+                              <>
+                                {" "}
+                                | Room: {team.round1Room.block}{" "}
+                                {team.round1Room.name}
+                              </>
+                            ) : (
+                              <> | Room: Not Assigned</>
+                            )}
                           </p>
                         </div>
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -480,7 +508,10 @@ export default function AdminDashboard() {
                           {team.name}
                         </h4>
                         <p className="text-xs text-slate-500 sm:text-sm">
-                          Room: {team.round1Room.block} {team.round1Room.name}
+                          Room:{" "}
+                          {team.round1Room
+                            ? `${team.round1Room.block} ${team.round1Room.name}`
+                            : "Not Assigned"}
                         </p>
                       </div>
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
@@ -633,11 +664,14 @@ export default function AdminDashboard() {
                             {team.name}
                           </CardTitle>
                           <CardDescription className="mt-1 text-sm">
-                            {team.problemStatement.title}
+                            {team.problemStatement?.title ||
+                              "No Problem Statement Selected"}
                           </CardDescription>
                           <p className="mt-1 text-xs break-all text-slate-500 sm:text-sm">
-                            Team ID: {team.generatedId} | Room:{" "}
-                            {team.round1Room.block} {team.round1Room.name}
+                            Team ID: {team.generatedId}
+                            {team.round1Room
+                              ? ` | Room: ${team.round1Room.block} ${team.round1Room.name}`
+                              : " | Room: Not Assigned"}
                           </p>
                         </div>
                         <div className="text-left lg:text-right">
@@ -691,60 +725,23 @@ export default function AdminDashboard() {
                       {/* Checkpoint Actions */}
                       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                         {/* Checkpoint 1 */}
-                        <Dialog
-                          open={checkpoint1DialogOpen}
-                          onOpenChange={setCheckpoint1DialogOpen}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={isCheckpointCompleted(team, 1)}
+                          className="bg-transparent text-xs"
+                          onClick={() => {
+                            setSelectedTeamForCheckpoint1({
+                              id: team.id,
+                              name: team.name,
+                            });
+                            setCheckpoint1DialogOpen(true);
+                          }}
                         >
-                          <DialogTrigger asChild>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              disabled={isCheckpointCompleted(team, 1)}
-                              className="bg-transparent text-xs"
-                            >
-                              {isCheckpointCompleted(team, 1)
-                                ? "CP1 Complete"
-                                : "Checkpoint 1"}
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="w-[95vw] max-w-md">
-                            <DialogHeader>
-                              <DialogTitle className="text-lg">
-                                Checkpoint 1 - {team.name}
-                              </DialogTitle>
-                              <DialogDescription className="text-sm">
-                                Team details confirmation and WiFi opt-in
-                              </DialogDescription>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                              <div className="flex items-center space-x-2">
-                                <Switch
-                                  id={`wifi-${team.id}`}
-                                  checked={wifiOptIn}
-                                  onCheckedChange={(checked) =>
-                                    setWifiOptIn(checked)
-                                  }
-                                />
-                                <Label
-                                  htmlFor={`wifi-${team.id}`}
-                                  className="text-sm"
-                                >
-                                  WiFi Opt-in
-                                </Label>
-                              </div>
-                            </div>
-                            <DialogFooter className="flex-col gap-2 sm:flex-row">
-                              <Button
-                                onClick={() =>
-                                  handleCheckpoint1Complete(team.id, wifiOptIn)
-                                }
-                                className="bg-hackx w-full text-white sm:w-auto"
-                              >
-                                Complete Checkpoint 1
-                              </Button>
-                            </DialogFooter>
-                          </DialogContent>
-                        </Dialog>
+                          {isCheckpointCompleted(team, 1)
+                            ? "CP1 Complete"
+                            : "Checkpoint 1"}
+                        </Button>
 
                         {/* Checkpoint 2 */}
                         <Dialog>
@@ -801,7 +798,8 @@ export default function AdminDashboard() {
                                       Room Number:
                                     </Label>
                                     <p className="font-mono text-sm sm:text-base">
-                                      {checkpoint2Data.round1Room}
+                                      {checkpoint2Data.round1Room ||
+                                        "Not Assigned"}
                                     </p>
                                   </div>
                                 </div>
@@ -849,14 +847,29 @@ export default function AdminDashboard() {
                               : "Pending"}
                           </Badge>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleResetPassword(team.id)}
-                          className="w-full text-xs sm:w-auto"
-                        >
-                          Reset Password
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleResetPassword(team.id)}
+                            className="text-xs"
+                          >
+                            Reset Password
+                          </Button>
+                          {(isCheckpointCompleted(team, 2) ||
+                            isCheckpointCompleted(team, 3)) && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() =>
+                                handleRefreshToCheckpoint1(team.id)
+                              }
+                              className="text-xs text-orange-600 hover:text-orange-700"
+                            >
+                              ↻ Reset to CP1
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -1122,6 +1135,18 @@ export default function AdminDashboard() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Enhanced Checkpoint 1 Modal */}
+      <Checkpoint1Modal
+        isOpen={checkpoint1DialogOpen}
+        onClose={() => {
+          setCheckpoint1DialogOpen(false);
+          setSelectedTeamForCheckpoint1(null);
+        }}
+        teamId={selectedTeamForCheckpoint1?.id || ""}
+        teamName={selectedTeamForCheckpoint1?.name || ""}
+        onComplete={handleCheckpoint1Complete}
+      />
     </div>
   );
 }

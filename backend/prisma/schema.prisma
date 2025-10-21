@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ParticipantRole {
+  MEMBER
+  TEAM_LEADER
+}
+
 enum UserRole {
   TEAM
   MENTOR
@@ -92,6 +97,20 @@ model Team {
   round2Room         Round2Room?       @relation(fields: [round2RoomId], references: [id])
   round2RoomId       String?
   checkpoints        TeamCheckpoint[]
+  teamParticipants   TeamParticipant[]
+}
+
+model TeamParticipant {
+  id            String          @id @default(cuid())
+  team          Team            @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId        String
+  role          ParticipantRole @default(MEMBER)
+  name          String
+  email         String
+  phone         String?
+  Verified     Boolean         @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
 
 model Domain {

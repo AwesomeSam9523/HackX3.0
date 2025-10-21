@@ -10,6 +10,32 @@ export interface Checkpoint {
   checkpoint: number;
   status: string;
   completedAt: string;
+  data?: Record<string, unknown>;
+}
+
+export interface Participant {
+  id?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role?: "MEMBER" | "TEAM_LEADER";
+  isPresent?: boolean;
+  Verified?: boolean;
+}
+
+export interface TeamCheckpoint1Data {
+  id: string;
+  name: string;
+  teamId: string;
+  participants: Participant[];
+  wifi: boolean;
+  status: string;
+}
+
+export interface Checkpoint1UpdateData {
+  teamId: string;
+  wifi: boolean;
+  participants: Participant[];
 }
 
 export interface Checkpoint2Data {
@@ -25,21 +51,24 @@ export interface Checkpoint2Data {
 }
 
 export interface WebsocketAuthenticated {
-  type: 'authenticated';
+  type: "authenticated";
 }
 
 export interface WebsocketCheckpoint {
-  type: 'checkpoint';
+  type: "checkpoint";
   teamId: string;
   checkpoint: Checkpoint;
 }
 
 export interface WebsocketSubscribe {
-  type: 'subscribed';
+  type: "subscribed";
   channel: string;
 }
 
-export type WebsocketData = WebsocketAuthenticated | WebsocketCheckpoint | WebsocketSubscribe;
+export type WebsocketData =
+  | WebsocketAuthenticated
+  | WebsocketCheckpoint
+  | WebsocketSubscribe;
 
 export interface User extends BaseUser {
   teamId?: string;

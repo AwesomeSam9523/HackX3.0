@@ -534,6 +534,130 @@ export class TeamService {
       {} as Record<string, string>,
     );
   }
+
+  // Get team participants
+  async getTeamParticipants(teamId: string) {
+    return prisma.teamParticipant.findMany({
+      where: {teamId},
+      orderBy: {createdAt: "asc"},
+    });
+  }
+
+  // Add team participant
+  async addTeamParticipant(teamId: string, data: {
+    name: string;
+    email: string;
+    phone?: string;
+    role?: "MEMBER" | "TEAM_LEADER";
+  }) {
+    return prisma.teamParticipant.create({
+      data: {
+        teamId,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        role: data.role || "MEMBER",
+        Verified: false,
+      },
+    });
+  }
+
+  // Update team participant
+  async updateTeamParticipant(participantId: string, data: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    role?: "MEMBER" | "TEAM_LEADER";
+    Verified?: boolean;
+  }) {
+    return prisma.teamParticipant.update({
+      where: {id: participantId},
+      data,
+    });
+  }
+
+  // Delete team participant
+  async deleteTeamParticipant(participantId: string) {
+    return prisma.teamParticipant.delete({
+      where: {participantId},
+    });
+  }
+
+  // Toggle participant presence
+  async toggleParticipantPresence(participantId: string, isPresent: boolean) {
+    return prisma.teamParticipant.update({
+      where: {participantId},
+      data: {isPresent},
+    });
+  }
+
+  // Check if team has minimum participants present for checkpoint completion
+  async checkMinimumParticipantsPresent(teamId: string): Promise<boolean> {
+    const presentCount = await prisma.teamParticipant.count({
+      where: {
+        teamId,
+        isPresent: true,
+      },
+    });
+    
+    return presentCount >= 2; // Minimum 2 participants must be present
+  }
+
+  // Complete checkpoint with participant validation
+  async completeCheckpoint(teamId: string, checkpoint: number, data?: any) {
+    // Check if minimum participants are present
+    const hasMinimumPresent = await this.checkMinimumParticipantsPresent(teamId);
+    
+    if (!hasMinimumPresent) {
+      throw new Error("Minimum 2 participants must be present to complete checkpoint");
+    }
+
+    // Get current participants data
+    const participants = await this.getTeamParticipants(teamId);
+    
+    return prisma.teamCheckpoint.upsert({
+      where: {
+        teamId_checkpoint: {
+          teamId,
+          checkpoint,
+        },
+      },
+      update: {
+        status: "completed",
+        data: {
+          ...data,
+          participants: participants.map(p => ({
+            participantId: p.participantId,
+            name: p.name,
+            email: p.email,
+            phone: p.phone,
+            role: p.role,
+            isPresent: p.isPresent,
+          })),
+          completedAt: new Date().toISOString(),
+        },
+        completedAt: new Date(),
+      },
+      create: {
+        teamId,
+        checkpoint,
+        status: "completed",
+        data: {
+          ...data,
+          participants: participants.map(p => ({
+            participantId: p.participantId,
+            name: p.name,
+            email: p.email,
+            phone: p.phone,
+            role: p.role,
+            isPresent: p.isPresent,
+          })),
+          completedAt: new Date().toISOString(),
+        },
+        completedAt: new Date(),
+      },
+    });
+  }
 }
 
 export const teamService = new TeamService();

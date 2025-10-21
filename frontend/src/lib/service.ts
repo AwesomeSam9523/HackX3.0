@@ -12,6 +12,7 @@ import type {
   LogFilter,
   Mentor,
   MentorshipSession,
+  Participant,
   ProblemStatement,
   ProblemStatementForm,
   QueueItem,
@@ -19,6 +20,7 @@ import type {
   Scores,
   Submission,
   Team,
+  TeamCheckpoint1Data,
   TeamJudgeMapping,
   TeamScore,
   User,
@@ -107,6 +109,91 @@ class ApiService {
     return this.request(`/teams/checkpoint/${checkpoint}`, {
       method: "POST",
       body: JSON.stringify(data),
+    });
+  }
+
+  // Enhanced Checkpoint 1 Management
+  async getTeamForCheckpoint1(teamId: string): Promise<TeamCheckpoint1Data> {
+    return this.request(`/team/${teamId}/checkpoint1`);
+  }
+
+  async addParticipantToTeam(
+    teamId: string,
+    participant: {
+      name: string;
+      email: string;
+      phone?: string;
+    },
+  ): Promise<Participant> {
+    return this.request(`/team/${teamId}/participants`, {
+      method: "POST",
+      body: JSON.stringify(participant),
+    });
+  }
+
+  async removeParticipantFromTeam(participantId: string): Promise<void> {
+    return this.request(`/participants/${participantId}`, {
+      method: "DELETE",
+    });
+  }
+
+  // New TeamParticipant management
+  async getTeamParticipants(teamId: string): Promise<Participant[]> {
+    return this.request(`/team/${teamId}/participants`);
+  }
+
+  async addTeamParticipant(
+    teamId: string,
+    participant: {
+      name: string;
+      email: string;
+      phone?: string;
+      role?: "MEMBER" | "TEAM_LEADER";
+    },
+  ): Promise<Participant> {
+    return this.request(`/team/${teamId}/participants/new`, {
+      method: "POST",
+      body: JSON.stringify(participant),
+    });
+  }
+
+  async updateTeamParticipant(
+    participantId: string,
+    updates: {
+      name?: string;
+      email?: string;
+      phone?: string;
+      role?: "MEMBER" | "TEAM_LEADER";
+      isPresent?: boolean;
+    },
+  ): Promise<Participant> {
+    return this.request(`/participants/${participantId}/update`, {
+      method: "PUT",
+      body: JSON.stringify(updates),
+    });
+  }
+
+  async deleteTeamParticipant(participantId: string): Promise<void> {
+    return this.request(`/participants/${participantId}/delete`, {
+      method: "DELETE",
+    });
+  }
+
+  async toggleParticipantPresence(
+    participantId: string,
+    isPresent: boolean,
+  ): Promise<Participant> {
+    return this.request(`/participants/${participantId}/presence`, {
+      method: "PATCH",
+      body: JSON.stringify({ isPresent }),
+    });
+  }
+
+  async refreshTeamToCheckpoint1(
+    teamId: string,
+  ): Promise<{ success: boolean; message: string }> {
+    return this.request(`/team/${teamId}/refresh-to-checkpoint-1`, {
+      method: "POST",
     });
   }
 

@@ -1,5 +1,6 @@
 import {Router} from "express";
 import {adminService} from "../services/adminService";
+import {teamService} from "../services/teamService";
 import {AuthRequest, requireAdmin} from "../middleware/auth";
 import {logActivity} from "../middleware/logging";
 
@@ -184,6 +185,125 @@ router.get("/team/:teamId/checkpoints", async (req: AuthRequest, res, next) => {
     next(error)
   }
 });
+
+// Get team details for checkpoint 1
+router.get("/team/:teamId/checkpoint1", async (req: AuthRequest, res, next) => {
+  try {
+    const teamDetails = await adminService.getTeamForCheckpoint1(req.params.teamId);
+    res.json(teamDetails);
+  } catch (error: any) {
+    next(error)
+  }
+});
+
+// Add participant to team
+router.post(
+  "/team/:teamId/participants",
+  logActivity("ADD_PARTICIPANT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const participant = await adminService.addParticipantToTeam(req.params.teamId, req.body);
+      res.json(participant);
+    } catch (error: any) {
+      next(error)
+    }
+  },
+);
+
+// Remove participant from team
+router.delete(
+  "/participants/:participantId",
+  logActivity("REMOVE_PARTICIPANT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      await adminService.removeParticipantFromTeam(req.params.participantId);
+      res.json({ success: true, message: "Participant removed successfully" });
+    } catch (error: any) {
+      next(error)
+    }
+  },
+);
+
+// Get team participants
+router.get("/team/:teamId/participants", async (req: AuthRequest, res, next) => {
+  try {
+    const participants = await teamService.getTeamParticipants(req.params.teamId);
+    res.json(participants);
+  } catch (error: any) {
+    next(error);
+  }
+});
+
+// Add new team participant
+router.post(
+  "/team/:teamId/participants/new",
+  logActivity("ADD_TEAM_PARTICIPANT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const participant = await teamService.addTeamParticipant(req.params.teamId, req.body);
+      res.json(participant);
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
+
+// Update team participant
+router.put(
+  "/participants/:participantId/update",
+  logActivity("UPDATE_TEAM_PARTICIPANT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const participant = await teamService.updateTeamParticipant(req.params.participantId, req.body);
+      res.json(participant);
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
+
+// Delete team participant
+router.delete(
+  "/participants/:participantId/delete",
+  logActivity("DELETE_TEAM_PARTICIPANT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      await teamService.deleteTeamParticipant(req.params.participantId);
+      res.json({ success: true, message: "Participant deleted successfully" });
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
+
+// Toggle participant presence
+router.patch(
+  "/participants/:participantId/presence",
+  logActivity("TOGGLE_PARTICIPANT_PRESENCE"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const { isPresent } = req.body;
+      const participant = await teamService.toggleParticipantPresence(req.params.participantId, isPresent);
+      res.json(participant);
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
+
+// Refresh team back to checkpoint 1
+router.post(
+  "/team/:teamId/refresh-to-checkpoint-1",
+  logActivity("REFRESH_TEAM_CHECKPOINT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const result = await adminService.refreshTeamToCheckpoint1(req.params.teamId);
+      res.json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
 
 router.get("/judges", async (req: AuthRequest, res, next) => {
   try {
