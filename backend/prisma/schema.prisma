@@ -108,7 +108,7 @@ model TeamParticipant {
   name          String
   email         String
   phone         String?
-  Verified     Boolean         @default(false)
+  Verified      Boolean         @default(false)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }

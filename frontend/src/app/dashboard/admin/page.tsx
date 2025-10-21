@@ -44,20 +44,13 @@ import {
   Mentor,
   ProblemStatement,
   Team,
+  TeamCheckpoint1Data,
   WebsocketData,
 } from "@/lib/types";
 import { apiService } from "@/lib/service";
 import { wsService } from "@/lib/ws";
 import { authService } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
-
-function isCheckpointCompleted(team: Team, checkpoint: number) {
-  return (
-    team?.checkpoints?.some(
-      (c) => c.checkpoint === checkpoint && c.status === "COMPLETED",
-    ) ?? false
-  );
-}
 
 function ago(dateString: string) {
   const date = new Date(dateString);
@@ -138,7 +131,15 @@ export default function AdminDashboard() {
     );
   }
 
-  const handleCheckpoint1Complete = async (checkpoint: Checkpoint) => {
+  const handleCheckpoint1Complete = async (
+    teamCheckpoint1Data: TeamCheckpoint1Data,
+  ) => {
+    // Convert TeamCheckpoint1Data to Checkpoint format for internal use
+    const checkpoint: Checkpoint = {
+      checkpoint: 1,
+      completedAt: new Date().toISOString(),
+      ...teamCheckpoint1Data,
+    };
     updateWebsocketCheckpoint(checkpoint);
     updateTeamCheckpoint(selectedTeamForCheckpoint1?.id || "", checkpoint);
     setCheckpoint1DialogOpen(false);
@@ -259,6 +260,13 @@ export default function AdminDashboard() {
     }
   };
 
+  function isCheckpointCompleted(team: Team, checkpoint: number): boolean {
+    return (
+      team?.checkpoints?.some(
+        (c) => c.checkpoint === checkpoint && c.status === "COMPLETED",
+      ) ?? false
+    );
+  }
   return (
     <div className="text-offblack min-h-screen bg-white p-4 sm:p-6">
       <div className="mx-auto max-w-7xl">

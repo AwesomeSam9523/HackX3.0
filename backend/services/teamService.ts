@@ -579,15 +579,15 @@ export class TeamService {
   // Delete team participant
   async deleteTeamParticipant(participantId: string) {
     return prisma.teamParticipant.delete({
-      where: {participantId},
+      where: {id: participantId},
     });
   }
 
-  // Toggle participant presence
+  // Toggle participant presence (using Verified field)
   async toggleParticipantPresence(participantId: string, isPresent: boolean) {
     return prisma.teamParticipant.update({
-      where: {participantId},
-      data: {isPresent},
+      where: {id: participantId},
+      data: {Verified: isPresent},
     });
   }
 
@@ -596,7 +596,7 @@ export class TeamService {
     const presentCount = await prisma.teamParticipant.count({
       where: {
         teamId,
-        isPresent: true,
+        Verified: true,
       },
     });
     
@@ -627,12 +627,12 @@ export class TeamService {
         data: {
           ...data,
           participants: participants.map(p => ({
-            participantId: p.participantId,
+            id: p.id,
             name: p.name,
             email: p.email,
             phone: p.phone,
             role: p.role,
-            isPresent: p.isPresent,
+            isPresent: p.Verified,
           })),
           completedAt: new Date().toISOString(),
         },
@@ -645,12 +645,12 @@ export class TeamService {
         data: {
           ...data,
           participants: participants.map(p => ({
-            participantId: p.participantId,
+            id: p.id,
             name: p.name,
             email: p.email,
             phone: p.phone,
             role: p.role,
-            isPresent: p.isPresent,
+            isPresent: p.Verified,
           })),
           completedAt: new Date().toISOString(),
         },

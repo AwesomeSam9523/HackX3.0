@@ -12,6 +12,7 @@ interface Checkpoint1Data {
     name: string;
     email: string;
     phone?: string;
+    role?: "MEMBER" | "TEAM_LEADER";
     isPresent: boolean;
   }[];
 }
@@ -458,12 +459,11 @@ export class AdminService {
       teamId: team.teamId,
       participants: team.teamParticipants.map(p => ({
         id: p.id,
-        participantId: p.participantId,
         name: p.name,
         email: p.email,
         phone: p.phone || '',
         role: p.role,
-        isPresent: p.isPresent,
+        isPresent: p.Verified, // Use Verified field for presence
       })),
       wifi: existingData?.wifi || false,
       status: checkpoint1?.status || 'pending',
@@ -555,29 +555,21 @@ export class AdminService {
       throw new Error("Team not found");
     }
 
-    // Generate unique participant ID
-    const participantCount = await prisma.teamParticipant.count({
-      where: {teamId},
-    });
-    
-    const participantId = `${team.teamId}-P${participantCount + 1}`;
-
     return prisma.teamParticipant.create({
       data: {
         teamId,
-        participantId,
         name: participantData.name,
         email: participantData.email,
         phone: participantData.phone,
         role: "MEMBER",
-        isPresent: false,
+        Verified: false,
       },
     });
   }
 
   async removeParticipantFromTeam(participantId: string) {
     return prisma.teamParticipant.delete({
-      where: {participantId},
+      where: {id: participantId},
     });
   }
 
