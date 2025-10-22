@@ -9,7 +9,7 @@ datasource db {
 
 enum ParticipantRole {
   MEMBER
-  TEAM_LEADER
+  LEADER
 }
 
 enum UserRole {
@@ -101,16 +101,16 @@ model Team {
 }
 
 model TeamParticipant {
-  id            String          @id @default(cuid())
-  team          Team            @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId        String
-  role          ParticipantRole @default(MEMBER)
-  name          String
-  email         String
-  phone         String?
-  Verified      Boolean         @default(false)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id        String          @id @default(cuid())
+  team      Team            @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId    String
+  role      ParticipantRole @default(MEMBER)
+  name      String
+  email     String
+  phone     String?
+  verified  Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
 
 model Domain {
@@ -149,7 +149,7 @@ model PSBookmark {
 model Mentor {
   id              String            @id @default(cuid())
   user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name String
+  name            String
   userId          String            @unique
   expertise       String[]
   meetLink        String?

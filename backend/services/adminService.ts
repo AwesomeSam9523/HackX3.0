@@ -12,7 +12,7 @@ interface Checkpoint1Data {
     name: string;
     email: string;
     phone?: string;
-    role?: "MEMBER" | "TEAM_LEADER";
+    role?: "MEMBER" | "LEADER";
     isPresent: boolean;
   }[];
 }
@@ -463,7 +463,7 @@ export class AdminService {
         email: p.email,
         phone: p.phone || '',
         role: p.role,
-        isPresent: p.Verified, // Use Verified field for presence
+        verified: p.verified,
       })),
       wifi: existingData?.wifi || false,
       status: checkpoint1?.status || 'pending',
@@ -480,10 +480,10 @@ export class AdminService {
     }
 
     // Use transaction to ensure data consistency
-    return await prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx) => {
       // 1. Delete existing team participants
       await tx.teamParticipant.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 2. Create new team participants from the frontend data
@@ -495,7 +495,7 @@ export class AdminService {
             email: participant.email,
             phone: participant.phone,
             role: participant.role || "MEMBER",
-            Verified: participant.isPresent || false, // Use Verified field to track presence
+            verified: participant.isPresent || false, // Use Verified field to track presence
           },
         });
       }
@@ -510,7 +510,7 @@ export class AdminService {
         },
         update: {
           data: {
-            wifi, 
+            wifi,
             participants: participants.map(p => ({
               name: p.name,
               email: p.email,
@@ -528,7 +528,7 @@ export class AdminService {
           teamId,
           checkpoint: 1,
           data: {
-            wifi, 
+            wifi,
             participants: participants.map(p => ({
               name: p.name,
               email: p.email,
@@ -562,7 +562,7 @@ export class AdminService {
         email: participantData.email,
         phone: participantData.phone,
         role: "MEMBER",
-        Verified: false,
+        verified: false,
       },
     });
   }
@@ -745,7 +745,7 @@ export class AdminService {
     }
 
     // Start transaction to refresh team to checkpoint 1
-    const result = await prisma.$transaction(async (tx) => {
+    return prisma.$transaction(async (tx) => {
       // 1. Delete the team user account if it exists
       await tx.user.deleteMany({
         where: {
@@ -801,8 +801,6 @@ export class AdminService {
         message: `Team ${team.teamId} has been refreshed back to checkpoint 1`
       };
     });
-
-    return result;
   }
 }
 

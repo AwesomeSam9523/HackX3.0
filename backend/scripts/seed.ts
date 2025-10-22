@@ -77,41 +77,41 @@ async function main() {
   console.log("✅ Created domains");
 
   // Create problem statements
-  const problemStatements = await Promise.all([
-    prisma.problemStatement.upsert({
-      where: { id: "ps1" },
-      update: {},
-      create: {
-        id: "ps1",
-        title: "E-commerce Platform for Local Businesses",
-        description:
-          "Build a comprehensive e-commerce platform that helps local businesses establish their online presence with features like inventory management, order processing, and customer analytics.",
-        domainId: domains[0].id,
-      },
-    }),
-    prisma.problemStatement.upsert({
-      where: { id: "ps2" },
-      update: {},
-      create: {
-        id: "ps2",
-        title: "Mental Health Support Mobile App",
-        description:
-          "Develop a mobile application that provides mental health resources, mood tracking, and connects users with professional counselors through secure messaging and video calls.",
-        domainId: domains[1].id,
-      },
-    }),
-    prisma.problemStatement.upsert({
-      where: { id: "ps3" },
-      update: {},
-      create: {
-        id: "ps3",
-        title: "AI-Powered Learning Assistant",
-        description:
-          "Create an AI-powered educational platform that personalizes learning experiences, provides intelligent tutoring, and adapts to individual student learning patterns.",
-        domainId: domains[2].id,
-      },
-    }),
-  ]);
+  // const problemStatements = await Promise.all([
+  //   prisma.problemStatement.upsert({
+  //     where: { id: "ps1" },
+  //     update: {},
+  //     create: {
+  //       id: "ps1",
+  //       title: "E-commerce Platform for Local Businesses",
+  //       description:
+  //         "Build a comprehensive e-commerce platform that helps local businesses establish their online presence with features like inventory management, order processing, and customer analytics.",
+  //       domainId: domains[0].id,
+  //     },
+  //   }),
+  //   prisma.problemStatement.upsert({
+  //     where: { id: "ps2" },
+  //     update: {},
+  //     create: {
+  //       id: "ps2",
+  //       title: "Mental Health Support Mobile App",
+  //       description:
+  //         "Develop a mobile application that provides mental health resources, mood tracking, and connects users with professional counselors through secure messaging and video calls.",
+  //       domainId: domains[1].id,
+  //     },
+  //   }),
+  //   prisma.problemStatement.upsert({
+  //     where: { id: "ps3" },
+  //     update: {},
+  //     create: {
+  //       id: "ps3",
+  //       title: "AI-Powered Learning Assistant",
+  //       description:
+  //         "Create an AI-powered educational platform that personalizes learning experiences, provides intelligent tutoring, and adapts to individual student learning patterns.",
+  //       domainId: domains[2].id,
+  //     },
+  //   }),
+  // ]);
 
   console.log("✅ Created problem statements");
 
