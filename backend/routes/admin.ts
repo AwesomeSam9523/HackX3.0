@@ -332,6 +332,32 @@ router.get("/team-judge-mappings", async (req, res, next) => {
   }
 });
 
+// Create a new team manually
+router.post(
+  "/teams/create",
+  logActivity("CREATE_TEAM"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const result = await adminService.createTeam(req.body);
+      res.json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
 
+// Delete a team
+router.delete(
+  "/teams/:teamId",
+  logActivity("DELETE_TEAM"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const result = await adminService.deleteTeam(req.params.teamId);
+      res.json(result);
+    } catch (error: any) {
+      next(error);
+    }
+  }
+);
 
 export default router;

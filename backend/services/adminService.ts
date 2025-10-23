@@ -802,6 +802,179 @@ export class AdminService {
       };
     });
   }
+
+  // Create a new team manually
+  async createTeam(data: {
+    teamName: string;
+    teamLeader: {
+      name: string;
+      email: string;
+      phone?: string;
+    };
+    teamMembers: Array<{
+      name: string;
+      email: string;
+      phone?: string;
+    }>;
+  }) {
+    return prisma.$transaction(async (tx) => {
+      // Generate unique team ID
+      let teamId = data.teamName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      let counter = 1;
+      let baseTeamId = teamId;
+      
+      // Check if team ID already exists and append number if needed
+      while (await tx.team.findUnique({ where: { teamId } })) {
+        teamId = `${baseTeamId}${counter}`;
+        counter++;
+      }
+
+      // Generate a simple password for the team (can be changed later)
+      const teamPassword = `team${teamId}123`;
+      const hashedPassword = await hashPassword(teamPassword);
+
+      // Create the team
+      const team = await tx.team.create({
+        data: {
+          name: data.teamName,
+          teamId: teamId,
+          password: hashedPassword,
+          status: "REGISTERED",
+          submissionStatus: "NOT_SUBMITTED",
+        },
+      });
+
+      // Create team leader
+      const teamLeader = await tx.teamParticipant.create({
+        data: {
+          teamId: team.id,
+          name: data.teamLeader.name,
+          email: data.teamLeader.email,
+          phone: data.teamLeader.phone,
+          role: "LEADER",
+          verified: false,
+        },
+      });
+
+      // Create team members
+      const teamMembers = await Promise.all(
+        data.teamMembers.map((member) =>
+          tx.teamParticipant.create({
+            data: {
+              teamId: team.id,
+              name: member.name,
+              email: member.email,
+              phone: member.phone,
+              role: "MEMBER",
+              verified: false,
+            },
+          })
+        )
+      );
+
+      // Create initial checkpoint entries
+      const checkpoints = await Promise.all([1, 2, 3].map(checkpoint =>
+        tx.teamCheckpoint.create({
+          data: {
+            teamId: team.id,
+            checkpoint,
+            status: "pending",
+            data: {},
+          },
+        })
+      ));
+
+      return {
+        team,
+        teamLeader,
+        teamMembers,
+        checkpoints,
+        credentials: {
+          teamId: teamId,
+          password: teamPassword,
+        },
+      };
+    });
+  }
+
+  // Delete a team and all its related data
+  async deleteTeam(teamId: string) {
+    return prisma.$transaction(async (tx) => {
+      // Get team details for logging
+      const team = await tx.team.findUnique({
+        where: { id: teamId },
+        select: { name: true, teamId: true }
+      });
+
+      if (!team) {
+        throw new Error("Team not found");
+      }
+
+      // Delete in order to respect foreign key constraints
+      
+      // 1. Delete team checkpoints
+      await tx.teamCheckpoint.deleteMany({
+        where: { teamId }
+      });
+
+      // 2. Delete mentorship queue entries
+      await tx.mentorshipQueue.deleteMany({
+        where: { teamId }
+      });
+
+      // 3. Delete team scores
+      await tx.teamScore.deleteMany({
+        where: { teamId }
+      });
+
+      // 4. Delete evaluations
+      await tx.evaluation.deleteMany({
+        where: { teamId }
+      });
+
+      // 5. Delete submissions
+      await tx.submission.deleteMany({
+        where: { teamId }
+      });
+
+      // 6. Delete problem statement bookmarks for team users
+      const teamUsers = await tx.user.findMany({
+        where: { teamId },
+        select: { id: true }
+      });
+      
+      if (teamUsers.length > 0) {
+        await tx.pSBookmark.deleteMany({
+          where: {
+            userId: {
+              in: teamUsers.map(user => user.id)
+            }
+          }
+        });
+      }
+
+      // 7. Delete team participants (this should cascade automatically, but let's be explicit)
+      await tx.teamParticipant.deleteMany({
+        where: { teamId }
+      });
+
+      // 8. Update users to remove team association
+      await tx.user.updateMany({
+        where: { teamId },
+        data: { teamId: null }
+      });
+
+      // 9. Finally delete the team
+      await tx.team.delete({
+        where: { id: teamId }
+      });
+
+      return {
+        success: true,
+        message: `Team "${team.name}" (${team.teamId}) has been successfully deleted`
+      };
+    });
+  }
 }
 
 export const adminService = new AdminService();

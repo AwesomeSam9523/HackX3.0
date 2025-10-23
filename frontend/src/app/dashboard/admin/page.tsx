@@ -29,13 +29,18 @@ import {
   Eye,
   Gavel,
   Megaphone,
+  Plus,
   RefreshCw,
   Search,
+  Trash2,
   UserCheck,
   Users,
 } from "lucide-react";
-import { JudgeTeamMappingTab } from "@/components/admin/judge-team-mapping-tab";
-import { Checkpoint1Modal } from "@/components/admin/checkpoint1";
+import {
+  JudgeTeamMappingTab,
+  Checkpoint1Modal,
+  CreateTeamModal,
+} from "@/components/admin";
 import {
   Announcement,
   Checkpoint,
@@ -88,6 +93,7 @@ export default function AdminDashboard() {
     id: string;
     name: string;
   } | null>(null);
+  const [createTeamModalOpen, setCreateTeamModalOpen] = useState(false);
   const [checkpoint2Data, setCheckpoint2Data] = useState({
     username: "",
     password: "",
@@ -179,6 +185,40 @@ export default function AdminDashboard() {
       toast({
         title: "Error",
         description: "Failed to refresh team to checkpoint 1",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleTeamCreated = () => {
+    // Reload teams after creation
+    apiService.getTeams().then(setTeams);
+  };
+
+  const handleDeleteTeam = async (teamId: string, teamName: string) => {
+    if (
+      !confirm(
+        `Are you sure you want to delete team "${teamName}"? This action cannot be undone and will remove all team data including checkpoints, submissions, and participant records.`,
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const result = await apiService.deleteTeam(teamId);
+
+      // Reload teams after deletion
+      apiService.getTeams().then(setTeams);
+
+      toast({
+        title: "Success",
+        description: result.message,
+      });
+    } catch (err) {
+      console.error("Failed to delete team:", err);
+      toast({
+        title: "Error",
+        description: "Failed to delete team. Please try again.",
         variant: "destructive",
       });
     }
@@ -572,14 +612,23 @@ export default function AdminDashboard() {
                 <h2 className="text-xl font-bold sm:text-2xl">
                   Registration Checkpoints
                 </h2>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full bg-transparent sm:w-auto"
-                >
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                  Real-time Updates
-                </Button>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <Button
+                    onClick={() => setCreateTeamModalOpen(true)}
+                    className="w-full text-sm sm:w-auto"
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Create Team
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full bg-transparent sm:w-auto"
+                  >
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Real-time Updates
+                  </Button>
+                </div>
               </div>
 
               <div className="space-y-4 sm:space-y-6">
@@ -877,6 +926,15 @@ export default function AdminDashboard() {
                               ↻ Reset to CP1
                             </Button>
                           )}
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleDeleteTeam(team.id, team.name)}
+                            className="text-xs text-red-600 hover:border-red-300 hover:text-red-700"
+                          >
+                            <Trash2 className="mr-1 h-3 w-3" />
+                            Delete
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
@@ -1154,6 +1212,13 @@ export default function AdminDashboard() {
         teamId={selectedTeamForCheckpoint1?.id || ""}
         teamName={selectedTeamForCheckpoint1?.name || ""}
         onComplete={handleCheckpoint1Complete}
+      />
+
+      {/* Create Team Modal */}
+      <CreateTeamModal
+        isOpen={createTeamModalOpen}
+        onClose={() => setCreateTeamModalOpen(false)}
+        onTeamCreated={handleTeamCreated}
       />
     </div>
   );

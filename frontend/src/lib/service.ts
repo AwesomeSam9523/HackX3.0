@@ -197,6 +197,44 @@ class ApiService {
     });
   }
 
+  // Create a new team manually
+  async createTeam(data: {
+    teamName: string;
+    teamLeader: {
+      name: string;
+      email: string;
+      phone?: string;
+    };
+    teamMembers: Array<{
+      name: string;
+      email: string;
+      phone?: string;
+    }>;
+  }): Promise<{
+    team: Team;
+    teamLeader: Participant;
+    teamMembers: Participant[];
+    credentials: {
+      teamId: string;
+      password: string;
+    };
+  }> {
+    return this.request("/teams/create", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
+
+  // Delete a team
+  async deleteTeam(teamId: string): Promise<{
+    success: boolean;
+    message: string;
+  }> {
+    return this.request(`/teams/${teamId}`, {
+      method: "DELETE",
+    });
+  }
+
   // Problem Statements
   async getDomains(): Promise<Domain[]> {
     return this.request("/domains");
