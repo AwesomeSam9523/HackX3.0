@@ -13,6 +13,8 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - app-network
+    ports:
+      - "5433:5432"
 
   # ===========================
   # Backend
