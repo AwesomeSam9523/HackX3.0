@@ -127,25 +127,12 @@ const HackathonTimeline: React.FC = () => {
                   <div
                     className={`mb-2 ${isLeft ? "text-right" : "text-left"} hidden md:block`}
                   >
-                    {item.time ? (
-                      <>
-                        <div className="text-offwhite text-2xl font-bold">
-                          {item.date}
-                        </div>
-                        <div className="text-2xl font-bold text-gray-600">
-                          {item.time}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="text-2xl font-bold text-gray-600">
-                          &nbsp;
-                        </div>
-                        <div className="text-offwhite text-2xl font-bold">
-                          {item.date}
-                        </div>
-                      </>
-                    )}
+                    <div className="text-offwhite text-2xl font-bold">
+                      {item.date}
+                    </div>
+                    <div className="text-2xl font-bold text-gray-600">
+                      {item.time}
+                    </div>
                   </div>
 
                   {/* Content Box */}
