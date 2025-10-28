@@ -855,29 +855,43 @@ export class SuperAdminService {
       where: { username },
     });
 
-    let userResult;
-    let password = "";
+    // Check if checkpoint already exists with stored password
+    const existingCheckpoint = await prisma.teamCheckpoint.findUnique({
+      where: {
+        teamId_checkpoint: {
+          teamId: payload.teamId,
+          checkpoint: 2,
+        },
+      },
+    });
 
-    if (existingUser) {
-      // User already exists, return existing credentials (password will be hidden)
-      userResult = {
-        username: existingUser.username,
-        password: "********", // Don't expose existing password
-      };
-    } else {
+    let password = "";
+    let isNewUser = false;
+
+    if (existingUser && existingCheckpoint?.data && typeof existingCheckpoint.data === 'object' && 'password' in existingCheckpoint.data) {
+      // User and checkpoint exist, retrieve stored password
+      password = (existingCheckpoint.data as any).password;
+    } else if (!existingUser) {
       // Create new user with credentials
       password = Math.random().toString(36).slice(-6);
       const hash = await hashPassword(password);
       
-      userResult = await prisma.user.create({
+      await prisma.user.create({
         data: {
           username,
           password: hash,
           role: "TEAM",
         },
-        select: {
-          username: true,
-        }
+      });
+      isNewUser = true;
+    } else {
+      // User exists but no checkpoint with password - generate new password and update user
+      password = Math.random().toString(36).slice(-6);
+      const hash = await hashPassword(password);
+      
+      await prisma.user.update({
+        where: { username },
+        data: { password: hash },
       });
     }
 
@@ -891,12 +905,18 @@ export class SuperAdminService {
       update: {
         status: "COMPLETED",
         completedAt: new Date(),
+        data: {
+          password: password, // Store password in checkpoint data
+        },
       },
       create: {
         teamId: payload.teamId,
         checkpoint: 2,
         status: "COMPLETED",
         completedAt: new Date(),
+        data: {
+          password: password, // Store password in checkpoint data
+        },
       },
     });
 
@@ -922,9 +942,9 @@ export class SuperAdminService {
 
     const [checkpoint, round1Room] = await prisma.$transaction([t2, t3]);
     return {
-      username: userResult.username,
+      username: username,
       round1Room: round1Room.round1Room,
-      password: existingUser ? "User already exists - password not shown" : password,
+      password: password,
       checkpoint,
     }
   }
