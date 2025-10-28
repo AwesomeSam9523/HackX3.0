@@ -57,7 +57,13 @@ const Timer: React.FC = () => {
           className="text-wrapper font-kinetikaUltra relative top-0 left-0 text-center text-[2.2rem] leading-[2.2rem] font-black tracking-[0] whitespace-nowrap text-[#fffef0] sm:text-[63.5px] sm:leading-[50.8px]"
           suppressHydrationWarning={true}
         >
-          {`${timeLeft.days}D ${String(timeLeft.hours).padStart(2, "0")}H ${String(timeLeft.minutes).padStart(2, "0")}M ${String(timeLeft.seconds).padStart(2, "0")}S`}
+          {timeLeft.days +
+            timeLeft.hours +
+            timeLeft.minutes +
+            timeLeft.seconds >
+          0
+            ? `${timeLeft.days}D ${String(timeLeft.hours).padStart(2, "0")}H ${String(timeLeft.minutes).padStart(2, "0")}M ${String(timeLeft.seconds).padStart(2, "0")}S`
+            : "Let the innovation begin!"}
         </div>
       </div>
       <div className="scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 sm:scrollbar-none overflow-x-none mx-auto grid max-w-full grid-cols-2 grid-rows-2 items-center justify-center gap-4 sm:max-w-[900px] sm:flex-row sm:items-end sm:justify-between sm:gap-6 sm:overflow-x-visible lg:grid-cols-4 lg:grid-rows-1">
