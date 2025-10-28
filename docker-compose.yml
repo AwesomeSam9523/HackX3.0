@@ -1,7 +1,4 @@
 services:
-  # ===========================
-  # Postgres Database
-  # ===========================
   db:
     image: postgres:15
     container_name: db
@@ -16,17 +13,14 @@ services:
     ports:
       - "5433:5432"
 
-  # ===========================
-  # Backend
-  # ===========================
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: hackx-backend:latest
+    image: awesomesam/hackx-backend:latest
     container_name: backend
     env_file:
-      - ./backend/.env.prod   # contains DATABASE_URL like postgresql://user:pass@db:5432/mujhackx?schema=public
+      - ./backend/.env.prod
     depends_on:
       - db
     ports:
@@ -35,14 +29,11 @@ services:
     networks:
       - app-network
 
-  # ===========================
-  # Frontend
-  # ===========================
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: hackx-frontend:latest
+    image: awesomesam/hackx-frontend:latest
     container_name: frontend
     env_file:
       - ./frontend/.env.production
