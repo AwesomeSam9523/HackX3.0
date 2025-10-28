@@ -39,7 +39,7 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags: awesomesam/hackx-backend:latest
+          tags: awesomesam/backend:latest
 
       # --- Frontend build and push ---
       - name: Build and push frontend image
@@ -48,7 +48,7 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags: awesomesam/hackx-frontend:latest
+          tags: awesomesam/frontend:latest
 
   deploy:
     runs-on: ubuntu-latest

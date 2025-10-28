@@ -17,7 +17,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: awesomesam/hackx-backend:latest
+    image: awesomesam/backend:latest
     container_name: backend
     env_file:
       - ./backend/.env.prod
@@ -33,7 +33,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: awesomesam/hackx-frontend:latest
+    image: awesomesam/frontend:latest
     container_name: frontend
     env_file:
       - ./frontend/.env.production
