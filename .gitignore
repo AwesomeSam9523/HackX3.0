@@ -3,3 +3,4 @@ docker/.env.local
 
 # Data folder containing CSV files
 backend/data/
+.env
