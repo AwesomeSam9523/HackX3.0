@@ -2,7 +2,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci --silent
 
 COPY tsconfig.json ./
 COPY prisma ./prisma/

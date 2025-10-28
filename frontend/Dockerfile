@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Avoid peer conflicts during Docker builds
-RUN npm install --legacy-peer-deps
+RUN npm ci --silent
 
 COPY . .
 RUN npm run build
