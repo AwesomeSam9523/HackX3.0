@@ -1,8 +1,8 @@
-﻿import { PrismaClient } from "@prisma/client";
-import { hashPassword } from "../utils/password";
+﻿import {PrismaClient} from "@prisma/client";
+import {hashPassword} from "../utils/password";
 import * as fs from "fs";
 import * as path from "path";
-import { fileURLToPath } from "url";
+import {fileURLToPath} from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -345,7 +345,7 @@ async function importShortlistedTeams() {
   // Read shortlisted teams
   const shortlistedPath = path.join(__dirname, '../data/shortlisted-teams.csv');
   const extendedPath = path.join(__dirname, '../data/extended-registration.csv');
-  
+
   if (!fs.existsSync(shortlistedPath)) {
     throw new Error(`Shortlisted teams CSV file not found at ${shortlistedPath}`);
   }
