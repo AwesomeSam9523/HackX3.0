@@ -10,73 +10,6 @@ export const teamData: TeamCategory[] = [
         title: "FACULTY ORGANIZERS",
         members: [
           {
-            id: "1a",
-            name: "Dr. Sandeep Joshi",
-            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl:
-              "https://www.linkedin.com/in/prof-dr-sandeep-chaurasia-0457568a/",
-          },
-          {
-            id: "2a",
-            name: "Dr. Ajay Kumar",
-            position: "ASSISTANT PROFESSOR (SELECTION GRADE), CSE",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
-          },
-          {
-            id: "3a",
-            name: "Dr. Anand Pandey",
-            position: "PROFESSOR & DIRECTOR, ENTREPRENEURSHIP CELL",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6XaTt2nPbaRP9_dr.anandpandey-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
-          },
-          {
-            id: "4a",
-            name: "Dr. CS Lamba",
-            position: "PROFESSOR & ASSOCIATE DEAN, CSE",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6XqTt2nPbaRP-_dr.CSlambda-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
-          },
-          {
-            id: "5a",
-            name: "Dr. Neha Chaudhary",
-            position: "PROFESSOR & HEAD OF DEPARTMENT, CSE",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "FACULTY CONVENERS",
-        members: [
-          {
-            id: "1",
-            name: "Dr. Juhi Singh",
-            position: "CONVENER, MUJ",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6X6Tt2nPbaRP__dr.juhisingh-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
-          },
-          {
-            id: "2",
-            name: "Dr. Shishir Singh",
-            position: "CONVENER, MUJ",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl: "#",
-          },
-        ],
-      },
-      {
-        title: "FACULTY CO-ORDINATORS",
-        members: [
-          {
             id: "fc31",
             name: "Dr Kuldeep Singh Sangwan",
             position: "ORGANIZING CHAIR",
@@ -108,6 +41,41 @@ export const teamData: TeamCategory[] = [
               "https://jaipur.manipal.edu/admin/photo/3/faculty/12/151.jpg",
             linkedinUrl: "#",
           },
+          {
+            id: "5a",
+            name: "Dr. Neha Chaudhary",
+            position: "CO-ORGANIZING CHAIR",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+        ],
+      },
+      {
+        title: "FACULTY CONVENERS",
+        members: [
+          {
+            id: "1",
+            name: "Dr. Juhi Singh",
+            position: "CONVENER, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6X6Tt2nPbaRP__dr.juhisingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+          {
+            id: "2",
+            name: "Dr. Shishir Singh",
+            position: "CONVENER, MUJ",
+            image:
+              "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+        ],
+      },
+      {
+        title: "FACULTY CO-ORDINATORS",
+        members: [
+          ////
           {
             id: "fc1",
             name: "Dr Bali Devi",
