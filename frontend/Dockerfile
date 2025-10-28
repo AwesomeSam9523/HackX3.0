@@ -1,23 +1,27 @@
-# Use Node.js base image
-FROM node:20-alpine
-
-# Set working directory
+# =============================
+# Stage 1: Builder
+# =============================
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy dependency files
-COPY package.json package-lock.json* ./
+COPY package*.json ./
 
-# Install all dependencies
-RUN npm install
+# Avoid peer conflicts during Docker builds
+RUN npm install --legacy-peer-deps
 
-# Copy the rest of the app
 COPY . .
-
-# Build the Next.js app
 RUN npm run build
 
-# Expose the port Next.js runs on
-EXPOSE 3000
+# =============================
+# Stage 2: Runtime
+# =============================
+FROM node:20-alpine
+WORKDIR /app
 
-# Start the server
-CMD ["npm", "run","dev"]
+ENV NODE_ENV=production
+ENV PORT=3000
+
+COPY --from=builder /app ./
+
+EXPOSE 3000
+CMD ["npm", "start"]

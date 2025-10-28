@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import Footer from "@/components/Footer";
-import ClientOnly from "@/components/ClientOnly";
+import LayoutClient from "./LayoutClient";
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,19 +32,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${kinetikaLight.variable} ${kinetikaUltra.variable} antialiased`}
       >
-        <ClientOnly>
-          <Sidebar />
-        </ClientOnly>
-        {children}
-        <Footer />
+        <LayoutClient>{children}</LayoutClient>
       </body>
     </html>
   );
