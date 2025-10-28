@@ -860,7 +860,7 @@ export class AdminService {
           checkpoint: 1
         },
         data: {
-          status: "pending",
+          status: "PARTIALLY_COMPLETED",
           completedAt: null,
         }
       });

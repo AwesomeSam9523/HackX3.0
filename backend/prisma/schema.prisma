@@ -56,6 +56,11 @@ enum QueueStatus {
   CANCELLED
 }
 
+enum CheckpointStatus {
+  COMPLETED
+  PARTIALLY_COMPLETED
+}
+
 model User {
   id              String         @id @default(cuid())
   username        String         @unique
@@ -269,14 +274,14 @@ model Round2Room {
 }
 
 model TeamCheckpoint {
-  id          String    @id @default(cuid())
-  team        Team      @relation(fields: [teamId], references: [id])
+  id          String           @id @default(cuid())
+  team        Team             @relation(fields: [teamId], references: [id])
   teamId      String
   checkpoint  Int
-  status      String    @default("pending")
+  status      CheckpointStatus
   data        Json?
   completedAt DateTime?
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime         @default(now())
 
   @@unique([teamId, checkpoint])
 }
