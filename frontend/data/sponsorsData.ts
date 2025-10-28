@@ -1,109 +1,55 @@
 export const sponsorsData = [
   {
-    logo: "/sponsors/sponsor1.svg",
-    name: "Casio",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EDbpReVYa3tdZ_image240.svg",
+    name: "Accenture",
   },
   {
-    logo: "/sponsors/sponsor2.svg",
-    name: "Radio Manipal Jaipur",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EC7pReVYa3tdY_image239.svg",
+    name: "Balaji Wafers",
   },
   {
-    logo: "/sponsors/sponsor3.svg",
-    name: "Femease",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-ECLpReVYa3tdX_image237.svg",
+    name: "Coding Blocks",
   },
   {
-    logo: "/sponsors/sponsor4.svg",
-    name: "ED Times",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EB7pReVYa3tdW_image230.svg",
+    name: "Salesforce",
   },
   {
-    logo: "/sponsors/sponsor5.svg",
-    name: "Manipal Hospital",
-  },
-  {
-    logo: "/sponsors/sponsor6.svg",
-    name: "Programming Pathshala",
-  },
-  {
-    logo: "/sponsors/sponsor7.svg",
-    name: "Threeway Studio",
-  },
-  {
-    logo: "/sponsors/sponsor8.svg",
-    name: "E-Cell",
-  },
-  {
-    logo: "/sponsors/sponsor9.svg",
-    name: "Vivacity",
-  },
-  {
-    logo: "/sponsors/sponsor10.svg",
-    name: "Herody",
-  },
-  {
-    logo: "/sponsors/sponsor11.svg",
-    name: "Oracle Academy",
-  },
-  {
-    logo: "/sponsors/sponsor12.svg",
-    name: "QuillBot",
-  },
-  {
-    logo: "/sponsors/sponsor13.svg",
-    name: "Namaste Dev",
-  },
-  {
-    logo: "/sponsors/sponsor14.svg",
-    name: "Bobble",
-  },
-  {
-    logo: "/sponsors/sponsor15.svg",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EBrpReVYa3tdV_image228.svg",
     name: "Unstop",
   },
   {
-    logo: "/sponsors/sponsor16.svg",
+    logo: "https://images.prismic.io/ieeemuj/aP_MubpReVYa3uaP_FuturixAI.png?auto=format,compress",
+    name: "FuturixAI",
+  },
+  {
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EBLpReVYa3tdT_Group1000011223.svg",
+    name: "EY",
+  },
+  {
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EA7pReVYa3tdS_Group1000011218.svg",
+    name: "Geek Room",
+  },
+  {
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EArpReVYa3tdR_Group1000011216.svg",
+    name: "GeeksforGeeks",
+  },
+  {
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EAbpReVYa3tdQ_Group169.svg",
+    name: "Programming Pathshala",
+  },
+  {
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-EALpReVYa3tdP_cdac.svg",
     name: "C-DAC",
   },
   {
-    logo: "/sponsors/sponsor17.svg",
-    name: "Design Studio",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-D_7pReVYa3tdO_Bluebgname1.svg",
+    name: "Acelnt",
   },
   {
-    logo: "/sponsors/sponsor18.svg",
-    name: "Codeate",
-  },
-  {
-    logo: "/sponsors/sponsor19.svg",
-    name: "QuillBot",
-  },
-  {
-    logo: "/sponsors/sponsor20.svg",
-    name: "Scribbr",
-  },
-  {
-    logo: "/sponsors/sponsor21.svg",
-    name: "Bikesetu",
-  },
-  {
-    logo: "/sponsors/sponsor22.svg",
-    name: "Axure",
-  },
-];
-
-export const inKindSponsorsData = [
-  {
-    logo: "/scribbr.svg",
-    name: "Scribbr",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/quillbot.svg",
-    name: "QuillBot",
-    type: "LANGUAGE PARTNER",
-  },
-  {
-    logo: "/languagetool.svg",
-    name: "LanguageTool",
-    type: "LANGUAGE PARTNER",
+    logo: "https://ieeemuj.cdn.prismic.io/ieeemuj/aP-D_7pReVYa3tdN_ASR_logo1.svg",
+    name: "ASR Aviation",
   },
   // Add more as needed
 ];
