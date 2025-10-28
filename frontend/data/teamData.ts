@@ -7,45 +7,44 @@ export const teamData: TeamCategory[] = [
     year: 2025,
     subcategories: [
       {
-        title: "FACULTY",
+        title: "FACULTY ORGANIZERS",
         members: [
           {
-            id: "1a",
-            name: "Dr. Sandeep Joshi",
-            position: "CEO AIC, MANIPAL UNIVERSITY JAIPUR",
+            id: "fc31",
+            name: "Dr Kuldeep Singh Sangwan",
+            position: "ORGANIZING CHAIR",
             image:
-              "https://images.prismic.io/ieeemuj/aJx6YaTt2nPbaRQB_dr.sandeepjoshi-faculty-hackX3.0.png?auto=format,compress",
-            linkedinUrl:
-              "https://www.linkedin.com/in/prof-dr-sandeep-chaurasia-0457568a/",
-          },
-          {
-            id: "2a",
-            name: "Dr. Ajay Kumar",
-            position: "ASSISTANT PROFESSOR (SELECTION GRADE), CSE",
-            image:
-              "https://images.prismic.io/ieeemuj/aJx6XKTt2nPbaRP8_dr.ajaykumar-faculty-hackX3.0.png?auto=format,compress",
+              "https://jaipur.manipal.edu/fosta/img/Dr%20Kuldip%20Singh.jpg",
             linkedinUrl: "#",
           },
           {
-            id: "3a",
-            name: "Dr. Anand Pandey",
-            position: "PROFESSOR & DIRECTOR, ENTREPRENEURSHIP CELL",
+            id: "fc32",
+            name: "Dr Sandeep Chaurasia",
+            position: "CO-ORGANIZING CHAIR",
             image:
-              "https://images.prismic.io/ieeemuj/aJx6XaTt2nPbaRP9_dr.anandpandey-faculty-hackX3.0.png?auto=format,compress",
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/147.jpg",
             linkedinUrl: "#",
           },
           {
-            id: "4a",
-            name: "Dr. CS Lamba",
-            position: "PROFESSOR & ASSOCIATE DEAN, CSE",
+            id: "fc33",
+            name: "Dr CS Lamba",
+            position: "CO-ORGANIZING CHAIR",
             image:
-              "https://images.prismic.io/ieeemuj/aJx6XqTt2nPbaRP-_dr.CSlambda-faculty-hackX3.0.png?auto=format,compress",
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/157.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc34",
+            name: "Dr Roheet Bhatnagar",
+            position: "CO-ORGANIZING CHAIR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/151.jpg",
             linkedinUrl: "#",
           },
           {
             id: "5a",
             name: "Dr. Neha Chaudhary",
-            position: "PROFESSOR & HEAD OF DEPARTMENT, CSE",
+            position: "CO-ORGANIZING CHAIR",
             image:
               "https://images.prismic.io/ieeemuj/aJx6YKTt2nPbaRQA_dr.nehachaudhary-faculty-hackX3.0.png?auto=format,compress",
             linkedinUrl: "#",
@@ -69,6 +68,225 @@ export const teamData: TeamCategory[] = [
             position: "CONVENER, MUJ",
             image:
               "https://images.prismic.io/ieeemuj/aJx6YqTt2nPbaRQC_mr.shishirsingh-faculty-hackX3.0.png?auto=format,compress",
+            linkedinUrl: "#",
+          },
+        ],
+      },
+      {
+        title: "FACULTY CO-ORDINATORS",
+        members: [
+          ////
+          {
+            id: "fc1",
+            name: "Dr Bali Devi",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/202.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc2",
+            name: "Ms Stuti Pandey",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/13/683.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc3",
+            name: "Dr Usha Jain",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/215.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc4",
+            name: "Mr LAV UPADHYAY",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/191.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc5",
+            name: "Dr Prashant Vats",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/178.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc6",
+            name: "Dr. Amit Garg",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/176.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc7",
+            name: "Mr. Abhay Singh Bisht",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/651.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc8",
+            name: "Dr. Satyabrata Roy",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/164.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc9",
+            name: "Dr. Sayar Singh Shekhawat",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/179.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc10",
+            name: "Dr Ajay Kumar",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/174.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc11",
+            name: "Dr Mahesh Jangid",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/160.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc12",
+            name: "Dr Surbhi Sharma",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/200.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc13",
+            name: "Dr Sunita Singhal",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/159.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc14",
+            name: "Dr Rishav dubey",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/206.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc16",
+            name: "Dr Vivek Singh Sikarwar",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/175.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc17",
+            name: "Dr. Mayank Namdev",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/214.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc18",
+            name: "Dr. Divya Thakur",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/665.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc19",
+            name: "Dr Anil Kumar",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/183.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc20",
+            name: "Dr Umashankar Rawat",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/156.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc23",
+            name: "Dr Babita Tiwari",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/193.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc24",
+            name: "Dr Anita Shrotriya",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/185.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc25",
+            name: "Dr Deepak Panwar",
+            position: "FACULTY COORDINATOR",
+            image: "https://jaipur.manipal.edu/admin/photo/3/faculty/13/84.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc26",
+            name: "Dr Akhilesh Kumar",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/fosta/img/Dr.%20Akhilesh%20Kr.%20Sharma.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc27",
+            name: "Dr Geeta Rani",
+            position: "FACULTY COORDINATOR",
+            image: "https://jaipur.manipal.edu/fosta/img/geetha.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc28",
+            name: "Dr Pratishta Mathur",
+            position: "FACULTY COORDINATOR",
+            image: "https://jaipur.manipal.edu/fosta/img/Pratistha.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc29",
+            name: "Dr Arjun Singh",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/16/143.jpg",
+            linkedinUrl: "#",
+          },
+          {
+            id: "fc30",
+            name: "Dr Ankur Pandey",
+            position: "FACULTY COORDINATOR",
+            image:
+              "https://jaipur.manipal.edu/admin/photo/3/faculty/12/218.jpg",
             linkedinUrl: "#",
           },
         ],
