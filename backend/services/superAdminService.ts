@@ -17,6 +17,10 @@ interface Checkpoint1Data {
   }[];
 }
 
+interface Checkpoint2Data {
+  teamId: string;
+}
+
 export class SuperAdminService {
   // User Management
   async getAllUsers() {
@@ -833,6 +837,117 @@ export class SuperAdminService {
           completedAt: new Date(),
         },
       });
+    });
+  }
+
+  async updateTeamCheckpoint2(payload: Checkpoint2Data) {
+    const team = await prisma.team.findUnique({
+      where: {id: payload.teamId},
+    });
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    const username = team.teamId;
+    
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
+    });
+
+    let userResult;
+    let password = "";
+
+    if (existingUser) {
+      // User already exists, return existing credentials (password will be hidden)
+      userResult = {
+        username: existingUser.username,
+        password: "********", // Don't expose existing password
+      };
+    } else {
+      // Create new user with credentials
+      password = Math.random().toString(36).slice(-6);
+      const hash = await hashPassword(password);
+      
+      userResult = await prisma.user.create({
+        data: {
+          username,
+          password: hash,
+          role: "TEAM",
+        },
+        select: {
+          username: true,
+        }
+      });
+    }
+
+    const t2 = prisma.teamCheckpoint.upsert({
+      where: {
+        teamId_checkpoint: {
+          teamId: payload.teamId,
+          checkpoint: 2,
+        },
+      },
+      update: {
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+      create: {
+        teamId: payload.teamId,
+        checkpoint: 2,
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+    });
+
+    const emptyRoom = await prisma.round1Room.findFirst({
+      where: {
+        teams: {
+          none: {},
+        },
+      },
+    })
+
+    const t3 = prisma.team.update({
+      where: {id: payload.teamId},
+      data: {
+        round1Room: {
+          connect: {
+            name: "001",
+          },
+        },
+      },
+      select: {round1Room: true},
+    });
+
+    const [checkpoint, round1Room] = await prisma.$transaction([t2, t3]);
+    return {
+      username: userResult.username,
+      round1Room: round1Room.round1Room,
+      password: existingUser ? "User already exists - password not shown" : password,
+      checkpoint,
+    }
+  }
+
+  async updateTeamCheckpoint3(data: { teamId: string }) {
+    const {teamId} = data;
+    return prisma.teamCheckpoint.upsert({
+      where: {
+        teamId_checkpoint: {
+          teamId,
+          checkpoint: 3,
+        },
+      },
+      update: {
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
+      create: {
+        teamId,
+        checkpoint: 3,
+        status: "COMPLETED",
+        completedAt: new Date(),
+      },
     });
   }
 }

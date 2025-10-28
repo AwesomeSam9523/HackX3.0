@@ -613,20 +613,38 @@ export class AdminService {
     }
 
     const username = team.teamId;
-    const password = Math.random().toString(36).slice(-6);
-    const hash = await hashPassword(password);
-
-    const t1 = prisma.user.create({
-      data: {
-        username,
-        password: hash,
-        role: "TEAM",
-      },
-      select: {
-        username: true,
-        password: true,
-      }
+    
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
     });
+
+    let userResult;
+    let password = "";
+
+    if (existingUser) {
+      // User already exists, return existing credentials (password will be hidden)
+      userResult = {
+        username: existingUser.username,
+        password: "********", // Don't expose existing password
+      };
+    } else {
+      // Create new user with credentials
+      password = Math.random().toString(36).slice(-6);
+      const hash = await hashPassword(password);
+      
+      userResult = await prisma.user.create({
+        data: {
+          username,
+          password: hash,
+          role: "TEAM",
+        },
+        select: {
+          username: true,
+        }
+      });
+    }
+
     const t2 = prisma.teamCheckpoint.upsert({
       where: {
         teamId_checkpoint: {
@@ -666,11 +684,11 @@ export class AdminService {
       select: {round1Room: true},
     });
 
-    const [user, checkpoint, round1Room] = await prisma.$transaction([t1, t2, t3]);
+    const [checkpoint, round1Room] = await prisma.$transaction([t2, t3]);
     return {
-      username: user.username,
+      username: userResult.username,
       round1Room: round1Room.round1Room,
-      password,
+      password: existingUser ? "User already exists - password not shown" : password,
       checkpoint,
     }
   }

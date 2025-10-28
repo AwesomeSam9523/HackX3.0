@@ -145,6 +145,34 @@ router.post(
   },
 );
 
+// Update team checkpoint 2
+router.post(
+  "/teams/checkpoint/2",
+  logActivity("UPDATE_CHECKPOINT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const result = await superAdminService.updateTeamCheckpoint2(req.body);
+      res.json(result);
+    } catch (error: any) {
+      next(error)
+    }
+  },
+);
+
+// Update team checkpoint 3
+router.post(
+  "/teams/checkpoint/3",
+  logActivity("UPDATE_CHECKPOINT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const result = await superAdminService.updateTeamCheckpoint3(req.body);
+      res.json(result);
+    } catch (error: any) {
+      next(error)
+    }
+  },
+);
+
 // System Settings
 router.post("/mentorship/lock", modifyLimiter, logActivity("TOGGLE_MENTORSHIP_LOCK"), async (req: AuthRequest, res, next) => {
   try {
