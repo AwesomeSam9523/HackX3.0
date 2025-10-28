@@ -32,7 +32,7 @@ const themesData = [
   {
     hoverImage: "/rectangle_7.svg",
     vectorImage: "/defence.svg",
-    text: "defence systems",
+    text: "smart cities",
   },
   {
     hoverImage: "/rectangle_8.svg",
@@ -40,14 +40,14 @@ const themesData = [
     text: "disaster response",
   },
   {
+    hoverImage: "/rectangle_10.svg",
+    vectorImage: "/cybersecurity.svg",
+    text: "cybersecurity and defence systems",
+  },
+  {
     hoverImage: "/rectangle_9.svg",
     vectorImage: "/open_innovation.svg",
     text: "open innovation",
-  },
-  {
-    hoverImage: "/rectangle_10.svg",
-    vectorImage: "/cybersecurity.svg",
-    text: "cybersecurity",
   },
 ];
 
