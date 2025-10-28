@@ -548,7 +548,7 @@ export class TeamService {
     name: string;
     email: string;
     phone?: string;
-    role?: "MEMBER" | "TEAM_LEADER";
+    role?: "MEMBER" | "LEADER";
   }) {
     return prisma.teamParticipant.create({
       data: {
@@ -557,7 +557,7 @@ export class TeamService {
         email: data.email,
         phone: data.phone,
         role: data.role || "MEMBER",
-        Verified: false,
+        verified: false,
       },
     });
   }
@@ -567,8 +567,8 @@ export class TeamService {
     name?: string;
     email?: string;
     phone?: string;
-    role?: "MEMBER" | "TEAM_LEADER";
-    Verified?: boolean;
+    role?: "MEMBER" | "LEADER";
+    verified?: boolean;
   }) {
     return prisma.teamParticipant.update({
       where: {id: participantId},
@@ -583,11 +583,11 @@ export class TeamService {
     });
   }
 
-  // Toggle participant presence (using Verified field)
+  // Toggle participant presence (using verified field)
   async toggleParticipantPresence(participantId: string, isPresent: boolean) {
     return prisma.teamParticipant.update({
       where: {id: participantId},
-      data: {Verified: isPresent},
+      data: {verified: isPresent},
     });
   }
 
@@ -596,7 +596,7 @@ export class TeamService {
     const presentCount = await prisma.teamParticipant.count({
       where: {
         teamId,
-        Verified: true,
+        verified: true,
       },
     });
     
@@ -632,7 +632,7 @@ export class TeamService {
             email: p.email,
             phone: p.phone,
             role: p.role,
-            isPresent: p.Verified,
+            isPresent: p.verified,
           })),
           completedAt: new Date().toISOString(),
         },
@@ -650,7 +650,7 @@ export class TeamService {
             email: p.email,
             phone: p.phone,
             role: p.role,
-            isPresent: p.Verified,
+            isPresent: p.verified,
           })),
           completedAt: new Date().toISOString(),
         },
