@@ -453,18 +453,38 @@ export class AdminService {
     const checkpoint1 = team.checkpoints.find(cp => cp.checkpoint === 1);
     const existingData = checkpoint1?.data as any;
 
-    return {
-      id: team.id,
-      name: team.name,
-      teamId: team.teamId,
-      participants: team.teamParticipants.map(p => ({
+    // If checkpoint exists, use the participants from checkpoint data (which includes isPresent)
+    // Otherwise, use participants from teamParticipants table
+    let participantsData;
+    if (existingData?.participants && Array.isArray(existingData.participants)) {
+      // Use checkpoint data which has isPresent status
+      participantsData = existingData.participants.map((p: any) => ({
+        id: p.id || `cp-${p.email}`, // Use checkpoint participant id or generate one
+        name: p.name,
+        email: p.email,
+        phone: p.phone || '',
+        role: p.role,
+        isPresent: p.isPresent || false,
+        verified: p.isPresent || false,
+      }));
+    } else {
+      // Use teamParticipants table data
+      participantsData = team.teamParticipants.map(p => ({
         id: p.id,
         name: p.name,
         email: p.email,
         phone: p.phone || '',
         role: p.role,
+        isPresent: p.verified || false, // Use verified field as initial isPresent
         verified: p.verified,
-      })),
+      }));
+    }
+
+    return {
+      id: team.id,
+      name: team.name,
+      teamId: team.teamId,
+      participants: participantsData,
       wifi: existingData?.wifi || false,
       status: checkpoint1?.status || 'pending',
     };
@@ -473,10 +493,19 @@ export class AdminService {
   async updateTeamCheckpoint1(data: Checkpoint1Data) {
     const {teamId, wifi, participants} = data;
     
-    // Validate that at least 2 participants are present
+    // Count present participants
     const presentParticipants = participants.filter(p => p.isPresent);
+    const totalParticipants = participants.length;
+    
+    // Determine status based on attendance
+    let status = "COMPLETED";
+    let notes = "";
+    
     if (presentParticipants.length < 2) {
       throw new Error("At least 2 participants must be marked as present to complete checkpoint 1");
+    } else if (presentParticipants.length < totalParticipants) {
+      status = "PARTIALLY_FILLED";
+      notes = `Only ${presentParticipants.length} out of ${totalParticipants} participants were present`;
     }
 
     // Use transaction to ensure data consistency
@@ -520,8 +549,9 @@ export class AdminService {
             })),
             totalParticipants: participants.length,
             presentCount: presentParticipants.length,
+            notes: notes,
           },
-          status: "COMPLETED",
+          status: status,
           completedAt: new Date(),
         },
         create: {
@@ -538,8 +568,9 @@ export class AdminService {
             })),
             totalParticipants: participants.length,
             presentCount: presentParticipants.length,
+            notes: notes,
           },
-          status: "COMPLETED",
+          status: status,
           completedAt: new Date(),
         },
       });

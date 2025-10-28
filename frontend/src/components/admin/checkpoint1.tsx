@@ -205,9 +205,33 @@ export function Checkpoint1Modal({
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <Users className="h-6 w-6" />
             Checkpoint 1 - {teamName}
+            {teamData?.status && teamData.status !== "pending" && (
+              <Badge
+                variant={
+                  teamData.status === "COMPLETED" ? "default" : "outline"
+                }
+                className={`text-sm ${
+                  teamData.status === "PARTIALLY_FILLED"
+                    ? "border-orange-500 text-orange-600"
+                    : ""
+                }`}
+              >
+                {teamData.status === "COMPLETED"
+                  ? "Complete"
+                  : teamData.status === "PARTIALLY_FILLED"
+                    ? "Partially Filled"
+                    : teamData.status}
+              </Badge>
+            )}
           </DialogTitle>
           <DialogDescription className="text-base">
             Team details confirmation, participant management, and WiFi opt-in
+            {teamData?.status === "PARTIALLY_FILLED" && (
+              <span className="mt-1 block font-medium text-orange-600">
+                ⚠ This checkpoint was previously completed with partial
+                attendance
+              </span>
+            )}
           </DialogDescription>
         </DialogHeader>
 

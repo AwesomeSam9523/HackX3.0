@@ -4,6 +4,19 @@ import type {LogFilter} from "../types";
 
 const prisma = new PrismaClient();
 
+interface Checkpoint1Data {
+  teamId: string;
+  wifi: boolean;
+  participants: {
+    id?: string;
+    name: string;
+    email: string;
+    phone?: string;
+    role?: "MEMBER" | "LEADER";
+    isPresent: boolean;
+  }[];
+}
+
 export class SuperAdminService {
   // User Management
   async getAllUsers() {
@@ -238,6 +251,9 @@ export class SuperAdminService {
         submissions: true,
         round1Room: true,
         round2Room: true,
+        checkpoints: {
+          select: {checkpoint: true, status: true, completedAt: true, data: true},
+        }
       },
       orderBy: {createdAt: "desc"},
     });
@@ -670,6 +686,153 @@ export class SuperAdminService {
           },
         },
       },
+    });
+  }
+
+  // Get team details for checkpoint 1
+  async getTeamForCheckpoint1(teamId: string) {
+    const team = await prisma.team.findUnique({
+      where: {id: teamId},
+      include: {
+        teamParticipants: {
+          orderBy: {createdAt: "asc"},
+        },
+        checkpoints: {
+          where: {checkpoint: 1},
+        },
+      },
+    });
+
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    // Get existing checkpoint 1 data if it exists
+    const checkpoint1 = team.checkpoints.find(cp => cp.checkpoint === 1);
+    const existingData = checkpoint1?.data as any;
+
+    // If checkpoint exists, use the participants from checkpoint data (which includes isPresent)
+    // Otherwise, use participants from teamParticipants table
+    let participantsData;
+    if (existingData?.participants && Array.isArray(existingData.participants)) {
+      // Use checkpoint data which has isPresent status
+      participantsData = existingData.participants.map((p: any) => ({
+        id: p.id || `cp-${p.email}`, // Use checkpoint participant id or generate one
+        name: p.name,
+        email: p.email,
+        phone: p.phone || '',
+        role: p.role,
+        isPresent: p.isPresent || false,
+        verified: p.isPresent || false,
+      }));
+    } else {
+      // Use teamParticipants table data
+      participantsData = team.teamParticipants.map(p => ({
+        id: p.id,
+        name: p.name,
+        email: p.email,
+        phone: p.phone || '',
+        role: p.role,
+        isPresent: p.verified || false, // Use verified field as initial isPresent
+        verified: p.verified,
+      }));
+    }
+
+    return {
+      id: team.id,
+      name: team.name,
+      teamId: team.teamId,
+      participants: participantsData,
+      wifi: existingData?.wifi || false,
+      status: checkpoint1?.status || 'pending',
+    };
+  }
+
+  // Update team checkpoint 1 with partial attendance support
+  async updateTeamCheckpoint1(data: Checkpoint1Data) {
+    const {teamId, wifi, participants} = data;
+    
+    // Count present participants
+    const presentParticipants = participants.filter(p => p.isPresent);
+    const totalParticipants = participants.length;
+    
+    // Determine status based on attendance
+    let status = "COMPLETED";
+    let notes = "";
+    
+    if (presentParticipants.length < 2) {
+      throw new Error("At least 2 participants must be marked as present to complete checkpoint 1");
+    } else if (presentParticipants.length < totalParticipants) {
+      status = "PARTIALLY_FILLED";
+      notes = `Only ${presentParticipants.length} out of ${totalParticipants} participants were present`;
+    }
+
+    // Use transaction to ensure data consistency
+    return prisma.$transaction(async (tx) => {
+      // 1. Delete existing team participants
+      await tx.teamParticipant.deleteMany({
+        where: {teamId}
+      });
+
+      // 2. Create new team participants from the frontend data
+      for (const participant of participants) {
+        await tx.teamParticipant.create({
+          data: {
+            teamId,
+            name: participant.name,
+            email: participant.email,
+            phone: participant.phone,
+            role: participant.role || "MEMBER",
+            verified: participant.isPresent || false, // Use Verified field to track presence
+          },
+        });
+      }
+
+      // 3. Create or update checkpoint record
+      return tx.teamCheckpoint.upsert({
+        where: {
+          teamId_checkpoint: {
+            teamId,
+            checkpoint: 1,
+          },
+        },
+        update: {
+          data: {
+            wifi,
+            participants: participants.map(p => ({
+              name: p.name,
+              email: p.email,
+              phone: p.phone,
+              role: p.role,
+              isPresent: p.isPresent,
+            })),
+            totalParticipants: participants.length,
+            presentCount: presentParticipants.length,
+            notes: notes,
+          },
+          status: status,
+          completedAt: new Date(),
+        },
+        create: {
+          teamId,
+          checkpoint: 1,
+          data: {
+            wifi,
+            participants: participants.map(p => ({
+              name: p.name,
+              email: p.email,
+              phone: p.phone,
+              role: p.role,
+              isPresent: p.isPresent,
+            })),
+            totalParticipants: participants.length,
+            presentCount: presentParticipants.length,
+            notes: notes,
+          },
+          status: status,
+          completedAt: new Date(),
+        },
+      });
     });
   }
 }

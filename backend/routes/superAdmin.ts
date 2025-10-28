@@ -121,6 +121,30 @@ router.get("/teams/:teamId", async (req: AuthRequest, res, next) => {
   }
 });
 
+// Get team details for checkpoint 1
+router.get("/team/:teamId/checkpoint1", async (req: AuthRequest, res, next) => {
+  try {
+    const teamDetails = await superAdminService.getTeamForCheckpoint1(req.params.teamId);
+    res.json(teamDetails);
+  } catch (error: any) {
+    next(error)
+  }
+});
+
+// Update team checkpoint 1
+router.post(
+  "/teams/checkpoint/1",
+  logActivity("UPDATE_CHECKPOINT"),
+  async (req: AuthRequest, res, next) => {
+    try {
+      const result = await superAdminService.updateTeamCheckpoint1(req.body);
+      res.json(result);
+    } catch (error: any) {
+      next(error)
+    }
+  },
+);
+
 // System Settings
 router.post("/mentorship/lock", modifyLimiter, logActivity("TOGGLE_MENTORSHIP_LOCK"), async (req: AuthRequest, res, next) => {
   try {

@@ -301,11 +301,43 @@ export default function AdminDashboard() {
   };
 
   function isCheckpointCompleted(team: Team, checkpoint: number): boolean {
-    return (
-      team?.checkpoints?.some(
-        (c) => c.checkpoint === checkpoint && c.status === "COMPLETED",
-      ) ?? false
+    if (!team?.checkpoints || !Array.isArray(team.checkpoints)) {
+      return false;
+    }
+    return team.checkpoints.some(
+      (c) =>
+        c.checkpoint === checkpoint &&
+        (c.status === "COMPLETED" || c.status === "PARTIALLY_FILLED"),
     );
+  }
+
+  function getCheckpointStatus(team: Team, checkpoint: number): string {
+    if (!team?.checkpoints || !Array.isArray(team.checkpoints)) {
+      return "pending";
+    }
+    const cp = team.checkpoints.find((c) => c.checkpoint === checkpoint);
+    return cp?.status || "pending";
+  }
+
+  function getCheckpoint1ButtonText(team: Team): string {
+    const status = getCheckpointStatus(team, 1);
+    if (status === "COMPLETED") return "CP1 Complete";
+    if (status === "PARTIALLY_FILLED") return "CP1 Partial";
+    return "Checkpoint 1";
+  }
+
+  function getCheckpointBadgeProps(team: Team, checkpoint: number) {
+    const status = getCheckpointStatus(team, checkpoint);
+    if (status === "COMPLETED") {
+      return { variant: "default" as const, className: "text-xs" };
+    }
+    if (status === "PARTIALLY_FILLED") {
+      return {
+        variant: "outline" as const,
+        className: "text-xs border-orange-500 text-orange-600",
+      };
+    }
+    return { variant: "secondary" as const, className: "text-xs" };
   }
   return (
     <div className="text-offblack min-h-screen bg-white p-4 sm:p-6">
@@ -491,14 +523,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
                           <div className="flex items-center gap-2">
-                            <Badge
-                              variant={
-                                isCheckpointCompleted(team, 1)
-                                  ? "default"
-                                  : "secondary"
-                              }
-                              className="text-xs"
-                            >
+                            <Badge {...getCheckpointBadgeProps(team, 1)}>
                               CP1
                             </Badge>
                             <Badge
@@ -564,14 +589,7 @@ export default function AdminDashboard() {
                       </div>
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
                         <div className="flex items-center gap-2">
-                          <Badge
-                            variant={
-                              isCheckpointCompleted(team, 1)
-                                ? "default"
-                                : "secondary"
-                            }
-                            className="text-xs"
-                          >
+                          <Badge {...getCheckpointBadgeProps(team, 1)}>
                             CP1
                           </Badge>
                           <Badge
@@ -729,6 +747,12 @@ export default function AdminDashboard() {
                             {team.round1Room
                               ? ` | Room: ${team.round1Room.block} ${team.round1Room.name}`
                               : " | Room: Not Assigned"}
+                            {getCheckpointStatus(team, 1) ===
+                              "PARTIALLY_FILLED" && (
+                              <span className="ml-2 font-medium text-orange-600">
+                                ⚠ CP1 Partial
+                              </span>
+                            )}
                           </p>
                         </div>
                         <div className="text-left lg:text-right">
@@ -744,16 +768,7 @@ export default function AdminDashboard() {
                     <CardContent className="space-y-4">
                       {/* Checkpoint Status */}
                       <div className="flex flex-wrap items-center gap-2">
-                        <Badge
-                          variant={
-                            isCheckpointCompleted(team, 1)
-                              ? "default"
-                              : "secondary"
-                          }
-                          className="text-xs"
-                        >
-                          CP1
-                        </Badge>
+                        <Badge {...getCheckpointBadgeProps(team, 1)}>CP1</Badge>
                         <Badge
                           variant={
                             isCheckpointCompleted(team, 2)
@@ -785,8 +800,12 @@ export default function AdminDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
-                          disabled={isCheckpointCompleted(team, 1)}
-                          className="bg-transparent text-xs"
+                          disabled={false} // Always allow editing CP1
+                          className={`bg-transparent text-xs ${
+                            getCheckpointStatus(team, 1) === "PARTIALLY_FILLED"
+                              ? "border-orange-500 text-orange-600"
+                              : ""
+                          }`}
                           onClick={() => {
                             setSelectedTeamForCheckpoint1({
                               id: team.id,
@@ -795,9 +814,7 @@ export default function AdminDashboard() {
                             setCheckpoint1DialogOpen(true);
                           }}
                         >
-                          {isCheckpointCompleted(team, 1)
-                            ? "CP1 Complete"
-                            : "Checkpoint 1"}
+                          {getCheckpoint1ButtonText(team)}
                         </Button>
 
                         {/* Checkpoint 2 */}
