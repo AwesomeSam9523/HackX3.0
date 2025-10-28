@@ -36,7 +36,7 @@ const Box: React.FC<BoxProps> = ({ hoverImage, vectorImage, text }) => {
   const isDefense = text === "defence systems";
   const isDisaster = text === "disaster response";
   const isOpenInnovation = text === "open innovation";
-  const isCybersecurity = text === "cybersecurity";
+  const isCybersecurity = text === "cybersecurity and defence systems";
   const isBlockchain = text === "blockchain for good";
 
   return (
