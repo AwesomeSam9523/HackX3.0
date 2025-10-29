@@ -148,7 +148,7 @@ class ApiService {
       name: string;
       email: string;
       phone?: string;
-      role?: "MEMBER" | "TEAM_LEADER";
+      role?: "MEMBER" | "LEADER";
     },
   ): Promise<Participant> {
     return this.request(`/team/${teamId}/participants/new`, {
@@ -163,7 +163,7 @@ class ApiService {
       name?: string;
       email?: string;
       phone?: string;
-      role?: "MEMBER" | "TEAM_LEADER";
+      role?: "MEMBER" | "LEADER";
       isPresent?: boolean;
     },
   ): Promise<Participant> {

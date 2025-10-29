@@ -532,7 +532,6 @@ async function importShortlistedTeams() {
         data: {
           name: teamName,
           teamId: teamId,
-          password: "team123", // Default password
           status: "REGISTERED",
         },
       });

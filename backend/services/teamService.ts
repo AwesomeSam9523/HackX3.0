@@ -11,7 +11,7 @@ export class TeamService {
         participantTeam: {
           include: {
             participants: {
-              select: {id: true, username: true, email: true},
+              select: {id: true, name: true, email: true},
             },
             problemStatement: {
               include: {domain: true},
@@ -623,7 +623,7 @@ export class TeamService {
         },
       },
       update: {
-        status: "completed",
+        status: "COMPLETED",
         data: {
           ...data,
           participants: participants.map(p => ({
@@ -641,7 +641,7 @@ export class TeamService {
       create: {
         teamId,
         checkpoint,
-        status: "completed",
+        status: "COMPLETED",
         data: {
           ...data,
           participants: participants.map(p => ({

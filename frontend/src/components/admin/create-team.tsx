@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Minus, Copy, CheckCircle } from "lucide-react";
+import { CheckCircle, Minus, Plus } from "lucide-react";
 import { apiService } from "@/lib/service";
 import { useToast } from "@/hooks/use-toast";
 
@@ -46,14 +46,33 @@ export function CreateTeamModal({
   const [isLoading, setIsLoading] = useState(false);
   const [createdTeam, setCreatedTeam] = useState<{
     teamId: string;
-    password: string;
   } | null>(null);
-  const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const { toast } = useToast();
 
+  function isTeamValid() {
+    if (!teamName.trim()) return false;
+    let count = 0;
+    if (
+      !teamLeader.name.trim() ||
+      !teamLeader.email.trim() ||
+      !teamLeader.phone.trim()
+    )
+      return false;
+    count++;
+    for (const member of teamMembers) {
+      if (!member.name.trim() || !member.email.trim() || !member.phone.trim())
+        return false;
+      count++;
+    }
+
+    return count >= 2 && count <= 4;
+  }
+
   const addTeamMember = () => {
-    if (teamMembers.length < 4) {
+    console.log(teamMembers);
+    console.log(teamMembers.length);
+    if (teamMembers.length < 3) {
       setTeamMembers([...teamMembers, { name: "", email: "", phone: "" }]);
     }
   };
@@ -73,29 +92,11 @@ export function CreateTeamModal({
     const newMembers = [...teamMembers];
     newMembers[index][field] = value;
     setTeamMembers(newMembers);
+    console.log(newMembers);
   };
 
   const updateTeamLeader = (field: keyof TeamMember, value: string) => {
     setTeamLeader({ ...teamLeader, [field]: value });
-  };
-
-  const copyToClipboard = async (text: string, field: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedField(field);
-      setTimeout(() => setCopiedField(null), 2000);
-      toast({
-        title: "Copied!",
-        description: `${field} copied to clipboard`,
-      });
-    } catch (err) {
-      console.error("Failed to copy to clipboard:", err);
-      toast({
-        title: "Failed to copy",
-        description: "Please copy manually",
-        variant: "destructive",
-      });
-    }
   };
 
   const handleSubmit = async () => {
@@ -151,7 +152,7 @@ export function CreateTeamModal({
         })),
       });
 
-      setCreatedTeam(result.credentials);
+      setCreatedTeam(result.team);
 
       toast({
         title: "Success!",
@@ -177,7 +178,6 @@ export function CreateTeamModal({
     setTeamLeader({ name: "", email: "", phone: "" });
     setTeamMembers([{ name: "", email: "", phone: "" }]);
     setCreatedTeam(null);
-    setCopiedField(null);
     onClose();
   };
 
@@ -196,9 +196,7 @@ export function CreateTeamModal({
             {createdTeam ? "Team Created Successfully!" : "Create New Team"}
           </DialogTitle>
           <DialogDescription className="text-sm">
-            {createdTeam
-              ? "Share these credentials with the team"
-              : "Add team details and participant information"}
+            {createdTeam ? "" : "Add team details and participant information"}
           </DialogDescription>
         </DialogHeader>
 
@@ -222,55 +220,8 @@ export function CreateTeamModal({
                     <code className="flex-1 rounded-md border bg-white px-3 py-2 font-mono text-sm">
                       {createdTeam.teamId}
                     </code>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() =>
-                        copyToClipboard(createdTeam.teamId, "Team ID")
-                      }
-                      className="px-3"
-                    >
-                      {copiedField === "Team ID" ? (
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
                   </div>
                 </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-green-700">
-                    Password
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <code className="flex-1 rounded-md border bg-white px-3 py-2 font-mono text-sm">
-                      {createdTeam.password}
-                    </code>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() =>
-                        copyToClipboard(createdTeam.password, "Password")
-                      }
-                      className="px-3"
-                    >
-                      {copiedField === "Password" ? (
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 rounded-md border border-blue-200 bg-blue-50 p-3">
-                <p className="text-sm text-blue-800">
-                  💡 <strong>Note:</strong> The team can use these credentials
-                  to log in to the platform. Make sure to share them securely
-                  with the team leader.
-                </p>
               </div>
             </div>
           </div>
@@ -279,8 +230,12 @@ export function CreateTeamModal({
           <div className="space-y-6">
             {/* Team Name */}
             <div className="space-y-2">
-              <Label htmlFor="team-name" className="text-sm font-medium">
-                Team Name *
+              <Label
+                htmlFor="team-name"
+                className="relative w-fit text-sm font-medium"
+              >
+                Team Name
+                <span className={"absolute -right-2 text-red-500"}>*</span>
               </Label>
               <Input
                 id="team-name"
@@ -294,10 +249,10 @@ export function CreateTeamModal({
             {/* Team Leader */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <Label className="text-sm font-medium">Team Leader *</Label>
-                <Badge variant="outline" className="text-xs">
-                  Leader
-                </Badge>
+                <Label className="relative text-sm font-medium">
+                  Team Leader
+                  <span className={"absolute -right-2 text-red-500"}>*</span>
+                </Label>
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -322,9 +277,7 @@ export function CreateTeamModal({
                 </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-xs text-slate-600">
-                  Phone (Optional)
-                </Label>
+                <Label className="text-xs text-slate-600">Phone</Label>
                 <Input
                   placeholder="Phone number"
                   value={teamLeader.phone}
@@ -343,7 +296,7 @@ export function CreateTeamModal({
                   size="sm"
                   variant="outline"
                   onClick={addTeamMember}
-                  disabled={teamMembers.length >= 4}
+                  disabled={teamMembers.length >= 3}
                   className="text-xs"
                 >
                   <Plus className="mr-1 h-4 w-4" />
@@ -442,7 +395,7 @@ export function CreateTeamModal({
               </Button>
               <Button
                 onClick={handleSubmit}
-                disabled={isLoading}
+                disabled={isLoading || !isTeamValid()}
                 className="w-full sm:w-auto"
               >
                 {isLoading ? "Creating..." : "Create Team"}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,12 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Trash2, Plus, Users, UserCheck } from "lucide-react";
+import { Plus, Trash2, UserCheck, Users } from "lucide-react";
 import { apiService } from "@/lib/service";
 import {
-  TeamCheckpoint1Data,
-  Participant,
+  Checkpoint,
   Checkpoint1UpdateData,
+  Participant,
+  TeamCheckpoint1Data,
 } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
 
@@ -36,7 +37,7 @@ interface Checkpoint1ModalProps {
   onClose: () => void;
   teamId: string;
   teamName: string;
-  onComplete: (checkpoint: TeamCheckpoint1Data) => void;
+  onComplete: (checkpoint: Checkpoint) => void;
 }
 
 export function Checkpoint1Modal({
@@ -54,7 +55,7 @@ export function Checkpoint1Modal({
     name: "",
     email: "",
     phone: "",
-    role: "MEMBER" as "MEMBER" | "TEAM_LEADER",
+    role: "MEMBER" as "MEMBER" | "LEADER",
   });
   const { toast } = useToast();
 
@@ -104,8 +105,8 @@ export function Checkpoint1Modal({
     }
 
     // Check if trying to add a team leader when one already exists
-    if (newParticipant.role === "TEAM_LEADER") {
-      const existingLeader = participants.find((p) => p.role === "TEAM_LEADER");
+    if (newParticipant.role === "LEADER") {
+      const existingLeader = participants.find((p) => p.role === "LEADER");
       if (existingLeader) {
         toast({
           title: "Error",
@@ -173,13 +174,11 @@ export function Checkpoint1Modal({
         participants,
       };
 
-      await apiService.updateCheckpoint(1, updateData);
-      const updatedTeamData: TeamCheckpoint1Data = {
-        ...teamData!,
-        wifi,
-        participants,
-      };
-      onComplete(updatedTeamData);
+      const result = (await apiService.updateCheckpoint(
+        1,
+        updateData,
+      )) as Checkpoint;
+      onComplete(result);
       onClose();
       toast({
         title: "Success",
@@ -200,7 +199,7 @@ export function Checkpoint1Modal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="m-auto flex h-[90vh] max-h-none w-[90vw] max-w-none flex-col p-6">
+      <DialogContent className="m-auto flex h-[90vh] max-h-none w-[60vw] !max-w-none flex-col p-6">
         <DialogHeader className="flex-shrink-0 pb-4">
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <Users className="h-6 w-6" />
@@ -211,14 +210,14 @@ export function Checkpoint1Modal({
                   teamData.status === "COMPLETED" ? "default" : "outline"
                 }
                 className={`text-sm ${
-                  teamData.status === "PARTIALLY_FILLED"
+                  teamData.status === "PARTIALLY_COMPLETED"
                     ? "border-orange-500 text-orange-600"
                     : ""
                 }`}
               >
                 {teamData.status === "COMPLETED"
                   ? "Complete"
-                  : teamData.status === "PARTIALLY_FILLED"
+                  : teamData.status === "PARTIALLY_COMPLETED"
                     ? "Partially Filled"
                     : teamData.status}
               </Badge>
@@ -226,7 +225,7 @@ export function Checkpoint1Modal({
           </DialogTitle>
           <DialogDescription className="text-base">
             Team details confirmation, participant management, and WiFi opt-in
-            {teamData?.status === "PARTIALLY_FILLED" && (
+            {teamData?.status === "PARTIALLY_COMPLETED" && (
               <span className="mt-1 block font-medium text-orange-600">
                 ⚠ This checkpoint was previously completed with partial
                 attendance
@@ -314,7 +313,7 @@ export function Checkpoint1Modal({
                         <Label className="text-sm font-medium">Present</Label>
                       </div>
 
-                      <div className="grid flex-1 grid-cols-3 gap-2">
+                      <div className="flex flex-1 flex-row gap-2">
                         <Input
                           placeholder="Name"
                           value={participant.name}
@@ -412,7 +411,7 @@ export function Checkpoint1Modal({
                       </Label>
                       <Select
                         value={newParticipant.role}
-                        onValueChange={(value: "MEMBER" | "TEAM_LEADER") =>
+                        onValueChange={(value: "MEMBER" | "LEADER") =>
                           setNewParticipant({ ...newParticipant, role: value })
                         }
                       >
@@ -422,13 +421,13 @@ export function Checkpoint1Modal({
                         <SelectContent>
                           <SelectItem value="MEMBER">Member</SelectItem>
                           <SelectItem
-                            value="TEAM_LEADER"
+                            value="LEADER"
                             disabled={participants.some(
-                              (p) => p.role === "TEAM_LEADER",
+                              (p) => p.role === "LEADER",
                             )}
                           >
                             Team Leader{" "}
-                            {participants.some((p) => p.role === "TEAM_LEADER")
+                            {participants.some((p) => p.role === "LEADER")
                               ? "(Already assigned)"
                               : ""}
                           </SelectItem>
@@ -481,9 +480,13 @@ export function Checkpoint1Modal({
           <Button
             onClick={handleComplete}
             disabled={loading || presentCount < 2}
-            className="h-9 flex-1 bg-green-600 text-sm text-white hover:bg-green-700"
+            className={`${presentCount < participants.length ? "bg-yellow-600 text-black hover:bg-yellow-700" : "bg-green-600 text-white hover:bg-green-700"} h-9 flex-1 text-sm`}
           >
-            {loading ? "Processing..." : "Complete Checkpoint 1"}
+            {loading
+              ? "Processing..."
+              : presentCount < participants.length
+                ? "Partially Complete"
+                : "Complete Checkpoint 1"}
           </Button>
         </DialogFooter>
       </DialogContent>

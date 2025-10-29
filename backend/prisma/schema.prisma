@@ -70,7 +70,7 @@ model User {
   status          UserStatus     @default(ACTIVE)
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
-  participantTeam Team?          @relation("TeamParticipants", fields: [teamId], references: [id])
+  participantTeam Team?          @relation(fields: [teamId], references: [id])
   mentorProfile   Mentor?
   judgeProfile    Judge?
   activityLogs    ActivityLog[]
@@ -83,14 +83,13 @@ model Team {
   id                 String            @id @default(cuid())
   name               String
   teamId             String            @unique
-  password           String
   status             TeamStatus        @default(REGISTERED)
   submissionStatus   SubmissionStatus  @default(NOT_SUBMITTED)
   githubRepo         String?
   presentationLink   String?
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
-  participants       User[]            @relation("TeamParticipants")
+  participants       TeamParticipant[]
   problemStatement   ProblemStatement? @relation(fields: [problemStatementId], references: [id])
   problemStatementId String?
   submissions        Submission[]
@@ -102,7 +101,7 @@ model Team {
   round2Room         Round2Room?       @relation(fields: [round2RoomId], references: [id])
   round2RoomId       String?
   checkpoints        TeamCheckpoint[]
-  teamParticipants   TeamParticipant[]
+  User               User[]
 }
 
 model TeamParticipant {

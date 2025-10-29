@@ -37,9 +37,9 @@ import {
   Users,
 } from "lucide-react";
 import {
-  JudgeTeamMappingTab,
   Checkpoint1Modal,
   CreateTeamModal,
+  JudgeTeamMappingTab,
 } from "@/components/admin";
 import {
   Announcement,
@@ -49,7 +49,6 @@ import {
   Mentor,
   ProblemStatement,
   Team,
-  TeamCheckpoint1Data,
   WebsocketData,
 } from "@/lib/types";
 import { apiService } from "@/lib/service";
@@ -120,7 +119,7 @@ export default function AdminDashboard() {
     setTeams((prev) =>
       prev.map((team) =>
         team.id === teamId
-          ? { ...team, checkpoints: [...team.checkpoints, checkpoint] }
+          ? { ...team, checkpoints: [checkpoint, ...team.checkpoints] }
           : team,
       ),
     );
@@ -137,15 +136,8 @@ export default function AdminDashboard() {
     );
   }
 
-  const handleCheckpoint1Complete = async (
-    teamCheckpoint1Data: TeamCheckpoint1Data,
-  ) => {
+  const handleCheckpoint1Complete = async (checkpoint: Checkpoint) => {
     // Convert TeamCheckpoint1Data to Checkpoint format for internal use
-    const checkpoint: Checkpoint = {
-      checkpoint: 1,
-      completedAt: new Date().toISOString(),
-      ...teamCheckpoint1Data,
-    };
     updateWebsocketCheckpoint(checkpoint);
     updateTeamCheckpoint(selectedTeamForCheckpoint1?.id || "", checkpoint);
     setCheckpoint1DialogOpen(false);
@@ -300,14 +292,20 @@ export default function AdminDashboard() {
     }
   };
 
-  function isCheckpointCompleted(team: Team, checkpoint: number): boolean {
+  function isCheckpointCompleted(
+    team: Team,
+    checkpoint: number,
+    allowPartial: boolean = false,
+  ): boolean {
     if (!team?.checkpoints || !Array.isArray(team.checkpoints)) {
       return false;
     }
     return team.checkpoints.some(
       (c) =>
         c.checkpoint === checkpoint &&
-        (c.status === "COMPLETED" || c.status === "PARTIALLY_FILLED"),
+        (allowPartial
+          ? c.status === "COMPLETED" || c.status === "PARTIALLY_COMPLETED"
+          : c.status === "COMPLETED"),
     );
   }
 
@@ -322,7 +320,7 @@ export default function AdminDashboard() {
   function getCheckpoint1ButtonText(team: Team): string {
     const status = getCheckpointStatus(team, 1);
     if (status === "COMPLETED") return "CP1 Complete";
-    if (status === "PARTIALLY_FILLED") return "CP1 Partial";
+    if (status === "PARTIALLY_COMPLETED") return "CP1 Partial";
     return "Checkpoint 1";
   }
 
@@ -331,7 +329,7 @@ export default function AdminDashboard() {
     if (status === "COMPLETED") {
       return { variant: "default" as const, className: "text-xs" };
     }
-    if (status === "PARTIALLY_FILLED") {
+    if (status === "PARTIALLY_COMPLETED") {
       return {
         variant: "outline" as const,
         className: "text-xs border-orange-500 text-orange-600",
@@ -743,12 +741,14 @@ export default function AdminDashboard() {
                               "No Problem Statement Selected"}
                           </CardDescription>
                           <p className="mt-1 text-xs break-all text-slate-500 sm:text-sm">
-                            Team ID: {team.generatedId}
+                            Team ID: {team.teamId}
+                            {` | `}
+                            Participants: {team.participants.length}
                             {team.round1Room
                               ? ` | Room: ${team.round1Room.block} ${team.round1Room.name}`
                               : " | Room: Not Assigned"}
                             {getCheckpointStatus(team, 1) ===
-                              "PARTIALLY_FILLED" && (
+                              "PARTIALLY_COMPLETED" && (
                               <span className="ml-2 font-medium text-orange-600">
                                 ⚠ CP1 Partial
                               </span>
@@ -800,9 +800,10 @@ export default function AdminDashboard() {
                         <Button
                           size="sm"
                           variant="outline"
-                          disabled={false} // Always allow editing CP1
+                          disabled={isCheckpointCompleted(team, 1)} // Always allow editing CP1
                           className={`bg-transparent text-xs ${
-                            getCheckpointStatus(team, 1) === "PARTIALLY_FILLED"
+                            getCheckpointStatus(team, 1) ===
+                            "PARTIALLY_COMPLETED"
                               ? "border-orange-500 text-orange-600"
                               : ""
                           }`}
@@ -825,7 +826,7 @@ export default function AdminDashboard() {
                               variant="outline"
                               disabled={
                                 isCheckpointCompleted(team, 2) ||
-                                !isCheckpointCompleted(team, 1)
+                                !isCheckpointCompleted(team, 1, true)
                               }
                               className="bg-transparent text-xs"
                               onClick={() => handleCheckpoint2Complete(team.id)}

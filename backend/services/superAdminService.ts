@@ -761,13 +761,13 @@ export class SuperAdminService {
     const totalParticipants = participants.length;
     
     // Determine status based on attendance
-    let status = "COMPLETED";
+    let status: "COMPLETED" | "PARTIALLY_COMPLETED" = "COMPLETED";
     let notes = "";
     
     if (presentParticipants.length < 2) {
       throw new Error("At least 2 participants must be marked as present to complete checkpoint 1");
     } else if (presentParticipants.length < totalParticipants) {
-      status = "PARTIALLY_FILLED";
+      status = "PARTIALLY_COMPLETED";
       notes = `Only ${presentParticipants.length} out of ${totalParticipants} participants were present`;
     }
 

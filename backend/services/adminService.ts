@@ -84,7 +84,14 @@ export class AdminService {
     return prisma.team.findMany({
       include: {
         participants: {
-          select: {id: true, username: true, email: true},
+          select: {
+            id: true,
+            role: true,
+            name: true,
+            email: true,
+            phone: true,
+            verified: true,
+          },
         },
         problemStatement: {
           include: {domain: true},
@@ -122,7 +129,14 @@ export class AdminService {
       where: {id: teamId},
       include: {
         participants: {
-          select: {id: true, username: true, email: true},
+          select: {
+            id: true,
+            role: true,
+            name: true,
+            email: true,
+            phone: true,
+            verified: true,
+          },
         },
         problemStatement: {
           include: {domain: true},
@@ -436,7 +450,7 @@ export class AdminService {
     const team = await prisma.team.findUnique({
       where: {id: teamId},
       include: {
-        teamParticipants: {
+        participants: {
           orderBy: {createdAt: "asc"},
         },
         checkpoints: {
@@ -469,7 +483,7 @@ export class AdminService {
       }));
     } else {
       // Use teamParticipants table data
-      participantsData = team.teamParticipants.map(p => ({
+      participantsData = team.participants.map(p => ({
         id: p.id,
         name: p.name,
         email: p.email,
@@ -498,13 +512,13 @@ export class AdminService {
     const totalParticipants = participants.length;
     
     // Determine status based on attendance
-    let status = "COMPLETED";
+    let status: "COMPLETED" | "PARTIALLY_COMPLETED" = "COMPLETED";
     let notes = "";
     
     if (presentParticipants.length < 2) {
       throw new Error("At least 2 participants must be marked as present to complete checkpoint 1");
     } else if (presentParticipants.length < totalParticipants) {
-      status = "PARTIALLY_FILLED";
+      status = "PARTIALLY_COMPLETED";
       notes = `Only ${presentParticipants.length} out of ${totalParticipants} participants were present`;
     }
 
@@ -618,6 +632,7 @@ export class AdminService {
     const existingUser = await prisma.user.findUnique({
       where: { username },
     });
+    console.log('existingUser', existingUser);
 
     // Check if checkpoint already exists with stored password
     const existingCheckpoint = await prisma.teamCheckpoint.findUnique({
@@ -628,6 +643,7 @@ export class AdminService {
         },
       },
     });
+    console.log('existingCheckpoint', existingCheckpoint);
 
     let password = "";
     let isNewUser = false;
@@ -635,9 +651,11 @@ export class AdminService {
     if (existingUser && existingCheckpoint?.data && typeof existingCheckpoint.data === 'object' && 'password' in existingCheckpoint.data) {
       // User and checkpoint exist, retrieve stored password
       password = (existingCheckpoint.data as any).password;
+      console.log('retrieved password from checkpoint data', password);
     } else if (!existingUser) {
       // Create new user with credentials
       password = Math.random().toString(36).slice(-6);
+      console.log('generated new password for new user', password);
       const hash = await hashPassword(password);
       
       await prisma.user.create({
@@ -645,6 +663,7 @@ export class AdminService {
           username,
           password: hash,
           role: "TEAM",
+          teamId: payload.teamId,
         },
       });
       isNewUser = true;
@@ -888,18 +907,20 @@ export class AdminService {
   }) {
     return prisma.$transaction(async (tx) => {
       // Generate unique team ID
-      let teamId = data.teamName.toLowerCase().replace(/[^a-z0-9]/g, '');
-      let counter = 1;
-      let baseTeamId = teamId;
-      
-      // Check if team ID already exists and append number if needed
-      while (await tx.team.findUnique({ where: { teamId } })) {
-        teamId = `${baseTeamId}${counter}`;
-        counter++;
+      const lastTeam = await tx.team.findFirst({
+        select: {
+          teamId: true,
+        },
+        orderBy: {createdAt: "desc"},
+      });
+      if (!lastTeam) {
+        return; // not possible as we are importing teams
       }
+      const count = parseInt(lastTeam.teamId.replace("TEAM", ""));
+      let teamId = `TEAM${(count + 1).toString().padStart(3, "0")}`;
 
       // Generate a simple password for the team (can be changed later)
-      const teamPassword = `team${teamId}123`;
+      const teamPassword = Math.random().toString(36).slice(-6);
       const hashedPassword = await hashPassword(teamPassword);
 
       // Create the team
@@ -907,7 +928,6 @@ export class AdminService {
         data: {
           name: data.teamName,
           teamId: teamId,
-          password: hashedPassword,
           status: "REGISTERED",
           submissionStatus: "NOT_SUBMITTED",
         },
@@ -941,27 +961,11 @@ export class AdminService {
         )
       );
 
-      // Create initial checkpoint entries
-      const checkpoints = await Promise.all([1, 2, 3].map(checkpoint =>
-        tx.teamCheckpoint.create({
-          data: {
-            teamId: team.id,
-            checkpoint,
-            status: "pending",
-            data: {},
-          },
-        })
-      ));
-
       return {
         team,
         teamLeader,
         teamMembers,
-        checkpoints,
-        credentials: {
-          teamId: teamId,
-          password: teamPassword,
-        },
+        checkpoints: [],
       };
     });
   }

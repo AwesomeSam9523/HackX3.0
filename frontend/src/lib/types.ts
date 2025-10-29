@@ -18,9 +18,9 @@ export interface Participant {
   name: string;
   email: string;
   phone?: string;
-  role?: "MEMBER" | "TEAM_LEADER";
+  role?: "MEMBER" | "LEADER";
   isPresent?: boolean;
-  Verified?: boolean;
+  verified?: boolean;
 }
 
 export interface TeamCheckpoint1Data {
@@ -85,6 +85,15 @@ export interface User extends BaseUser {
   };
 }
 
+export interface TeamParticipant {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: "MEMBER" | "LEADER";
+  verified: boolean;
+}
+
 export interface Team {
   id: string;
   name: string;
@@ -99,7 +108,7 @@ export interface Team {
   wifiOptIn: boolean;
   generatedId: string | null;
   generatedPassword: string | null;
-  members: string[];
+  participants: TeamParticipant[];
   round1Status?: string;
   round2Status?: string;
   round2Room?: string | null;
