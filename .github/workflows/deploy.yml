@@ -3,7 +3,6 @@ name: build_and_deploy
 on:
   push:
     branches:
-      - admin
       - main
     paths-ignore:
       - 'README.md'
