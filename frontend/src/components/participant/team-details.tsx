@@ -44,9 +44,9 @@ export function TeamDetails({
           <div>
             <Label className="text-sm font-medium">Team Members</Label>
             <ul className="mt-2 space-y-1">
-              {team.members.map((member, index) => (
+              {team.participants.map((member, index) => (
                 <li key={index} className="text-sm text-slate-600">
-                  {member}
+                  {member.name}
                 </li>
               ))}
             </ul>
