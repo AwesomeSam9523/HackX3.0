@@ -1,0 +1,294 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ParticipantRole {
+  MEMBER
+  LEADER
+}
+
+enum UserRole {
+  TEAM
+  MENTOR
+  JUDGE
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum MentorMode {
+  ONLINE
+  OFFLINE
+}
+
+enum TeamStatus {
+  REGISTERED
+  PROBLEM_SELECTED
+  ROUND1_SUBMITTED
+  ROUND1_QUALIFIED
+  ROUND2_SUBMITTED
+  ELIMINATED
+}
+
+enum SubmissionStatus {
+  NOT_SUBMITTED
+  PARTIAL
+  SUBMITTED
+}
+
+enum EvaluationStatus {
+  PENDING
+  COMPLETED
+}
+
+enum QueueStatus {
+  WAITING
+  RESOLVED
+  CANCELLED
+}
+
+enum CheckpointStatus {
+  COMPLETED
+  PARTIALLY_COMPLETED
+}
+
+model User {
+  id              String         @id @default(cuid())
+  username        String         @unique
+  password        String
+  email           String?
+  role            UserRole
+  status          UserStatus     @default(ACTIVE)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  participantTeam Team?          @relation(fields: [teamId], references: [id])
+  mentorProfile   Mentor?
+  judgeProfile    Judge?
+  activityLogs    ActivityLog[]
+  announcements   Announcement[]
+  teamId          String?
+  PSBookmark      PSBookmark[]
+}
+
+model Team {
+  id                 String            @id @default(cuid())
+  name               String
+  teamId             String            @unique
+  status             TeamStatus        @default(REGISTERED)
+  submissionStatus   SubmissionStatus  @default(NOT_SUBMITTED)
+  githubRepo         String?
+  presentationLink   String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  participants       TeamParticipant[]
+  problemStatement   ProblemStatement? @relation(fields: [problemStatementId], references: [id])
+  problemStatementId String?
+  submissions        Submission[]
+  evaluations        Evaluation[]
+  teamScores         TeamScore[]
+  mentorshipQueue    MentorshipQueue[]
+  round1Room         Round1Room?       @relation(fields: [round1RoomId], references: [id])
+  round1RoomId       String?
+  round2Room         Round2Room?       @relation(fields: [round2RoomId], references: [id])
+  round2RoomId       String?
+  checkpoints        TeamCheckpoint[]
+  User               User[]
+}
+
+model TeamParticipant {
+  id        String          @id @default(cuid())
+  team      Team            @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId    String
+  role      ParticipantRole @default(MEMBER)
+  name      String
+  email     String
+  phone     String?
+  verified  Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+model Domain {
+  id                String             @id @default(cuid())
+  name              String             @unique
+  description       String?
+  createdAt         DateTime           @default(now())
+  problemStatements ProblemStatement[]
+}
+
+model ProblemStatement {
+  id           String       @id @default(cuid())
+  title        String
+  description  String
+  domain       Domain       @relation(fields: [domainId], references: [id])
+  domainId     String
+  deliverables String[]
+  isLocked     Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  teams        Team[]
+  bookmarks    PSBookmark[]
+}
+
+model PSBookmark {
+  id                 String           @id @default(cuid())
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String
+  problemStatement   ProblemStatement @relation(fields: [problemStatementId], references: [id])
+  problemStatementId String
+  createdAt          DateTime         @default(now())
+
+  @@unique([userId, problemStatementId])
+}
+
+model Mentor {
+  id              String            @id @default(cuid())
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  userId          String            @unique
+  expertise       String[]
+  meetLink        String?
+  domain          String            @default("General")
+  mode            MentorMode        @default(ONLINE)
+  isAvailable     Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  mentorshipQueue MentorshipQueue[]
+}
+
+model Judge {
+  id          String       @id @default(cuid())
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String       @unique
+  name        String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  evaluations Evaluation[]
+  teamScores  TeamScore[]
+}
+
+model MentorshipQueue {
+  id        String      @id @default(cuid())
+  team      Team        @relation(fields: [teamId], references: [id])
+  teamId    String
+  mentor    Mentor      @relation(fields: [mentorId], references: [id])
+  mentorId  String
+  status    QueueStatus @default(WAITING)
+  query     String?
+  notes     String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Evaluation {
+  id        String           @id @default(cuid())
+  team      Team             @relation(fields: [teamId], references: [id])
+  teamId    String
+  judge     Judge            @relation(fields: [judgeId], references: [id])
+  judgeId   String
+  status    EvaluationStatus @default(PENDING)
+  round     Int              @default(1)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@unique([teamId, judgeId, round])
+}
+
+model TeamScore {
+  id           String   @id @default(cuid())
+  team         Team     @relation(fields: [teamId], references: [id])
+  teamId       String
+  judge        Judge    @relation(fields: [judgeId], references: [id])
+  judgeId      String
+  innovation   Float?
+  technical    Float?
+  presentation Float?
+  impact       Float?
+  feasibility  Float?
+  totalScore   Float?
+  feedback     String?
+  round        Int      @default(1)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([teamId, judgeId, round])
+}
+
+model Submission {
+  id               String   @id @default(cuid())
+  team             Team     @relation(fields: [teamId], references: [id])
+  teamId           String
+  githubRepo       String?
+  presentationLink String?
+  submittedAt      DateTime @default(now())
+}
+
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  action    String
+  details   String?
+  payload   Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+model Round1Room {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  block     String   @default("AB1")
+  capacity  Int      @default(6)
+  filled    Int      @default(0)
+  createdAt DateTime @default(now())
+  teams     Team[]
+}
+
+model Round2Room {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  block     String   @default("AB1")
+  capacity  Int      @default(10)
+  createdAt DateTime @default(now())
+  teams     Team[]
+}
+
+model TeamCheckpoint {
+  id          String           @id @default(cuid())
+  team        Team             @relation(fields: [teamId], references: [id])
+  teamId      String
+  checkpoint  Int
+  status      CheckpointStatus
+  data        Json?
+  completedAt DateTime?
+  createdAt   DateTime         @default(now())
+
+  @@unique([teamId, checkpoint])
+}
+
+model SystemSettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}

@@ -1,7 +1,8 @@
 node_modules
-npm-debug.log
-.git
-.idea
-.vscode
-.env
 dist
+.env
+npm-debug.log
+Dockerfile
+.git
+.gitignore
+.eslint*
