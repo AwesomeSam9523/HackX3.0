@@ -196,7 +196,7 @@ export interface Mentor {
   isAvailable: boolean;
   user: BaseUser;
   mode: "ONLINE" | "IN_PERSON";
-  domain: string;
+  domains: string[];
   expertise: string[];
   mentorshipQueue: {
     id: string;

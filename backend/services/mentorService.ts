@@ -16,7 +16,7 @@ export class MentorService {
             team: {
               include: {
                 participants: {
-                  select: {id: true, username: true, email: true},
+                  select: {id: true, name: true, email: true},
                 },
                 problemStatement: {
                   include: {domain: true},
@@ -197,7 +197,7 @@ export class MentorService {
         team: {
           include: {
             participants: {
-              select: {id: true, username: true, email: true},
+              select: {id: true, name: true, email: true},
             },
             problemStatement: {
               include: {domain: true},
@@ -307,7 +307,7 @@ export class MentorService {
         team: {
           include: {
             participants: {
-              select: {id: true, username: true, email: true},
+              select: {id: true, name: true, email: true},
             },
           },
         },

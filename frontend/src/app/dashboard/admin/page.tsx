@@ -1065,7 +1065,9 @@ export default function AdminDashboard() {
                                 {mentor.name}
                               </CardTitle>
                               <CardDescription className="text-sm">
-                                {mentor.domain} | ID: {mentor.user.username}
+                                {mentor.domains.join(", ")} | ID:{" "}
+                                {mentor.user.username} | Meet Link:{" "}
+                                {mentor.meetLink || "Not Set"}
                               </CardDescription>
                             </div>
                             <Badge
@@ -1085,7 +1087,12 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-4">
                               <div className="text-center">
                                 <p className="text-xl font-bold text-blue-600 sm:text-2xl">
-                                  {mentor.waitingTeamsCount}/5
+                                  {
+                                    mentor.mentorshipQueue.filter(
+                                      (q) => q.status === "WAITING",
+                                    ).length
+                                  }
+                                  /5
                                 </p>
                                 <p className="text-xs text-slate-500">
                                   Queue Status
@@ -1106,18 +1113,56 @@ export default function AdminDashboard() {
                               <DialogContent className="w-[95vw] max-w-md">
                                 <DialogHeader>
                                   <DialogTitle className="text-lg">
-                                    {mentor.name} - Queue Details
+                                    {mentor.user.username}&#39;s Queue Details
                                   </DialogTitle>
                                   <DialogDescription className="text-sm">
                                     Current teams in mentorship queue
                                   </DialogDescription>
                                 </DialogHeader>
                                 <div className="space-y-2">
-                                  <p className="text-sm text-slate-600">
-                                    {/*TODO*/}
-                                    Queue implementation would show team details
-                                    here
-                                  </p>
+                                  <div className="text-sm text-slate-600">
+                                    {mentor.mentorshipQueue.length === 0
+                                      ? "No teams in the queue."
+                                      : mentor.mentorshipQueue.map((item) => (
+                                          <div
+                                            key={item.id}
+                                            className="border-b pb-2"
+                                          >
+                                            <div className="flex w-full items-end justify-between gap-2">
+                                              <p className="font-medium">
+                                                Team: {item.team.name}
+                                              </p>
+                                              <Badge
+                                                variant={
+                                                  item.status === "WAITING"
+                                                    ? "yellow"
+                                                    : item.status ===
+                                                        "CANCELLED"
+                                                      ? "red"
+                                                      : item.status ===
+                                                          "RESOLVED"
+                                                        ? "green"
+                                                        : "outline"
+                                                }
+                                                className="mt-1 text-xs"
+                                              >
+                                                {item.status}
+                                              </Badge>
+                                            </div>
+                                            <p className="font-medium text-slate-500">
+                                              {ago(item.createdAt)}
+                                            </p>
+                                            <p className="text-sm">
+                                              Query: {item.query}
+                                            </p>
+                                            {item.notes && (
+                                              <p className="text-sm italic">
+                                                Notes: {item.notes}
+                                              </p>
+                                            )}
+                                          </div>
+                                        ))}
+                                  </div>
                                 </div>
                               </DialogContent>
                             </Dialog>

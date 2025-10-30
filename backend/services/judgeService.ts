@@ -107,7 +107,7 @@ export class JudgeService {
             name: true,
             status: true,
             participants: {
-              select: {id: true, username: true, email: true},
+              select: {id: true, name: true, email: true},
             },
             problemStatement: {
               include: {domain: true},
@@ -177,7 +177,7 @@ export class JudgeService {
         team: {
           include: {
             participants: {
-              select: {id: true, username: true, email: true},
+              select: {id: true, name: true, email: true},
             },
             problemStatement: {
               include: {domain: true},

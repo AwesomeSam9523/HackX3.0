@@ -565,10 +565,11 @@ export class SuperAdminService {
 
   async createMentor(payload: { name: string; domain: string; mode: "ONLINE" | "OFFLINE" }) {
     // Generate a random password
-    const rawPassword = Math.random().toString(36).slice(-8);
+    const rawPassword = Math.random().toString(36).slice(-6);
     const hashedPassword = await hashPassword(rawPassword);
 
     // Create user and mentor profile
+    const domains = payload.domain.split(",").map(x => x.trim());
     const user = await prisma.user.create({
       data: {
         username: payload.name.toLowerCase().replace(/\s+/g, "_"),
@@ -577,7 +578,7 @@ export class SuperAdminService {
         mentorProfile: {
           create: {
             name: payload.name,
-            domain: payload.domain,
+            domains: domains,
             mode: payload.mode,
           },
         },

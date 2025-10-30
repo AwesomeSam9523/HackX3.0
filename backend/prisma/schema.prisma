@@ -157,7 +157,7 @@ model Mentor {
   userId          String            @unique
   expertise       String[]
   meetLink        String?
-  domain          String            @default("General")
+  domains         String[]
   mode            MentorMode        @default(ONLINE)
   isAvailable     Boolean           @default(true)
   createdAt       DateTime          @default(now())

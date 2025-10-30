@@ -328,13 +328,14 @@ class ApiService {
   }
 
   async markMentorshipResolved(queueItemId: string): Promise<void> {
-    return this.request(`/mentors/queue/${queueItemId}/resolve`, {
+    return this.request(`/queue/resolve`, {
       method: "POST",
+      body: JSON.stringify({ queueItemId }),
     });
   }
 
   async updateMeetLink(link: string): Promise<void> {
-    return this.request("/mentors/meet-link", {
+    return this.request("/meet-link", {
       method: "POST",
       body: JSON.stringify({ meetLink: link }),
     });
@@ -594,6 +595,10 @@ class ApiService {
     }
 
     return response.json();
+  }
+
+  async getTeamPreviousMentorshipStatus() {
+    return this.request<boolean>(`/mentorship-status-allowed`);
   }
 }
 

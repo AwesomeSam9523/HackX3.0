@@ -174,4 +174,14 @@ router.get("/announcements", async (req: AuthRequest, res, next) => {
   }
 });
 
+router.get("/mentorship-status-allowed", async (req: AuthRequest, res, next) => {
+  try {
+    const status = await teamService.getTeamPreviousMentorshipStatus(req.user!.id);
+    res.json(status);
+  } catch (error: any) {
+    next(error);
+  }
+});
+
+
 export default router;

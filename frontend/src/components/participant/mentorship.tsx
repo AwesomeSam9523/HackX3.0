@@ -56,16 +56,16 @@ export function Mentorship({
   const { toast } = useToast();
 
   const filteredMentors = mentors.filter((mentor) => {
-    const matchesDomain =
-      domainFilter === "all" ||
-      mentor.domain.toLowerCase().includes(domainFilter.replace("-", "/"));
+    // const matchesDomain =
+    //   domainFilter === "all" ||
+    //   mentor.domain.toLowerCase().includes(domainFilter.replace("-", "/"));
     const matchesSearch = mentor.user.username
       .toLowerCase()
       .includes(mentorSearch.toLowerCase());
     const matchesMode =
       (showOnline && mentor.mode === "ONLINE") ||
       (showOffline && mentor.mode === "IN_PERSON");
-    return matchesDomain && matchesSearch && matchesMode;
+    return matchesSearch && matchesMode;
   });
 
   const handleBookMentor = async (mentorId: string) => {
@@ -107,7 +107,7 @@ export function Mentorship({
         <CardHeader>
           <CardTitle>{mentorshipSession.mentor.user.username}</CardTitle>
           <CardDescription>
-            {mentorshipSession.mentor.domain} • Mentorship Mode:{" "}
+            {mentorshipSession.mentor.domains.join(", ")} • Mentorship Mode:{" "}
             {mentorshipSession.mentor.mode}
           </CardDescription>
         </CardHeader>
@@ -218,7 +218,7 @@ export function Mentorship({
                 <div>
                   <CardTitle>{mentor.user.username}</CardTitle>
                   <CardDescription>
-                    {mentor.domain} • Mode: {mentor.mode}
+                    {mentor.domains.join(", ")} • Mode: {mentor.mode}
                   </CardDescription>
                 </div>
                 <div className="text-right">

@@ -658,6 +658,34 @@ export class TeamService {
       },
     });
   }
+
+  async getTeamPreviousMentorshipStatus(userId: string) {
+    const user = await prisma.user.findUnique({
+      where: {id: userId},
+      include: {participantTeam: true},
+    });
+
+    if (!user || !user.participantTeam || !user.teamId) {
+      throw new Error("Team not found for this participant");
+    }
+
+    const team = await prisma.team.findUnique({
+      where: {id: user.teamId},
+    });
+
+    if (!team) {
+      throw new Error("Team not found");
+    }
+
+    // Check if the team has completed at least one mentorship session
+    const completedSessionsCount = await prisma.mentorshipQueue.count({
+      where: {
+        teamId: user.teamId,
+        status: "RESOLVED",
+      },
+    });
+    return completedSessionsCount === 0;
+  }
 }
 
 export const teamService = new TeamService();

@@ -35,6 +35,8 @@ export default function TeamDashboard() {
   const [mentors, setMentors] = useState<Mentor[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
+  const [notDonePreviousMentorship, setNotDonePreviousMentorship] =
+    useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -69,6 +71,7 @@ export default function TeamDashboard() {
         lockedData,
         selectedMentorData,
         submissionsData,
+        notDonePreviousMentorshipData,
       ] = await Promise.all([
         apiService.getDomains(),
         apiService.getMentors(),
@@ -78,6 +81,7 @@ export default function TeamDashboard() {
         apiService.getLockedOverview(),
         apiService.getSelectedMentor(),
         apiService.getTeamSubmission(),
+        apiService.getTeamPreviousMentorshipStatus(),
       ]);
 
       setDomains(domainsData);
@@ -90,6 +94,7 @@ export default function TeamDashboard() {
       setRound1Locked(lockedData.round1_locked === "true");
       setSelectedMentor(selectedMentorData);
       setSubmissions(submissionsData);
+      setNotDonePreviousMentorship(notDonePreviousMentorshipData);
     } catch (error) {
       console.error("Failed to load data:", error);
     }
@@ -209,13 +214,17 @@ export default function TeamDashboard() {
                 Mentorship sessions are currently locked. Please check back
                 later.
               </div>
-            ) : (
+            ) : notDonePreviousMentorship ? (
               <Mentorship
                 mentors={mentors}
                 mentorshipSession={selectedMentor}
                 onSelectMentorAction={setSelectedMentor}
                 refreshMentorsAction={refreshMentors}
               />
+            ) : (
+              <div className="w-full text-center">
+                You have already completed your mentorship session.
+              </div>
             )}
           </TabsContent>
 

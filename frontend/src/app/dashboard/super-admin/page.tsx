@@ -654,10 +654,10 @@ export default function SuperAdminDashboard() {
                             {mentor.user.username}
                           </h4>
                           <p className="text-xs text-slate-500 sm:text-sm">
-                            {mentor.domain} • {mentor.mode} •{" "}
+                            {mentor.domains.join(",")} • {mentor.mode} •{" "}
                             {mentor.meetLink
                               ? `Meet Link: ${mentor.meetLink}`
-                              : ""}
+                              : "No meet link provided"}
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
