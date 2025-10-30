@@ -53,7 +53,8 @@ app.use(
     origin: [
       process.env.FRONTEND_URL || "http://localhost:3000",
       "http://localhost",
-      "http://localhost:80"
+      "http://localhost:80",
+      "https://hackxmuj.com"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
