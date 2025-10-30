@@ -703,12 +703,12 @@ export class AdminService {
       },
     });
 
-    let connectedRoomNumber = "213";
+    let connectedRoomNumber = "cmhcuughy0000yxf1z5suasmk";
 
     const allRooms = await prisma.round1Room.findMany();
     for (const room of allRooms) {
       if (room.filled < room.capacity) {
-        connectedRoomNumber = room.name;
+        connectedRoomNumber = room.id;
       }
     }
     console.log('final connectedRoomNumber', connectedRoomNumber);
@@ -717,7 +717,7 @@ export class AdminService {
       data: {
         round1Room: {
           connect: {
-            name: connectedRoomNumber,
+            id: connectedRoomNumber,
           },
         },
       },
