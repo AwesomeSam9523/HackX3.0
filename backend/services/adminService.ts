@@ -716,7 +716,7 @@ export class AdminService {
       data: {
         round1Room: {
           connect: {
-            name: "001",
+            name: "201",
           },
         },
       },
