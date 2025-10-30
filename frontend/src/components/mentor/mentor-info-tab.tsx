@@ -35,7 +35,7 @@ export function MentorInfoTab({
             </div>
             <div>
               <Label className="text-sm font-medium">Domain</Label>
-              <p className="text-lg">{mentorInfo.domain}</p>
+              <p className="text-lg">{mentorInfo.domains.join(", ")}</p>
             </div>
             <div>
               <Label className="text-sm font-medium">Mode</Label>
