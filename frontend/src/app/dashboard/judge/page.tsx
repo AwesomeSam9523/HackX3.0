@@ -350,13 +350,13 @@ export default function JudgeDashboard() {
                   <CardContent className="pt-0">
                     <div className="space-y-3">
                       <div className="flex flex-col gap-2 sm:flex-row">
-                        {evaluation.team.latestSubmission.githubRepo ? (
+                        {evaluation.team.latestSubmission?.githubRepo ? (
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() =>
                               window.open(
-                                evaluation.team.latestSubmission.githubRepo,
+                                evaluation.team.latestSubmission?.githubRepo,
                                 "_blank",
                               )
                             }
@@ -377,14 +377,14 @@ export default function JudgeDashboard() {
                           </Button>
                         )}
 
-                        {evaluation.team.latestSubmission.presentationLink ? (
+                        {evaluation.team.latestSubmission?.presentationLink ? (
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() =>
                               window.open(
                                 evaluation.team.latestSubmission
-                                  .presentationLink,
+                                  ?.presentationLink,
                                 "_blank",
                               )
                             }

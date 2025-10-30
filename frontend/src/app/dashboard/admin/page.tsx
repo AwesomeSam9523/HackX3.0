@@ -1110,7 +1110,7 @@ export default function AdminDashboard() {
                                   View Queue
                                 </Button>
                               </DialogTrigger>
-                              <DialogContent className="w-[95vw] max-w-md">
+                              <DialogContent className="h-auto w-[95vw] max-w-md overflow-y-scroll">
                                 <DialogHeader>
                                   <DialogTitle className="text-lg">
                                     {mentor.user.username}&#39;s Queue Details
