@@ -63,7 +63,6 @@ export class TeamService {
 
   // Get all domains with problem statements
   async getDomains() {
-    return [];
     return prisma.domain.findMany({
       include: {
         problemStatements: {
@@ -80,7 +79,6 @@ export class TeamService {
 
   // Get all problem statements
   async getProblemStatements() {
-    return [];
     return prisma.problemStatement.findMany({
       include: {
         domain: true,
