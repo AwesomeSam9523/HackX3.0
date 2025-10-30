@@ -703,14 +703,6 @@ export class AdminService {
       },
     });
 
-    const emptyRoom = await prisma.round1Room.findFirst({
-      where: {
-        teams: {
-          none: {},
-        },
-      },
-    })
-
     let connectedRoomNumber = "213";
 
     const allRooms = await prisma.round1Room.findMany();
@@ -719,7 +711,7 @@ export class AdminService {
         connectedRoomNumber = room.name;
       }
     }
-
+    console.log('final connectedRoomNumber', connectedRoomNumber);
     const t3 = prisma.team.update({
       where: {id: payload.teamId},
       data: {
