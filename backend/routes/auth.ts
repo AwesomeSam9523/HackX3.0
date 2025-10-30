@@ -1,14 +1,13 @@
-import { Router } from "express";
-import { authService } from "../services/authService";
-import { authenticateToken } from "../middleware/auth";
-import { authLimiter } from "../middleware/rateLimiter";
-import { logActivity } from "../middleware/logging";
-import type { AuthRequest } from "../middleware/auth";
+import {Router} from "express";
+import {authService} from "../services/authService";
+import type {AuthRequest} from "../middleware/auth";
+import {authenticateToken} from "../middleware/auth";
+import {logActivity} from "../middleware/logging";
 
 const router = Router();
 
 // Login endpoint
-router.post("/login", authLimiter, async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     const result = await authService.login(req.body);
     res.json(result);
