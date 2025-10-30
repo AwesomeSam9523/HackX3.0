@@ -712,32 +712,37 @@ export class AdminService {
       }
     }
     console.log('final connectedRoomNumber', connectedRoomNumber);
-    const t3 = prisma.team.update({
-      where: {id: payload.teamId},
-      data: {
-        round1Room: {
-          connect: {
-            id: connectedRoomNumber,
-          },
-        },
-      },
-      select: {round1Room: true},
-    });
-    const t4 = prisma.round1Room.update({
+    // const t3 = prisma.team.update({
+    //   where: {id: payload.teamId},
+    //   data: {
+    //     round1Room: {
+    //       connect: {
+    //         id: connectedRoomNumber,
+    //       },
+    //     },
+    //   },
+    //   select: {round1Room: true},
+    // });
+    // const t4 = prisma.round1Room.update({
+    //   where: {
+    //     id: connectedRoomNumber,
+    //   },
+    //   data: {
+    //     filled: {
+    //       increment: 1,
+    //     }
+    //   }
+    // });
+    const round1Room = await prisma.round1Room.findUnique({
       where: {
-        id: connectedRoomNumber,
-      },
-      data: {
-        filled: {
-          increment: 1,
-        }
+        id: 'cmhcuughy0000yxf1z5suasmk'
       }
     });
 
-    const [checkpoint, round1Room] = await prisma.$transaction([t2, t3, t4]);
+    const [checkpoint] = await prisma.$transaction([t2]);
     return {
       username: username,
-      round1Room: round1Room.round1Room,
+      round1Room: round1Room,
       password: password,
       checkpoint,
     }
