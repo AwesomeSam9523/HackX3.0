@@ -3,6 +3,7 @@ import {hashPassword} from "../utils/password";
 import * as fs from "fs";
 import * as path from "path";
 import {fileURLToPath} from "url";
+import {parse} from 'csv-parse/sync';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +20,7 @@ interface ShortlistedTeam {
 
 interface ExtendedRegistrationRow {
   [key: string]: string;
+
   "Team Name": string;
   "Team Leader Name": string;
   "Team Leader Contact Number": string;
@@ -29,25 +31,25 @@ interface ExtendedRegistrationRow {
 function parseCSV(content: string): any[] {
   const lines = content.split('\n');
   const headers = lines[0].split(',').map(h => h.trim());
-  
+
   // Handle duplicate headers by making them unique
   const uniqueHeaders = headers.map((header, index) => {
     const occurrences = headers.slice(0, index).filter(h => h === header).length;
     return occurrences > 0 ? `${header}_${occurrences + 1}` : header;
   });
-  
+
   const data: any[] = [];
 
   for (let i = 1; i < lines.length; i++) {
     if (lines[i].trim() === '') continue;
-    
+
     const values: string[] = [];
     let currentValue = '';
     let inQuotes = false;
-    
+
     for (let j = 0; j < lines[i].length; j++) {
       const char = lines[i][j];
-      
+
       if (char === '"' && !inQuotes) {
         inQuotes = true;
       } else if (char === '"' && inQuotes) {
@@ -65,22 +67,18 @@ function parseCSV(content: string): any[] {
     uniqueHeaders.forEach((header, index) => {
       row[header] = values[index] || '';
     });
-    
+
     // Also add original headers for backward compatibility
     headers.forEach((header, index) => {
       if (!row[header]) { // Only if not already set by unique header
         row[header] = values[index] || '';
       }
     });
-    
+
     data.push(row);
   }
 
   return data;
-}
-
-function normalizeTeamName(name: string): string {
-  return name.toLowerCase().trim().replace(/\s+/g, ' ');
 }
 
 function isValidMemberData(name: string, email: string): boolean {
@@ -98,7 +96,7 @@ function hasAnyMemberInfo(extendedTeam: ExtendedRegistrationRow, memberIndex: nu
   const email = extendedTeam[`Member ${memberIndex} Email (Personal)`]?.trim() || extendedTeam[`Member ${memberIndex} Email (Official)`]?.trim();
   const phone = extendedTeam[`Member ${memberIndex} Contact Number`]?.trim();
   const college = extendedTeam[`Member ${memberIndex} College Name`]?.trim();
-  
+
   return Boolean(name || email || phone || college);
 }
 
@@ -108,7 +106,7 @@ async function createBasicData() {
   // Create domains
   const domains = await Promise.all([
     prisma.domain.upsert({
-      where: { name: "Web Development" },
+      where: {name: "Web Development"},
       update: {},
       create: {
         name: "Web Development",
@@ -116,7 +114,7 @@ async function createBasicData() {
       },
     }),
     prisma.domain.upsert({
-      where: { name: "Mobile Development" },
+      where: {name: "Mobile Development"},
       update: {},
       create: {
         name: "Mobile Development",
@@ -124,7 +122,7 @@ async function createBasicData() {
       },
     }),
     prisma.domain.upsert({
-      where: { name: "AI/ML" },
+      where: {name: "AI/ML"},
       update: {},
       create: {
         name: "AI/ML",
@@ -132,7 +130,7 @@ async function createBasicData() {
       },
     }),
     prisma.domain.upsert({
-      where: { name: "Blockchain" },
+      where: {name: "Blockchain"},
       update: {},
       create: {
         name: "Blockchain",
@@ -140,7 +138,7 @@ async function createBasicData() {
       },
     }),
     prisma.domain.upsert({
-      where: { name: "IoT" },
+      where: {name: "IoT"},
       update: {},
       create: {
         name: "IoT",
@@ -154,7 +152,7 @@ async function createBasicData() {
   // Create problem statements
   const problemStatements = await Promise.all([
     prisma.problemStatement.upsert({
-      where: { id: "ps1" },
+      where: {id: "ps1"},
       update: {},
       create: {
         id: "ps1",
@@ -165,7 +163,7 @@ async function createBasicData() {
       },
     }),
     prisma.problemStatement.upsert({
-      where: { id: "ps2" },
+      where: {id: "ps2"},
       update: {},
       create: {
         id: "ps2",
@@ -176,7 +174,7 @@ async function createBasicData() {
       },
     }),
     prisma.problemStatement.upsert({
-      where: { id: "ps3" },
+      where: {id: "ps3"},
       update: {},
       create: {
         id: "ps3",
@@ -193,7 +191,7 @@ async function createBasicData() {
   // Create super admin user
   const superAdminPassword = await hashPassword("admin123");
   const superAdmin = await prisma.user.upsert({
-    where: { username: "superadmin" },
+    where: {username: "superadmin"},
     update: {},
     create: {
       username: "superadmin",
@@ -206,7 +204,7 @@ async function createBasicData() {
   // Create admin user
   const adminPassword = await hashPassword("admin123");
   const admin = await prisma.user.upsert({
-    where: { username: "admin" },
+    where: {username: "admin"},
     update: {},
     create: {
       username: "admin",
@@ -219,7 +217,7 @@ async function createBasicData() {
   // Create sample judge
   const judgePassword = await hashPassword("judge123");
   const judgeUser = await prisma.user.upsert({
-    where: { username: "judge1" },
+    where: {username: "judge1"},
     update: {},
     create: {
       username: "judge1",
@@ -230,7 +228,7 @@ async function createBasicData() {
   });
 
   const judge = await prisma.judge.upsert({
-    where: { userId: judgeUser.id },
+    where: {userId: judgeUser.id},
     update: {},
     create: {
       userId: judgeUser.id,
@@ -241,7 +239,7 @@ async function createBasicData() {
   // Create sample mentor
   const mentorPassword = await hashPassword("mentor123");
   const mentorUser = await prisma.user.upsert({
-    where: { username: "mentor1" },
+    where: {username: "mentor1"},
     update: {},
     create: {
       username: "mentor1",
@@ -252,7 +250,7 @@ async function createBasicData() {
   });
 
   const mentor = await prisma.mentor.upsert({
-    where: { userId: mentorUser.id },
+    where: {userId: mentorUser.id},
     update: {},
     create: {
       userId: mentorUser.id,
@@ -265,7 +263,7 @@ async function createBasicData() {
   // Create system settings
   await Promise.all([
     prisma.systemSettings.upsert({
-      where: { key: "problem_statements_locked" },
+      where: {key: "problem_statements_locked"},
       update: {},
       create: {
         key: "problem_statements_locked",
@@ -274,7 +272,7 @@ async function createBasicData() {
       },
     }),
     prisma.systemSettings.upsert({
-      where: { key: "mentorship_locked" },
+      where: {key: "mentorship_locked"},
       update: {},
       create: {
         key: "mentorship_locked",
@@ -283,7 +281,7 @@ async function createBasicData() {
       },
     }),
     prisma.systemSettings.upsert({
-      where: { key: "round1_locked" },
+      where: {key: "round1_locked"},
       update: {},
       create: {
         key: "round1_locked",
@@ -297,7 +295,7 @@ async function createBasicData() {
 
   // Create sample announcement
   await prisma.announcement.upsert({
-    where: { id: "announcement1" },
+    where: {id: "announcement1"},
     update: {},
     create: {
       id: "announcement1",
@@ -310,12 +308,12 @@ async function createBasicData() {
 
   console.log("✅ Created sample announcement");
 
-  return { superAdmin, admin };
+  return {superAdmin, admin};
 }
 
 async function createRooms() {
   console.log("🏢 Creating rooms...");
-  
+
   const data: { name: string; capacity: number }[] = [];
   const floors = [0, 1, 2, 3];
 
@@ -339,237 +337,186 @@ async function createRooms() {
   console.log("✅ Created round 1 rooms");
 }
 
-async function importShortlistedTeams() {
-  console.log("📊 Importing shortlisted teams with lenient validation...");
+// ---------- Utility helpers ----------
+function normalizeTeamName(s?: string) {
+  if (!s) return '';
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .replace(/\b(the|team|muj|manipal university jaipur)\b/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
-  // Read shortlisted teams
-  const shortlistedPath = path.join(__dirname, '../data/shortlisted-teams.csv');
-  const extendedPath = path.join(__dirname, '../data/extended-registration.csv');
+function isValidName(name?: string) {
+  return !!name && name.trim().length > 1 && !/^member\s*\d*$/i.test(name);
+}
 
-  if (!fs.existsSync(shortlistedPath)) {
-    throw new Error(`Shortlisted teams CSV file not found at ${shortlistedPath}`);
-  }
-  
-  if (!fs.existsSync(extendedPath)) {
-    throw new Error(`Extended registration CSV file not found at ${extendedPath}`);
-  }
+function trimString(v?: string) {
+  return typeof v === 'string' ? v.trim() : '';
+}
 
-  const shortlistedContent = fs.readFileSync(shortlistedPath, 'utf-8');
-  const extendedContent = fs.readFileSync(extendedPath, 'utf-8');
-  
-  const shortlistedTeams = parseCSV(shortlistedContent) as ShortlistedTeam[];
-  const extendedRegistrations = parseCSV(extendedContent) as ExtendedRegistrationRow[];
+// ---------- Main import ----------
+export async function importShortlistedTeams() {
+  console.log('📊 Importing shortlisted teams from Excel...');
 
-  console.log(`Found ${shortlistedTeams.length} shortlisted teams`);
-  console.log(`Found ${extendedRegistrations.length} extended registrations`);
+  const filePath = path.join(__dirname, '../data/extended_shortlisted_teams.csv');
+  if (!fs.existsSync(filePath)) throw new Error(`File not found at ${filePath}`);
 
-  // Create a map of shortlisted team names (normalized)
-  const shortlistedMap = new Map<string, ShortlistedTeam>();
-  shortlistedTeams.forEach(team => {
-    const normalizedName = normalizeTeamName(team["Team Name"]);
-    shortlistedMap.set(normalizedName, team);
+  const csvContent = fs.readFileSync(filePath, 'utf-8');
+  const rows: Record<string, string>[] = parse(csvContent, {
+    columns: true,
+    skip_empty_lines: true,
+    trim: true
   });
+  console.log(`Found ${rows.length} rows`);
 
-  console.log(`Shortlisted teams: ${Array.from(shortlistedMap.keys()).join(', ')}`);
+  const normalizedSeen = new Set<string>();
+  let createdCount = 0;
+  let skippedCount = 0;
+  let emptyCount = 0;
+  let counter = 1;
 
-  let teamCounter = 1;
-  let importedCount = 0;
-  let notFoundCount = 0;
-  let partialDataCount = 0;
+  for (const row of rows) {
+    const rawName = trimString(row['Team Name']);
+    if (!rawName) continue;
+    const normalized = normalizeTeamName(rawName);
+    if (normalizedSeen.has(normalized)) continue;
+    normalizedSeen.add(normalized);
 
-  for (const extendedTeam of extendedRegistrations) {
-    const teamName = extendedTeam["Team Name"]?.trim();
-    if (!teamName) continue;
-
-    const normalizedExtendedName = normalizeTeamName(teamName);
-    
-    // Check if this team is in the shortlisted teams
-    if (!shortlistedMap.has(normalizedExtendedName)) {
-      console.log(`⚠️ Team "${teamName}" not found in shortlisted teams`);
-      notFoundCount++;
+    const existing = await prisma.team.findFirst({
+      where: {name: rawName},
+      select: {id: true},
+    });
+    if (existing) {
+      console.warn(`⚠️ Skipping existing team: ${rawName}`);
+      skippedCount++;
       continue;
     }
 
-    console.log(`✅ Processing shortlisted team: ${teamName}`);
+    // Identify MUJ vs external
+    const isMUJ =
+      trimString(row['Does all of your team belong to Manipal University Jaipur?']).toLowerCase() === 'yes';
 
-    // Generate team ID
-    const teamId = `TEAM${teamCounter.toString().padStart(3, '0')}`;
-    
-    // Collect team members data with lenient validation
-    const members = [];
+    const members: any[] = [];
 
-    // Check if it's MUJ team or external
-    const isMUJTeam = extendedTeam["Does all of your team belong to Manipal University Jaipur?"]?.toLowerCase() === "yes";
-
-    if (isMUJTeam) {
-      // MUJ team - use MUJ specific fields (the second set of Team Leader fields for MUJ teams)
-      // For MUJ teams, use the second occurrence of "Team Leader Name" which is the MUJ-specific one
-      const mujLeaderName = extendedTeam["Team Leader Name_2"]?.trim() || extendedTeam["Team Leader Name"]?.trim();
-      const mujLeaderEmail = extendedTeam["Team Leader Email (Personal)"]?.trim() || extendedTeam["Team Leader Email (Official)"]?.trim() || '';
-      const mujLeaderPhone = extendedTeam["Team Leader Contact Number_2"]?.trim() || extendedTeam["Team Leader Contact Number"]?.trim() || '';
-      
-      if (isValidMemberName(mujLeaderName)) {
+    if (isMUJ) {
+      // MUJ leader
+      const leaderName =
+        trimString(row['Team Leader Name_2']) || trimString(row['Team Leader Name']);
+      if (isValidName(leaderName)) {
         members.push({
-          name: mujLeaderName,
-          email: mujLeaderEmail,
-          phone: mujLeaderPhone,
-          role: "LEADER" as const,
-          gender: extendedTeam["Team Leader Gender"]?.trim() || '',
-          registrationNumber: extendedTeam["Team Leader Registration Number"]?.trim() || '',
-          department: extendedTeam["Team Leader Department"]?.trim() || '',
-          yearOfStudy: extendedTeam["Team Leader Year of Study"]?.trim() || '',
-          college: 'Manipal University Jaipur'
+          name: leaderName,
+          email:
+            trimString(row['Team Leader Email (Personal)']) ||
+            trimString(row['Team Leader Email (Official)']),
+          phone:
+            trimString(row['Team Leader Contact Number_2']) ||
+            trimString(row['Team Leader Contact Number']),
+          role: 'LEADER',
+          college: 'Manipal University Jaipur',
         });
       }
-
-      // Add ALL MUJ members with their actual names
+      // MUJ members
       for (let i = 2; i <= 4; i++) {
-        const memberName = extendedTeam[`Member ${i} Name`]?.trim();
-        const memberEmail = extendedTeam[`Member ${i} Email (Personal)`]?.trim() || extendedTeam[`Member ${i} Email (Official)`]?.trim() || '';
-        const memberPhone = extendedTeam[`Member ${i} Contact Number`]?.trim() || '';
-        
-        // Check if we have ANY meaningful data for this member
-        if (memberName || memberEmail || memberPhone) {
-          // Use actual name if available, otherwise use placeholder
-          const finalName = isValidMemberName(memberName) ? memberName : `Member ${i}`;
-            
+        const name = trimString(row[`Member ${i} Name`]);
+        const email =
+          trimString(row[`Member ${i} Email (Personal)`]) ||
+          trimString(row[`Member ${i} Email (Official)`]);
+        const phone = trimString(row[`Member ${i} Contact Number`]);
+        if (name || email || phone) {
           members.push({
-            name: finalName,
-            email: memberEmail,
-            phone: memberPhone,
-            role: "MEMBER" as const,
-            gender: extendedTeam[`Member ${i} Gender`]?.trim() || '',
-            registrationNumber: extendedTeam[`Member ${i} Registration Number`]?.trim() || '',
-            department: extendedTeam[`Member ${i} Department`]?.trim() || '',
-            yearOfStudy: extendedTeam[`Member ${i} Year of Study`]?.trim() || '',
-            college: 'Manipal University Jaipur'
+            name: isValidName(name) ? name : `Member ${i}`,
+            email,
+            phone,
+            role: 'MEMBER',
+            college: 'Manipal University Jaipur',
           });
         }
       }
     } else {
-      // External team - use external college fields (the last set of columns for external teams)
-      // For external teams, the external leader info is in the 3rd set of "Team Leader Name" columns
-      const externalLeaderName = extendedTeam["Team Leader Name_3"]?.trim() || extendedTeam["Team Leader Name"]?.trim(); 
-      const leaderCollegeName = extendedTeam["Team Leader College Name"]?.trim();
-      const externalLeaderEmail = extendedTeam["Team Leader Email (Personal)_2"]?.trim() || extendedTeam["Team Leader Email (College official email)"]?.trim() || '';
-      const externalLeaderPhone = extendedTeam["Team Leader Contact Number_3"]?.trim() || extendedTeam["Team Leader Contact Number"]?.trim() || '';
-      
-      if (externalLeaderName || externalLeaderEmail || externalLeaderPhone || leaderCollegeName) {
-        const finalLeaderName = isValidMemberName(externalLeaderName) ? externalLeaderName : 'Team Leader';
-        
+      // External leader
+      const leaderName =
+        trimString(row['Team Leader Name_3']) || trimString(row['Team Leader Name']);
+      const leaderCollege =
+        trimString(row['Team Leader College Name']) || 'External College';
+      if (isValidName(leaderName) || leaderCollege) {
         members.push({
-          name: finalLeaderName,
-          email: externalLeaderEmail,
-          phone: externalLeaderPhone,
-          role: "LEADER" as const,
-          gender: extendedTeam["Team Leader Gender_2"]?.trim() || extendedTeam["Team Leader Gender"]?.trim() || '',
-          registrationNumber: extendedTeam["Team Leader College Registration Number"]?.trim() || '',
-          department: extendedTeam["Team Leader Degree Specialization"]?.trim() || extendedTeam["Team Leader Department"]?.trim() || '',
-          yearOfStudy: extendedTeam["Team Leader Year of Study_2"]?.trim() || extendedTeam["Team Leader Year of Study"]?.trim() || '',
-          college: leaderCollegeName || 'External College'
+          name: isValidName(leaderName) ? leaderName : 'Team Leader',
+          email:
+            trimString(row['Team Leader Email (Personal)_2']) ||
+            trimString(row['Team Leader Email (College official email)']),
+          phone:
+            trimString(row['Team Leader Contact Number_3']) ||
+            trimString(row['Team Leader Contact Number']),
+          role: 'LEADER',
+          college: leaderCollege,
         });
       }
-
-      // Add ALL external members with their actual names
+      // External members
       for (let i = 2; i <= 4; i++) {
-        const memberName = extendedTeam[`Member ${i} Name`]?.trim() || '';
-        const memberEmail = extendedTeam[`Member ${i} Email (Personal)`]?.trim() || extendedTeam[`Member ${i} Email (College official email)`]?.trim() || '';
-        const memberPhone = extendedTeam[`Member ${i} Contact Number`]?.trim() || '';
-        const memberCollegeName = extendedTeam[`Member ${i} College Name`]?.trim() || '';
-        const memberGender = extendedTeam[`Member ${i} Gender`]?.trim() || '';
-        const memberRegNo = extendedTeam[`Member ${i} Registration Number`]?.trim() || extendedTeam[`Member ${i} College Registration Number`]?.trim() || '';
-        const memberDept = extendedTeam[`Member ${i} Department`]?.trim() || extendedTeam[`Member ${i} Degree Specialization`]?.trim() || '';
-        const memberYear = extendedTeam[`Member ${i} Year of Study`]?.trim() || '';
-        
-        // Import member if ANY data is available
-        if (memberName || memberEmail || memberPhone || memberCollegeName || memberGender || memberRegNo || memberDept) {
-          // Use actual name if it's valid, otherwise use placeholder
-          const finalMemberName = isValidMemberName(memberName) ? memberName : `Member ${i}`;
-          
+        const name = trimString(row[`Member ${i} Name`]);
+        const email =
+          trimString(row[`Member ${i} Email (Personal)`]) ||
+          trimString(row[`Member ${i} Email (College official email)`]);
+        const phone = trimString(row[`Member ${i} Contact Number`]);
+        const college =
+          trimString(row[`Member ${i} College Name`]) || leaderCollege;
+        if (name || email || phone) {
           members.push({
-            name: finalMemberName,
-            email: memberEmail,
-            phone: memberPhone,
-            role: "MEMBER" as const,
-            gender: memberGender,
-            registrationNumber: memberRegNo,
-            department: memberDept,
-            yearOfStudy: memberYear,
-            college: memberCollegeName || leaderCollegeName || 'External College'
+            name: isValidName(name) ? name : `Member ${i}`,
+            email,
+            phone,
+            role: 'MEMBER',
+            college,
           });
         }
       }
     }
 
-    // Even more lenient - if we have at least team name from shortlist, create a minimal entry
     if (members.length === 0) {
-      const shortlistedData = shortlistedMap.get(normalizedExtendedName);
-      if (shortlistedData) {
-        members.push({
-          name: shortlistedData["Team Leader Name"]?.trim() || 'Team Leader',
-          email: shortlistedData["Team Leader's Official mail ID"]?.trim() || '',
-          phone: shortlistedData["Team Leader's Contact No."]?.trim() || '',
-          role: "LEADER" as const,
-          gender: '',
-          registrationNumber: '',
-          department: '',
-          yearOfStudy: '',
-          college: 'Unknown'
-        });
-        console.log(`📝 Created minimal entry from shortlist data for: ${teamName}`);
-        partialDataCount++;
-      }
-    }
-
-    if (members.length === 0) {
-      console.log(`❌ Skipping team ${teamName} - absolutely no valid data found`);
+      console.warn(`❌ Skipping ${rawName}: no member data`);
+      emptyCount++;
       continue;
     }
 
+    const teamId = `TEAM${counter.toString().padStart(3, '0')}`;
+
     try {
-      // Create team
-      const team = await prisma.team.create({
-        data: {
-          name: teamName,
-          teamId: teamId,
-          status: "REGISTERED",
-        },
-      });
-
-      // Create team participants
-      for (const member of members) {
-        if (member.name && member.name.trim() !== '' && member.name.trim().length > 0) {
-          await prisma.teamParticipant.create({
-            data: {
-              teamId: team.id,
-              name: member.name.trim(),
-              email: member.email || '',
-              phone: member.phone || '',
-              role: member.role,
-              verified: false,
+      await prisma.$transaction(async tx => {
+        const team = await tx.team.create({
+          data: {
+            name: rawName,
+            teamId,
+            status: 'REGISTERED',
+            participants: {
+              create: members.map(m => ({
+                name: m.name,
+                email: m.email || '',
+                phone: m.phone || '',
+                role: m.role,
+                verified: false,
+              })),
             },
-          });
-        }
-      }
-
-      console.log(`✅ Created shortlisted team: ${teamName} (${teamId}) with ${members.length} members (MUJ: ${isMUJTeam}):`);
-      members.forEach((member, index) => {
-        console.log(`   ${index + 1}. ${member.name} | ${member.email} | ${member.phone} | ${member.role}`);
+          },
+        });
+        console.log(`✅ Created team: ${team.name} (${teamId}) with ${members.length} members`);
       });
-      teamCounter++;
-      importedCount++;
-
-    } catch (error) {
-      console.error(`❌ Error creating team ${teamName}:`, error);
+      createdCount++;
+      counter++;
+    } catch (err) {
+      console.error(`❌ Error creating team ${rawName}:`, err);
     }
   }
 
-  console.log(`\n📊 Import Summary:`);
-  console.log(`✅ Successfully imported: ${importedCount} shortlisted teams`);
-  console.log(`📝 Teams with partial data: ${partialDataCount}`);
-  console.log(`⚠️ Teams not in shortlist: ${notFoundCount}`);
-  console.log(`📋 Total shortlisted teams: ${shortlistedTeams.length}`);
+  console.log('\n📋 Import summary');
+  console.log(`✅ Teams created: ${createdCount}`);
+  console.log(`⚠️ Teams skipped (existing): ${skippedCount}`);
+  console.log(`❌ Teams with no data: ${emptyCount}`);
+  console.log(`📊 Total processed: ${normalizedSeen.size}`);
 }
+
 
 async function main() {
   console.log("🚀 Starting lenient shortlisted teams import process...");
@@ -579,13 +526,13 @@ async function main() {
     console.log("🧹 Clearing existing data...");
     await prisma.teamParticipant.deleteMany();
     await prisma.team.deleteMany();
-    
+
     // Create basic system data
     await createBasicData();
-    
+
     // Create rooms
     await createRooms();
-    
+
     // Import shortlisted teams with lenient validation
     await importShortlistedTeams();
 
