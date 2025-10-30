@@ -52,7 +52,6 @@ interface Criterion {
 export default function JudgeDashboard() {
   // const [passwordChanged, setPasswordChanged] = useState(true);
   const [hideEvaluated, setHideEvaluated] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [scores, setScores] = useState<
     Record<ScoreKeys, number> & { feedback: string }
   >({
@@ -514,7 +513,7 @@ export default function JudgeDashboard() {
                               <Button
                                 variant="outline"
                                 className="w-full bg-transparent sm:w-auto"
-                                onClick={() => setDialogOpen(false)}
+                                onClick={() => setOpenTeamId(null)}
                               >
                                 Cancel
                               </Button>
