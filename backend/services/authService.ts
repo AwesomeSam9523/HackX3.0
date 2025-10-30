@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import { hashPassword, comparePassword, generateRandomPassword } from "../utils/password";
-import { generateToken } from "../utils/jwt";
-import type {LoginRequest, ChangePasswordRequest, JWTPayload} from "../types";
+import {PrismaClient} from "@prisma/client";
+import {comparePassword, generateRandomPassword, hashPassword} from "../utils/password";
+import {generateToken} from "../utils/jwt";
+import type {ChangePasswordRequest, JWTPayload, LoginRequest} from "../types";
 
 const prisma = new PrismaClient();
 
@@ -20,16 +20,19 @@ export class AuthService {
     });
 
     if (!user) {
+      console.log('inavlid cred')
       throw new Error("Invalid credentials");
     }
 
     if (user.status === "DISABLED") {
+      console.log('disabled')
       throw new Error("Account is disabled");
     }
 
     // Verify password
     const isValidPassword = await comparePassword(password, user.password);
     if (!isValidPassword) {
+      console.log('wrong compare')
       throw new Error("Invalid credentials");
     }
 
