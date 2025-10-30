@@ -335,6 +335,7 @@ export class TeamService {
     const activeSessionsCount = await prisma.mentorshipQueue.count({
       where: {
         mentorId: data.mentorId,
+        status: "WAITING",
       },
     });
     if (activeSessionsCount >= 5) {
