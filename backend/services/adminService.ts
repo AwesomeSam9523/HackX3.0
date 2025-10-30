@@ -506,15 +506,15 @@ export class AdminService {
 
   async updateTeamCheckpoint1(data: Checkpoint1Data) {
     const {teamId, wifi, participants} = data;
-    
+
     // Count present participants
     const presentParticipants = participants.filter(p => p.isPresent);
     const totalParticipants = participants.length;
-    
+
     // Determine status based on attendance
     let status: "COMPLETED" | "PARTIALLY_COMPLETED" = "COMPLETED";
     let notes = "";
-    
+
     if (presentParticipants.length < 2) {
       throw new Error("At least 2 participants must be marked as present to complete checkpoint 1");
     } else if (presentParticipants.length < totalParticipants) {
@@ -627,10 +627,10 @@ export class AdminService {
     }
 
     const username = team.teamId;
-    
+
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
-      where: { username },
+      where: {username},
     });
     console.log('existingUser', existingUser);
 
@@ -657,7 +657,7 @@ export class AdminService {
       password = Math.random().toString(36).slice(-6);
       console.log('generated new password for new user', password);
       const hash = await hashPassword(password);
-      
+
       await prisma.user.create({
         data: {
           username,
@@ -671,10 +671,10 @@ export class AdminService {
       // User exists but no checkpoint with password - generate new password and update user
       password = Math.random().toString(36).slice(-6);
       const hash = await hashPassword(password);
-      
+
       await prisma.user.update({
-        where: { username },
-        data: { password: hash },
+        where: {username},
+        data: {password: hash},
       });
     }
 
@@ -711,19 +711,38 @@ export class AdminService {
       },
     })
 
+    let connectedRoomNumber = "213";
+
+    const allRooms = await prisma.round1Room.findMany();
+    for (const room of allRooms) {
+      if (room.filled < room.capacity) {
+        connectedRoomNumber = room.name;
+      }
+    }
+
     const t3 = prisma.team.update({
       where: {id: payload.teamId},
       data: {
         round1Room: {
           connect: {
-            name: "201",
+            name: connectedRoomNumber,
           },
         },
       },
       select: {round1Room: true},
     });
+    const t4 = prisma.round1Room.update({
+      where: {
+        name: connectedRoomNumber,
+      },
+      data: {
+        filled: {
+          increment: 1,
+        }
+      }
+    });
 
-    const [checkpoint, round1Room] = await prisma.$transaction([t2, t3]);
+    const [checkpoint, round1Room] = await prisma.$transaction([t2, t3, t4]);
     return {
       username: username,
       round1Room: round1Room.round1Room,
@@ -975,8 +994,8 @@ export class AdminService {
     return prisma.$transaction(async (tx) => {
       // Get team details for logging
       const team = await tx.team.findUnique({
-        where: { id: teamId },
-        select: { name: true, teamId: true }
+        where: {id: teamId},
+        select: {name: true, teamId: true}
       });
 
       if (!team) {
@@ -984,38 +1003,38 @@ export class AdminService {
       }
 
       // Delete in order to respect foreign key constraints
-      
+
       // 1. Delete team checkpoints
       await tx.teamCheckpoint.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 2. Delete mentorship queue entries
       await tx.mentorshipQueue.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 3. Delete team scores
       await tx.teamScore.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 4. Delete evaluations
       await tx.evaluation.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 5. Delete submissions
       await tx.submission.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 6. Delete problem statement bookmarks for team users
       const teamUsers = await tx.user.findMany({
-        where: { teamId },
-        select: { id: true }
+        where: {teamId},
+        select: {id: true}
       });
-      
+
       if (teamUsers.length > 0) {
         await tx.pSBookmark.deleteMany({
           where: {
@@ -1028,18 +1047,18 @@ export class AdminService {
 
       // 7. Delete team participants (this should cascade automatically, but let's be explicit)
       await tx.teamParticipant.deleteMany({
-        where: { teamId }
+        where: {teamId}
       });
 
       // 8. Update users to remove team association
       await tx.user.updateMany({
-        where: { teamId },
-        data: { teamId: null }
+        where: {teamId},
+        data: {teamId: null}
       });
 
       // 9. Finally delete the team
       await tx.team.delete({
-        where: { id: teamId }
+        where: {id: teamId}
       });
 
       return {
