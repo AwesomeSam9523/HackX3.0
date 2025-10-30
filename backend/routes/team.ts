@@ -131,7 +131,7 @@ router.get("/mentors", async (req: AuthRequest, res, next) => {
 });
 
 // Book mentorship session
-router.post("/mentors/book", modifyLimiter, logActivity("BOOK_MENTORSHIP"), async (req: AuthRequest, res, next) => {
+router.post("/mentors/book", logActivity("BOOK_MENTORSHIP"), async (req: AuthRequest, res, next) => {
   try {
     const session = await teamService.bookMentorshipSession(req.user!.id, req.body);
     res.status(201).json(session);

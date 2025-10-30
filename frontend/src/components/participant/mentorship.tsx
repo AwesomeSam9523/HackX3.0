@@ -223,7 +223,11 @@ export function Mentorship({
                 </div>
                 <div className="text-right">
                   <Badge
-                    variant={mentor.queueCount >= 5 ? "destructive" : "default"}
+                    variant={
+                      mentor.mentorshipQueue.length >= 5
+                        ? "destructive"
+                        : "default"
+                    }
                   >
                     {mentor.waitingTeamsCount}/{5} slots
                   </Badge>
@@ -237,8 +241,13 @@ export function Mentorship({
               }
             >
               <DialogTrigger asChild>
-                <Button className="mx-5" disabled={mentor.queueCount >= 5}>
-                  {mentor.queueCount >= 5 ? "Queue Full" : "Book Mentor"}
+                <Button
+                  className="mx-5"
+                  disabled={mentor.mentorshipQueue.length >= 5}
+                >
+                  {mentor.mentorshipQueue.length >= 5
+                    ? "Queue Full"
+                    : "Book Mentor"}
                 </Button>
               </DialogTrigger>
               <DialogContent>

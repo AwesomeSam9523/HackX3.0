@@ -331,6 +331,16 @@ export class TeamService {
       throw new Error("Team already has a pending session with this mentor");
     }
 
+    // check if mentor already has 5 sessions
+    const activeSessionsCount = await prisma.mentorshipQueue.count({
+      where: {
+        mentorId: data.mentorId,
+      },
+    });
+    if (activeSessionsCount >= 5) {
+      return new Error("Mentorship queue full! Try again later.");
+    }
+
     // Create mentorship queue item
     return prisma.mentorshipQueue.create({
       data: {
