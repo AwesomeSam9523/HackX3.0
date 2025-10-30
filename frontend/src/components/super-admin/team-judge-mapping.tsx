@@ -197,7 +197,9 @@ export function TeamJudgeMapping({ teams, judges }: TeamJudgeMappingProps) {
   };
 
   const getTeamScore = (teamId: string) => {
-    return teamScores.find((score) => score.id === teamId);
+    return teamScores.find(
+      (score) => score.id === teamId && score.teamScores.length > 0,
+    );
   };
 
   const getJudgeStats = (judgeId: string) => {

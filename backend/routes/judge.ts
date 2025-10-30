@@ -1,9 +1,9 @@
-import { Router } from "express";
-import { judgeService } from "../services/judgeService";
-import { requireJudge } from "../middleware/auth";
-import { modifyLimiter } from "../middleware/rateLimiter";
-import { logActivity } from "../middleware/logging";
-import type { AuthRequest } from "../middleware/auth";
+import {Router} from "express";
+import {judgeService} from "../services/judgeService";
+import type {AuthRequest} from "../middleware/auth";
+import {requireJudge} from "../middleware/auth";
+import {modifyLimiter} from "../middleware/rateLimiter";
+import {logActivity} from "../middleware/logging";
 
 const router = Router();
 
@@ -55,7 +55,7 @@ router.get("/teams/:teamId/score", async (req: AuthRequest, res, next) => {
   try {
     const score = await judgeService.getTeamScore(req.user!.id, req.params.teamId);
     if (!score) {
-      return res.status(404).json({ error: "Score not found" });
+      return res.json(null);
     }
     res.json(score);
   } catch (error: any) {

@@ -309,7 +309,7 @@ class ApiService {
     return this.request("/mentors");
   }
 
-  async getTeamScoresById(teamId: string): Promise<Scores> {
+  async getTeamScoresById(teamId: string): Promise<Scores | null> {
     return this.request(`/teams/${teamId}/score`);
   }
 

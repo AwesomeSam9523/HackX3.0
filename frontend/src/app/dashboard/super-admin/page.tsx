@@ -845,7 +845,7 @@ export default function SuperAdminDashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
+                  <div className="h-[17rem] space-y-4 overflow-y-auto">
                     {judges.map((judge) => (
                       // Made judge cards responsive
                       <div

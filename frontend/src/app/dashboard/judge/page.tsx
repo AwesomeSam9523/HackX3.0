@@ -65,6 +65,7 @@ export default function JudgeDashboard() {
   });
   const [judge, setJudge] = useState<Judge>();
   const [assignedTeams, setAssignedTeams] = useState<Evaluation[]>([]);
+  const [openTeamId, setOpenTeamId] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -107,15 +108,19 @@ export default function JudgeDashboard() {
 
   const loadScores = async (teamId: string) => {
     const teamScores = await apiService.getTeamScoresById(teamId);
-    setScores({
-      innovation: teamScores.innovation,
-      impact: teamScores.impact,
-      technical: teamScores.technical,
-      presentation: teamScores.presentation,
-      feasibility: teamScores.feasibility,
-      feedback: teamScores.feedback || "",
-    });
-    setDialogOpen(true);
+    if (!teamScores) {
+      resetScores();
+    } else {
+      setScores({
+        innovation: teamScores.innovation,
+        impact: teamScores.impact,
+        technical: teamScores.technical,
+        presentation: teamScores.presentation,
+        feasibility: teamScores.feasibility,
+        feedback: teamScores.feedback || "",
+      });
+    }
+    setOpenTeamId(teamId);
   };
 
   const calculateWeightedScore = () => {
@@ -136,17 +141,14 @@ export default function JudgeDashboard() {
   };
 
   const handleSaveScore = async (teamId: string) => {
-    const payload = {
-      teamId,
-      scores,
-    };
+    const payload = { teamId, scores };
     await apiService.submitScore(payload);
     apiService.getEvaluations().then(setAssignedTeams);
     toast({
       title: "Team marked!",
-      description: `Successfully updated the score of team`,
+      description: `Successfully updated the score of ${teamId}`,
     });
-    setDialogOpen(false);
+    setOpenTeamId(null);
   };
 
   const resetScores = () => {
@@ -422,7 +424,12 @@ export default function JudgeDashboard() {
                             </div>
                           )}
                         </div>
-                        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                        <Dialog
+                          open={openTeamId === evaluation.team.id}
+                          onOpenChange={(open) =>
+                            setOpenTeamId(open ? evaluation.team.id : null)
+                          }
+                        >
                           <DialogTrigger asChild>
                             <Button
                               size="sm"
