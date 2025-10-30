@@ -46,7 +46,7 @@ export function ProblemStatements({
   refreshDomainsAction,
 }: ProblemStatementsProps) {
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [activePSId, setActivePSId] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export function ProblemStatements({
     try {
       const ps = await apiService.selectProblemStatement(psId);
       onSelectPSAction(ps.problemStatement);
-      setDialogOpen(false);
+      setActivePSId(null);
       toast({
         title: "Success",
         description: "Problem statement selected successfully",
@@ -181,7 +181,12 @@ export function ProblemStatements({
                         ))}
                       </ul>
                     </div>
-                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                    <Dialog
+                      open={activePSId === ps.id}
+                      onOpenChange={(open) =>
+                        setActivePSId(open ? ps.id : null)
+                      }
+                    >
                       <DialogTrigger asChild>
                         <Button
                           className="w-full"
@@ -201,20 +206,27 @@ export function ProblemStatements({
                             : "Select This Problem"}
                         </Button>
                       </DialogTrigger>
+
                       <DialogContent>
                         <DialogHeader>
                           <DialogTitle>Confirm Selection</DialogTitle>
                           <DialogDescription>
-                            Are you sure you want to select &#34;{ps.title}
-                            &#34;?
-                            {psLocked
-                              ? " Selection is locked and cannot be changed."
-                              : " You can change this selection within the first 2 hours of the start of hackathon."}
+                            Are you sure you want to select “{ps.title}”?
                           </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
-                          <DialogClose className={"mr-2"}>Cancel</DialogClose>
-                          <Button onClick={() => handleSelectPS(ps.id)}>
+                          <DialogClose
+                            className="mr-2"
+                            onClick={() => setActivePSId(null)}
+                          >
+                            Cancel
+                          </DialogClose>
+                          <Button
+                            onClick={() => {
+                              handleSelectPS(ps.id);
+                              setActivePSId(null);
+                            }}
+                          >
                             Confirm Selection
                           </Button>
                         </DialogFooter>
