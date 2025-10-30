@@ -668,6 +668,9 @@ export class AdminService {
     if (!availableRoom) {
       throw new Error("No available Round1Room found");
     }
+    console.log('---------------------------------------------');
+    console.log('available', availableRoom);
+    console.log('---------------------------------------------');
 
     // 3️⃣ Create checkpoint + assign room atomically
     const [checkpoint, updatedTeam, updatedRoom] = await prisma.$transaction([
