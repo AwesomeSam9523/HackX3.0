@@ -725,7 +725,7 @@ export class AdminService {
     });
     const t4 = prisma.round1Room.update({
       where: {
-        name: connectedRoomNumber,
+        id: connectedRoomNumber,
       },
       data: {
         filled: {
