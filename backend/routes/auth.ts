@@ -9,6 +9,7 @@ const router = Router();
 // Login endpoint
 router.post("/login", async (req, res, next) => {
   try {
+    console.log('------------------------test============================')
     const result = await authService.login(req.body);
     console.log('result', result);
     res.json(result);
