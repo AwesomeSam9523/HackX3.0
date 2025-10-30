@@ -229,7 +229,7 @@ export class SuperAdminService {
     return prisma.team.findMany({
       include: {
         participants: {
-          select: {id: true, username: true, email: true},
+          select: {id: true, name: true, email: true},
         },
         problemStatement: {
           include: {domain: true},
@@ -268,7 +268,7 @@ export class SuperAdminService {
       where: {id: teamId},
       include: {
         participants: {
-          select: {id: true, username: true, email: true},
+          select: {id: true, name: true, email: true},
         },
         problemStatement: {
           include: {domain: true},
@@ -698,7 +698,7 @@ export class SuperAdminService {
     const team = await prisma.team.findUnique({
       where: {id: teamId},
       include: {
-        teamParticipants: {
+        participants: {
           orderBy: {createdAt: "asc"},
         },
         checkpoints: {
@@ -731,7 +731,7 @@ export class SuperAdminService {
       }));
     } else {
       // Use teamParticipants table data
-      participantsData = team.teamParticipants.map(p => ({
+      participantsData = team.participants.map(p => ({
         id: p.id,
         name: p.name,
         email: p.email,
