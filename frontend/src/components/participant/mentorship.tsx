@@ -51,7 +51,7 @@ export function Mentorship({
   const [showOnline, setShowOnline] = useState(true);
   const [showOffline, setShowOffline] = useState(true);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
-  const [showBookingDialog, setShowBookingDialog] = useState(false);
+  const [activeMentorId, setActiveMentorId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const { toast } = useToast();
 
@@ -231,8 +231,10 @@ export function Mentorship({
               </div>
             </CardHeader>
             <Dialog
-              open={showBookingDialog}
-              onOpenChange={setShowBookingDialog}
+              open={activeMentorId === mentor.id}
+              onOpenChange={(open) =>
+                setActiveMentorId(open ? mentor.id : null)
+              }
             >
               <DialogTrigger asChild>
                 <Button className="mx-5" disabled={mentor.queueCount >= 5}>
@@ -247,10 +249,11 @@ export function Mentorship({
                 </DialogHeader>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="query">Your Query</Label>
+                    <Label htmlFor={`query-${mentor.id}`}>Your Query</Label>
                     <Input
-                      id="query"
+                      id={`query-${mentor.id}`}
                       placeholder="Describe what you want to discuss..."
+                      value={query}
                       onChange={(e) => setQuery(e.target.value)}
                     />
                   </div>
@@ -258,13 +261,16 @@ export function Mentorship({
                 <DialogFooter>
                   <Button
                     variant="outline"
-                    onClick={() => setShowBookingDialog(false)}
+                    onClick={() => setActiveMentorId(null)}
                   >
                     Cancel
                   </Button>
                   <Button
-                    onClick={() => handleBookMentor(mentor.id)}
-                    disabled={!query || query.trim() === ""}
+                    onClick={() => {
+                      handleBookMentor(mentor.id);
+                      setActiveMentorId(null);
+                    }}
+                    disabled={!query.trim()}
                   >
                     Confirm Booking
                   </Button>
