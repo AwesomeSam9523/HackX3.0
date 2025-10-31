@@ -131,27 +131,34 @@ export class JudgeService {
                 id: true,
                 name: true,
                 block: true,
-              }
-            }
+              },
+            },
           },
         },
       },
       orderBy: {createdAt: "asc"},
     });
 
-    return evaluations.map((evaluation) => ({
-      evaluationId: evaluation.id,
-      evaluationStatus: evaluation.status,
-      evaluated: evaluation.status === "COMPLETED",
-      round: evaluation.round,
-      team: {
-        ...evaluation.team,
-        hasScore: evaluation.team.teamScores.length > 0,
-        latestScore: evaluation.team.teamScores[0] || null,
-        submissionStatus: evaluation.team.submissions.length > 0 ? "SUBMITTED" : "NOT_SUBMITTED",
-        latestSubmission: evaluation.team.submissions[0] || null,
-      },
-    }));
+    return evaluations
+      .map((evaluation) => ({
+        evaluationId: evaluation.id,
+        evaluationStatus: evaluation.status,
+        evaluated: evaluation.status === "COMPLETED",
+        round: evaluation.round,
+        team: {
+          ...evaluation.team,
+          hasScore: evaluation.team.teamScores.length > 0,
+          latestScore: evaluation.team.teamScores[0] || null,
+          submissionStatus:
+            evaluation.team.submissions.length > 0 ? "SUBMITTED" : "NOT_SUBMITTED",
+          latestSubmission: evaluation.team.submissions[0] || null,
+        },
+      }))
+      .sort((a, b) => {
+        const numA = parseInt(a.team.round1Room?.name || "0", 10);
+        const numB = parseInt(b.team.round1Room?.name || "0", 10);
+        return numA - numB; // ascending numeric order
+      });
   }
 
   // Get specific team details for evaluation
