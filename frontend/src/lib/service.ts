@@ -23,7 +23,7 @@ import type {
   TeamCheckpoint1Data,
   TeamJudgeMapping,
   TeamScore,
-  User,
+  User
 } from "./types";
 
 const API_BASE_URL =
@@ -37,6 +37,46 @@ const routeTypes = {
 };
 
 class ApiService {
+  private async request<T>(
+    endpoint: string,
+    options: RequestInit = {},
+  ): Promise<T> {
+    const token = authService.getToken();
+    const user = authService.getUser();
+    const routeType =
+      user && !endpoint.startsWith("/auth") ? `/${routeTypes[user.role]}` : "";
+    const config: RequestInit = {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    if (!token && endpoint !== "/auth/login") {
+      // If no token and not a login request, redirect to log in
+      authService.logout();
+      throw new Error("Unauthorized");
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}${routeType}${endpoint}`,
+      config,
+    );
+
+    if (response.status === 401 || response.status === 403) {
+      authService.logout();
+      throw new Error("Unauthorized");
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status} at ${endpoint}`);
+    }
+
+    return response.json();
+  }
+
   async getMyQueue(): Promise<QueueItem[]> {
     return this.request("/queue");
   }
@@ -555,46 +595,6 @@ class ApiService {
       method: "POST",
       body: JSON.stringify(payload),
     });
-  }
-
-  private async request<T>(
-    endpoint: string,
-    options: RequestInit = {},
-  ): Promise<T> {
-    const token = authService.getToken();
-    const user = authService.getUser();
-    const routeType =
-      user && !endpoint.startsWith("/auth") ? `/${routeTypes[user.role]}` : "";
-    const config: RequestInit = {
-      headers: {
-        "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
-        ...options.headers,
-      },
-      ...options,
-    };
-
-    if (!token && endpoint !== "/auth/login") {
-      // If no token and not a login request, redirect to log in
-      authService.logout();
-      throw new Error("Unauthorized");
-    }
-
-    const response = await fetch(
-      `${API_BASE_URL}${routeType}${endpoint}`,
-      config,
-    );
-
-    if (response.status === 401 || response.status === 403) {
-      authService.logout();
-      throw new Error("Unauthorized");
-    }
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status} at ${endpoint}`);
-    }
-
-    return response.json();
   }
 
   async getTeamPreviousMentorshipStatus() {
